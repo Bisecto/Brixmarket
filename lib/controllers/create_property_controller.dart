@@ -1,0 +1,462 @@
+import 'package:brixmarket/controllers/edit_controller.dart';
+import 'package:brixmarket/core/app.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
+import '../core/dialogs.dart';
+import '../core/preloader.dart';
+import '../models/insight_model.dart';
+import '../models/property_model.dart';
+import '../models/user_model.dart';
+import '../res/strings.dart';
+import '../services/provider.dart';
+import '../utils/utils.dart';
+import '../view/screens/create_property/create_property_widges.dart';
+import '../view/screens/mobile/my_ads_page.dart';
+import 'instance.dart';
+
+class CreatePropertyCtrl extends GetxController {
+  late PageController controller;
+  late PageController cPPageController;
+  final createPropScrollCtrl = ScrollController();
+  final createPropScrollCtrlA = ScrollController();
+  final scrollController2 = ScrollController();
+  final scrollController2a = ScrollController();
+  final scrollController3 = ScrollController();
+  final scrollController3a = ScrollController();
+  final scrollController4 = ScrollController();
+  final scrollController4a = ScrollController();
+  final scrollController5 = ScrollController();
+  final scrollController5a = ScrollController();
+  final scrollController6 = ScrollController();
+  final scrollController6a = ScrollController(initialScrollOffset: 0.0);
+
+  var showMyPropertyMenu = false.obs;
+  var showMyPropertyMenuIndex = 0.obs;
+
+  static const historyLength = 5;
+
+  FloatingSearchBarController? searchController;
+
+  var accountIndex = 0.obs;
+
+  var createPropPageIndex = 0.obs;
+  var sideNavIndex = 0.obs;
+
+  onSelected(int index) {
+    sideNavIndex.value = index;
+    sideNavIndex.refresh();
+  }
+
+  bool propertyListData = false;
+  bool pricingListData = false;
+  bool isChange = false;
+  bool isIdentity = false;
+  var changePassword = false.obs;
+
+  @override
+  void onInit() {
+    controller = PageController(initialPage: 0);
+    cPPageController = PageController(initialPage: 0);
+    super.onInit();
+  }
+
+  backToPrevious() {
+    createPropScrollCtrl.jumpTo(0);
+    if (createPropPageIndex.value > 0) {
+      createPropPageIndex.value--;
+    }
+    cPPageController.animateToPage(cPPageController.page!.toInt() - 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+  }
+
+  bool saveToDraft = false;
+  gotoNext({required int pageIndex}) {
+    createPropScrollCtrl.jumpTo(0);
+    if (saveToDraft == true) {
+      MSG.snackBar('Save property to my draft');
+      saveToDraft = false;
+      createPropPageIndex.value = 1;
+      sideNavIndex.value = 2;
+      sideNavIndex.refresh();
+      createPropPageIndex.refresh();
+      EditCtrl.disposeControllers();
+    } else {
+      createPropPageIndex.value = pageIndex;
+      cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+      getAmenities();
+      getFeatures();
+    }
+  }
+
+  submitPropertyDescription() async {
+    if (EditCtrl.title.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Property title field is required',
+      );
+    } else if (EditCtrl.description.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Property description field is required',
+      );
+    } else if (EditCtrl.price.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Property price filed is required',
+      );
+    } else if (EditCtrl.priceDuration.value.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Price duration field is required',
+      );
+    } else if (EditCtrl.category.value.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Property category field is required',
+      );
+    } else if (EditCtrl.type.value.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Property type field is required',
+      );
+    } else if (EditCtrl.status.value.text.isEmpty) {
+      MSG.errorSnackBar(
+        'New or Existing field is required',
+      );
+    } else {
+      Preloader.show();
+      Map<String, dynamic> data = Property.map(
+        title: EditCtrl.title.text,
+        reference: EditCtrl.reference.text,
+        description: EditCtrl.description.text,
+        price: EditCtrl.price.text,
+        priceDuration: EditCtrl.priceDuration.value.text,
+        category: EditCtrl.category.value.text,
+        type: EditCtrl.type.value.text,
+        status: EditCtrl.status.value.text,
+      );
+
+      var response = await Provider().postData("property/store", data);
+
+      if (response != null) {
+        propCtrl.property = Property.fromJson(response);
+        Preloader.hide();
+        gotoNext(pageIndex: 1);
+      }
+    }
+  }
+
+  selectPropertyImages() async {
+    var uInt8List = await Utils.filesPicker();
+    for (var uInt in uInt8List) {
+      EditCtrl.image8Lists.addIf(uInt != null, uInt!);
+    }
+    EditCtrl.image8Lists.refresh();
+  }
+
+  removeImage(file) {
+    EditCtrl.image8Lists.value.remove(file);
+    EditCtrl.image8Lists.refresh();
+  }
+
+  submitPropertyMedia() async {
+    if (EditCtrl.image8Lists.length < 3) {
+      MSG.errorSnackBar(
+        'Image uploaded is not up to 3',
+      );
+    } else {
+      Preloader.show();
+      var data = Property.map();
+      var response = await Provider().postFiles("property/store-media/${data['property']}", EditCtrl.image8Lists.value, data: data);
+      if (response != null) {
+        propCtrl.property = Property.fromJson(response);
+        Preloader.hide();
+        gotoNext(pageIndex: 2);
+      }
+    }
+  }
+
+  submitPropertyLocation() async {
+    bool isValidData = false;
+    if (EditCtrl.address.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Address of property is required',
+      );
+    } else if (EditCtrl.state.value.text.isEmpty) {
+      MSG.errorSnackBar(
+        'State of property is required',
+      );
+    } else if (EditCtrl.city.value.text.isEmpty) {
+      MSG.errorSnackBar(
+        'City of property is required',
+      );
+    } else if (EditCtrl.longitude.text.isNotEmpty) {
+      if (EditCtrl.longitude.text.isNum) {
+        isValidData = true;
+      } else {
+        MSG.errorSnackBar(
+          'Invalid longitude value',
+        );
+      }
+    } else if (EditCtrl.latitude.text.isNotEmpty) {
+      if (EditCtrl.longitude.text.isNum) {
+        isValidData = true;
+      } else {
+        MSG.errorSnackBar(
+          'Invalid latitude value',
+        );
+      }
+    } else {
+      isValidData = true;
+    }
+    if (isValidData) {
+      Preloader.show();
+      Map<String, dynamic> data = Property.map(
+        address: EditCtrl.address.text,
+        city: EditCtrl.city.value.text,
+        state: EditCtrl.state.value.text,
+        landmarks: EditCtrl.latitude.text,
+        longitude: EditCtrl.longitude.value.text,
+        latitude: EditCtrl.latitude.value.text,
+      );
+
+      var response = await Provider().postData("property/store-location/${data['property']}", data);
+      if (response != null) {
+        propCtrl.property = Property.fromJson(response);
+        Preloader.hide();
+        gotoNext(pageIndex: 3);
+      }
+    }
+  }
+
+  submitPropertyMoreDetails() async {
+    bool isValidData = true;
+    int i = 0;
+    Map<String, dynamic> map = {};
+    for (var ctrl in EditCtrl.ctrlList) {
+      var key = EditCtrl.ctrlListKeys[i++];
+      if (ctrl.value.text.trim().isEmpty && isValidData) {
+        isValidData = false;
+        MSG.errorSnackBar(
+          '${key.text} field is required',
+        );
+      } else {
+        map['features[${key.text}]'] = ctrl.value.text.trim();
+      }
+    }
+    if (isValidData) {
+      Preloader.show();
+      Map<String, dynamic> data = Property.map();
+      data.addAll(map);
+      var response = await Provider().postData("property/store-features/${data['property']}", data);
+      if (response != null) {
+        propCtrl.property = Property.fromJson(response);
+        Preloader.hide();
+        gotoNext(pageIndex: 4);
+      }
+    }
+  }
+
+  submitPropertyAmenities() async {
+    int i = 0;
+    Map<String, dynamic> map = {};
+    for (var amenity in EditCtrl.amenities) {
+      map['amenities[${i++}]'] = amenity;
+    }
+    Preloader.show();
+    Map<String, dynamic> data = Property.map();
+    data.addAll(map);
+
+    var response = await Provider().postData("property/store-amenities/${data['property']}", data);
+    if (response != null) {
+      propCtrl.property = Property.fromJson(response);
+      Preloader.hide();
+      gotoNext(pageIndex: 5);
+    }
+  }
+
+  submitPropertyContact() async {
+    if (!EditCtrl.email.text.isEmail) {
+      MSG.errorSnackBar(
+        'Email address is not valid',
+      );
+    } else if (!Utils.isPhoneNumber(EditCtrl.phone.text)) {
+      MSG.errorSnackBar(
+        'Phone number not valid',
+      );
+    } else if (EditCtrl.userAddress.text.isEmpty) {
+      MSG.errorSnackBar(
+        'Address field is required',
+      );
+    } else {
+      Preloader.show();
+      Map<String, dynamic> data = Property.map(
+        address: EditCtrl.title.text,
+        email: EditCtrl.email.text,
+        phone: EditCtrl.phone.text,
+        whatsAppNumber: EditCtrl.whatsAppNumber.text,
+      );
+
+      var response = await Provider().postData("property/store-user-contact/${data['property']}", data);
+      if (response != null) {
+        propCtrl.property = Property.fromJson(response);
+        Preloader.hide();
+        EditCtrl.reference.text = '';
+        MSG.snackBar('Property has been created successfully');
+        EditCtrl.disposeControllers();
+        if (Utils.isMobileApp) {
+          cPropCtrl.createPropPageIndex.value = 0;
+          Get.off(() => const MyAdsPage());
+        } else {
+          createPropPageIndex.value = 0;
+          createPropPageIndex.refresh();
+          sideNavIndex.value = 2;
+          sideNavIndex.refresh();
+        }
+      }
+    }
+  }
+
+  Insight? insight;
+  Future getInsight() async {
+    // if (insight == null) {
+    await Provider().postData("property/get-insight", User.map()).then((value) => insight = Insight.fromJson(value));
+    // }
+    return insight;
+  }
+
+  var myProperties = <Property>[].obs;
+  var mySoldProperties = <Property>[].obs;
+  var myDraftProperties = <Property>[].obs;
+  var mySuspendedProperties = <Property>[].obs;
+  var myPublishedProperties = <Property>[].obs;
+  Future getMyProperties() async {
+    // if (myProperties.isEmpty) {
+    var map = User.map();
+    var response = await Provider().postData("property/get-user-properties", map);
+    if (response != null) {
+      myProperties.value = [];
+      mySoldProperties.value = [];
+      myDraftProperties.value = [];
+      mySuspendedProperties.value = [];
+      myPublishedProperties.value = [];
+      if (response != null && response.isNotEmpty) {
+        for (var e in response['properties']) {
+          mySoldProperties.addIf(e['publish_state'] == 'Sold', Property.fromJson(e));
+          myDraftProperties.addIf(e['publish_state'] == 'Draft', Property.fromJson(e));
+          mySuspendedProperties.addIf(e['publish_state'] == 'Suspended', Property.fromJson(e));
+          myPublishedProperties.addIf(e['publish_state'] == 'Published', Property.fromJson(e));
+          myProperties.add(Property.fromJson(e));
+        }
+      }
+      // }
+    }
+    return myProperties;
+  }
+
+  Future changePublishState({property, state}) async {
+    cPropCtrl.showMyPropertyMenu.value = false;
+    var map = Property.map(id: property.id, publishState: state);
+    var response = await Provider().postData("property/change-property-publish-state", map);
+    if (response != null) {
+      if (response != null && response.isNotEmpty) {
+        dnd(response['properties'].length);
+        myProperties.value = [];
+        mySoldProperties.value = [];
+        myDraftProperties.value = [];
+        mySuspendedProperties.value = [];
+        myPublishedProperties.value = [];
+        for (var e in response['properties']) {
+          mySoldProperties.addIf(e['publish_state'] == 'Sold', Property.fromJson(e));
+          myDraftProperties.addIf(e['publish_state'] == 'Draft', Property.fromJson(e));
+          mySuspendedProperties.addIf(e['publish_state'] == 'Suspended', Property.fromJson(e));
+          myPublishedProperties.addIf(e['publish_state'] == 'Published', Property.fromJson(e));
+          myProperties.add(Property.fromJson(e));
+        }
+        myProperties.refresh();
+        mySoldProperties.refresh();
+        myDraftProperties.refresh();
+        mySuspendedProperties.refresh();
+        myPublishedProperties.refresh();
+      }
+    }
+  }
+
+  List? amenities;
+  Future getAmenities({all = false}) async {
+    amenities = [];
+    if (amenities!.isEmpty && EditCtrl.category.value.text.isNotEmpty || all) {
+      String category = all ? 'all' : EditCtrl.category.value.text;
+      await Provider().postData("property/get-amenities/$category", Property.map()).then((value) => amenities = value);
+    }
+    return amenities ?? [];
+  }
+
+  completeDraftProperty(Property property) async {
+    cPropCtrl.showMyPropertyMenu.value = false;
+    cPropCtrl.createPropPageIndex.value = 0;
+    Preloader.show();
+    EditCtrl.title.text = property.title ?? '';
+    EditCtrl.reference.text = property.reference ?? '';
+    EditCtrl.description.text = property.description ?? '';
+
+    EditCtrl.price.text = property.price.toString();
+    EditCtrl.priceDuration.value.text = property.priceDuration ?? '';
+    EditCtrl.category.value.text = property.category ?? '';
+    EditCtrl.type.value.text = property.type ?? '';
+    EditCtrl.status.value.text = property.status ?? '';
+
+    if (property.media != null) {
+      // EditCtrl.imageFiles.value = [];
+      EditCtrl.image8Lists.value = [];
+      for (var element in property.media!) {
+        // EditCtrl.imageFiles.add(File.fromUri(Uri.parse('$propertyImgPath${element.media}')));
+        EditCtrl.image8Lists.add(await Utils.imgUrlToFile('$propertyImgPath${element.media}'));
+      }
+      EditCtrl.imageFiles.refresh();
+    }
+
+    if (property.location != null) {
+      EditCtrl.address.text = property.location!.address ?? '';
+      EditCtrl.city.value.text = property.location!.city ?? '';
+      EditCtrl.state.value.text = property.location!.state ?? '';
+      EditCtrl.landmarks.value.text = property.location!.landmarks ?? '';
+      EditCtrl.longitude.text = property.location!.longitude ?? '';
+      EditCtrl.latitude.text = property.location!.latitude ?? '';
+    }
+
+    if (property.features != null) {
+      var featuresData = property.features;
+      var feature = {};
+      for (var e in featuresData!) {
+        if (feature[e.feature] == null) {
+          feature[e.feature] = [e.featureValue.toString()];
+        } else {
+          feature[e.feature].add(e.featureValue.toString());
+        }
+        features ??= [];
+        features!.add(e.toJson());
+      }
+      feature.entries.map((feature) {
+        EditCtrl.ctrlList.add(TextEditingController().obs);
+        EditCtrl.ctrlListKeys.add(TextEditingController(text: feature.key));
+      });
+    }
+
+    if (property.amenities != null) {
+      for (var e in property.amenities!) {
+        EditCtrl.amenities.add(e.amenity);
+      }
+      EditCtrl.amenities.refresh();
+    }
+
+    if (property.contact != null) {
+      EditCtrl.userAddress.text = property.contact!.address ?? '';
+      EditCtrl.email.text = property.contact!.address ?? '';
+      EditCtrl.phone.text = property.contact!.address ?? '';
+    }
+    if (Utils.isMobileApp) {
+      Preloader.hide();
+      Get.toNamed(RouteStr.mobileCreateProperty);
+    } else {
+      Preloader.hide();
+      sideNavIndex.value = 1;
+      sideNavIndex.refresh();
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "status": true,
+  "message": "Login successful",
+  "data": {
+    "surname": "Okorochi",
+    "first_name": "Felixes",
+    "phone_number": "09094774903",
+    "email_address": "zikzay@gmail.com",
+    "ref_id": "YZDCBY079",
+    "image": "022517559205.jpg",
+    "location": null,
+    "longitude": null,
+    "latitude": null,
+    "city": null,
+    "state": null,
+    "country": null,
+    "address": null,
+    "password": "$2y$10$PuxfVtUOylopPZ.d4uZERuAJH9MQgM8gMw5Xbh2nygoPdVo00daXe",
+    "is_admin": 0,
+    "is_active": 0,
+    "is_agency": 0,
+    "is_agent": 0,
+    "is_user": 1,
+    "is_verified": 1,
+    "is_premium": 0,
+    "is_blocked": 0,
+    "otp": "BlZYpoGO9znK5HTAuyu89RWVzMvAdzwg+2xLmB2yaJ0=",
+    "id": "MDIwODc0NjQ0ODM1MzAy",
+    "created_at": "2022-05-05 19:49:24",
+    "updated_at": "2022-05-26 12:56:26",
+    "premium_details": {
+      "user": "MDIwODc0NjQ0ODM1MzAy",
+      "address": "34 Ukamu Street",
+      "city": "Arochukwu",
+      "state": "Abia",
+      "id_type": "Voter card",
+      "id_number": "393948374300",
+      "id_photo": "022660039553.jpg",
+      "is_verified": 0,
+      "id": "MDIyNjU1OTczOTkwNTM2",
+      "created_at": "2022-05-26 10:38:14",
+      "updated_at": "2022-05-26 12:08:31"
+    },
+    "settings": {
+      "user": "MDIwODc0NjQ0ODM1MzAy",
+      "request_tour_alert": 1,
+      "update_alert": 1,
+      "in_app_alert": 0,
+      "email_alert": 0,
+      "sms_alert": 0,
+      "sub_newsletter": 1,
+      "id": "MDIwODc0NzM3ODY0MzAy",
+      "created_at": "2022-05-05 19:50:57",
+      "updated_at": "2022-05-26 14:37:25"
+    },
+    "saved_properties": [
+      {
+        "user": "MDIwODc0NjQ0ODM1MzAy",
+        "property": "MDIxMDEzNjEwMDE3NzA0",
+        "id": "MDIxMDMxMTc2MjA0MzAy",
+        "created_at": "2022-05-07 15:18:16",
+        "updated_at": "2022-05-07 15:18:16"
+      },
+      {
+        "user": "MDIwODc0NjQ0ODM1MzAy",
+        "property": "MDIxMDE0MjA3OTQ4MDg2",
+        "id": "MDIxMDMxMTU1ODYzNDE3",
+        "created_at": "2022-05-07 15:17:55",
+        "updated_at": "2022-05-07 15:17:55"
+      },
+      {
+        "user": "MDIwODc0NjQ0ODM1MzAy",
+        "property": "MDIxMDEzNDE4MTc3MDQy",
+        "id": "MDIxMDMxODY4NDUyMTQ1",
+        "created_at": "2022-05-07 15:29:48",
+        "updated_at": "2022-05-07 15:29:48"
+      },
+      {
+        "user": "MDIwODc0NjQ0ODM1MzAy",
+        "property": "MDIxMDA5MzcxMzkxMjIx",
+        "id": "MDIyNDA2OTQ2OTMxNDE0",
+        "created_at": "2022-05-23 13:27:46",
+        "updated_at": "2022-05-23 13:27:46"
+      }
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+import 'dart:async';
+
+import 'package:brixmarket/utils/shared_preferences.dart';
+import 'package:brixmarket/view/screens/no_internet.dart';
+import 'package:cross_connectivity/cross_connectivity.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+
+import '../../../config/theme/color.dart';
+import '../../../res/strings.dart';
+import '../../../utils/utils.dart';
+import '../../widgets/custom_text.dart';
+
+class SplashScreen extends StatefulWidget {
+  static String splashScreen = '/splash_screen';
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    checkpermission();
+
+    // Connectivity().checkConnection().then((connected) async {
+    //   SharedPref.getBool('acceptLocationUsage').then((accepted) async {
+    //     //dnd(accepted);
+    //     if(accepted == true) {
+    //       if (connected) {
+    //         await openApp();
+    //       } else {
+    //         Get.to(() =>
+    //             NoInternet(
+    //                 callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
+    //                 reInitApp: true));
+    //       }
+    //     } else {
+    //       if (connected) {
+    //         await openApp();
+    //       } else {
+    //         Get.to(() =>
+    //             NoInternet(
+    //                 callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
+    //                 reInitApp: true));
+    //       }
+    //       //Get.offNamed(RouteStr.mobileAcceptLocationUsage);
+    //     }
+    //   });
+    //
+    // });
+  }
+  checkpermission()async{
+    await Utils.getCurrentLocation();
+    var permission = await Geolocator.checkPermission();
+    if(permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+      await SharedPref.putBool('acceptLocationUsage', true);
+      Connectivity().checkConnection().then((connected) async {
+        if (connected) {
+          await openApp();
+        } else {
+          Get.to(() =>
+              NoInternet(
+                  callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
+                  reInitApp: true));
+        }
+      });
+
+
+
+    } else {
+      await SharedPref.putBool('acceptLocationUsage', false);
+      Connectivity().checkConnection().then((connected) async {
+        if (connected) {
+          await openApp();
+        } else {
+          Get.to(() =>
+              NoInternet(
+                  callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
+                  reInitApp: true));
+        }
+      });
+    }
+  }
+
+  openApp() async {
+    bool firstOpen = (await SharedPref.getBool('firstOpen')) ?? false;
+
+    if (firstOpen) {
+      Future.delayed(const Duration(seconds: 5), () {
+        Get.offAndToNamed(RouteStr.mobileLanding);
+      });
+    } else {
+      await SharedPref.putBool('firstOpen', true);
+      Future.delayed(const Duration(seconds: 5), () {
+        Get.offAndToNamed(RouteStr.mobileOnboard);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.9),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(ImgStr.logoDark, height: isMobile() ? 54 : 64),
+            const SizedBox(
+              height: 6,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
