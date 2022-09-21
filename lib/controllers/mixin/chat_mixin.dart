@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:brixmarket/controllers/edit_controller.dart';
+import 'package:brixmarket/core/app.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import '../../models/property_model.dart';
 import '../../res/strings.dart';
 import '../../services/provider.dart';
 import '../../utils/utils.dart';
+import '../../view/screens/mobile/chat_details_page.dart';
 import '../instance.dart';
 
 mixin Chat {
@@ -53,7 +55,11 @@ mixin Chat {
     otherUserImage = chatUser.image;
 
     chatKey = chatUser.chatKey;
-    Get.toNamed(RouteStr.chat);
+    //Get.toNamed(RouteStr.chat);
+    Navigator.push(
+      context!,
+      MaterialPageRoute(builder: (context) => const ChatDetailPage()),
+    );
   }
 
   bool scroll = true;

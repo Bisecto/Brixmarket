@@ -12,6 +12,7 @@ import '../../../models/property_model.dart';
 import '../../../res/strings.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
+import 'explore_filter_page.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -53,7 +54,11 @@ class _ExplorePageState extends State<ExplorePage> {
           actions: [
             GestureDetector(
               onTap: () {
-                Get.to(RouteStr.mobileExploreFilter);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FilterExplorePage()),
+                );
+                //Get.to(RouteStr.mobileExploreFilter);
               },
               child: Padding(padding: const EdgeInsets.only(right: 12.0), child: Image.asset('assets/images/filter.png')),
             )
@@ -83,10 +88,6 @@ class _ExplorePageState extends State<ExplorePage> {
                                           alignment: Alignment.topLeft,
                                           child: CustomText(color: Colors.blueGrey, text: 'Filter Results', weight: FontWeight.bold, size: 16)),
                                       const Divider(color: Colors.black12),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                                        child: Image.asset('assets/images/banner-one.jpg'),
-                                      ),
                                       propCtrl.exploreFilterProperties.isEmpty
                                           ? Column(children: [
                                               SizedBox(

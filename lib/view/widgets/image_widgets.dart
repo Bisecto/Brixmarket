@@ -59,7 +59,13 @@ profileImgAndBasicInfo() {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            circleProfileImage(),
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(RouteStr.mobileProfileHome);
+              },
+              child:circleProfileImage(),
+            ),
+
             const SizedBox(width: 14),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

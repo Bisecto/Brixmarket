@@ -226,10 +226,6 @@ class MobileHomePage extends StatelessWidget {
                     }),
               ),
               const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Image.asset('assets/images/banner-three.jpg'),
-              ),
               FutureBuilder(
                   future: propCtrl.fetchFeaturedProperties(),
                   builder: (context, AsyncSnapshot snap) {
@@ -271,11 +267,6 @@ class MobileHomePage extends StatelessWidget {
                     ),
                   ),
                 ]),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Image.asset('assets/images/ads-old.png'),
               ),
               const SizedBox(height: 24),
               Container(

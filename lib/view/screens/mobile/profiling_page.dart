@@ -65,13 +65,13 @@ class ProfilingPage extends StatelessWidget {
                   title: 'Agency Information',
                   icon: Icons.document_scanner,
                 ),
-          user.isUser == true
-              ? const SizedBox.shrink()
-              : buildListTile(
-                  onTap: () => Get.toNamed(RouteStr.mobileLegalDocumentInfo),
-                  title: 'Location Information',
-                  icon: Icons.location_on,
-                ),
+          // user.isUser == true
+          //     ? const SizedBox.shrink()
+          //     : buildListTile(
+          //         onTap: () => Get.toNamed(RouteStr.mobileLegalDocumentInfo),
+          //         title: 'Location Information',
+          //         icon: Icons.location_on,
+          //       ),
           user.isUser == false
               ? const SizedBox.shrink()
               : buildListTile(

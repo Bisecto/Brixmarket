@@ -2,6 +2,7 @@ import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 import '../core/dialogs.dart';
@@ -38,7 +39,7 @@ class CreatePropertyCtrl extends GetxController {
   static const historyLength = 5;
 
   FloatingSearchBarController? searchController;
-
+  final oCcy = NumberFormat("#,##0.00","en_US");
   var accountIndex = 0.obs;
 
   var createPropPageIndex = 0.obs;
@@ -124,7 +125,7 @@ class CreatePropertyCtrl extends GetxController {
         title: EditCtrl.title.text,
         reference: EditCtrl.reference.text,
         description: EditCtrl.description.text,
-        price: EditCtrl.price.text,
+        price: oCcy.format(EditCtrl.price.text),
         priceDuration: EditCtrl.priceDuration.value.text,
         category: EditCtrl.category.value.text,
         type: EditCtrl.type.value.text,
@@ -395,7 +396,7 @@ class CreatePropertyCtrl extends GetxController {
     EditCtrl.reference.text = property.reference ?? '';
     EditCtrl.description.text = property.description ?? '';
 
-    EditCtrl.price.text = property.price.toString();
+    EditCtrl.price.text = oCcy.format(property.price.toString());
     EditCtrl.priceDuration.value.text = property.priceDuration ?? '';
     EditCtrl.category.value.text = property.category ?? '';
     EditCtrl.type.value.text = property.type ?? '';

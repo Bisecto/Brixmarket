@@ -20,8 +20,10 @@ import 'package:universal_io/io.dart';
 
 import '../config/theme/color.dart';
 import '../controllers/instance.dart';
+import '../core/app.dart';
 import '../res/strings.dart';
 import '../services/provider.dart';
+import '../view/screens/mobile/landing_page.dart';
 import '../view/widgets/custom_text.dart';
 import 'device_info.dart';
 
@@ -264,9 +266,17 @@ class Utils {
 
   static void gotoHomePage({enableGoBack = false}) {
     if (isMobileApp && enableGoBack) {
-      Get.toNamed(RouteStr.mobileLanding);
+      Navigator.pushReplacement(
+        context!,
+        MaterialPageRoute(builder: (context) =>  const MobileLandingPage()),
+      );
+      //Get.toNamed(RouteStr.mobileLanding);
     } else if (isMobileApp) {
-      Get.offAndToNamed(RouteStr.mobileLanding);
+      Navigator.pushReplacement(
+        context!,
+        MaterialPageRoute(builder: (context) =>  const MobileLandingPage()),
+      );
+      //Get.offAndToNamed(RouteStr.mobileLanding);
     } else if (enableGoBack) {
       Get.toNamed(RouteStr.webHome);
     } else {
