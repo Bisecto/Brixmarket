@@ -87,7 +87,7 @@ class Utils {
 
   static bool isPhoneNumber(String s) {
     if (s.length > 16 || s.length < 9) return false;
-    return hasMatch(s, r'^[+]*[0]{1}[789]{1}[01]{1}[0-9]{8}$');
+    return hasMatch(s, r'^(?:[+0][1-9])?[0-9]{10,12}$');
   }
 
   static bool hasMatch(String? value, String pattern) {
