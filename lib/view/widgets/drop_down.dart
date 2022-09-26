@@ -81,7 +81,7 @@ class DropDown extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     elevation: 3,
                     underline: Container(color: Colors.transparent),
-                    value: controller.value.text == '' || !items.contains(controller.value.text) ? null : controller.value.text,
+                    value: controller.value.text == ' ' || !items.contains(controller.value.text) ? null : controller.value.text,
                     onChanged: (newValue) {
                       controller.value.text = newValue;
                       controller.refresh();

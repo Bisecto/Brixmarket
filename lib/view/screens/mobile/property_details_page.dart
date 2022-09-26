@@ -11,6 +11,7 @@ import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
+import '../../../libs/launch_urls.dart';
 import '../../../models/media_model.dart';
 import '../../../models/property_model.dart';
 import '../../../models/review_model.dart';
@@ -366,19 +367,33 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      GestureDetector(
-                        onTap: () => Whatsapp2.sendToNumber(property.contact?.phoneNumber ?? '', 'Hi ${property.user?.firstName}'),
-                        child: Container(
-                          height: 42,
-                          width: 42,
-                          child: const Icon(
+                      Container(
+                        height: 42,
+                        width: 42,
+                        decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
+                        child: OpenUrl(
+                          url: 'https://wa.me/${property.contact?.phoneNumber}',
+                          //phone: Str.contactPhone1.replaceAll(' ', ''),
+                          widget: Icon(
                             Icons.whatsapp,
-                            size: 20,
                             color: Pallet.secondaryColor,
+                            size: 20,
                           ),
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
                         ),
                       ),
+                      // GestureDetector(
+                      //   onTap: () => Whatsapp2.sendToNumber(property.contact?.phoneNumber ?? '', 'Hi ${property.user?.firstName}'),
+                      //   child: Container(
+                      //     height: 42,
+                      //     width: 42,
+                      //     child: const Icon(
+                      //       Icons.whatsapp,
+                      //       size: 20,
+                      //       color: Pallet.secondaryColor,
+                      //     ),
+                      //     decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
                           _callNumber(property.contact?.phoneNumber ?? '');
@@ -697,7 +712,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               ),
               const SizedBox(height: 8),
               FormInput(
-                controller: EditCtrl.message,
+                controller: EditCtrl.messageReview,
                 validate: Val.name,
                 error: EditCtrl.messageErr,
                 height: 164,
@@ -901,7 +916,7 @@ requestATour(propertyId) {
             ),
             const SizedBox(height: 20),
             FormInput(
-              controller: EditCtrl.message,
+              controller: EditCtrl.messageTour,
               validate: Val.name,
               error: EditCtrl.messageErr,
               height: 164,

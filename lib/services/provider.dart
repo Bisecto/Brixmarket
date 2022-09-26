@@ -95,7 +95,6 @@ class Provider extends GetConnect {
       }
       var httpResponse = await request.send();
       var response = await http.Response.fromStream(httpResponse).timeout(timeOutDuration2, onTimeout: () => http.Response('Request time out', 408));
-      ;
       return processResponse(response);
     } catch (e, t) {
       dnd('$e Trace: $t');
@@ -124,7 +123,6 @@ class Provider extends GetConnect {
 
       var httpResponse = await request.send();
       var response = await http.Response.fromStream(httpResponse).timeout(timeOutDuration2, onTimeout: () => http.Response('Request time out', 408));
-      ;
       return processResponse(response);
     } catch (e, t) {
       dnd('$e Trace: $t');
@@ -144,6 +142,7 @@ class Provider extends GetConnect {
               Preloader.hide();
               // for (var causes in apiResponse.causes.entries) {
               MSG.errorSnackBar(apiResponse.message.toString());
+              print('1');
               // }
             } else {
               Preloader.hide();
@@ -153,6 +152,7 @@ class Provider extends GetConnect {
             dnd('$e Trace: $t');
             Preloader.hide();
             MSG.errorSnackBar(apiResponse.message.toString());
+            print('2');
             dnd(e);
           }
         } else {

@@ -6,6 +6,7 @@ import '../../config/theme/color.dart';
 import '../../controllers/instance.dart';
 import '../../core/app.dart';
 import '../../res/strings.dart';
+import '../screens/mobile/profiling_page.dart';
 import 'current_location.dart';
 import 'custom_text.dart';
 
@@ -48,7 +49,7 @@ profileImgAndRefId() {
   );
 }
 
-profileImgAndBasicInfo() {
+profileImgAndBasicInfo(int num) {
   reInitInstance();
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -61,7 +62,13 @@ profileImgAndBasicInfo() {
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             GestureDetector(
               onTap: (){
-                Get.toNamed(RouteStr.mobileProfileHome);
+                if(num==1){
+                  Navigator.push(context!, MaterialPageRoute(builder:(context)=> ProfilingPage()));
+
+                } else{
+                  return;
+                }
+                //Get.toNamed(RouteStr.mobileProfileHome);
               },
               child:circleProfileImage(),
             ),

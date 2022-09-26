@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/edit_controller.dart';
+import 'package:brixmarket/core/dialogs.dart';
 import 'package:brixmarket/utils/utils.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +12,18 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../controllers/instance.dart';
 import '../../../res/strings.dart';
 
-class VerifyOtpPage extends StatelessWidget {
+class VerifyOtpPage extends StatefulWidget {
+  VerifyOtpPage({Key? key}) : super(key: key);
+
+  @override
+  State<VerifyOtpPage> createState() => _VerifyOtpPageState();
+}
+
+class _VerifyOtpPageState extends State<VerifyOtpPage> {
   final formKey = GlobalKey<FormState>();
   String smsOTP = '';
 
-  VerifyOtpPage({Key? key}) : super(key: key);
+  bool isTimerEnded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +56,8 @@ class VerifyOtpPage extends StatelessWidget {
                   const SizedBox(height: 90),
                   Container(
                       width: double.infinity,
-                      margin: EdgeInsets.symmetric(horizontal: (constraints.maxWidth <= 471 ? 24 : 0)),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: (constraints.maxWidth <= 471 ? 24 : 0)),
                       child: Align(
                         alignment: Alignment.center,
                         child: TextStyles.richTexts(
@@ -83,7 +94,8 @@ class VerifyOtpPage extends StatelessWidget {
                   SizedBox(
                     height: vh * 0.030,
                   ),
-                  otpTextField(context: context, screenWidth: constraints.maxWidth),
+                  otpTextField(
+                      context: context, screenWidth: constraints.maxWidth),
                   SizedBox(
                     height: vh * 0.060,
                   ),
@@ -92,7 +104,13 @@ class VerifyOtpPage extends StatelessWidget {
                     children: [
                       Flexible(
                         child: TextStyles.richTexts(
-                            onPress1: homeCtrl.resendOTP,
+                            onPress1: () {
+                              if (isTimerEnded) {
+                                homeCtrl.resendOTP;
+                              } else {
+                                MSG.snackBar('Resend Code after 2 minutes');
+                              }
+                            },
                             onPress2: () {},
                             size: 14,
                             weight: FontWeight.w600,
@@ -104,14 +122,31 @@ class VerifyOtpPage extends StatelessWidget {
                             text4: ''),
                       ),
                       const SizedBox(width: 55),
-                      const Flexible(
-                        child: CustomText(
-                          maxLines: 1,
-                          text: 'Resend in 2:00',
-                          size: 14,
-                          color: Color.fromARGB(255, 19, 48, 63),
-                          weight: FontWeight.w600,
-                        ),
+                      Flexible(
+                        child: TweenAnimationBuilder<Duration>(
+                            duration: Duration(minutes: 2),
+                            tween: Tween(
+                                begin: Duration(minutes: 2),
+                                end: Duration.zero),
+                            onEnd: () {
+                              isTimerEnded = true;
+                              print('Timer ended');
+                            },
+                            builder: (BuildContext context, Duration value,
+                                Widget? child) {
+                              final minutes = value.inMinutes;
+                              final seconds = value.inSeconds % 60;
+                              return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: CustomText(
+                                    maxLines: 1,
+                                    text: '$minutes:$seconds',
+                                    size: 18,
+                                    color: Color.fromARGB(255, 19, 48, 63),
+                                    weight: FontWeight.w600,
+                                  ));
+                            }),
                       )
                     ],
                   ),
@@ -128,7 +163,8 @@ class VerifyOtpPage extends StatelessWidget {
     return Form(
       key: formKey,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: (screenWidth! <= 357 ? 24 : 0)),
+        margin:
+            EdgeInsets.symmetric(horizontal: (screenWidth! <= 357 ? 24 : 0)),
         width: 300,
         child: PinCodeTextField(
           appContext: context!,
@@ -165,7 +201,8 @@ class VerifyOtpPage extends StatelessWidget {
           ),
           cursorColor: Pallet.secondaryColor,
           animationDuration: const Duration(milliseconds: 0),
-          textStyle: const TextStyle(fontSize: 16, height: 1.3, color: Pallet.secondaryColor),
+          textStyle: const TextStyle(
+              fontSize: 16, height: 1.3, color: Pallet.secondaryColor),
           backgroundColor: Colors.white,
           enableActiveFill: true,
           controller: EditCtrl.otp,

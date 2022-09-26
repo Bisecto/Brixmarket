@@ -35,7 +35,7 @@ class PrivacySecurityPage extends StatelessWidget {
           horizontal: 12,
         ),
         children: [
-          profileImgAndBasicInfo(),
+          profileImgAndBasicInfo(0),
           const CustomText(
             color: Colors.black,
             size: 16,

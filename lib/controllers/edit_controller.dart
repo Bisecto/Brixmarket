@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../utils/utils.dart';
+import '../view/screens/create_property/create_property_widges.dart';
 
 class EditCtrl extends GetxController {
   static var selectedIndex = 0.obs;

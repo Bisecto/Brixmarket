@@ -66,6 +66,8 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 30),
                                 FormInput(
+                                  isobscure: true,
+                                  inputType: TextInputType.visiblePassword,
                                   controller: EditCtrl.password,
                                   label: Str.password,
                                   hint: Str.password,

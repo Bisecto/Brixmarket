@@ -3,6 +3,7 @@ import 'package:brixmarket/core/preloader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
 import '../../../models/media_model.dart';
@@ -236,6 +237,7 @@ class _MyAdsPageState extends State<MyAdsPage> with SingleTickerProviderStateMix
                                 onTap: () {
                                   cPropCtrl.showMyPropertyMenu.value = true;
                                   cPropCtrl.showMyPropertyMenuIndex.value = index;
+
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
@@ -260,7 +262,10 @@ class _MyAdsPageState extends State<MyAdsPage> with SingleTickerProviderStateMix
                                         ? propertyAction(
                                             text: 'Edit Property',
                                             icon: Icons.mode_edit_outline_outlined,
-                                            onTap: () => cPropCtrl.completeDraftProperty(property),
+                                            onTap: () {
+                                              cPropCtrl.completeDraftProperty(property);
+                                              //EditCtrl.image8Lists.value.clear();
+                                              },
                                           )
                                         : const SizedBox.shrink(),
                                     property.publishState == PublishedState.publish
@@ -281,7 +286,11 @@ class _MyAdsPageState extends State<MyAdsPage> with SingleTickerProviderStateMix
                                         ? propertyAction(
                                             text: 'Edit Property',
                                             icon: Icons.mode_edit_outline_outlined,
-                                            onTap: () => cPropCtrl.completeDraftProperty(property),
+                                            onTap: (){
+                                              //EditCtrl.image8Lists.value.clear();
+                                              cPropCtrl.completeDraftProperty(property);
+
+                                            },
                                           )
                                         : const SizedBox.shrink(),
                                     property.publishState == PublishedState.draft

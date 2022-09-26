@@ -61,7 +61,7 @@ class CreateNewPassword extends StatelessWidget {
                                   validate: Val.password,
                                   error: EditCtrl.passwordErr,
                                   hint: Str.password,
-                                  width: 430,
+                                  width: 430, isobscure: true,
                                 ),
                                 const SizedBox(height: 30),
                                 FormInput(
@@ -70,7 +70,7 @@ class CreateNewPassword extends StatelessWidget {
                                   validate: Val.password,
                                   error: EditCtrl.password2Err,
                                   hint: Str.confirmNewPassword,
-                                  width: 430,
+                                  width: 430, isobscure: true,
                                 ),
                                 const SizedBox(height: 15),
                                 FormButton(

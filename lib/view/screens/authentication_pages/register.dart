@@ -72,7 +72,7 @@ class RegisterPage extends StatelessWidget {
                                   validate: Val.password,
                                   label: 'Password',
                                   hint: 'Password',
-                                  width: 430,
+                                  width: 430, isobscure: true,
                                 ),
                                 const SizedBox(height: 28),
                                 SizedBox(

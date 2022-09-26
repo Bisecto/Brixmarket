@@ -48,7 +48,9 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     map['nav_item'] = (navItem ?? navbarIndex.value).toString();
     var response = await Provider().postData("property/filter-properties", map);
     if (response != null && response.isNotEmpty) {
-      globalProperties = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+      globalProperties = (response['properties'] as List)
+          .map((e) => Property.fromJson(e))
+          .toList();
     }
 
     exploreFilterProperties.value = globalProperties;
@@ -63,33 +65,38 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var searchLoading = false.obs;
   var searchProperties = [].obs;
+
   homeSearchProperties({init}) async {
     List<Property> result = [];
     searchLoading.value = true;
-    String val='';
+    String val = '';
     if (searchProperties.isEmpty) {
-      switch(EditCtrl.homeSearch.text.toLowerCase()){
+      switch (EditCtrl.homeSearch.text.toLowerCase()) {
         case "abuja":
-          val='Municipal';
+          val = 'Municipal';
 
           break;
         case "fct":
-          val='Municipal';          //propCtrl.homeSearchProperties();
+          val = 'Municipal'; //propCtrl.homeSearchProperties();
           break;
         case "federal capital territory":
-          val='Municipal';          //propCtrl.homeSearchProperties();
+          val = 'Municipal'; //propCtrl.homeSearchProperties();
           break;
         case "federal":
-          val='Municipal';          //propCtrl.homeSearchProperties();
+          val = 'Municipal'; //propCtrl.homeSearchProperties();
           break;
-        default:val= EditCtrl.homeSearch.text;
-        //propCtrl.homeSearchProperties();
-        break;
+        default:
+          val = EditCtrl.homeSearch.text;
+          //propCtrl.homeSearchProperties();
+          break;
       }
 
-      var response = await Provider().getData("property/search-properties/$val");
+      var response =
+          await Provider().getData("property/search-properties/$val");
       if (response != null) {
-        result = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+        result = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
       }
     }
     searchLoading.value = false;
@@ -108,15 +115,19 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   var mySavedProperties = <Property>[].obs;
+
   saveProperty(Property property) async {
     homeCtrl.savingProperty.add(property.id);
     if (HomeController.userId == '') {
       Get.toNamed(RouteStr.login);
     } else {
-      var response = await Provider().postData("user/save-property", Property.map(id: property.id));
+      var response = await Provider()
+          .postData("user/save-property", Property.map(id: property.id));
       if (response != null && response.isNotEmpty) {
         mySavedProperties.value = [];
-        mySavedProperties.value = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+        mySavedProperties.value = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
       }
       if (propCtrl.user.value.savedProperties != null) {
         if (propCtrl.user.value.savedProperties!.contains(property.id)) {
@@ -140,13 +151,15 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var allP = <Property>[];
   List<Property> featuredProperties = <Property>[];
+
   Future<List<Property>> fetchFeaturedProperties() async {
     if (featuredProperties.isEmpty) {
       // var response = await Provider().getData("property/featured-properties");
       var response = await Provider().getData("property/get-all");
       if (response != null) {
         for (var e in (response['properties'] as List)) {
-          featuredProperties.addIf(featuredProperties.length < 20, Property.fromJson(e));
+          featuredProperties.addIf(
+              featuredProperties.length < 20, Property.fromJson(e));
           globalProperties.add(Property.fromJson(e));
         }
         isFeaturedProperties.value = true;
@@ -205,6 +218,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var showFeatureLoading = true.obs;
   var userFilterData = false.obs;
   var map = <String, String>{};
+
   void applyFilterParameters() async {
     userFilterData.value = true;
     showFeatureLoading.value = true;
@@ -239,9 +253,12 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       Get.back();
 
       exploreFilterProperties.value = [];
-      var response = await Provider().postData("property/filter-properties", map);
+      var response =
+          await Provider().postData("property/filter-properties", map);
       if (response != null && response.isNotEmpty) {
-        exploreFilterProperties.value = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+        exploreFilterProperties.value = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
       }
 
       showFeatureLoading.value = false;
@@ -278,7 +295,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         rating: EditCtrl.rating.text,
         message: EditCtrl.messageReview.text,
       );
-      var response = await Provider().postData("user/review-property/$propertyId", data);
+      var response =
+          await Provider().postData("user/review-property/$propertyId", data);
       if (response != null) {
         Preloader.hide();
         EditCtrl.messageReview.text = '';
@@ -293,7 +311,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.phoneErr.value = Val.phone(EditCtrl.phone.text);
     EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
     EditCtrl.messageErr.value = Val.name(EditCtrl.message.text);
-    print("Hello "+EditCtrl.nameErr.value);
+    print("Hello " + EditCtrl.nameErr.value);
 
     if (EditCtrl.nameErr.value.isNotEmpty) {
       MSG.errorSnackBar(
@@ -321,7 +339,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         email: EditCtrl.email.text,
         name: EditCtrl.name.text,
       );
-      var response = await Provider().postData("user/flag-inappropriate-property/$propertyId", data);
+      var response = await Provider()
+          .postData("user/flag-inappropriate-property/$propertyId", data);
       if (response != null) {
         EditCtrl.message.text = '';
         EditCtrl.phone.text = '';
@@ -335,12 +354,11 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   Future submitRequestATour(propertyId) async {
-
     EditCtrl.nameErr.value = Val.name(EditCtrl.name.text);
     EditCtrl.phoneErr.value = Val.phone(EditCtrl.phone.text);
-    print("Hello "+EditCtrl.nameErr.value);
+    print("Hello " + EditCtrl.nameErr.value);
     EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
-    EditCtrl.messageErr.value = Val.name(EditCtrl.message.text);
+    EditCtrl.messageErr.value = Val.name(EditCtrl.messageTour.text);
 
     if (EditCtrl.nameErr.value.isNotEmpty) {
       MSG.errorSnackBar(
@@ -363,12 +381,13 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
       var data = Property.map(
         id: propertyId,
-        message: EditCtrl.message.text,
+        message: EditCtrl.messageTour.text,
         phone: EditCtrl.phone.text,
         email: EditCtrl.email.text,
         name: EditCtrl.name.text,
       );
-      var response = await Provider().postData("user/request-a-tour/$propertyId", data);
+      var response =
+          await Provider().postData("user/request-a-tour/$propertyId", data);
       if (response != null) {
         EditCtrl.messageTour.text = '';
         EditCtrl.phone.text = '';
@@ -386,6 +405,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   late Timer messageTimer;
 
   int iM = 0;
+
   animateHomeHeroImage({bool stopTimer = false}) {
     if (!Utils.isMobileApp && false) {
       if (stopTimer) {
@@ -398,7 +418,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           'assets/images/room4.jpg',
           'assets/images/hero1.jpg',
         ];
-        messageTimer = Timer.periodic(const Duration(seconds: 6), (Timer timer) {
+        messageTimer =
+            Timer.periodic(const Duration(seconds: 6), (Timer timer) {
           homeCtrl.heroImage.value = images[iM % 5];
           iM++;
           dnd(iM % 4);
@@ -408,7 +429,13 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   deleteAccount() async {
-    errorDialog('Are you sure you want to DELETE your account?', title: 'DELETE ACCOUNT', onTapContinue: deleteUserAccount, btnContinue: 'Delete Account', showButtons: true,);
+    errorDialog(
+      'Are you sure you want to DELETE your account?',
+      title: 'DELETE ACCOUNT',
+      onTapContinue: deleteUserAccount,
+      btnContinue: 'Delete Account',
+      showButtons: true,
+    );
   }
 
   deleteUserAccount() async {

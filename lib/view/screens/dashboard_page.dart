@@ -115,7 +115,7 @@ class DashBoardSideBar extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink(),
-              profileImgAndBasicInfo(),
+              profileImgAndBasicInfo(0),
             ],
           ),
           const Padding(

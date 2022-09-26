@@ -93,11 +93,12 @@ class AgencySignUpPage extends StatelessWidget {
                           height: 15,
                         ),
                         FormInput(
+
                           height: 45,
                           controller: TextEditingController(text: ''),
                           label: 'Password ',
                           hint: 'Password',
-                          width: double.infinity,
+                          width: double.infinity, isobscure: true,
                         ),
                         const SizedBox(
                           height: 15,
@@ -107,7 +108,7 @@ class AgencySignUpPage extends StatelessWidget {
                           controller: TextEditingController(text: ''),
                           label: 'Confirm Password',
                           hint: 'Confirm Password',
-                          width: double.infinity,
+                          width: double.infinity, isobscure: true,
                         ),
                         const SizedBox(
                           height: 15,
@@ -437,7 +438,7 @@ class AgencySignUpPage extends StatelessWidget {
                                 width: double.infinity,
                                 controller: TextEditingController(text: ''),
                                 label: 'Password ',
-                                hint: 'Password',
+                                hint: 'Password', isobscure: true,
                               ),
                             ),
                             const SizedBox(
@@ -448,7 +449,7 @@ class AgencySignUpPage extends StatelessWidget {
                                 width: double.infinity,
                                 controller: TextEditingController(text: ''),
                                 label: 'Confirm Password',
-                                hint: 'Confirm Password',
+                                hint: 'Confirm Password', isobscure: true,
                               ),
                             ),
                           ],

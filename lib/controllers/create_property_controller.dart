@@ -125,7 +125,7 @@ class CreatePropertyCtrl extends GetxController {
         title: EditCtrl.title.text,
         reference: EditCtrl.reference.text,
         description: EditCtrl.description.text,
-        price: oCcy.format(EditCtrl.price.text),
+        price: EditCtrl.price.text,
         priceDuration: EditCtrl.priceDuration.value.text,
         category: EditCtrl.category.value.text,
         type: EditCtrl.type.value.text,
@@ -138,6 +138,9 @@ class CreatePropertyCtrl extends GetxController {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         gotoNext(pageIndex: 1);
+      } else{
+        Preloader.hide();
+        MSG.errorSnackBar('There was a problem uploading product details',title: 'Message');
       }
     }
   }
@@ -169,6 +172,11 @@ class CreatePropertyCtrl extends GetxController {
         Preloader.hide();
         gotoNext(pageIndex: 2);
       }
+      // else{
+      //   Preloader.hide();
+      //   MSG.errorSnackBar('Something is wrong with the image',title: 'Message');
+      //   Preloader.hide();
+      // }
     }
   }
 
@@ -221,6 +229,10 @@ class CreatePropertyCtrl extends GetxController {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         gotoNext(pageIndex: 3);
+      }else{
+        Preloader.hide();
+        MSG.errorSnackBar('Problem Occurred while Uploading product location',title: 'Message');
+        Preloader.hide();
       }
     }
   }
@@ -396,7 +408,7 @@ class CreatePropertyCtrl extends GetxController {
     EditCtrl.reference.text = property.reference ?? '';
     EditCtrl.description.text = property.description ?? '';
 
-    EditCtrl.price.text = oCcy.format(property.price.toString());
+    EditCtrl.price.text = property.price.toString();
     EditCtrl.priceDuration.value.text = property.priceDuration ?? '';
     EditCtrl.category.value.text = property.category ?? '';
     EditCtrl.type.value.text = property.type ?? '';

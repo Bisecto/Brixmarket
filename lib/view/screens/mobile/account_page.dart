@@ -1,4 +1,5 @@
 import 'package:brixmarket/res/strings.dart';
+import 'package:brixmarket/view/screens/mobile/profiling_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -14,6 +15,8 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/form_button.dart';
 import '../../widgets/form_inputs.dart';
 import '../../widgets/image_widgets.dart';
+import 'add_property_page.dart';
+import 'my_ads_page.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -51,7 +54,7 @@ class AccountPage extends StatelessWidget {
             horizontal: 8,
           ),
           children: [
-            profileImgAndBasicInfo(),
+            profileImgAndBasicInfo(1),
             Container(
               color: Pallet.secondaryColor,
               padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
@@ -63,14 +66,18 @@ class AccountPage extends StatelessWidget {
               ),
             ),
             buildListTile(
-                onTap: () {
-                  Get.toNamed(RouteStr.mobileCreateProperty);
+                onTap: ()  {
+                   EditCtrl.disposeControllers();
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const AddPropertyPage()));
+                  //Get.toNamed(RouteStr.mobileCreateProperty);
                 },
                 title: 'Place Ad',
                 icon: Icons.post_add),
             buildListTile(
                 onTap: () {
-                  Get.toNamed(RouteStr.mobileMyProperties);
+                  EditCtrl.disposeControllers();
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyAdsPage()));
+                  //Get.toNamed(RouteStr.mobileMyProperties);
                 },
                 title: 'My Ads',
                 icon: Icons.ads_click_outlined),

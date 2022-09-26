@@ -34,7 +34,7 @@ class Notifications extends StatelessWidget {
           horizontal: 12,
         ),
         children: [
-          profileImgAndBasicInfo(),
+          profileImgAndBasicInfo(0),
           Container(
             color: Pallet.secondaryColor,
             padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../utils/utils.dart';
 
 class FormInput extends StatelessWidget {
+  final bool isobscure;
   final TextEditingController controller;
   final String label;
   final String hint;
@@ -30,6 +31,7 @@ class FormInput extends StatelessWidget {
     required this.controller,
     this.label = '',
     this.topSpace = true,
+    this.isobscure=false,
     this.hint = '',
     this.value,
     this.width = 200,
@@ -79,6 +81,7 @@ class FormInput extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: TextField(
+                    obscureText: isobscure,
                       controller: controller,
                       keyboardType: inputType,
                       maxLines: maxLines,

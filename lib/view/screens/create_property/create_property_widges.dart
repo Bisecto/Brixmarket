@@ -1,3 +1,4 @@
+import 'package:brixmarket/core/dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,35 +89,56 @@ Widget stepWidget(int i) {
           Container(
             height: 30,
             width: 30,
-            decoration: BoxDecoration(color: (cPropCtrl.createPropPageIndex.value >= i) ? Pallet.secondaryColor : Colors.grey, borderRadius: BorderRadius.circular(50)),
+            decoration: BoxDecoration(
+                color: (cPropCtrl.createPropPageIndex.value >= i)
+                    ? Pallet.secondaryColor
+                    : Colors.grey,
+                borderRadius: BorderRadius.circular(50)),
             child: Center(
-              child: CustomText(color: Colors.white, size: 14, textAlign: TextAlign.center, weight: FontWeight.w500, text: '${i + 1}'),
+              child: CustomText(
+                  color: Colors.white,
+                  size: 14,
+                  textAlign: TextAlign.center,
+                  weight: FontWeight.w500,
+                  text: '${i + 1}'),
             ), //Icon(stepItems[i]['icon'], color: Colors.white, size: 16),
           ),
           // ),
-          (screenWidth <= 430 || cPropCtrl.createPropPageIndex.value != i && screenWidth < 1260)
+          (screenWidth <= 430 ||
+                  cPropCtrl.createPropPageIndex.value != i &&
+                      screenWidth < 1260)
               ? Container()
               : Padding(
                   padding: const EdgeInsets.only(left: 4),
                   child: CustomText(
-                      color: (cPropCtrl.createPropPageIndex.value >= i) ? Pallet.secondaryColor : Colors.grey.shade500,
+                      color: (cPropCtrl.createPropPageIndex.value >= i)
+                          ? Pallet.secondaryColor
+                          : Colors.grey.shade500,
                       size: 14,
                       textAlign: TextAlign.center,
                       weight: FontWeight.w100,
                       text: Lst.stepItems[i].label),
                 ),
-          (screenWidth > 430 && cPropCtrl.createPropPageIndex.value == i || screenWidth > 780) ? const SizedBox(width: 4) : const SizedBox.shrink(),
-          (screenWidth > 430 && cPropCtrl.createPropPageIndex.value == i || screenWidth > 780)
+          (screenWidth > 430 && cPropCtrl.createPropPageIndex.value == i ||
+                  screenWidth > 780)
+              ? const SizedBox(width: 4)
+              : const SizedBox.shrink(),
+          (screenWidth > 430 && cPropCtrl.createPropPageIndex.value == i ||
+                  screenWidth > 780)
               ? Expanded(
                   flex: 4,
                   child: Container(
                     margin: const EdgeInsets.only(top: 6),
-                    color: (cPropCtrl.createPropPageIndex.value >= i) ? Pallet.secondaryColor : Colors.grey,
+                    color: (cPropCtrl.createPropPageIndex.value >= i)
+                        ? Pallet.secondaryColor
+                        : Colors.grey,
                     height: 3,
                   ),
                 )
               : const SizedBox.shrink(),
-          i == 5 && screenWidth < 780 ? const SizedBox.shrink() : const SizedBox(width: 12),
+          i == 5 && screenWidth < 780
+              ? const SizedBox.shrink()
+              : const SizedBox(width: 12),
         ],
       ),
     ),
@@ -125,16 +147,25 @@ Widget stepWidget(int i) {
 
 Widget buildStepNumber() {
   return SizedBox(
+
     width: double.infinity,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
-      children: [stepWidget(0), stepWidget(1), stepWidget(2), stepWidget(3), stepWidget(4), stepWidget(5)],
+      children: [
+        stepWidget(0),
+        stepWidget(1),
+        stepWidget(2),
+        stepWidget(3),
+        stepWidget(4),
+        stepWidget(5)
+      ],
     ),
   );
 }
 
 Widget buttonRow(Function() nextFunction) {
+
   return Padding(
     padding: const EdgeInsets.only(
       top: 8.0,
@@ -173,7 +204,9 @@ Widget buttonRow(Function() nextFunction) {
         Obx(() => Flexible(
               child: FormButton(
                 width: 100,
-                text: (cPropCtrl.createPropPageIndex.value == 6) ? 'Finish' : 'Next',
+                text: (cPropCtrl.createPropPageIndex.value == 6)
+                    ? 'Finish'
+                    : 'Next',
                 onPressed: nextFunction,
               ),
             )),
@@ -183,7 +216,9 @@ Widget buttonRow(Function() nextFunction) {
 }
 
 Widget createPropertyDetails() {
-  EditCtrl.reference.text = EditCtrl.reference.text == '' ? Utils.generateId() : EditCtrl.reference.text;
+  EditCtrl.reference.text = EditCtrl.reference.text == ''
+      ? Utils.generateId()
+      : EditCtrl.reference.text;
   return Container(
     color: Colors.white,
     child: Column(
@@ -412,7 +447,8 @@ Widget createPropertyMedia() {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.black12,
-                              image: DecorationImage(image: MemoryImage(file), fit: BoxFit.cover),
+                              image: DecorationImage(
+                                  image: MemoryImage(file), fit: BoxFit.cover),
                             ),
                           ),
                           Positioned(
@@ -423,8 +459,11 @@ Widget createPropertyMedia() {
                               child: Container(
                                 width: 16,
                                 height: 16,
-                                decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(12)),
-                                child: const Icon(Icons.close, color: Colors.white, size: 10),
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: const Icon(Icons.close,
+                                    color: Colors.white, size: 10),
                               ),
                             ),
                           ),
@@ -441,23 +480,35 @@ Widget createPropertyMedia() {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: const Color(0xFFDDDDDD),
-                      boxShadow: const [BoxShadow(color: Colors.black38, spreadRadius: 1, blurRadius: 5, offset: Offset(0, 3))],
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black38,
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 3))
+                      ],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(Icons.add_a_photo, size: 24, color: Pallet.secondaryColor),
+                        const Icon(Icons.add_a_photo,
+                            size: 24, color: Pallet.secondaryColor),
                         const SizedBox(height: 4),
                         Obx(() => Text(
-                              EditCtrl.image8Lists.isEmpty ? 'Upload your mages' : 'Upload MORE images',
+                              EditCtrl.image8Lists.isEmpty
+                                  ? 'Upload your mages'
+                                  : 'Upload MORE images',
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontWeight: FontWeight.w600),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w600),
                             )),
                         const SizedBox(height: 4),
                         const Text(
                           'Browse images',
-                          style: TextStyle(color: Pallet.secondaryColor, decoration: TextDecoration.underline),
+                          style: TextStyle(
+                              color: Pallet.secondaryColor,
+                              decoration: TextDecoration.underline),
                         ),
                       ],
                     ),
@@ -481,7 +532,8 @@ Widget createPropertyMedia() {
         ),
         const SizedBox(height: 5),
         const CustomText(
-          text: '      • First picture is the Title picture. Grab and Drag to chage the order of photos',
+          text:
+              '      • First picture is the Title picture. Grab and Drag to chage the order of photos',
           color: Colors.black,
           size: 14,
           weight: FontWeight.w300,
@@ -609,10 +661,14 @@ Widget createPropertyLocation() {
 }
 
 List? features;
+
 Future getFeatures() async {
   features ??= [];
   if (features!.isEmpty && EditCtrl.category.value.text.isNotEmpty) {
-    await Provider().postData("property/get-features/${EditCtrl.category.value.text}", Property.map()).then((value) => features = value);
+    await Provider()
+        .postData("property/get-features/${EditCtrl.category.value.text}",
+            Property.map())
+        .then((value) => features = value);
   }
   return features;
 }
@@ -620,73 +676,91 @@ Future getFeatures() async {
 Widget createPropertyMorDetails() {
   return Container(
     color: Colors.white,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText(text: 'More Details', color: Colors.black, size: 16, weight: FontWeight.bold),
-        const SizedBox(height: 40),
-        SizedBox(
-          width: double.infinity,
-          child: FutureBuilder(
-              future: getFeatures(),
-              builder: (context, AsyncSnapshot snap) {
-                var featuresData = snap.data ?? [];
-                var features = {};
-                featuresData.forEach((e) {
-                  if (features[e['feature']] == null) {
-                    features[e['feature']] = [e['feature_value'].toString()];
-                  } else {
-                    features[e['feature']].add(e['feature_value'].toString());
+    child: SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomText(
+              text: 'More Details',
+              color: Colors.black,
+              size: 16,
+              weight: FontWeight.bold),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: FutureBuilder(
+                future: getFeatures(),
+                builder: (context, AsyncSnapshot snap) {
+                  var featuresData = snap.data ?? [];
+                  var features = {};
+                  featuresData.forEach((e) {
+                    if (features[e['feature']] == null) {
+                      features[e['feature']] = [e['feature_value'].toString()];
+                    } else {
+                      features[e['feature']].add(e['feature_value'].toString());
+                    }
+                  });
+                  var initialList = [];
+                  if (featuresData.isNotEmpty) {
+                    initialList = EditCtrl.ctrlList;
+                    EditCtrl.ctrlList = [];
                   }
-                });
-                var initialList = [];
-                if (featuresData.isNotEmpty) {
-                  initialList = EditCtrl.ctrlList;
-                  EditCtrl.ctrlList = [];
-                }
-                int i = -1;
-                return Wrap(
-                  children: [
-                    ...features.entries.map((feature) {
-                      EditCtrl.ctrlList.add(TextEditingController().obs);
-                      EditCtrl.ctrlListKeys.add(TextEditingController(text: feature.key));
-                      i++;
-                      if ((feature.value[0] ?? '').isEmpty) {
-                        return Container(
-                          padding: EdgeInsets.only(right: Get.width * 0.01, bottom: 24),
-                          width: Get.width < 480 ? double.infinity : Get.width * 0.31,
-                          child: FormInput(
-                            width: double.infinity,
-                            controller: EditCtrl.ctrlList[i].value,
-                            label: feature.key,
-                            hint: 'Enter ${feature.key}',
-                            value: initialList.isEmpty ? '' : initialList[i].value.text,
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          padding: EdgeInsets.only(right: Get.width * 0.01, bottom: 24),
-                          width: Get.width < 480 ? double.infinity : Get.width * 0.31,
-                          child: SizedBox(
-                            child: DropDown(
-                              initialValue: initialList.isEmpty ? '' : initialList[i].value.text,
-                              controller: EditCtrl.ctrlList[i],
+                  int i = -1;
+                  return Wrap(
+                    children: [
+                      ...features.entries.map((feature) {
+                        EditCtrl.ctrlList.add(TextEditingController().obs);
+                        EditCtrl.ctrlListKeys
+                            .add(TextEditingController(text: feature.key));
+                        i++;
+                        if ((feature.value[0] ?? '').isEmpty) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                                right: Get.width * 0.01, bottom: 24),
+                            width: Get.width < 480
+                                ? double.infinity
+                                : Get.width * 0.31,
+                            child: FormInput(
+                              width: double.infinity,
+                              controller: EditCtrl.ctrlList[i].value,
                               label: feature.key,
-                              items: feature.value as List<String>,
+                              hint: 'Enter ${feature.key}',
+                              value: initialList.isEmpty
+                                  ? ''
+                                  : initialList[i].value.text,
                             ),
-                          ),
-                        );
-                      }
-                    }).toList(),
-                  ],
-                );
-              }),
-        ),
-        buttonRow(cPropCtrl.submitPropertyMoreDetails),
-        const SizedBox(
-          height: 40,
-        ),
-      ],
+                          );
+                        } else {
+                          return Container(
+                            padding: EdgeInsets.only(
+                                right: Get.width * 0.01, bottom: 24),
+                            width: Get.width < 480
+                                ? double.infinity
+                                : Get.width * 0.31,
+                            child: SizedBox(
+                              child: DropDown(
+                                initialValue: initialList.isEmpty
+                                    ? ''
+                                    : initialList[i].value.text,
+                                controller: EditCtrl.ctrlList[i],
+                                label: feature.key,
+                                items: feature.value as List<String>,
+                              ),
+                            ),
+                          );
+                        }
+                      }).toList(),
+                    ],
+                  );
+                }),
+          ),
+          buttonRow(cPropCtrl.submitPropertyMoreDetails),
+          const SizedBox(
+            height: 40,
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -699,7 +773,11 @@ Widget createPropertyAmenities() {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomText(text: 'Basic Amenities', color: Colors.black, size: 16, weight: FontWeight.bold),
+            const CustomText(
+                text: 'Basic Amenities',
+                color: Colors.black,
+                size: 16,
+                weight: FontWeight.bold),
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
@@ -713,36 +791,44 @@ Widget createPropertyAmenities() {
                         padding: const EdgeInsets.only(right: 24),
                         physics: const BouncingScrollPhysics(),
                         itemCount: amenities.length,
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
                           mainAxisExtent: 54,
                           maxCrossAxisExtent: 260,
                         ),
                         itemBuilder: (_, i) {
                           var amenity = amenities[i]['amenity'];
 
-                          return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                            Transform.scale(
-                              scale: 0.7,
-                              child: Obx(
-                                () => Checkbox(
-                                  activeColor: Pallet.secondaryColor,
-                                  checkColor: Colors.white,
-                                  side: const BorderSide(color: Colors.black54),
-                                  value: EditCtrl.amenities.contains(amenity),
-                                  onChanged: (state) {
-                                    if (EditCtrl.amenities.contains(amenity)) {
-                                      EditCtrl.amenities.remove(amenity);
-                                    } else {
-                                      EditCtrl.amenities.add(amenity);
-                                      EditCtrl.amenities.refresh();
-                                    }
-                                  },
+                          return Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Transform.scale(
+                                  scale: 0.7,
+                                  child: Obx(
+                                    () => Checkbox(
+                                      activeColor: Pallet.secondaryColor,
+                                      checkColor: Colors.white,
+                                      side: const BorderSide(
+                                          color: Colors.black54),
+                                      value:
+                                          EditCtrl.amenities.contains(amenity),
+                                      onChanged: (state) {
+                                        if (EditCtrl.amenities
+                                            .contains(amenity)) {
+                                          EditCtrl.amenities.remove(amenity);
+                                        } else {
+                                          EditCtrl.amenities.add(amenity);
+                                          EditCtrl.amenities.refresh();
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(child: Text(amenity, style: const TextStyle(fontSize: 16))),
-                          ]);
+                                const SizedBox(width: 10),
+                                Expanded(
+                                    child: Text(amenity,
+                                        style: const TextStyle(fontSize: 16))),
+                              ]);
                         });
                   }),
             ),
@@ -823,7 +909,11 @@ Widget createPropertyContact() {
             controller: EditCtrl.userAddress,
             label: 'Contact Address',
             hint: 'Enter contact address ',
-            value: user.isAgent ?? false ? (user.agency!.address ?? '') : (user.premiumDetails != null ? user.premiumDetails!.address ?? '' : ''),
+            value: user.isAgent ?? false
+                ? (user.agency!.address ?? '')
+                : (user.premiumDetails != null
+                    ? user.premiumDetails!.address ?? ''
+                    : ''),
           ),
         ),
         buttonRow(cPropCtrl.submitPropertyContact),
