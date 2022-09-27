@@ -21,7 +21,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   readmore: ^2.1.0
   material_floating_search_bar: ^0.3.7
-  flutter_paystack_client: ^0.1.1
+  #flutter_paystack_client: ^0.1.0
   extended_image: ^6.0.2+1
   shared_preferences: ^2.0.6
   device_info_plus: ^3.2.3

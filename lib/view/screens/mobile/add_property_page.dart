@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/theme/color.dart';
+import '../../../controllers/edit_controller.dart';
 import '../../widgets/appbar_menus.dart';
 import '../../widgets/custom_text.dart';
 import '../create_property/create_property_widges.dart';
@@ -10,19 +11,45 @@ class AddPropertyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Pallet.homeBackground,
-        appBar: AppBar(
-          backgroundColor: Pallet.secondaryColor,
-          automaticallyImplyLeading: true,
-          title: const CustomText(
-            color: Colors.white,
-            size: 18,
-            text: 'Add Property',
-          ),
-          actions: const [AppBarMenu(logout: true, saveDraft: true)],
+    return WillPopScope(
+      onWillPop: ()async{
+        return (await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+          title: const Text('Do you want to Leave this page?'),
+          content: const Text('You will leave this page with some data not saved'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                EditCtrl.disposeControllers();
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
         ),
-        body: const CreatePropertyWidget());
+        )) ??
+        false;
+
+      },
+      child: Scaffold(
+          backgroundColor: Pallet.homeBackground,
+          appBar: AppBar(
+            backgroundColor: Pallet.secondaryColor,
+            automaticallyImplyLeading: true,
+            title: const CustomText(
+              color: Colors.white,
+              size: 18,
+              text: 'Add Property',
+            ),
+            actions: const [AppBarMenu(logout: true, saveDraft: true)],
+          ),
+          body: const CreatePropertyWidget()),
+    );
   }
   //
   // propertyTypeContainers({required String title, Function? onTap}) {

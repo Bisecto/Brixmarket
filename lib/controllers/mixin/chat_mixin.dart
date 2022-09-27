@@ -27,7 +27,11 @@ mixin Chat {
   var thisUserImage = '';
 
   generateChatKey(String s1, String s2) {
-    return s1.compareTo(s2) < 0 ? '${s1}_$s2' : '${s2}_$s1';
+    if (s1.compareTo(s2) < 0) {
+      return '${s1}_$s2';
+    } else {
+      return '${s2}_$s1';
+    }
   }
 
   chatWithSeller(Property property) {
@@ -63,21 +67,49 @@ mixin Chat {
   }
 
   bool scroll = true;
+
   sendMessage() async {
     var message = EditCtrl.chatMessage.text.trim();
     if (message.isNotEmpty) {
-      var thisUserMap = ChatUser.toJson(chatKey: chatKey, userId: thisUserId, name: thisUserName, image: thisUserImage, lastMessage: message);
-      var otherUserMap = ChatUser.toJson(chatKey: chatKey, userId: otherUserId, name: otherUserName, image: otherUserImage, lastMessage: message);
+      var thisUserMap = ChatUser.toJson(
+          chatKey: chatKey,
+          userId: thisUserId,
+          name: thisUserName,
+          image: thisUserImage,
+          lastMessage: message);
+      var otherUserMap = ChatUser.toJson(
+          chatKey: chatKey,
+          userId: otherUserId,
+          name: otherUserName,
+          image: otherUserImage,
+          lastMessage: message);
       var chatMap = ChatMessage.toJson(chatKey: chatKey, message: message);
 
       if (Utils.userFirebase) {
-        FirebaseDatabase.instance.ref('Brix').child('ChatUsers').child(thisUserId).push().set(thisUserMap);
-        FirebaseDatabase.instance.ref('Brix').child('ChatUsers').child(otherUserId).push().set(otherUserMap);
-        FirebaseDatabase.instance.ref('Brix').child('ChatMessages').child(chatKey).push().set(chatMap);
+        FirebaseDatabase.instance
+            .ref('Brix')
+            .child('ChatUsers')
+            .child(thisUserId)
+            .push()
+            .set(thisUserMap);
+        FirebaseDatabase.instance
+            .ref('Brix')
+            .child('ChatUsers')
+            .child(otherUserId)
+            .push()
+            .set(otherUserMap);
+        FirebaseDatabase.instance
+            .ref('Brix')
+            .child('ChatMessages')
+            .child(chatKey)
+            .push()
+            .set(chatMap);
         EditCtrl.chatMessage.text = '';
       } else {
         Provider().postData('chat/save-message', chatMap).then((value) {
-          var added = (value as List).map((event) => ChatMessage.fromJson(event)).toList();
+          var added = (value as List)
+              .map((event) => ChatMessage.fromJson(event))
+              .toList();
           chatMessageStreamCtrl.sink.add(added);
           scroll = true;
         });
@@ -90,10 +122,14 @@ mixin Chat {
 
   late Timer messageTimer;
   late Stream<List<ChatMessage>?> chatMessagesStream;
-  final StreamController chatMessageStreamCtrl = StreamController<List<ChatMessage>>();
+  final StreamController chatMessageStreamCtrl =
+      StreamController<List<ChatMessage>>();
+
   fetchChatMessages() async {
     if (!chatMessageStreamCtrl.hasListener) {
-      chatMessagesStream = (chatMessageStreamCtrl.stream as Stream<List<ChatMessage>?>).asBroadcastStream();
+      chatMessagesStream =
+          (chatMessageStreamCtrl.stream as Stream<List<ChatMessage>?>)
+              .asBroadcastStream();
     }
     if (Utils.userFirebase) {
       var added = await FirebaseDatabase.instance
@@ -101,20 +137,25 @@ mixin Chat {
           .child('ChatMessages')
           .child(chatKey)
           .orderByChild('time')
+          .orderByPriority()
           .onValue
           .map((event) => ChatMessage.fromJson(event.snapshot.value))
           .toList();
       chatMessageStreamCtrl.sink.add(added);
     } else {
       Provider().getData('chat/messages/$chatKey').then((value) {
-        var added = (value as List).map((event) => ChatMessage.fromJson(event)).toList();
+        var added = (value as List)
+            .map((event) => ChatMessage.fromJson(event))
+            .toList();
         chatMessageStreamCtrl.sink.add(added);
         homeCtrl.scroll = true;
         Provider().getData('chat/seen/$chatKey/${user.id}');
       });
       messageTimer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
         Provider().getData('chat/messages/$chatKey').then((value) {
-          var added = (value as List).map((event) => ChatMessage.fromJson(event)).toList();
+          var added = (value as List)
+              .map((event) => ChatMessage.fromJson(event))
+              .toList();
           chatMessageStreamCtrl.sink.add(added);
         });
       });
@@ -123,10 +164,13 @@ mixin Chat {
 
   late Timer userTimer;
   late Stream<List<ChatUser>?> chatUserStream;
-  final StreamController chatUserStreamCtrl = StreamController<List<ChatUser>>();
+  final StreamController chatUserStreamCtrl =
+      StreamController<List<ChatUser>>();
+
   fetchChatUsers() async {
     if (!chatUserStreamCtrl.hasListener) {
-      chatUserStream = (chatUserStreamCtrl.stream as Stream<List<ChatUser>?>).asBroadcastStream();
+      chatUserStream = (chatUserStreamCtrl.stream as Stream<List<ChatUser>?>)
+          .asBroadcastStream();
     }
     if (Utils.userFirebase) {
       var added = await FirebaseDatabase.instance
@@ -140,12 +184,14 @@ mixin Chat {
       chatUserStreamCtrl.sink.add(added);
     } else {
       Provider().getData('chat/users/${user.id}').then((value) {
-        var added = (value as List).map((event) => ChatUser.fromJson(event)).toList();
+        var added =
+            (value as List).map((event) => ChatUser.fromJson(event)).toList();
         chatUserStreamCtrl.sink.add(added);
       });
       userTimer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
         Provider().getData('chat/users/${user.id}').then((value) {
-          var added = (value as List).map((event) => ChatUser.fromJson(event)).toList();
+          var added =
+              (value as List).map((event) => ChatUser.fromJson(event)).toList();
           chatUserStreamCtrl.sink.add(added);
         });
       });

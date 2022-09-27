@@ -113,6 +113,7 @@ class _ChatPageState extends State<ChatPage> {
                               padding: const EdgeInsets.only(top: 16),
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
+                                if(users[index].chatKey.contains(user.id.toString())){
                                 return GestureDetector(
                                   onTap: () => homeCtrl.chatFromUserList(users[index]),
                                   child: ConversationList(
@@ -123,7 +124,9 @@ class _ChatPageState extends State<ChatPage> {
                                     seen: users[index].seen,
                                     fromMe: users[index].fromMe,
                                   ),
-                                );
+                                );}else{
+                                  return Container();
+                                }
                               },
                             );
                 }),

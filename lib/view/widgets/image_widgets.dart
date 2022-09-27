@@ -63,7 +63,7 @@ profileImgAndBasicInfo(int num) {
             GestureDetector(
               onTap: (){
                 if(num==1){
-                  Navigator.push(context!, MaterialPageRoute(builder:(context)=> ProfilingPage()));
+                  Navigator.push(context!, MaterialPageRoute(builder:(context)=> const PersonalInformation()));
 
                 } else{
                   return;

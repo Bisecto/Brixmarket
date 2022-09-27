@@ -19,6 +19,7 @@ class CurrentLocation extends StatelessWidget {
           return snap.connectionState == ConnectionState.waiting && homeCtrl.currentLocation.value == ''
               ? Preloader.loadingWidget2(size: 16)
               : Obx(() => CustomText(
+            maxLines: 2,
                     text: snap.data == null || homeCtrl.currentLocation.value != '' || user.city != '' || user.city != null
                         ? homeCtrl.currentLocation.value == ''
                             ? user.city != '' && user.city != null

@@ -81,7 +81,7 @@ class CreatePropertyCtrl extends GetxController {
       sideNavIndex.value = 2;
       sideNavIndex.refresh();
       createPropPageIndex.refresh();
-      EditCtrl.disposeControllers();
+      //EditCtrl.disposeControllers();
     } else {
       createPropPageIndex.value = pageIndex;
       cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
@@ -172,11 +172,13 @@ class CreatePropertyCtrl extends GetxController {
         Preloader.hide();
         gotoNext(pageIndex: 2);
       }
-      // else{
+
+       else{
+        gotoNext(pageIndex: 2);
       //   Preloader.hide();
       //   MSG.errorSnackBar('Something is wrong with the image',title: 'Message');
       //   Preloader.hide();
-      // }
+       }
     }
   }
 
@@ -395,7 +397,7 @@ class CreatePropertyCtrl extends GetxController {
     amenities = [];
     if (amenities!.isEmpty && EditCtrl.category.value.text.isNotEmpty || all) {
       String category = all ? 'all' : EditCtrl.category.value.text;
-      await Provider().postData("property/get-amenities/$category", Property.map()).then((value) => amenities = value);
+      await Provider().postData("property/get-amenities/${EditCtrl.category.value.text}", Property.map()).then((value) => amenities = value);
     }
     return amenities ?? [];
   }

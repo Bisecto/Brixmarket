@@ -98,7 +98,7 @@ class WebHeroSearch extends StatelessWidget {
               onTap: () {
                 if (propCtrl.showLargeFilerBox.value) {
                   propCtrl.showLargeFilerBox.value = false;
-                  WidgetsBinding.instance!.addPostFrameCallback((_) => showOverlayFilterBox(context));
+                  WidgetsBinding.instance.addPostFrameCallback((_) => showOverlayFilterBox(context));
                 } else {
                   propCtrl.showLargeFilerBox.value = true;
                   try {

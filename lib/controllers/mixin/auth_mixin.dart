@@ -333,14 +333,15 @@ mixin Auth {
     // return paymentSuccess('reference');
     UpgradePlan plan = homeCtrl.selectedUpgradePlan!;
     var map = <String, String>{'plan': plan.id!, 'userId': user.id!};
-    await Payments.paystackPayment(
-      Get.context!,
-      email: user.emailAddress!,
-      amount: plan.amount!,
-      meta: map,
-      successCallBack: paymentSuccess,
-      failedCallBack: paymentFailed,
-    );
+    ///Had to commet this out becase its not been used currently.And it gives error to the android
+    // await Payments.paystackPayment(
+    //   Get.context!,
+    //   email: user.emailAddress!,
+    //   amount: plan.amount!,
+    //   meta: map,
+    //   successCallBack: paymentSuccess,
+    //   failedCallBack: paymentFailed,
+    // );
   }
 
   paymentSuccess(reference) async {

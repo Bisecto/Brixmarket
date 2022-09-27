@@ -35,7 +35,7 @@ class ChatUser {
         lastMessage: json['message'],
         sender: json['sender'],
         fromMe: json['sender'] == HomeController.userId,
-        lastMessageTime: Utils.formatDateTime(json['created_at']),
+        lastMessageTime: Utils.formatDateTime(json['updated_at']),
         seen: json['seen'].toString() == '1' || json['seen'].toString() == 'true',
         delivered: json['delivered'].toString() == '1' || json['delivered'].toString() == 'true',
       );
@@ -48,7 +48,7 @@ class ChatUser {
     data['image'] = image == null || image == '' ? 'default.jpg' : image;
     data['message'] = lastMessage;
     if (Utils.userFirebase) {
-      data['created_at'] = ServerValue.timestamp;
+      data['updated_at'] = ServerValue.timestamp;
     }
     data['seen'] = Utils.userFirebase ? false : '0';
     data['delivered'] = Utils.userFirebase ? false : '0';

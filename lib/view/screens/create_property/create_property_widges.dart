@@ -47,13 +47,13 @@ class CreatePropertyWidget extends StatelessWidget {
               ),
             ),
             const Divider(color: Colors.black26),
-            const SizedBox(height: 24),
+            const SizedBox(height: 10),
             buildStepNumber(),
             const SizedBox(
-              height: 32,
+              height: 20,
             ),
             SizedBox(
-              height: 860,
+              height: 1050,
               child: PageView(
                 controller: cPropCtrl.cPPageController,
                 physics: const NeverScrollableScrollPhysics(),
@@ -168,9 +168,9 @@ Widget buttonRow(Function() nextFunction) {
 
   return Padding(
     padding: const EdgeInsets.only(
-      top: 8.0,
+      top: 3.0,
       right: 0,
-      bottom: 8,
+      bottom: 3,
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -204,7 +204,7 @@ Widget buttonRow(Function() nextFunction) {
         Obx(() => Flexible(
               child: FormButton(
                 width: 100,
-                text: (cPropCtrl.createPropPageIndex.value == 6)
+                text: (cPropCtrl.createPropPageIndex.value == 5)
                     ? 'Finish'
                     : 'Next',
                 onPressed: nextFunction,
@@ -428,7 +428,7 @@ Widget createPropertyMedia() {
         ),
         const SizedBox(height: 5),
         const CustomText(
-          text: '      • Advert must contain from 2 to 20 images',
+          text: '      • Advert must contain from 3 to 20 images',
           color: Colors.black,
           size: 14,
           weight: FontWeight.w300,
@@ -604,11 +604,19 @@ Widget createPropertyLocation() {
               ),
               SizedBox(width: Get.width * 0.02),
               Flexible(
-                child: DropDown(
-                  controller: EditCtrl.landmarks,
+                child: FormInput(
+                  width: double.infinity,
+                  controller: EditCtrl.landmarks.value,
+                  validate: Val.name,
+                  error: EditCtrl.landmarksErr,
                   label: 'Landmarks',
-                  items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
+                  hint: 'Enter the closest bustop',
                 ),
+                // DropDown(
+                //   controller: EditCtrl.landmarks,
+                //   label: 'Landmarks',
+                //   items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
+                // ),
               ),
             ],
           ),
@@ -666,7 +674,7 @@ Future getFeatures() async {
   features ??= [];
   if (features!.isEmpty && EditCtrl.category.value.text.isNotEmpty) {
     await Provider()
-        .postData("property/get-features/${EditCtrl.category.value.text}",
+        .postData("property/get-features/House",
             Property.map())
         .then((value) => features = value);
   }
@@ -717,7 +725,7 @@ Widget createPropertyMorDetails() {
                         if ((feature.value[0] ?? '').isEmpty) {
                           return Container(
                             padding: EdgeInsets.only(
-                                right: Get.width * 0.01, bottom: 24),
+                                right: Get.width * 0.01, bottom: 10),
                             width: Get.width < 480
                                 ? double.infinity
                                 : Get.width * 0.31,
@@ -734,7 +742,7 @@ Widget createPropertyMorDetails() {
                         } else {
                           return Container(
                             padding: EdgeInsets.only(
-                                right: Get.width * 0.01, bottom: 24),
+                                right: Get.width * 0.01, bottom: 10),
                             width: Get.width < 480
                                 ? double.infinity
                                 : Get.width * 0.31,
@@ -770,17 +778,19 @@ Widget createPropertyAmenities() {
     color: Colors.white,
     child: SizedBox(
         height: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomText(
                 text: 'Basic Amenities',
                 color: Colors.black,
                 size: 16,
                 weight: FontWeight.bold),
-            const SizedBox(height: 20),
+            //const SizedBox(height: 10),
             SizedBox(
-              width: double.infinity,
+              //width: double.infinity,
               child: FutureBuilder(
                   future: cPropCtrl.getAmenities(),
                   builder: (context, AsyncSnapshot snap) {
@@ -788,13 +798,13 @@ Widget createPropertyAmenities() {
 
                     return GridView.builder(
                         shrinkWrap: true,
-                        padding: const EdgeInsets.only(right: 24),
-                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(right: 0),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: amenities.length,
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                          mainAxisExtent: 54,
-                          maxCrossAxisExtent: 260,
+                          mainAxisExtent: 53,
+                          maxCrossAxisExtent: 200,
                         ),
                         itemBuilder: (_, i) {
                           var amenity = amenities[i]['amenity'];
@@ -803,7 +813,7 @@ Widget createPropertyAmenities() {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Transform.scale(
-                                  scale: 0.7,
+                                  scale: 0.5,
                                   child: Obx(
                                     () => Checkbox(
                                       activeColor: Pallet.secondaryColor,
@@ -824,7 +834,6 @@ Widget createPropertyAmenities() {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 10),
                                 Expanded(
                                     child: Text(amenity,
                                         style: const TextStyle(fontSize: 16))),

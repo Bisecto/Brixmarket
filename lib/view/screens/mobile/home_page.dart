@@ -103,7 +103,7 @@ class MobileHomePage extends StatelessWidget {
                   Container(height: Get.width * 1.3 > 580 ? Get.width * 0.6 : Get.width * 0.8, color: Colors.black38),
                   SafeArea(
                     child: Padding(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -115,13 +115,15 @@ class MobileHomePage extends StatelessWidget {
                                 Icons.location_on,
                                 color: Colors.white,
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 5),
                               const CurrentLocation(),
+                              const SizedBox(width: 5),
+
                               const Spacer(),
                               HomeController.isLogin.value
                                   ? Obx(() => Text(
                                         accountName(user: homeCtrl.user.value, home: true),
-                                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                                        style: const TextStyle(color: Colors.white, fontSize: 15),
                                       ))
                                   : InkWell(
                                       onTap: () => Get.toNamed(RouteStr.login),

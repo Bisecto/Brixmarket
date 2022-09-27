@@ -135,6 +135,8 @@ class Provider extends GetConnect {
     dnd(response.body);
     try {
       if (response.statusCode == 200) {
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        print(response.body);
         ApiResponse apiResponse = ApiResponse.fromJson(jsonDecode(response.body));
         if (!apiResponse.status) {
           try {
