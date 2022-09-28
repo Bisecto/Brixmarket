@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brixmarket/core/dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,33 @@ import '../../widgets/drop_down.dart';
 import '../../widgets/form_button.dart';
 import '../../widgets/form_inputs.dart';
 
-class CreatePropertyWidget extends StatelessWidget {
+class CreatePropertyWidget extends StatefulWidget {
   const CreatePropertyWidget({Key? key}) : super(key: key);
+
+  @override
+  State<CreatePropertyWidget> createState() => _CreatePropertyWidgetState();
+}
+
+class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
+  bool isExpanded=false;
+  checkFeture(){
+    setState(() {
+      getFeatures();
+      getAmenities();
+      isExpanded=true;
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //if()
+    //Timer.periodic(const Duration(m: 2), (timer) {
+    //   setState(() {
+    //
+    //   });
+    //});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +80,7 @@ class CreatePropertyWidget extends StatelessWidget {
               height: 20,
             ),
             SizedBox(
-              height: 1050,
+              height: 1000,
               child: PageView(
                 controller: cPropCtrl.cPPageController,
                 physics: const NeverScrollableScrollPhysics(),
@@ -61,7 +88,123 @@ class CreatePropertyWidget extends StatelessWidget {
                   createPropertyDetails(),
                   createPropertyMedia(),
                   createPropertyLocation(),
-                  createPropertyMorDetails(),
+              Container(
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CustomText(
+                          text: 'More Details(Optional)',
+                          color: Colors.black,
+                          size: 16,
+                          weight: FontWeight.bold),
+                      if(!isExpanded)
+                      RaisedButton(
+                        onPressed: () {
+                          checkFeture();
+                          //callFeature();
+                        },
+                        child: const Text('Expand To fill'),
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FutureBuilder(
+                            future: getFeatures(),
+                            builder: (context, AsyncSnapshot snap) {
+                              var featuresData = snap.data ?? [];
+                              var features = {};
+                              featuresData.forEach((e) {
+                                if (features[e['feature']] == null) {
+                                  features[e['feature']] = [e['feature_value'].toString()];
+                                } else {
+                                  features[e['feature']].add(e['feature_value'].toString());
+                                }
+                              });
+                              var initialList = [];
+                              if (featuresData.isNotEmpty) {
+                                initialList = EditCtrl.ctrlList;
+                                EditCtrl.ctrlList = [];
+                              }
+                              int i = -1;
+                              if (snap.connectionState == ConnectionState.done) {
+                                // If we got an error
+                                if (snap.hasError) {
+                                  return Center(
+                                    child: Text(
+                                      '${snap.error} occurred',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  );
+
+                                  // if we got our data
+                                } else if (snap.hasData) {
+                                  // Extracting data from snapshot object
+                                  return Wrap(
+                                    children: [
+                                      ...features.entries.map((feature) {
+                                        EditCtrl.ctrlList.add(TextEditingController().obs);
+                                        EditCtrl.ctrlListKeys
+                                            .add(TextEditingController(text: feature.key));
+                                        i++;
+                                        if ((feature.value[0] ?? '').isEmpty) {
+                                          return Container(
+                                            padding: EdgeInsets.only(
+                                                right: Get.width * 0.01, bottom: 10),
+                                            width: Get.width < 480
+                                                ? double.infinity
+                                                : Get.width * 0.31,
+                                            child: FormInput(
+                                              width: double.infinity,
+                                              controller: EditCtrl.ctrlList[i].value,
+                                              label: feature.key,
+                                              hint: 'Enter ${feature.key}',
+                                              value: initialList.isEmpty
+                                                  ? ''
+                                                  : initialList[i].value.text,
+                                            ),
+                                          );
+                                        } else {
+                                          return Container(
+                                            padding: EdgeInsets.only(
+                                                right: Get.width * 0.01, bottom: 10),
+                                            width: Get.width < 480
+                                                ? double.infinity
+                                                : Get.width * 0.31,
+                                            child: SizedBox(
+                                              child: DropDown(
+                                                initialValue: initialList.isEmpty
+                                                    ? ''
+                                                    : initialList[i].value.text,
+                                                controller: EditCtrl.ctrlList[i],
+                                                label: feature.key,
+                                                items: feature.value as List<String>,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }).toList(),
+                                    ],
+                                  );
+                                }
+                              }
+
+                              // Displaying LoadingSpinner to indicate waiting state
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }),
+                      ),
+                      buttonRow(cPropCtrl.submitPropertyMoreDetails),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
                   createPropertyAmenities(),
                   createPropertyContact(),
                 ],
@@ -76,6 +219,10 @@ class CreatePropertyWidget extends StatelessWidget {
 
 Widget stepWidget(int i) {
   double screenWidth = Get.width;
+  if(i==3){
+    getFeatures();
+    getAmenities();
+  }
   return Obx(
     () => Flexible(
       flex: cPropCtrl.createPropPageIndex.value == i && (screenWidth > 430)
@@ -147,7 +294,6 @@ Widget stepWidget(int i) {
 
 Widget buildStepNumber() {
   return SizedBox(
-
     width: double.infinity,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,7 +311,6 @@ Widget buildStepNumber() {
 }
 
 Widget buttonRow(Function() nextFunction) {
-
   return Padding(
     padding: const EdgeInsets.only(
       top: 3.0,
@@ -271,45 +416,6 @@ Widget createPropertyDetails() {
           label: 'Property Description',
           hint: 'Enter Description',
         ),
-        const SizedBox(height: 24),
-        const CustomText(
-          text: 'Price',
-          color: Colors.black,
-          size: 16,
-          weight: FontWeight.bold,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            children: [
-              Flexible(
-                child: FormInput(
-                  inputType: TextInputType.number,
-                  width: double.infinity,
-                  controller: EditCtrl.price,
-                  validate: Val.number,
-                  error: EditCtrl.priceErr,
-                  label: 'Property Price',
-                  hint: 'Enter price',
-                ),
-              ),
-              SizedBox(
-                width: Get.width * 0.02,
-              ),
-              Flexible(
-                child: DropDown(
-                  label: 'Price Duration',
-                  items: Lst.priceDurations,
-                  controller: EditCtrl.priceDuration,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 24),
         const CustomText(
           text: 'Category',
           color: Colors.black,
@@ -391,6 +497,44 @@ Widget createPropertyDetails() {
                 ),
               ],
             ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        const CustomText(
+          text: 'Price',
+          color: Colors.black,
+          size: 16,
+          weight: FontWeight.bold,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: Row(
+            children: [
+              Flexible(
+                child: FormInput(
+                  inputType: TextInputType.number,
+                  width: double.infinity,
+                  controller: EditCtrl.price,
+                  validate: Val.number,
+                  error: EditCtrl.priceErr,
+                  label: 'Property Price',
+                  hint: 'Enter price',
+                ),
+              ),
+              SizedBox(
+                width: Get.width * 0.02,
+              ),
+              Flexible(
+                child: DropDown(
+                  label: 'Price Duration',
+                  items: Lst.priceDurations,
+                  controller: EditCtrl.priceDuration,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
@@ -668,112 +812,38 @@ Widget createPropertyLocation() {
   );
 }
 
+List? amenities;
+
+Future getAmenities({all = false}) async {
+  amenities = [];
+  if (amenities!.isEmpty && EditCtrl.category.value.text.isNotEmpty || all) {
+    String category = all ? 'all' : EditCtrl.category.value.text;
+    await Provider()
+        .postData("property/get-amenities/${EditCtrl.category.value.text}",
+            Property.map())
+        .then((value) => amenities = value);
+  }
+  return amenities ?? [];
+}
+
 List? features;
 
 Future getFeatures() async {
   features ??= [];
   if (features!.isEmpty && EditCtrl.category.value.text.isNotEmpty) {
     await Provider()
-        .postData("property/get-features/House",
-            Property.map())
+        .postData("property/get-features/House", Property.map())
         .then((value) => features = value);
   }
   return features;
 }
-
-Widget createPropertyMorDetails() {
-  return Container(
-    color: Colors.white,
-    child: SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CustomText(
-              text: 'More Details',
-              color: Colors.black,
-              size: 16,
-              weight: FontWeight.bold),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: FutureBuilder(
-                future: getFeatures(),
-                builder: (context, AsyncSnapshot snap) {
-                  var featuresData = snap.data ?? [];
-                  var features = {};
-                  featuresData.forEach((e) {
-                    if (features[e['feature']] == null) {
-                      features[e['feature']] = [e['feature_value'].toString()];
-                    } else {
-                      features[e['feature']].add(e['feature_value'].toString());
-                    }
-                  });
-                  var initialList = [];
-                  if (featuresData.isNotEmpty) {
-                    initialList = EditCtrl.ctrlList;
-                    EditCtrl.ctrlList = [];
-                  }
-                  int i = -1;
-                  return Wrap(
-                    children: [
-                      ...features.entries.map((feature) {
-                        EditCtrl.ctrlList.add(TextEditingController().obs);
-                        EditCtrl.ctrlListKeys
-                            .add(TextEditingController(text: feature.key));
-                        i++;
-                        if ((feature.value[0] ?? '').isEmpty) {
-                          return Container(
-                            padding: EdgeInsets.only(
-                                right: Get.width * 0.01, bottom: 10),
-                            width: Get.width < 480
-                                ? double.infinity
-                                : Get.width * 0.31,
-                            child: FormInput(
-                              width: double.infinity,
-                              controller: EditCtrl.ctrlList[i].value,
-                              label: feature.key,
-                              hint: 'Enter ${feature.key}',
-                              value: initialList.isEmpty
-                                  ? ''
-                                  : initialList[i].value.text,
-                            ),
-                          );
-                        } else {
-                          return Container(
-                            padding: EdgeInsets.only(
-                                right: Get.width * 0.01, bottom: 10),
-                            width: Get.width < 480
-                                ? double.infinity
-                                : Get.width * 0.31,
-                            child: SizedBox(
-                              child: DropDown(
-                                initialValue: initialList.isEmpty
-                                    ? ''
-                                    : initialList[i].value.text,
-                                controller: EditCtrl.ctrlList[i],
-                                label: feature.key,
-                                items: feature.value as List<String>,
-                              ),
-                            ),
-                          );
-                        }
-                      }).toList(),
-                    ],
-                  );
-                }),
-          ),
-          buttonRow(cPropCtrl.submitPropertyMoreDetails),
-          const SizedBox(
-            height: 40,
-          ),
-        ],
-      ),
-    ),
-  );
-}
+//
+// Widget createPropertyMorDetails(BuildContext context) {
+//   return
+// }
 
 Widget createPropertyAmenities() {
+  getAmenities();
   return Container(
     color: Colors.white,
     child: SizedBox(
@@ -784,7 +854,7 @@ Widget createPropertyAmenities() {
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomText(
-                text: 'Basic Amenities',
+                text: 'Basic Amenities(Optional)',
                 color: Colors.black,
                 size: 16,
                 weight: FontWeight.bold),
@@ -792,7 +862,7 @@ Widget createPropertyAmenities() {
             SizedBox(
               //width: double.infinity,
               child: FutureBuilder(
-                  future: cPropCtrl.getAmenities(),
+                  future: getAmenities(),
                   builder: (context, AsyncSnapshot snap) {
                     var amenities = snap.data ?? [];
 
@@ -813,7 +883,7 @@ Widget createPropertyAmenities() {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Transform.scale(
-                                  scale: 0.5,
+                                  scale: 0.7,
                                   child: Obx(
                                     () => Checkbox(
                                       activeColor: Pallet.secondaryColor,

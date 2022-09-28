@@ -121,7 +121,6 @@ final ngnLga = {
     "Umuahia North",
     "Umuahia South",
     "Umu Nneochi",
-    "Obi Ngwa"
   ],
   "Ogun": [
     "Abeokuta North",

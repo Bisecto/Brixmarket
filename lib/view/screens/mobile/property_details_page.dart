@@ -1,6 +1,7 @@
 import 'package:brixmarket/libs/whatsapp.dart';
 import 'package:brixmarket/res/lists.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -95,6 +96,17 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
     detailsDescription.add(productReviews(property));
 
     return Scaffold(
+      appBar:AppBar(
+        title: Text(property.title.toString(),maxLines: 1,),
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          // Status bar color
+          statusBarColor: Colors.red,
+          // Status bar brightness (optional)
+          statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        ),
+      ),
       resizeToAvoidBottomInset: false,
       body: ListView(
         shrinkWrap: true,
@@ -463,7 +475,24 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Pallet.secondaryColor),
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              children: [
+                Container(
+                  height: 5,
+                  width: 35,
+                  color: Pallet.secondaryColor,
+                ),
+                const SizedBox(width: 10),
+                const CustomText(maxLines:2,color: Colors.black, text: 'Landmark', weight: FontWeight.w400, size: 18),
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
+          CustomText(maxLines:2,color: Colors.black, text: property.location!.landmarks, weight: FontWeight.w400, size: 18),
+          const SizedBox(height: 15),
           Container(
             color: const Color(0xFFf9f9f9),
             child: Column(
@@ -606,47 +635,50 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
           const SizedBox(height: 20),
         ],
       ),
-      bottomNavigationBar: Container(
-          height: 62,
-          padding: const EdgeInsets.only(left: 12, right: 12, bottom: 8),
-          decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const CustomText(color: Colors.blueGrey, text: 'PRICE', weight: FontWeight.bold, size: 14),
-                    Row(
-                      children: [
-                        CustomText(color: Pallet.secondaryColor, text: Utils.amount(property.price!), weight: FontWeight.bold, size: 18),
-                        const SizedBox(width: 5),
-                        property.priceDuration!.substring(0, 3) == 'Per'
-                            ? CustomText(
-                                color: Colors.blueGrey,
-                                text: property.priceDuration!.substring(0, 3) == 'Per' ? property.priceDuration!.toUpperCase() : '',
-                                weight: FontWeight.bold,
-                                size: 10)
-                            : const SizedBox(height: 8),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                  ],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+            height: 62,
+            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 8),
+            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const CustomText(color: Colors.blueGrey, text: 'PRICE', weight: FontWeight.bold, size: 14),
+                      Row(
+                        children: [
+                          CustomText(color: Pallet.secondaryColor, text: Utils.amount(property.price!), weight: FontWeight.bold, size: 18),
+                          const SizedBox(width: 5),
+                          property.priceDuration!.substring(0, 3) == 'Per'
+                              ? CustomText(
+                                  color: Colors.blueGrey,
+                                  text: property.priceDuration!.substring(0, 3) == 'Per' ? property.priceDuration!.toUpperCase() : '',
+                                  weight: FontWeight.bold,
+                                  size: 10)
+                              : const SizedBox(height: 8),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                    ],
+                  ),
                 ),
-              ),
-              FormButton(
-                onPressed: () => requestATour(property.id),
-                text: 'Request Tour',
-                width: 140,
-                height: 48,
-                size: 16,
-                radius: 4,
-                top: 12,
-                txtColor: Colors.white,
-              )
-            ],
-          )),
+                FormButton(
+                  onPressed: () => requestATour(property.id),
+                  text: 'Request Tour',
+                  width: 140,
+                  height: 48,
+                  size: 16,
+                  radius: 4,
+                  top: 12,
+                  txtColor: Colors.white,
+                )
+              ],
+            )),
+      ),
     );
   }
 

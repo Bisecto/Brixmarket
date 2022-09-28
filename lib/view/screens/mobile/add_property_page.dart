@@ -48,7 +48,7 @@ class AddPropertyPage extends StatelessWidget {
             ),
             actions: const [AppBarMenu(logout: true, saveDraft: true)],
           ),
-          body: const CreatePropertyWidget()),
+          body:  CreatePropertyWidget()),
     );
   }
   //

@@ -82,6 +82,8 @@ class CreatePropertyCtrl extends GetxController {
       sideNavIndex.refresh();
       createPropPageIndex.refresh();
       //EditCtrl.disposeControllers();
+      getAmenities();
+      getFeatures();
     } else {
       createPropPageIndex.value = pageIndex;
       cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
@@ -245,14 +247,14 @@ class CreatePropertyCtrl extends GetxController {
     Map<String, dynamic> map = {};
     for (var ctrl in EditCtrl.ctrlList) {
       var key = EditCtrl.ctrlListKeys[i++];
-      if (ctrl.value.text.trim().isEmpty && isValidData) {
-        isValidData = false;
-        MSG.errorSnackBar(
-          '${key.text} field is required',
-        );
-      } else {
+      // if (ctrl.value.text.trim().isEmpty && isValidData) {
+      //   isValidData = false;
+      //   MSG.errorSnackBar(
+      //     '${key.text} field is required',
+      //   );
+      // } else {
         map['features[${key.text}]'] = ctrl.value.text.trim();
-      }
+      //}
     }
     if (isValidData) {
       Preloader.show();

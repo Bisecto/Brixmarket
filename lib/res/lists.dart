@@ -12,8 +12,8 @@ import '../view/screens/mobile/saved_page.dart';
 import 'states.dart';
 
 class Lst {
-  static final priceDurations = ['All time', 'Per Year', 'Per Month', 'Per Week', 'Per Day'];
-  static final propertyTypes = ['Sale', 'Rent', 'Short stay'];
+  static final priceDurations = ['Outright', 'Per Year', 'Per Month', 'Per Week', 'Per Day'];
+  static final propertyTypes = ['Sale', 'Rent', 'Short stay','Lease'];
   static final propertyStatus = ['New', 'Existing', 'Renovated'];
   static final propertyCategories = ['House', 'Land', 'Commercial', 'Student Hostel', 'New Home'];
   static final Map<String, RxList> filterMap = {'category': EditCtrl.filterCategories, 'type': EditCtrl.filterTypes, 'status': EditCtrl.filterStatus};
