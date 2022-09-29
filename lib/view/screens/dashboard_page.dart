@@ -44,7 +44,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     return LayoutBuilder(builder: (context, constraints) {
       var dashboardWidgets = [
         const InsightWidget(),
-         CreatePropertyWidget(),
+         CreatePropertyWidget(isEdt: false,),
         MyPropertiesWidget(provider: this),
         SavedPropertiesWidget(constraints: constraints.maxWidth),
         UpgradePricingWidget(constraints: constraints.maxWidth),

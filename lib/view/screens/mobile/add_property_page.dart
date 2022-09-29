@@ -7,7 +7,8 @@ import '../../widgets/custom_text.dart';
 import '../create_property/create_property_widges.dart';
 
 class AddPropertyPage extends StatelessWidget {
-  const AddPropertyPage({Key? key}) : super(key: key);
+  bool isEdit;
+   AddPropertyPage({Key? key,required this.isEdit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +47,10 @@ class AddPropertyPage extends StatelessWidget {
               size: 18,
               text: 'Add Property',
             ),
-            actions: const [AppBarMenu(logout: true, saveDraft: true)],
+            actions: const [AppBarMenu(logout: true, saveDraft: true, propertyIDS: [],)],
           ),
-          body:  CreatePropertyWidget()),
+          body:  CreatePropertyWidget(isEdt: isEdit,)),
+
     );
   }
   //

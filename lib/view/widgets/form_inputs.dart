@@ -98,7 +98,10 @@ class FormInput extends StatelessWidget {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             error!.value = validate!(text);
                             try {
-                              controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+                              TextSelection previousSelection = controller.selection;
+                              //controller.text = text;
+                              controller.selection = previousSelection;
+                              //controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
                             } catch (e) {
                               dnd(e);
                             }

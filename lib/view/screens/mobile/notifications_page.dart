@@ -27,7 +27,7 @@ class Notifications extends StatelessWidget {
           size: 18,
           text: 'Notifications',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(

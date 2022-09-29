@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../config/theme/color.dart';
+import '../../../controllers/create_property_controller.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../models/property_model.dart';
@@ -20,25 +21,30 @@ import '../../widgets/form_button.dart';
 import '../../widgets/form_inputs.dart';
 
 class CreatePropertyWidget extends StatefulWidget {
-  const CreatePropertyWidget({Key? key}) : super(key: key);
+  bool isEdt;
+
+  CreatePropertyWidget({Key? key, required this.isEdt}) : super(key: key);
 
   @override
   State<CreatePropertyWidget> createState() => _CreatePropertyWidgetState();
 }
 
 class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
-  bool isExpanded=false;
-  checkFeture(){
+  bool isExpanded = false;
+
+  checkFeture() {
     setState(() {
       getFeatures();
       getAmenities();
-      isExpanded=true;
+      // isExpanded=true;
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    checkFeture();
     //if()
     //Timer.periodic(const Duration(m: 2), (timer) {
     //   setState(() {
@@ -75,136 +81,366 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
             ),
             const Divider(color: Colors.black26),
             const SizedBox(height: 10),
+            //if(!widget.isEdt)
             buildStepNumber(),
+            // if(widget.isEdt)
+            //   buildStepNumberEdit(),
             const SizedBox(
               height: 20,
             ),
+            if (widget.isEdt)
+              Obx(() => FormButton(
+                    bgColor: Pallet.secondaryColor,
+                    text: 'Skip this section',
+                    disableButton: cPropCtrl.createPropPageIndex.value == 5,
+                    onPressed: () {
+                      //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
+                      //MSG.errorSnackBar('End of page');
+                      //  }
+                      cPropCtrl.ToSpecifiedpage();
+                    },
+                  )),
+            if (!widget.isEdt)
+            Obx(() {
+              if(cPropCtrl.createPropPageIndex.value==3){
+              return FormButton(
+                bgColor: Pallet.secondaryColor,
+                text: 'Skip this section',
+                disableButton: cPropCtrl.createPropPageIndex.value == 5,
+                onPressed: () {
+                  //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
+                  //MSG.errorSnackBar('End of page');
+                  //  }
+                  cPropCtrl.ToSpecifiedpage();
+                },
+              );}else{
+              return Container();
+            }}),
             SizedBox(
-              height: 1000,
+              height: 1050,
               child: PageView(
                 controller: cPropCtrl.cPPageController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   createPropertyDetails(),
                   createPropertyMedia(),
-                  createPropertyLocation(),
-              Container(
-                color: Colors.white,
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const CustomText(
-                          text: 'More Details(Optional)',
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const CustomText(
+                          text: 'Details',
                           color: Colors.black,
                           size: 16,
-                          weight: FontWeight.bold),
-                      if(!isExpanded)
-                      RaisedButton(
-                        onPressed: () {
-                          checkFeture();
-                          //callFeature();
-                        },
-                        child: const Text('Expand To fill'),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        child: FutureBuilder(
-                            future: getFeatures(),
-                            builder: (context, AsyncSnapshot snap) {
-                              var featuresData = snap.data ?? [];
-                              var features = {};
-                              featuresData.forEach((e) {
-                                if (features[e['feature']] == null) {
-                                  features[e['feature']] = [e['feature_value'].toString()];
-                                } else {
-                                  features[e['feature']].add(e['feature_value'].toString());
-                                }
-                              });
-                              var initialList = [];
-                              if (featuresData.isNotEmpty) {
-                                initialList = EditCtrl.ctrlList;
-                                EditCtrl.ctrlList = [];
-                              }
-                              int i = -1;
-                              if (snap.connectionState == ConnectionState.done) {
-                                // If we got an error
-                                if (snap.hasError) {
-                                  return Center(
-                                    child: Text(
-                                      '${snap.error} occurred',
-                                      style: TextStyle(fontSize: 18),
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: FormInput(
+                                  width: double.infinity,
+                                  controller: EditCtrl.address,
+                                  validate: Val.name,
+                                  error: EditCtrl.addressErr,
+                                  label: 'Address',
+                                  hint: 'Enter address',
+                                ),
+                              ),
+                              SizedBox(width: Get.width * 0.02),
+                              Flexible(
+                                child: DropDown(
+                                  controller: EditCtrl.state,
+                                  label: 'State',
+                                  items: Lst.ngStates,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Obx(
+                                  () => DropDown(
+                                    controller: EditCtrl.city,
+                                    label: 'City/Town',
+                                    items:
+                                        Lst.ngLGA[EditCtrl.state.value.text] ??
+                                            [],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: Get.width * 0.02),
+                              Flexible(
+                                child: FormInput(
+                                  width: double.infinity,
+                                  controller: EditCtrl.landmarks.value,
+                                  validate: Val.name,
+                                  error: EditCtrl.landmarksErr,
+                                  label: 'Landmarks',
+                                  hint: 'Enter the closest bustop',
+                                ),
+                                // DropDown(
+                                //   controller: EditCtrl.landmarks,
+                                //   label: 'Landmarks',
+                                //   items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
+                                // ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        // const CustomText(
+                        //   text: 'Google Map (Optional)',
+                        //   color: Colors.black,
+                        //   size: 16,
+                        //   weight: FontWeight.bold,
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // SizedBox(
+                        //   width: double.infinity,
+                        //   child: Row(
+                        //     children: [
+                        //       Flexible(
+                        //         child: FormInput(
+                        //           width: double.infinity,
+                        //           controller: EditCtrl.latitude,
+                        //           label: 'Latitude',
+                        //           hint: 'Enter location Latitude',
+                        //         ),
+                        //       ),
+                        //       SizedBox(width: Get.width * 0.02),
+                        //       Flexible(
+                        //         child: FormInput(
+                        //           width: double.infinity,
+                        //           controller: EditCtrl.longitude,
+                        //           label: 'Longitude',
+                        //           hint: 'Enter location Longitude',
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 32,
+                        // ),
+                        // Image.asset('assets/images/map.jpeg'),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 3.0,
+                            right: 0,
+                            bottom: 3,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Obx(() => Flexible(
+                                    child: FormButton(
+                                      width: 100,
+                                      bgColor: Pallet.secondaryColor,
+                                      disableButton:
+                                          cPropCtrl.createPropPageIndex.value <
+                                              1,
+                                      text: 'Previous',
+                                      onPressed: cPropCtrl.backToPrevious,
                                     ),
-                                  );
-
-                                  // if we got our data
-                                } else if (snap.hasData) {
-                                  // Extracting data from snapshot object
-                                  return Wrap(
-                                    children: [
-                                      ...features.entries.map((feature) {
-                                        EditCtrl.ctrlList.add(TextEditingController().obs);
-                                        EditCtrl.ctrlListKeys
-                                            .add(TextEditingController(text: feature.key));
-                                        i++;
-                                        if ((feature.value[0] ?? '').isEmpty) {
-                                          return Container(
-                                            padding: EdgeInsets.only(
-                                                right: Get.width * 0.01, bottom: 10),
-                                            width: Get.width < 480
-                                                ? double.infinity
-                                                : Get.width * 0.31,
-                                            child: FormInput(
-                                              width: double.infinity,
-                                              controller: EditCtrl.ctrlList[i].value,
-                                              label: feature.key,
-                                              hint: 'Enter ${feature.key}',
-                                              value: initialList.isEmpty
-                                                  ? ''
-                                                  : initialList[i].value.text,
-                                            ),
-                                          );
-                                        } else {
-                                          return Container(
-                                            padding: EdgeInsets.only(
-                                                right: Get.width * 0.01, bottom: 10),
-                                            width: Get.width < 480
-                                                ? double.infinity
-                                                : Get.width * 0.31,
-                                            child: SizedBox(
-                                              child: DropDown(
-                                                initialValue: initialList.isEmpty
-                                                    ? ''
-                                                    : initialList[i].value.text,
-                                                controller: EditCtrl.ctrlList[i],
-                                                label: feature.key,
-                                                items: feature.value as List<String>,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      }).toList(),
-                                    ],
-                                  );
-                                }
-                              }
-
-                              // Displaying LoadingSpinner to indicate waiting state
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }),
-                      ),
-                      buttonRow(cPropCtrl.submitPropertyMoreDetails),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                    ],
+                                  )),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Flexible(
+                                child: FormBorderButton(
+                                  width: 120,
+                                  bgColor: Colors.white,
+                                  txtColor: Colors.black,
+                                  text: 'Save as draft',
+                                  onPressed: () {
+                                    cPropCtrl.saveToDraft = true;
+                                    cPropCtrl.submitPropertyLocation();
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Obx(() => Flexible(
+                                    child: FormButton(
+                                      width: 100,
+                                      text: (cPropCtrl
+                                                  .createPropPageIndex.value ==
+                                              5)
+                                          ? 'Finish'
+                                          : 'Next',
+                                      onPressed: () {
+                                        checkFeture();
+                                        cPropCtrl.submitPropertyLocation();
+                                      },
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        )
+                        //buttonRow(cPropCtrl.submitPropertyLocation),
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                  Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const CustomText(
+                              text: 'More Details(Optional)',
+                              color: Colors.black,
+                              size: 16,
+                              weight: FontWeight.bold),
+                          // Row(
+                          //   children: [
+                          //     if (!isExpanded)
+                          //       RaisedButton(
+                          //         color: Colors.red,
+                          //         onPressed: () {
+                          //           checkFeture();
+                          //
+                          //           //callFeature();
+                          //         },
+                          //         child: const Text('Expand To fill'),
+                          //       ),
+                          //   ],
+                          // ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: FutureBuilder(
+                                future: getFeatures(),
+                                builder: (context, AsyncSnapshot snap) {
+                                  var featuresData = snap.data ?? [];
+                                  var features = {};
+                                  featuresData.forEach((e) {
+                                    if (features[e['feature']] == null) {
+                                      features[e['feature']] = [
+                                        e['feature_value'].toString()
+                                      ];
+                                    } else {
+                                      features[e['feature']]
+                                          .add(e['feature_value'].toString());
+                                    }
+                                  });
+                                  var initialList = [];
+                                  if (featuresData.isNotEmpty) {
+                                    initialList = EditCtrl.ctrlList;
+                                    EditCtrl.ctrlList = [];
+                                  }
+                                  int i = -1;
+                                  if (snap.connectionState ==
+                                      ConnectionState.done) {
+                                    // If we got an error
+                                    if (snap.hasError) {
+                                      return Center(
+                                        child: Text(
+                                          '${snap.error} occurred',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      );
+
+                                      // if we got our data
+                                    } else if (snap.hasData) {
+                                      // Extracting data from snapshot object
+                                      return Wrap(
+                                        children: [
+                                          ...features.entries.map((feature) {
+                                            EditCtrl.ctrlList.add(
+                                                TextEditingController().obs);
+                                            EditCtrl.ctrlListKeys.add(
+                                                TextEditingController(
+                                                    text: feature.key));
+                                            i++;
+                                            if ((feature.value[0] ?? '')
+                                                .isEmpty) {
+                                              return Container(
+                                                padding: EdgeInsets.only(
+                                                    right: Get.width * 0.01,
+                                                    bottom: 10),
+                                                width: Get.width < 480
+                                                    ? double.infinity
+                                                    : Get.width * 0.31,
+                                                child: FormInput(
+                                                  width: double.infinity,
+                                                  controller: EditCtrl
+                                                      .ctrlList[i].value,
+                                                  label: feature.key,
+                                                  hint:
+                                                      'Enter ${feature.key} Nearby',
+                                                  value: initialList.isEmpty
+                                                      ? ''
+                                                      : initialList[i]
+                                                          .value
+                                                          .text,
+                                                ),
+                                              );
+                                            } else {
+                                              return Container(
+                                                padding: EdgeInsets.only(
+                                                    right: Get.width * 0.01,
+                                                    bottom: 10),
+                                                width: Get.width < 480
+                                                    ? double.infinity
+                                                    : Get.width * 0.31,
+                                                child: SizedBox(
+                                                  child: DropDown(
+                                                    initialValue:
+                                                        initialList.isEmpty
+                                                            ? ''
+                                                            : initialList[i]
+                                                                .value
+                                                                .text,
+                                                    controller:
+                                                        EditCtrl.ctrlList[i],
+                                                    label:
+                                                        feature.key + ' Nearby',
+                                                    items: feature.value
+                                                        as List<String>,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          }).toList(),
+                                        ],
+                                      );
+                                    }
+                                  }
+
+                                  // Displaying LoadingSpinner to indicate waiting state
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }),
+                          ),
+                          buttonRow(cPropCtrl.submitPropertyMoreDetails),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   createPropertyAmenities(),
                   createPropertyContact(),
                 ],
@@ -219,7 +455,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
 
 Widget stepWidget(int i) {
   double screenWidth = Get.width;
-  if(i==3){
+  if (i == 1) {
     getFeatures();
     getAmenities();
   }
@@ -309,6 +545,48 @@ Widget buildStepNumber() {
     ),
   );
 }
+
+// Widget buildStepNumberEdit() {
+//   return SizedBox(
+//     width: double.infinity,
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       mainAxisSize: MainAxisSize.max,
+//       children: [
+//         GestureDetector(
+//           onTap: (){
+//             cPropCtrl.ToSpecifiedpage(0);
+//           },
+//             child: stepWidget(0)),
+//         GestureDetector(
+//             onTap: (){
+//               cPropCtrl.ToSpecifiedpage(1);
+//             },
+//             child: stepWidget(1)),
+//         GestureDetector(
+//             onTap: (){
+//               cPropCtrl.ToSpecifiedpage(2);
+//             },
+//             child: stepWidget(2)),
+//         GestureDetector(
+//             onTap: (){
+//               cPropCtrl.ToSpecifiedpage(3);
+//             },
+//             child: stepWidget(3)),
+//         GestureDetector(
+//             onTap: (){
+//               cPropCtrl.ToSpecifiedpage(4);
+//             },
+//             child: stepWidget(4)),
+//         GestureDetector(
+//             onTap: (){
+//               cPropCtrl.ToSpecifiedpage(5);
+//             },
+//             child: stepWidget(5))
+//       ],
+//     ),
+//   );
+// }
 
 Widget buttonRow(Function() nextFunction) {
   return Padding(
@@ -690,127 +968,8 @@ Widget createPropertyMedia() {
   );
 }
 
-Widget createPropertyLocation() {
-  return Container(
-    color: Colors.white,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText(
-          text: 'Details',
-          color: Colors.black,
-          size: 16,
-          weight: FontWeight.bold,
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            children: [
-              Flexible(
-                child: FormInput(
-                  width: double.infinity,
-                  controller: EditCtrl.address,
-                  validate: Val.name,
-                  error: EditCtrl.addressErr,
-                  label: 'Address',
-                  hint: 'Enter address',
-                ),
-              ),
-              SizedBox(width: Get.width * 0.02),
-              Flexible(
-                child: DropDown(
-                  controller: EditCtrl.state,
-                  label: 'State',
-                  items: Lst.ngStates,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            children: [
-              Flexible(
-                child: Obx(
-                  () => DropDown(
-                    controller: EditCtrl.city,
-                    label: 'City/Town',
-                    items: Lst.ngLGA[EditCtrl.state.value.text] ?? [],
-                  ),
-                ),
-              ),
-              SizedBox(width: Get.width * 0.02),
-              Flexible(
-                child: FormInput(
-                  width: double.infinity,
-                  controller: EditCtrl.landmarks.value,
-                  validate: Val.name,
-                  error: EditCtrl.landmarksErr,
-                  label: 'Landmarks',
-                  hint: 'Enter the closest bustop',
-                ),
-                // DropDown(
-                //   controller: EditCtrl.landmarks,
-                //   label: 'Landmarks',
-                //   items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
-                // ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        // const CustomText(
-        //   text: 'Google Map (Optional)',
-        //   color: Colors.black,
-        //   size: 16,
-        //   weight: FontWeight.bold,
-        // ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // SizedBox(
-        //   width: double.infinity,
-        //   child: Row(
-        //     children: [
-        //       Flexible(
-        //         child: FormInput(
-        //           width: double.infinity,
-        //           controller: EditCtrl.latitude,
-        //           label: 'Latitude',
-        //           hint: 'Enter location Latitude',
-        //         ),
-        //       ),
-        //       SizedBox(width: Get.width * 0.02),
-        //       Flexible(
-        //         child: FormInput(
-        //           width: double.infinity,
-        //           controller: EditCtrl.longitude,
-        //           label: 'Longitude',
-        //           hint: 'Enter location Longitude',
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // const SizedBox(
-        //   height: 32,
-        // ),
-        // Image.asset('assets/images/map.jpeg'),
-        const SizedBox(height: 16),
-        buttonRow(cPropCtrl.submitPropertyLocation),
-      ],
-    ),
-  );
-}
+// Widget createPropertyLocation() {
+//;}
 
 List? amenities;
 

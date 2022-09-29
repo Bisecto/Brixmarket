@@ -34,7 +34,7 @@ class ProfilingPage extends StatelessWidget {
           size: 18,
           text: 'My Profile',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(
@@ -140,7 +140,7 @@ class PersonalInformation extends StatelessWidget {
           size: 18,
           text: 'Personal Information',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         children: [
@@ -226,7 +226,7 @@ class AgencyInformation extends StatelessWidget {
           size: 18,
           text: 'Agency Information',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         children: [
@@ -346,7 +346,7 @@ class LocationInfo extends StatelessWidget {
           size: 18,
           text: 'Location Information',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         children: [
@@ -642,7 +642,7 @@ class IdentityDocument extends StatelessWidget {
           size: 18,
           text: 'Identity Document',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         children: [

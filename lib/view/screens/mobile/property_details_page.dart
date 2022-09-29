@@ -16,6 +16,7 @@ import '../../../libs/launch_urls.dart';
 import '../../../models/media_model.dart';
 import '../../../models/property_model.dart';
 import '../../../models/review_model.dart';
+import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
 import '../../widgets/custom_button.dart';
@@ -39,6 +40,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
   List detailsDescription = [];
   List<Media> imageList = [];
   Property property = Property();
+
   @override
   void initState() {
     property = propCtrl.property;
@@ -73,7 +75,12 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
           children: [
             const Icon(Icons.control_camera, color: Colors.black54, size: 18),
             const SizedBox(width: 16),
-            Expanded(child: CustomText(color: Colors.black54, text: feature.featureValue, weight: FontWeight.w500, size: 16)),
+            Expanded(
+                child: CustomText(
+                    color: Colors.black54,
+                    text: feature.featureValue,
+                    weight: FontWeight.w500,
+                    size: 16)),
           ],
         ),
       );
@@ -86,7 +93,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
           children: [
             const Icon(Icons.light_outlined, color: Colors.black54, size: 18),
             const SizedBox(width: 16),
-            CustomText(color: Colors.black54, text: value.amenity, weight: FontWeight.w500, size: 16),
+            CustomText(
+                color: Colors.black54,
+                text: value.amenity,
+                weight: FontWeight.w500,
+                size: 16),
           ],
         ),
       );
@@ -96,8 +107,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
     detailsDescription.add(productReviews(property));
 
     return Scaffold(
-      appBar:AppBar(
-        title: Text(property.title.toString(),maxLines: 1,),
+      appBar: AppBar(
+        title: Text(
+          property.title.toString(),
+          maxLines: 1,
+        ),
         automaticallyImplyLeading: false,
         systemOverlayStyle: SystemUiOverlayStyle(
           // Status bar color
@@ -125,7 +139,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                         Container(
                           width: Get.width,
                           height: Get.width,
-                          decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(propertyImgPath + images[index].media!))),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      propertyImgPath + images[index].media!))),
                         ),
                       ],
                     );
@@ -146,7 +164,9 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                       Icons.arrow_back_ios_new,
                       size: 10,
                     ),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white.withOpacity(0.6)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: Colors.white.withOpacity(0.6)),
                   ),
                 ),
               ),
@@ -164,7 +184,9 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                       Icons.arrow_forward_ios,
                       size: 10,
                     ),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white.withOpacity(0.4)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: Colors.white.withOpacity(0.4)),
                   ),
                 ),
               ),
@@ -190,7 +212,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                           ),
                         ),
                       ),
-                      Obx(() => SavePropertyIcon(property: property, user: propCtrl.user.value, state: homeCtrl.savingProperty.value, color: Colors.red)),
+                      Obx(() => SavePropertyIcon(
+                          property: property,
+                          user: propCtrl.user.value,
+                          state: homeCtrl.savingProperty.value,
+                          color: Colors.red)),
                     ],
                   ),
                 ),
@@ -208,21 +234,25 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                         color: Colors.black38,
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            const Icon(
-                              Icons.camera_enhance,
-                              color: Colors.orange,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 6),
-                            CustomText(
-                              maxLines: 1,
-                              text: imageNum == 0 ? '1/${images.length}' : '${imageNum + 1}/${images.length}',
-                              color: Colors.orange,
-                              size: 14,
-                              weight: FontWeight.w400,
-                            ),
-                          ]),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.camera_enhance,
+                                  color: Colors.orange,
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 6),
+                                CustomText(
+                                  maxLines: 1,
+                                  text: imageNum == 0
+                                      ? '1/${images.length}'
+                                      : '${imageNum + 1}/${images.length}',
+                                  color: Colors.orange,
+                                  size: 14,
+                                  weight: FontWeight.w400,
+                                ),
+                              ]),
                         ),
                       ),
                     ),
@@ -235,7 +265,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
           GestureDetector(
             onTap: () => Get.to(() => FullGalleryScreen(index: 1)),
             child: const Center(
-              child: CustomText(color: Colors.black54, text: 'Tap to view in fullScreen', weight: FontWeight.w700, size: 13),
+              child: CustomText(
+                  color: Colors.black54,
+                  text: 'Tap to view in fullScreen',
+                  weight: FontWeight.w700,
+                  size: 13),
             ),
           ),
           const SizedBox(height: 20),
@@ -249,17 +283,27 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         child: Center(
-                          child: CustomText(color: const Color(0xFF308b85), text: property.type!.toUpperCase(), weight: FontWeight.w400, size: 13),
+                          child: CustomText(
+                              color: const Color(0xFF308b85),
+                              text: property.type!.toUpperCase(),
+                              weight: FontWeight.w400,
+                              size: 13),
                         ),
                         color: Colors.black12,
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         margin: const EdgeInsets.only(left: 8, right: 8),
                         child: Center(
-                          child: CustomText(color: Colors.white, text: property.status!.toUpperCase(), weight: FontWeight.w400, size: 13),
+                          child: CustomText(
+                              color: Colors.white,
+                              text: property.status!.toUpperCase(),
+                              weight: FontWeight.w400,
+                              size: 13),
                         ),
                         color: Pallet.secondaryColor,
                       )
@@ -271,14 +315,19 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     unratedColor: Pallet.grayColor,
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
-                      color: property.averageRating == null ? Colors.black26 : Colors.yellow[900],
+                      color: property.averageRating == null
+                          ? Colors.black26
+                          : Colors.yellow[900],
                       size: 18,
                     ),
                     itemCount: 5,
                     itemSize: 18.0,
                     direction: Axis.horizontal,
                   ),
-                  CustomText(text: (property.numberOfRatingUsers ?? '0').toString(), weight: FontWeight.w200, size: 14),
+                  CustomText(
+                      text: (property.numberOfRatingUsers ?? '0').toString(),
+                      weight: FontWeight.w200,
+                      size: 14),
                 ],
               ),
             ),
@@ -291,7 +340,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 12.0),
-                  child: CustomText(color: Colors.black, text: property.title, weight: FontWeight.w500, size: 18),
+                  child: CustomText(
+                      color: Colors.black,
+                      text: property.title,
+                      weight: FontWeight.w500,
+                      size: 18),
                 ),
               ),
               const SizedBox(
@@ -310,7 +363,10 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                       width: Get.width * 0.8,
                       child: Text(
                         '${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
-                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14),
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
                         // overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -331,12 +387,25 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               children: [
                 Row(
                   children: [
-                    Container(
-                      height: 75,
-                      width: 75,
-                      decoration:
-                          BoxDecoration(shape: BoxShape.circle, image: DecorationImage(fit: BoxFit.cover, image: NetworkImage('$userImgPath${property.user?.image}'))),
+                    CircleAvatar(
+                      radius: 45 + 2,
+                      backgroundColor: Colors.blueGrey,
+                      child: CircleAvatar(
+                        radius: 45,
+                        backgroundImage:
+                            (user.image != null && user.image != '')
+                                ? NetworkImage(
+                                        '$userImgPath${property.user?.image}')
+                                    as ImageProvider
+                                : AssetImage(ImgStr.avatarImg),
+                      ),
                     ),
+                    // Container(
+                    //   height: 75,
+                    //   width: 75,
+                    //   decoration:
+                    //       BoxDecoration(shape: BoxShape.circle,color: Colors.red, image: DecorationImage(fit: BoxFit.cover, image: NetworkImage('$userImgPath${property.user?.image}'))),
+                    // ),
                     const SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,17 +413,30 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                         Stack(
                           children: [
                             Container(
-                                margin: const EdgeInsets.only(top: 12, right: 24),
-                                child: CustomText(color: Colors.black, text: accountName(user: property.user!), weight: FontWeight.bold, size: 16)),
+                                margin:
+                                    const EdgeInsets.only(top: 12, right: 24),
+                                child: CustomText(
+                                    color: Colors.black,
+                                    text: accountName(user: property.user!),
+                                    weight: FontWeight.bold,
+                                    size: 16)),
                             property.user?.verifiedAgent == false
                                 ? const SizedBox.shrink()
-                                : const Positioned(right: 2, top: 2, child: Icon(Icons.verified, color: Colors.green)),
+                                : const Positioned(
+                                    right: 2,
+                                    top: 2,
+                                    child: Icon(Icons.verified,
+                                        color: Colors.green)),
                           ],
                         ),
                         const SizedBox(height: 5),
                         CustomText(
-                            color: property.user?.verifiedAgent == false ? Colors.deepOrangeAccent : Colors.green,
-                            text: (property.user?.verifiedAgent == false ? 'Not Verified ' : 'Verified ') +
+                            color: property.user?.verifiedAgent == false
+                                ? Colors.deepOrangeAccent
+                                : Colors.green,
+                            text: (property.user?.verifiedAgent == false
+                                    ? 'Not Verified '
+                                    : 'Verified ') +
                                 (property.user?.isUser == true
                                     ? 'Property Agent'
                                     : property.user?.isAgent == true
@@ -371,7 +453,9 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               ],
             ),
           ),
-          user.id == property.user?.id ? const SizedBox.shrink() : const SizedBox(height: 24),
+          user.id == property.user?.id
+              ? const SizedBox.shrink()
+              : const SizedBox(height: 24),
           user.id == property.user?.id
               ? const SizedBox.shrink()
               : Padding(
@@ -379,36 +463,40 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        height: 42,
-                        width: 42,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
-                        child: OpenUrl(
-                          url: 'https://wa.me/${property.contact?.phoneNumber}',
-                          //phone: Str.contactPhone1.replaceAll(' ', ''),
-                          widget: Icon(
-                            Icons.whatsapp,
-                            color: Pallet.secondaryColor,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                      // GestureDetector(
-                      //   onTap: () => Whatsapp2.sendToNumber(property.contact?.phoneNumber ?? '', 'Hi ${property.user?.firstName}'),
-                      //   child: Container(
-                      //     height: 42,
-                      //     width: 42,
-                      //     child: const Icon(
+                      // Container(
+                      //   height: 42,
+                      //   width: 42,
+                      //   decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
+                      //   child: OpenUrl(
+                      //     url: 'https://wa.me/${property.contact?.phoneNumber}',
+                      //     //phone: Str.contactPhone1.replaceAll(' ', ''),
+                      //     widget: Icon(
                       //       Icons.whatsapp,
-                      //       size: 20,
                       //       color: Pallet.secondaryColor,
+                      //       size: 20,
                       //     ),
-                      //     decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
                       //   ),
                       // ),
                       GestureDetector(
+                        onTap: () => homeCtrl.shareApp(property: property),
+                        child: Container(
+                          height: 42,
+                          width: 42,
+                          child: const Icon(
+                            Icons.share,
+                            size: 20,
+                            color: Pallet.secondaryColor,
+                          ),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Pallet.secondaryColor.withOpacity(0.2)),
+                        ),
+                      ),
+                      GestureDetector(
                         onTap: () {
-                          _callNumber(property.contact?.phoneNumber ?? '');
+                          print(property.location!.landmarks);
+                          print(property.user!.phoneNumber);
+                          _callNumber(property.user!.phoneNumber ?? '');
                         },
                         child: Container(
                           height: 42,
@@ -418,12 +506,15 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                             size: 20,
                             color: Pallet.secondaryColor,
                           ),
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Pallet.secondaryColor.withOpacity(0.2)),
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
-                          homeCtrl.loginRequest(request: () => homeCtrl.chatWithSeller(property));
+                          homeCtrl.loginRequest(
+                              request: () => homeCtrl.chatWithSeller(property));
                         },
                         child: Container(
                           height: 42,
@@ -433,7 +524,9 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                             size: 28,
                             color: Pallet.secondaryColor,
                           ),
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor.withOpacity(0.2)),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Pallet.secondaryColor.withOpacity(0.2)),
                         ),
                       ),
                     ],
@@ -455,7 +548,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   color: Pallet.secondaryColor,
                 ),
                 const SizedBox(width: 10),
-                const CustomText(color: Colors.black, text: 'Description', weight: FontWeight.w400, size: 18),
+                const CustomText(
+                    color: Colors.black,
+                    text: 'Description',
+                    weight: FontWeight.w400,
+                    size: 18),
               ],
             ),
           ),
@@ -467,12 +564,21 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               trimLines: 9,
               colorClickableText: Colors.pink,
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey[600]),
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[600]),
               trimMode: TrimMode.Line,
-              lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Pallet.secondaryColor),
+              lessStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Pallet.secondaryColor),
               trimCollapsedText: '  Read more',
               trimExpandedText: '  Read less',
-              moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Pallet.secondaryColor),
+              moreStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Pallet.secondaryColor),
             ),
           ),
           const SizedBox(height: 15),
@@ -486,12 +592,25 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   color: Pallet.secondaryColor,
                 ),
                 const SizedBox(width: 10),
-                const CustomText(maxLines:2,color: Colors.black, text: 'Landmark', weight: FontWeight.w400, size: 18),
+                const CustomText(
+                    maxLines: 2,
+                    color: Colors.black,
+                    text: 'Landmarks near this property',
+                    weight: FontWeight.w400,
+                    size: 18),
               ],
             ),
           ),
           const SizedBox(height: 5),
-          CustomText(maxLines:2,color: Colors.black, text: property.location!.landmarks, weight: FontWeight.w400, size: 18),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: CustomText(
+                maxLines: 2,
+                color: Colors.black,
+                text: property.location!.landmarks,
+                //weight: FontWeight.w400,
+                size: 18),
+          ),
           const SizedBox(height: 15),
           Container(
             color: const Color(0xFFf9f9f9),
@@ -522,10 +641,17 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                                   child: Container(
                                       height: 50,
                                       width: double.infinity,
-                                      margin: const EdgeInsets.symmetric(horizontal: 0),
-                                      decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade200))),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color:
+                                                      Colors.grey.shade200))),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           active.contains(index)
                                               ? const Icon(
@@ -539,32 +665,54 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                                                   size: 24,
                                                 ),
                                           const SizedBox(width: 12),
-                                          Expanded(
-                                            child: CustomText(
-                                              text: Lst.propertyDetailTitle[index],
-                                              size: 18,
-                                              weight: FontWeight.w600,
-                                              color: Colors.black,
+                                          if (index == 0)
+                                            Expanded(
+                                              child: CustomText(
+                                                text:
+                                                    "${Lst.propertyDetailTitle[0]} (Nearby)",
+                                                size: 18,
+                                                weight: FontWeight.w600,
+                                                color: Colors.black,
+                                              ),
                                             ),
-                                          ),
+                                          if (index != 0)
+                                            Expanded(
+                                              child: CustomText(
+                                                text: Lst
+                                                    .propertyDetailTitle[index],
+                                                size: 18,
+                                                weight: FontWeight.w600,
+                                                color: Colors.black,
+                                              ),
+                                            ),
                                         ],
                                       )),
                                 ),
                                 Visibility(
-                                  visible: active.contains(index) ? true : false,
+                                  visible:
+                                      active.contains(index) ? true : false,
                                   child: AnimatedContainer(
                                     width: double.infinity,
                                     duration: const Duration(seconds: 1),
                                     child: Container(
-                                        padding: const EdgeInsets.only(left: 16, bottom: 24, top: 24, right: 8),
+                                        padding: const EdgeInsets.only(
+                                            left: 16,
+                                            bottom: 24,
+                                            top: 24,
+                                            right: 8),
                                         decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.005),
-                                          border: const Border.symmetric(horizontal: BorderSide(color: Colors.black12)),
+                                          color:
+                                              Colors.black.withOpacity(0.005),
+                                          border: const Border.symmetric(
+                                              horizontal: BorderSide(
+                                                  color: Colors.black12)),
                                         ),
                                         child: index == 0 || index == 1
                                             ? Wrap(
-                                                alignment: WrapAlignment.spaceBetween,
-                                                children: detailsDescription[index],
+                                                alignment:
+                                                    WrapAlignment.spaceBetween,
+                                                children:
+                                                    detailsDescription[index],
                                               )
                                             : detailsDescription[index]),
                                   ),
@@ -585,10 +733,14 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   child: Container(
                     padding: const EdgeInsets.only(left: 16),
                     child: GestureDetector(
-                      onTap: () => homeCtrl.loginRequest(request: () => writeReview(property.id)),
+                      onTap: () => homeCtrl.loginRequest(
+                          request: () => writeReview(property.id)),
                       child: const Text(
                         'Write a Review',
-                        style: TextStyle(color: Pallet.secondaryColor, decoration: TextDecoration.underline, fontSize: 16),
+                        style: TextStyle(
+                            color: Pallet.secondaryColor,
+                            decoration: TextDecoration.underline,
+                            fontSize: 16),
                       ),
                     ),
                   ),
@@ -600,13 +752,19 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               height: 50,
               margin: const EdgeInsets.symmetric(horizontal: 12),
               width: double.infinity,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), border: Border.all(color: Colors.blueGrey, width: 1.5)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: Colors.blueGrey, width: 1.5)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/megap.png', height: 25, width: 25),
                   const SizedBox(width: 10),
-                  const CustomText(color: Colors.black, text: 'Flag as inappropriate', weight: FontWeight.w400, size: 14),
+                  const CustomText(
+                      color: Colors.black,
+                      text: 'Flag as inappropriate',
+                      weight: FontWeight.w400,
+                      size: 14),
                 ],
               ),
             ),
@@ -618,7 +776,9 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
               height: 50,
               margin: const EdgeInsets.symmetric(horizontal: 12),
               width: double.infinity,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), border: Border.all(color: Colors.blueGrey, width: 1.5)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: Colors.blueGrey, width: 1.5)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -627,7 +787,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     color: Pallet.secondaryColor,
                   ),
                   SizedBox(width: 10),
-                  CustomText(color: Colors.black, text: 'Share to a Friend', weight: FontWeight.w400, size: 14),
+                  CustomText(
+                      color: Colors.black,
+                      text: 'Share to a Friend',
+                      weight: FontWeight.w400,
+                      size: 14),
                 ],
               ),
             ),
@@ -640,7 +804,8 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
         child: Container(
             height: 62,
             padding: const EdgeInsets.only(left: 12, right: 12, bottom: 8),
-            decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.black12))),
+            decoration: const BoxDecoration(
+                border: Border(top: BorderSide(color: Colors.black12))),
             child: Row(
               children: [
                 Expanded(
@@ -648,15 +813,27 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const CustomText(color: Colors.blueGrey, text: 'PRICE', weight: FontWeight.bold, size: 14),
+                      const CustomText(
+                          color: Colors.blueGrey,
+                          text: 'PRICE',
+                          weight: FontWeight.bold,
+                          size: 14),
                       Row(
                         children: [
-                          CustomText(color: Pallet.secondaryColor, text: Utils.amount(property.price!), weight: FontWeight.bold, size: 18),
+                          CustomText(
+                              color: Pallet.secondaryColor,
+                              text: Utils.amount(property.price!),
+                              weight: FontWeight.bold,
+                              size: 18),
                           const SizedBox(width: 5),
                           property.priceDuration!.substring(0, 3) == 'Per'
                               ? CustomText(
                                   color: Colors.blueGrey,
-                                  text: property.priceDuration!.substring(0, 3) == 'Per' ? property.priceDuration!.toUpperCase() : '',
+                                  text: property.priceDuration!
+                                              .substring(0, 3) ==
+                                          'Per'
+                                      ? property.priceDuration!.toUpperCase()
+                                      : '',
                                   weight: FontWeight.bold,
                                   size: 10)
                               : const SizedBox(height: 8),
@@ -683,7 +860,8 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
   }
 
   void nextPage() {
-    _controller.animateToPage(_controller.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+    _controller.animateToPage(_controller.page!.toInt() + 1,
+        duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
 
     setState(() {
       if (imageNum == imageList.length - 1) {
@@ -694,7 +872,8 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
   }
 
   void previousPage() {
-    _controller.animateToPage(_controller.page!.toInt() - 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+    _controller.animateToPage(_controller.page!.toInt() - 1,
+        duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
 
     setState(() {
       if (imageNum == 0) {
@@ -736,7 +915,8 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   itemCount: 5,
                   itemSize: 32,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber),
+                  itemBuilder: (context, _) =>
+                      const Icon(Icons.star, color: Colors.amber),
                   onRatingUpdate: (rating) {
                     EditCtrl.rating.text = rating.toInt().toString();
                   },
@@ -794,7 +974,9 @@ Widget productReviews(Property property) {
                               unratedColor: Pallet.grayColor,
                               itemBuilder: (context, index) => Icon(
                                 Icons.star,
-                                color: property.averageRating == null ? Colors.black26 : Colors.yellow[900],
+                                color: property.averageRating == null
+                                    ? Colors.black26
+                                    : Colors.yellow[900],
                                 size: 18,
                               ),
                               itemCount: 5,
@@ -861,7 +1043,11 @@ flagInappropriate(propertyId) {
                 ),
                 const SizedBox(height: 20),
                 FormInput(
-                  value: isLogin && user.phoneNumber != null && user.phoneNumber != '' ? user.phoneNumber : '',
+                  value: isLogin &&
+                          user.phoneNumber != null &&
+                          user.phoneNumber != ''
+                      ? user.phoneNumber
+                      : '',
                   controller: EditCtrl.phone,
                   error: EditCtrl.phoneErr,
                   validate: Val.phone,
@@ -938,7 +1124,10 @@ requestATour(propertyId) {
             ),
             const SizedBox(height: 20),
             FormInput(
-              value: isLogin && user.phoneNumber != null && user.phoneNumber != '' ? user.phoneNumber : '',
+              value:
+                  isLogin && user.phoneNumber != null && user.phoneNumber != ''
+                      ? user.phoneNumber
+                      : '',
               controller: EditCtrl.phone,
               error: EditCtrl.phoneErr,
               validate: Val.phone,

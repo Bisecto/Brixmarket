@@ -2,6 +2,7 @@ import 'package:brixmarket/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
@@ -343,6 +344,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     var response = await Provider().postData("user/get-new-notifications", User.map());
     if (response != null) {
       return response.isEmpty ? null : newNotifications.value = response.length;
+
     }
     return null;
   }

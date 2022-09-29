@@ -34,7 +34,7 @@ class _HelpPageState extends State<HelpPage> {
             size: 18,
             text: 'Help',
           ),
-          actions: const [AppBarMenu(logout: true, myAccount: true)],
+          actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
         ),
         body: ListView(
             padding: const EdgeInsets.symmetric(
@@ -149,7 +149,7 @@ class _FAQPageState extends State<FAQPage> {
           size: 18,
           text: 'FAQs',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         shrinkWrap: true,
@@ -314,7 +314,7 @@ class ContactPage extends StatelessWidget {
           weight: FontWeight.bold,
           text: 'Contact Us',
         ),
-        actions: [web ? const SizedBox.shrink() : const AppBarMenu(logout: true, myAccount: true)],
+        actions: [web ? const SizedBox.shrink() : const AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         shrinkWrap: true,
@@ -549,7 +549,7 @@ class TermsPage extends StatelessWidget {
           size: 18,
           text: 'Terms and Conditions',
         ),
-        actions: [HomeController.isLogin.value ? const AppBarMenu(logout: true, myAccount: true) : const SizedBox.shrink()],
+        actions: [HomeController.isLogin.value ? const AppBarMenu(logout: true, myAccount: true, propertyIDS: [],) : const SizedBox.shrink()],
       ),
       body: Column(
         children: <Widget>[
@@ -622,7 +622,7 @@ class PolicyPage extends StatelessWidget {
           size: 18,
           text: 'Privacy Policy',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: Column(
         children: <Widget>[
@@ -673,7 +673,7 @@ class AboutUsPage extends StatelessWidget {
           size: 18,
           text: 'About Us',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         children: [

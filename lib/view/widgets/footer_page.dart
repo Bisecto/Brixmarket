@@ -146,6 +146,7 @@ Widget pageFooter() {
                       footerQuickLind('Buy', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.buy)),
                       footerQuickLind('Rent', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.rent)),
                       footerQuickLind('New Home', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes)),
+                      footerQuickLind('Short Stay', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay)),
                       footerQuickLind('Commercial', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.commercial)),
                       footerQuickLind('Premium Realtors', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.premiumRealtors)),
                     ]),

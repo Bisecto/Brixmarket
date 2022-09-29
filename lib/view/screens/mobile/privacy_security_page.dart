@@ -28,7 +28,7 @@ class PrivacySecurityPage extends StatelessWidget {
           size: 18,
           text: 'Privacy and Security',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(
@@ -96,7 +96,7 @@ class ChangePasswordPage extends StatelessWidget {
           size: 18,
           text: 'Change Password',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: ListView(
         children: [

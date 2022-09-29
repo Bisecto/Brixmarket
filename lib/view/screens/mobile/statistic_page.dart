@@ -27,9 +27,9 @@ class _StatisticPageState extends State<StatisticPage> {
         title: const CustomText(
           color: Colors.white,
           size: 18,
-          text: 'Statistics',
+          text: 'Analytics',
         ),
-        actions: const [AppBarMenu(logout: true, myAccount: true)],
+        actions: const [AppBarMenu(logout: true, myAccount: true, propertyIDS: [],)],
       ),
       body: FutureBuilder(
           future: cPropCtrl.getInsight(),
@@ -43,7 +43,7 @@ class _StatisticPageState extends State<StatisticPage> {
                 const SizedBox(height: 20),
                 const CustomText(
                   color: Colors.black,
-                  size: 14,
+                  size: 16,
                   text: 'See real time progression of your ads',
                   weight: FontWeight.w600,
                 ),
@@ -67,8 +67,8 @@ class _StatisticPageState extends State<StatisticPage> {
                                     child: CustomText(
                                       text: 'No data is captured yet',
                                       color: Colors.blueGrey,
-                                      weight: FontWeight.w100,
-                                      size: 14,
+                                      weight: FontWeight.bold,
+                                      size: 16,
                                     ),
                                   )),
                             ),
@@ -85,15 +85,15 @@ class _StatisticPageState extends State<StatisticPage> {
                                   child: CustomText(
                                     text: 'No records',
                                     color: Colors.blueGrey,
-                                    weight: FontWeight.w100,
-                                    size: 14,
+                                    weight: FontWeight.bold,
+                                    size: 16,
                                   ),
                                 )),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          InkWell(onTap: () => cPropCtrl.sideNavIndex.value = 4, child: Image.asset('assets/images/proplan.png')),
+                         // InkWell(onTap: () => cPropCtrl.sideNavIndex.value = 4, child: Image.asset('assets/images/proplan.png')),
                         ],
                       )
                     : Column(

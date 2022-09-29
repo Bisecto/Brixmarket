@@ -3,6 +3,7 @@ import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
 import '../models/user_model.dart';
+import '../view/screens/create_property/create_property_widges.dart';
 import 'property_controller.dart';
 
 var homeCtrl = Get.find<PropCtrl>(tag: 'home');

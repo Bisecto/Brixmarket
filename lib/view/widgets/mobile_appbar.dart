@@ -190,6 +190,18 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                             ),
                             const SizedBox(width: 32),
                             InkWell(
+                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay),
+                              child: Obx(() => Text(
+                                Str.shortStay,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: homeCtrl.activeNavItem.value == NavItems.shortStay ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                                ),
+                              )),
+                            ),
+                            const SizedBox(width: 32),
+                            InkWell(
                               onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.commercial),
                               child: Obx(() => Text(
                                     Str.commercial,
@@ -268,6 +280,7 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                           ? Padding(
                               padding: const EdgeInsets.only(top: 6.0),
                               child: AppBarMenu(
+                                propertyIDS: [],
                                 child: circleProfileImage(radius: 20),
                               ),
                             )
@@ -275,6 +288,7 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                               login: true,
                               logout: false,
                               myAccount: false,
+                              propertyIDS: [],
                               child: Card(
                                 elevation: 4,
                                 child: Padding(

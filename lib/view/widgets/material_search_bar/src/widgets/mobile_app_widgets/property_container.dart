@@ -208,24 +208,35 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   margin: const EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.black12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.max,
+                  child: Column(
                     children: [
-                      ...property.features!.map((feature) {
-                        iFeature++;
-                        return iFeature >= 4
-                            ? const SizedBox.shrink()
-                            : Expanded(
-                                child: Column(
-                                  children: [
-                                    const Icon(Icons.bed, color: Colors.black, size: 18),
-                                    const SizedBox(width: 5),
-                                    CustomText(color: Colors.black, text: feature.featureValue, weight: FontWeight.w500, size: 14),
-                                  ],
-                                ),
-                              );
-                      }).toList(),
+
+                      CustomText(
+                        text: 'Institutions near this property',
+                        color: Colors.red,
+                        weight: FontWeight.bold,
+                      ),
+                      const SizedBox(height: 8),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ...property.features!.map((feature) {
+                            iFeature++;
+                            return iFeature >= 4
+                                ? const SizedBox.shrink()
+                                : Expanded(
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(width: 3),
+                                        CustomText(color: Colors.black, text: feature.featureValue, weight: FontWeight.w500, size: 13),
+                                      ],
+                                    ),
+                                  );
+                          }).toList(),
+                        ],
+                      ),
                     ],
                   ),
                 )

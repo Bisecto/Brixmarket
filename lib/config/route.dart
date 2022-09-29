@@ -89,7 +89,7 @@ List<GetPage<dynamic>> mobileHomePages = [
 
 //Mobile Dashboard Pages
 List<GetPage<dynamic>> mobileDashboardPages = [
-  GetPage(name: RouteStr.mobileCreateProperty, page: () => const AddPropertyPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+  GetPage(name: RouteStr.mobileCreateProperty, page: () =>  AddPropertyPage(isEdit: true,), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.mobileChatHistory, page: () => const ChatPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.chat, page: () => const ChatDetailPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.mobileMyProperties, page: () => const MyAdsPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),

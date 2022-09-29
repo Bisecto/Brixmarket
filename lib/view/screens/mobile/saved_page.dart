@@ -18,6 +18,13 @@ class SavedPages extends StatefulWidget {
 }
 
 class _SavedPagesState extends State<SavedPages> {
+  List<String> propertyID=[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -42,11 +49,11 @@ class _SavedPagesState extends State<SavedPages> {
             size: 18,
             text: 'Favourites',
           ),
-          actions: const [
+          actions:  [
             AppBarMenu(
               logout: true,
               myAccount: true,
-              clearSave: true,
+              clearSave: true, propertyIDS:homeCtrl.user.value.savedProperties!,
             ),
           ],
         ),

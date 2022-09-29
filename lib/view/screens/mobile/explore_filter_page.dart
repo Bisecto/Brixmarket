@@ -8,6 +8,7 @@ import '../../../controllers/instance.dart';
 import '../../../res/lists.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/drop_down.dart';
+import '../create_property/create_property_widges.dart';
 
 class FilterExplorePage extends StatelessWidget {
   final bool isWeb;
@@ -109,18 +110,18 @@ class FilterExplorePage extends StatelessWidget {
                         items: Lst.ngLGA[EditCtrl.filterState.value.text] ?? [],
                       )),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
-                  child: DropDown(
-                    width: maxWidth * 0.9,
-                    color: Colors.white10,
-                    showLabel: false,
-                    labelColor: Colors.black54,
-                    controller: EditCtrl.filterLandMark,
-                    label: 'Landmarks',
-                    items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
+                //   child: DropDown(
+                //     width: maxWidth * 0.9,
+                //     color: Colors.white10,
+                //     showLabel: false,
+                //     labelColor: Colors.black54,
+                //     controller: EditCtrl.filterLandMark,
+                //     label: 'Landmarks',
+                //     items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
+                //   ),
+                // ),
                 Obx(() => propCtrl.showMoreFilter.value
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

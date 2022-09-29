@@ -70,7 +70,16 @@ class CreatePropertyCtrl extends GetxController {
     }
     cPPageController.animateToPage(cPPageController.page!.toInt() - 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
-
+  ToSpecifiedpage() {
+    createPropScrollCtrl.jumpTo(0);
+    if (createPropPageIndex.value < 5) {
+      createPropPageIndex.value++;
+    }
+    cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+  }
+  Toinitial(){
+    createPropPageIndex.value=0;
+  }
   bool saveToDraft = false;
   gotoNext({required int pageIndex}) {
     createPropScrollCtrl.jumpTo(0);
@@ -82,13 +91,10 @@ class CreatePropertyCtrl extends GetxController {
       sideNavIndex.refresh();
       createPropPageIndex.refresh();
       //EditCtrl.disposeControllers();
-      getAmenities();
-      getFeatures();
     } else {
       createPropPageIndex.value = pageIndex;
       cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
-      getAmenities();
-      getFeatures();
+
     }
   }
 
@@ -140,6 +146,8 @@ class CreatePropertyCtrl extends GetxController {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         gotoNext(pageIndex: 1);
+        getAmenities();
+        getFeatures();
       } else{
         Preloader.hide();
         MSG.errorSnackBar('There was a problem uploading product details',title: 'Message');
@@ -166,7 +174,7 @@ class CreatePropertyCtrl extends GetxController {
         'Image uploaded is not up to 3',
       );
     } else {
-      Preloader.show();
+      Preloader.show(msg: 'Images uploading..... please wait');
       var data = Property.map();
       var response = await Provider().postFiles("property/store-media/${data['property']}", EditCtrl.image8Lists.value, data: data);
       if (response != null) {
@@ -223,7 +231,7 @@ class CreatePropertyCtrl extends GetxController {
         address: EditCtrl.address.text,
         city: EditCtrl.city.value.text,
         state: EditCtrl.state.value.text,
-        landmarks: EditCtrl.latitude.text,
+        landmarks: EditCtrl.landmarks.value.text,
         longitude: EditCtrl.longitude.value.text,
         latitude: EditCtrl.latitude.value.text,
       );
@@ -232,6 +240,8 @@ class CreatePropertyCtrl extends GetxController {
       if (response != null) {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
+        getAmenities();
+        getFeatures();
         gotoNext(pageIndex: 3);
       }else{
         Preloader.hide();
@@ -247,14 +257,14 @@ class CreatePropertyCtrl extends GetxController {
     Map<String, dynamic> map = {};
     for (var ctrl in EditCtrl.ctrlList) {
       var key = EditCtrl.ctrlListKeys[i++];
-      // if (ctrl.value.text.trim().isEmpty && isValidData) {
-      //   isValidData = false;
-      //   MSG.errorSnackBar(
-      //     '${key.text} field is required',
-      //   );
-      // } else {
+      if (ctrl.value.text.trim().isEmpty && isValidData) {
+        isValidData = false;
+        MSG.errorSnackBar(
+          '${key.text} field is required',
+        );
+      } else {
         map['features[${key.text}]'] = ctrl.value.text.trim();
-      //}
+      }
     }
     if (isValidData) {
       Preloader.show();
@@ -303,7 +313,7 @@ class CreatePropertyCtrl extends GetxController {
     } else {
       Preloader.show();
       Map<String, dynamic> data = Property.map(
-        address: EditCtrl.title.text,
+        address: EditCtrl.userAddress.text,
         email: EditCtrl.email.text,
         phone: EditCtrl.phone.text,
         whatsAppNumber: EditCtrl.whatsAppNumber.text,

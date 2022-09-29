@@ -47,7 +47,7 @@ class AccountPage extends StatelessWidget {
             text: 'My Account',
             weight: FontWeight.w600,
           ),
-          actions: const [AppBarMenu(logout: true, myAccount: false)],
+          actions: const [AppBarMenu(logout: true, myAccount: false, propertyIDS: [],)],
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(
@@ -68,7 +68,8 @@ class AccountPage extends StatelessWidget {
             buildListTile(
                 onTap: ()  {
                    EditCtrl.disposeControllers();
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const AddPropertyPage()));
+                   cPropCtrl.Toinitial();
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> AddPropertyPage(isEdit: false,)));
                   //Get.toNamed(RouteStr.mobileCreateProperty);
                 },
                 title: 'Place Ad',
@@ -85,7 +86,7 @@ class AccountPage extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(RouteStr.mobileStatistic);
                 },
-                title: 'Stats',
+                title: 'Analytics',
                 icon: Icons.stacked_bar_chart),
             buildListTile(
                 onTap: () {
@@ -111,7 +112,7 @@ class AccountPage extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(RouteStr.mobileNotificationSettings);
                 },
-                title: 'Notification',
+                title: 'Notification Settings',
                 icon: Icons.app_settings_alt),
             const SizedBox(
               height: 20,

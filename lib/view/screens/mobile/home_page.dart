@@ -28,8 +28,9 @@ class MobileHomePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         return (await showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
                 title: const Text('Are you sure?'),
                 content: const Text('Do you want to exit an App'),
                 actions: <Widget>[
@@ -43,7 +44,7 @@ class MobileHomePage extends StatelessWidget {
                   ),
                 ],
               ),
-            )) ??
+        )) ??
             false;
       },
       child: Scaffold(
@@ -97,10 +98,19 @@ class MobileHomePage extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: Get.width * 1.3 > 580 ? Get.width * 0.6 : Get.width * 0.8,
-                    decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/home1.jpg'), fit: BoxFit.cover)),
+                    height: Get.width * 1.3 > 580
+                        ? Get.width * 0.6
+                        : Get.width * 0.8,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/home1.jpg'),
+                            fit: BoxFit.cover)),
                   ),
-                  Container(height: Get.width * 1.3 > 580 ? Get.width * 0.6 : Get.width * 0.8, color: Colors.black38),
+                  Container(
+                      height: Get.width * 1.3 > 580
+                          ? Get.width * 0.6
+                          : Get.width * 0.8,
+                      color: Colors.black38),
                   SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.all(10),
@@ -116,22 +126,28 @@ class MobileHomePage extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               const SizedBox(width: 5),
-                              const CurrentLocation(),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 15.0),
+                                child: const CurrentLocation(),
+                              ),
                               const SizedBox(width: 5),
-
                               const Spacer(),
                               HomeController.isLogin.value
-                                  ? Obx(() => Text(
-                                        accountName(user: homeCtrl.user.value, home: true),
-                                        style: const TextStyle(color: Colors.white, fontSize: 15),
-                                      ))
+                                  ? Obx(() =>
+                                  Text(
+                                    accountName(
+                                        user: homeCtrl.user.value,
+                                        home: true),
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ))
                                   : InkWell(
-                                      onTap: () => Get.toNamed(RouteStr.login),
-                                      child: const CustomText(
-                                        text: Str.signIn,
-                                        color: Colors.white,
-                                      ),
-                                    )
+                                onTap: () => Get.toNamed(RouteStr.login),
+                                child: const CustomText(
+                                  text: Str.signIn,
+                                  color: Colors.white,
+                                ),
+                              )
                             ],
                           ),
                           SizedBox(height: Get.width * 0.1),
@@ -154,9 +170,11 @@ class MobileHomePage extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.only(left: 8, right: 9, top: 16),
+                            padding: const EdgeInsets.only(
+                                left: 8, right: 9, top: 16),
                             child: GestureDetector(
-                              onTap: () => Get.toNamed(RouteStr.mobileHomeSearch),
+                              onTap: () =>
+                                  Get.toNamed(RouteStr.mobileHomeSearch),
                               child: SearchInput(
                                 width: Get.width,
                                 height: Get.width > 480 ? 48 : 42,
@@ -173,18 +191,24 @@ class MobileHomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(height: 3, margin: const EdgeInsets.only(top: 0), decoration: const BoxDecoration(color: Pallet.secondaryColor)),
+              Container(
+                  height: 3,
+                  margin: const EdgeInsets.only(top: 0),
+                  decoration:
+                  const BoxDecoration(color: Pallet.secondaryColor)),
               const SizedBox(height: 36),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const [
-                  CustomText(
-                    text: 'Top Premium Realtors',
-                    color: Colors.blueGrey,
-                    size: 16,
-                    weight: FontWeight.w600,
-                  ),
-                ]),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      CustomText(
+                        text: 'Top Premium Realtors',
+                        color: Colors.blueGrey,
+                        size: 16,
+                        weight: FontWeight.w600,
+                      ),
+                    ]),
               ),
               Align(
                   alignment: Alignment.topLeft,
@@ -194,17 +218,23 @@ class MobileHomePage extends StatelessWidget {
                           width: 32,
                           height: 4,
                           margin: const EdgeInsets.only(left: 16, top: 4),
-                          decoration: BoxDecoration(color: Pallet.secondaryColor, borderRadius: BorderRadius.circular(2))),
+                          decoration: BoxDecoration(
+                              color: Pallet.secondaryColor,
+                              borderRadius: BorderRadius.circular(2))),
                       Container(
                           width: 8,
                           height: 4,
                           margin: const EdgeInsets.only(left: 4, top: 4),
-                          decoration: BoxDecoration(color: Pallet.secondaryColor, borderRadius: BorderRadius.circular(2))),
+                          decoration: BoxDecoration(
+                              color: Pallet.secondaryColor,
+                              borderRadius: BorderRadius.circular(2))),
                       Container(
                           width: 4,
                           height: 4,
                           margin: const EdgeInsets.only(left: 4, top: 4),
-                          decoration: BoxDecoration(color: Pallet.secondaryColor, borderRadius: BorderRadius.circular(2))),
+                          decoration: BoxDecoration(
+                              color: Pallet.secondaryColor,
+                              borderRadius: BorderRadius.circular(2))),
                     ],
                   )),
               const SizedBox(height: 8),
@@ -217,14 +247,16 @@ class MobileHomePage extends StatelessWidget {
                       return snap.connectionState == ConnectionState.waiting
                           ? Preloader.loadingWidget()
                           : ListView.builder(
-                              itemCount: properties.length,
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                Property property = properties[index];
-                                return buildPremiumList(showMore: false, property: property);
-                              });
+                          itemCount: properties.length,
+                          scrollDirection: Axis.horizontal,
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 15),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            Property property = properties[index];
+                            return buildPremiumList(
+                                showMore: false, property: property);
+                          });
                     }),
               ),
               const SizedBox(height: 20),
@@ -235,40 +267,47 @@ class MobileHomePage extends StatelessWidget {
                     return snap.connectionState == ConnectionState.waiting
                         ? SizedBox(height: 48, child: Preloader.loadingWidget())
                         : ListView.builder(
-                            itemCount: properties.length,
-                            scrollDirection: Axis.vertical,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              Property property = properties[index];
-                              return buildPremiumList(showMore: false, property: property, home: true);
-                            });
+                        itemCount: properties.length,
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          Property property = properties[index];
+                          return buildPremiumList(
+                              showMore: false,
+                              property: property,
+                              home: true);
+                        });
                   }),
               const SizedBox(height: 36),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: const BoxDecoration(
                   color: Colors.black12,
-                  border: Border(bottom: BorderSide(color: Colors.red, width: 2)),
+                  border:
+                  Border(bottom: BorderSide(color: Colors.red, width: 2)),
                 ),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  const CustomText(
-                    text: 'Featured Listing',
-                    color: Colors.blueGrey,
-                    size: 16,
-                    weight: FontWeight.w600,
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(RouteStr.mobileHomeSearch),
-                    child: const CustomText(
-                      text: 'Search Your Location',
-                      color: Pallet.secondaryColor,
-                      size: 14,
-                      weight: FontWeight.w500,
-                    ),
-                  ),
-                ]),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const CustomText(
+                        text: 'Featured Listing',
+                        color: Colors.blueGrey,
+                        size: 16,
+                        weight: FontWeight.w600,
+                      ),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(RouteStr.mobileHomeSearch),
+                        child: const CustomText(
+                          text: 'Search Your Location',
+                          color: Pallet.secondaryColor,
+                          size: 14,
+                          weight: FontWeight.w500,
+                        ),
+                      ),
+                    ]),
               ),
               const SizedBox(height: 24),
               Container(
@@ -281,13 +320,15 @@ class MobileHomePage extends StatelessWidget {
                       return snap.connectionState == ConnectionState.waiting
                           ? Preloader.loadingWidget()
                           : ListView.builder(
-                              itemCount: properties.length,
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return buildFeaturedListing(property: properties[index]);
-                              });
+                          itemCount: properties.length,
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return buildFeaturedListing(
+                                property: properties[index]);
+                          });
                     }),
               ),
               const SizedBox(height: 36),
@@ -316,17 +357,23 @@ class MobileHomePage extends StatelessWidget {
                           width: 32,
                           height: 4,
                           margin: const EdgeInsets.only(left: 16, top: 4),
-                          decoration: BoxDecoration(color: Pallet.secondaryColor, borderRadius: BorderRadius.circular(2))),
+                          decoration: BoxDecoration(
+                              color: Pallet.secondaryColor,
+                              borderRadius: BorderRadius.circular(2))),
                       Container(
                           width: 8,
                           height: 4,
                           margin: const EdgeInsets.only(left: 4, top: 4),
-                          decoration: BoxDecoration(color: Pallet.secondaryColor, borderRadius: BorderRadius.circular(2))),
+                          decoration: BoxDecoration(
+                              color: Pallet.secondaryColor,
+                              borderRadius: BorderRadius.circular(2))),
                       Container(
                           width: 4,
                           height: 4,
                           margin: const EdgeInsets.only(left: 4, top: 4),
-                          decoration: BoxDecoration(color: Pallet.secondaryColor, borderRadius: BorderRadius.circular(2))),
+                          decoration: BoxDecoration(
+                              color: Pallet.secondaryColor,
+                              borderRadius: BorderRadius.circular(2))),
                     ],
                   )),
               FutureBuilder(
@@ -336,15 +383,18 @@ class MobileHomePage extends StatelessWidget {
                     return snap.connectionState == ConnectionState.waiting
                         ? Preloader.loadingWidget()
                         : ListView.builder(
-                            itemCount: properties.length,
-                            scrollDirection: Axis.vertical,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              Property property = properties[index];
-                              return buildPremiumList(showMore: false, property: property, home2: true);
-                            });
+                        itemCount: properties.length,
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          Property property = properties[index];
+                          return buildPremiumList(
+                              showMore: false,
+                              property: property,
+                              home2: true);
+                        });
                   }),
               const SizedBox(height: 24),
             ],
@@ -395,10 +445,15 @@ class MobileHomePage extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 margin: const EdgeInsets.only(left: 0),
                 child: Center(
-                  child: CustomText(color: Colors.yellow, text: Utils.amount(property.price ?? 0), weight: FontWeight.bold, size: 13),
+                  child: CustomText(
+                      color: Colors.yellow,
+                      text: Utils.amount(property.price ?? 0),
+                      weight: FontWeight.bold,
+                      size: 13),
                 ),
                 decoration: const BoxDecoration(color: Pallet.secondaryColor),
               )
@@ -406,6 +461,88 @@ class MobileHomePage extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class SearchByNameOfProperty extends StatefulWidget {
+  const SearchByNameOfProperty({Key? key}) : super(key: key);
+
+  @override
+  State<SearchByNameOfProperty> createState() => _SearchByNameOfPropertyState();
+}
+
+class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
+  var myFocusNode = FocusNode().obs;
+  TextEditingController tc = TextEditingController();
+  String SearchValue = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Pallet.secondaryColor,
+          automaticallyImplyLeading: true,
+          leadingWidth: 28,
+          title: Container(
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: Hero(
+                tag: 'search',
+                child: Material(
+                  child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              SearchValue = value;
+                            });
+                          },
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: myFocusNode.value.hasFocus
+                            ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () => Get.back(),
+                        )
+                            : const SizedBox.shrink(),
+                        hintText: 'Search with name of property',
+                        border: InputBorder.none),
+
+                        ),
+                ),
+
+              ),
+            ),
+          )),
+
+      body: Container(
+        child: FutureBuilder(
+            future: propCtrl.getProperties(),
+            builder: (context, AsyncSnapshot snap) {
+              List<Property> properties = snap.data ?? [];
+              return snap.connectionState == ConnectionState.waiting
+                  ? Preloader.loadingWidget()
+                  :
+              ListView.builder(
+                  itemCount: properties.length,
+                  scrollDirection: Axis.vertical,
+                  physics: const ScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    Property property = properties[index];
+                    if (SearchValue.trim().isNotEmpty && property.title!.trim().toLowerCase().contains(
+                        SearchValue.trim().toLowerCase())) {
+                      return
+                        buildPremiumList(
+                            showMore: false, property: property, home2: true);
+                    } else {
+                      return Container();
+                    }
+                  });
+            }),
+      ),
     );
   }
 }
@@ -445,28 +582,32 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
           leadingWidth: 28,
           title: Container(
             height: 40,
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
             child: Center(
               child: Hero(
                 tag: 'search',
                 child: Obx(
-                  () => TextField(
-                    focusNode: myFocusNode.value,
-                    controller: EditCtrl.homeSearch,
-                    onEditingComplete: (){
-                      propCtrl.homeSearchProperties();
-                    },
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.search),
-                        suffixIcon: myFocusNode.value.hasFocus
-                            ? IconButton(
+                      () =>
+                      Material(
+                        child: TextField(
+                          focusNode: myFocusNode.value,
+                          controller: EditCtrl.homeSearch,
+                          onEditingComplete: () {
+                            propCtrl.homeSearchProperties();
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: myFocusNode.value.hasFocus
+                                  ? IconButton(
                                 icon: const Icon(Icons.clear),
                                 onPressed: () => Get.back(),
                               )
-                            : const SizedBox.shrink(),
-                        hintText: 'Search...',
-                        border: InputBorder.none),
-                  ),
+                                  : const SizedBox.shrink(),
+                              hintText: 'Search...',
+                              border: InputBorder.none),
+                        ),
+                      ),
                 ),
               ),
             ),
@@ -474,77 +615,139 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
       body: SizedBox(
         height: Get.height,
         child: SingleChildScrollView(
-          child: Obx(() => propCtrl.searchLoading.value
+          child: Obx(() =>
+          propCtrl.searchLoading.value
               ? SizedBox(
-                  height: Get.height,
-                  width: Get.width,
-                  child: const Center(
-                    child: SizedBox(child: CircularProgressIndicator()),
-                  ),
-                )
+            height: Get.height,
+            width: Get.width,
+            child: const Center(
+              child: SizedBox(child: CircularProgressIndicator()),
+            ),
+          )
               : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      Row(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    const Icon(Icons.location_on,
+                        color: Pallet.secondaryColor),
+                    const SizedBox(width: 12),
+                    GestureDetector(
+                      onTap: () {
+                        var location = user.city != null &&
+                            user.city != ''
+                            ? user.city.toString()
+                            : homeCtrl.currentLocation
+                            .split(',')
+                            .length >
+                            1
+                            ? homeCtrl.currentLocation.split(',')[1]
+                            : '';
+                        if (location == '' || location == 'null') {
+                          MSG.errorSnackBar(
+                              'Your location has not yet ben set');
+                        } else {
+                          EditCtrl.homeSearch.text =
+                          location.contains('Federal') ||
+                              location.contains('FCT')
+                              ? 'Abuja'
+                              : location;
+                          propCtrl.homeSearchProperties();
+                        }
+                      },
+                      child: const CustomText(
+                          color: Pallet.secondaryColor,
+                          text: 'Use my current location',
+                          weight: FontWeight.normal,
+                          size: 16),
+                    ),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 14.0,bottom: 14),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => SearchByNameOfProperty()));
+                      },
+                      child: Row(
                         children: [
-                          const Icon(Icons.location_on, color: Pallet.secondaryColor),
-                          const SizedBox(width: 12),
-                          GestureDetector(
-                            onTap: () {
-                              var location = user.city != null && user.city != ''
-                                  ? user.city.toString()
-                                  : homeCtrl.currentLocation.split(',').length > 1
-                                      ? homeCtrl.currentLocation.split(',')[1]
-                                      : '';
-                              if (location == '' || location == 'null') {
-                                MSG.errorSnackBar('Your location has not yet ben set');
-                              } else {
-                                EditCtrl.homeSearch.text = location.contains('Federal') || location.contains('FCT') ? 'Abuja' : location;
-                                propCtrl.homeSearchProperties();
-                              }
-                            },
-                            child: const CustomText(color: Pallet.secondaryColor, text: 'Use my current location', weight: FontWeight.normal, size: 16),
-                          ),
+                          Icon(Icons.house,color: Colors.red,),
+                          const CustomText(
+                              color: Pallet.secondaryColor,
+                              text: '   Search Using property name',
+                              weight: FontWeight.normal,
+                              size: 16),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const CustomText(color: Colors.blueGrey, text: 'Search Results', weight: FontWeight.normal, size: 16),
-                          propCtrl.searchProperties.isEmpty
-                              ? const CustomText(color: Pallet.secondaryColor, text: 'No Results Found', weight: FontWeight.w400, size: 16)
-                              : CustomText(color: Pallet.secondaryColor, text: '${propCtrl.searchProperties.length} results Found', weight: FontWeight.w400, size: 16),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      propCtrl.searchProperties.isNotEmpty
-                          ? SizedBox(
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: propCtrl.searchProperties.length,
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return buildPremiumList(showMore: true, property: propCtrl.searchProperties[index]);
-                                  }),
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: Get.height * 0.3,
-                                ),
-                                const CustomText(color: Colors.blueGrey, text: 'No Results Found', weight: FontWeight.w400, size: 18),
-                                const SizedBox(height: 10),
-                                const CustomText(color: Colors.blueGrey, text: 'Enable your location for better proximity', weight: FontWeight.w400, size: 16),
-                              ],
-                            ),
-                    ],
+                    ),
                   ),
-                )),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomText(
+                        color: Colors.blueGrey,
+                        text: 'Search Results',
+                        weight: FontWeight.normal,
+                        size: 16),
+                    propCtrl.searchProperties.isEmpty
+                        ? const CustomText(
+                        color: Pallet.secondaryColor,
+                        text: 'No Results Found',
+                        weight: FontWeight.w400,
+                        size: 16)
+                        : CustomText(
+                        color: Pallet.secondaryColor,
+                        text:
+                        '${propCtrl.searchProperties.length} results Found',
+                        weight: FontWeight.w400,
+                        size: 16),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                propCtrl.searchProperties.isNotEmpty
+                    ? SizedBox(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: propCtrl.searchProperties.length,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return buildPremiumList(
+                            showMore: true,
+                            property:
+                            propCtrl.searchProperties[index]);
+                      }),
+                )
+                    : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Get.height * 0.3,
+                    ),
+                    const CustomText(
+                        color: Colors.blueGrey,
+                        text: 'No Results Found',
+                        weight: FontWeight.w400,
+                        size: 18),
+                    const SizedBox(height: 10),
+                    const CustomText(
+                        color: Colors.blueGrey,
+                        text:
+                        'Enable your location for better proximity',
+                        weight: FontWeight.w400,
+                        size: 16),
+                  ],
+                ),
+              ],
+            ),
+          )),
         ),
       ),
     );
@@ -560,15 +763,18 @@ class HomeNotificationsPage extends StatefulWidget {
 
 class _HomeNotificationsPageState extends State<HomeNotificationsPage> {
   bool isEmpty = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Pallet.homeBackground,
       appBar: AppBar(
-        backgroundColor: Utils.isMobileApp ? Pallet.secondaryColor : Colors.white,
+        backgroundColor:
+        Utils.isMobileApp ? Pallet.secondaryColor : Colors.white,
         automaticallyImplyLeading: true,
         title: const Text('Notifications'),
-        foregroundColor: Utils.isMobileApp ? Pallet.whiteColor : Pallet.secondaryColor,
+        foregroundColor:
+        Utils.isMobileApp ? Pallet.whiteColor : Pallet.secondaryColor,
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
@@ -579,54 +785,99 @@ class _HomeNotificationsPageState extends State<HomeNotificationsPage> {
                 height: Get.height,
                 child: snap.connectionState == ConnectionState.waiting
                     ? Preloader.loadingWidget()
-                    : snap.connectionState == ConnectionState.done && !snap.hasData
-                        ? const Center(
-                            child: CustomText(
-                              color: Colors.blueGrey,
-                              size: 16,
-                              text: 'No Notifications',
-                            ),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: notificationItems.length,
-                            itemBuilder: ((context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(bottom: 4, top: (index == 0) ? 20 : 0),
-                                child: Material(
-                                    type: MaterialType.card,
-                                    elevation: 3,
-                                    child: Column(children: [
-                                      ListTile(
-                                        onTap: () => showDes.value = showDes.value == notificationItems[index].time ? '' : notificationItems[index].time,
-                                        leading: Container(
-                                          height: 35,
-                                          width: 35,
-                                          decoration: BoxDecoration(shape: BoxShape.circle, color: notificationItems[index].background),
-                                          child: Center(child: Icon(notificationItems[index].icon, color: notificationItems[index].iconColor)),
-                                        ),
-                                        title: CustomText(
-                                          color: const Color(0xFF282E3A),
-                                          size: 16,
-                                          text: notificationItems[index].title,
-                                          weight: FontWeight.w600,
-                                        ),
-                                        subtitle: Obx(() => Padding(
-                                              padding: EdgeInsets.only(bottom: showDes.value == notificationItems[index].time ? 0 : 8.0),
-                                              child: Text(notificationItems[index].description, maxLines: 1, overflow: TextOverflow.ellipsis),
-                                            )),
-                                        trailing: CustomText(color: const Color(0xFF282E3A), size: 14, text: notificationItems[index].time),
-                                      ),
-                                      Obx(() => showDes.value != notificationItems[index].time
-                                          ? const SizedBox.shrink()
-                                          : Padding(
-                                              padding: EdgeInsets.only(left: 72, right: 12, bottom: showDes.value == notificationItems[index].time ? 16 : 8.0),
-                                              child: Text(notificationItems[index].description, style: const TextStyle(color: Colors.blueGrey)),
-                                            )),
-                                    ])),
-                              );
-                            })),
+                    : snap.connectionState == ConnectionState.done &&
+                    !snap.hasData
+                    ? const Center(
+                  child: CustomText(
+                    color: Colors.blueGrey,
+                    size: 16,
+                    text: 'No Notifications',
+                  ),
+                )
+                    : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: notificationItems.length,
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                            bottom: 4, top: (index == 0) ? 20 : 0),
+                        child: Material(
+                            type: MaterialType.card,
+                            elevation: 3,
+                            child: Column(children: [
+                              ListTile(
+                                onTap: () =>
+                                showDes.value = showDes
+                                    .value ==
+                                    notificationItems[index].time
+                                    ? ''
+                                    : notificationItems[index].time,
+                                leading: Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: notificationItems[index]
+                                          .background),
+                                  child: Center(
+                                      child: Icon(
+                                          notificationItems[index].icon,
+                                          color:
+                                          notificationItems[index]
+                                              .iconColor)),
+                                ),
+                                title: CustomText(
+                                  color: const Color(0xFF282E3A),
+                                  size: 16,
+                                  text: notificationItems[index].title,
+                                  weight: FontWeight.w600,
+                                ),
+                                subtitle: Obx(() =>
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: showDes.value ==
+                                              notificationItems[
+                                              index]
+                                                  .time
+                                              ? 0
+                                              : 8.0),
+                                      child: Text(
+                                          notificationItems[index]
+                                              .description,
+                                          maxLines: 1,
+                                          overflow:
+                                          TextOverflow.ellipsis),
+                                    )),
+                                trailing: CustomText(
+                                    color: const Color(0xFF282E3A),
+                                    size: 14,
+                                    text:
+                                    notificationItems[index].time),
+                              ),
+                              Obx(() =>
+                              showDes.value !=
+                                  notificationItems[index].time
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                padding: EdgeInsets.only(
+                                    left: 72,
+                                    right: 12,
+                                    bottom: showDes.value ==
+                                        notificationItems[
+                                        index]
+                                            .time
+                                        ? 16
+                                        : 8.0),
+                                child: Text(
+                                    notificationItems[index]
+                                        .description,
+                                    style: const TextStyle(
+                                        color: Colors.blueGrey)),
+                              )),
+                            ])),
+                      );
+                    })),
               );
             }),
       ),

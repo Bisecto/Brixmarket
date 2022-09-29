@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 
 import '../res/strings.dart';
 import '../utils/utils.dart';
+import '../view/widgets/custom_text.dart';
 
 class Preloader extends StatefulWidget {
-  const Preloader({Key? key}) : super(key: key);
+  String messgage;
+   Preloader({Key? key,this.messgage=''}) : super(key: key);
 
   static late Timer timer;
 
-  static show() {
-    Get.dialog(const Preloader());
+  static show({String msg='Loading...'}) {
+    Get.dialog( Preloader(messgage: msg,));
   }
 
   static hide() {
@@ -110,7 +112,7 @@ class _PreloaderState extends State<Preloader> with SingleTickerProviderStateMix
     return Scaffold(
       backgroundColor: Colors.white,
       body: InkWell(
-        onTap: Preloader.hide,
+        //onTap: Preloader.hide,
         child: !Utils.isMobileApp || true
             ? Container(
                 width: _screenWidth,
@@ -122,6 +124,15 @@ class _PreloaderState extends State<Preloader> with SingleTickerProviderStateMix
                   children: [
                     // Image.asset('assets/images/load.gif', width: 38),
                     Image.asset(ImgStr.loadingBalls, height: isMobile() ? 94 : 124),
+                    SizedBox(
+                      height: isTabletDown() ? 16 : 48,
+                      width: 16,
+                    ),
+                    CustomText(
+                      size: 18,
+                      color: Colors.red,
+                      text: widget.messgage,
+                    ),
                     SizedBox(
                       height: isTabletDown() ? 16 : 48,
                       width: 16,
