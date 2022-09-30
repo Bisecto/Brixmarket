@@ -100,22 +100,22 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                       cPropCtrl.ToSpecifiedpage();
                     },
                   )),
-            if (!widget.isEdt)
-            Obx(() {
-              if(cPropCtrl.createPropPageIndex.value==3){
-              return FormButton(
-                bgColor: Pallet.secondaryColor,
-                text: 'Skip this section',
-                disableButton: cPropCtrl.createPropPageIndex.value == 5,
-                onPressed: () {
-                  //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
-                  //MSG.errorSnackBar('End of page');
-                  //  }
-                  cPropCtrl.ToSpecifiedpage();
-                },
-              );}else{
-              return Container();
-            }}),
+            // if (!widget.isEdt)
+            // Obx(() {
+            //   if(cPropCtrl.createPropPageIndex.value==3){
+            //   return FormButton(
+            //     bgColor: Pallet.secondaryColor,
+            //     text: 'Skip this section',
+            //     disableButton: cPropCtrl.createPropPageIndex.value == 5,
+            //     onPressed: () {
+            //       //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
+            //       //MSG.errorSnackBar('End of page');
+            //       //  }
+            //       cPropCtrl.ToSpecifiedpage();
+            //     },
+            //   );}else{
+            //   return Container();
+            // }}),
             SizedBox(
               height: 1050,
               child: PageView(
@@ -628,7 +628,7 @@ Widget buttonRow(Function() nextFunction) {
               child: FormButton(
                 width: 100,
                 text: (cPropCtrl.createPropPageIndex.value == 5)
-                    ? 'Finish'
+                    ? 'Publish'
                     : 'Next',
                 onPressed: nextFunction,
               ),

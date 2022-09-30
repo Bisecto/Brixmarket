@@ -7,7 +7,7 @@
 //       dnd(e);
 //     }
 //   }
-
+//
 // Future init() async {
 //   var con = await MySqlConnection.connect(ConnectionSettings(host: 'localhost', port: 3308, user: 'root', password: 'Password@123', db: 'boutique'));
 //   // var q = await con.query("INSERT INTO `bq_admin` (id, surname, first_name, blocked, active) VALUES('3', 'Victor', 'Blessed', 0, 1)");

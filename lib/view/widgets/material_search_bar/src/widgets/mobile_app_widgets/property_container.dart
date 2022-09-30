@@ -20,10 +20,10 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
   return Container(
     width: 240,
     height: (showMore)
-        ? 408
+        ? 420
         : home || home2
-            ? 365
-            : 305,
+            ? 377
+            : 377,
     margin: EdgeInsets.only(right: (showMore || home || home2) ? 0 : 16, top: (showMore || home2 || home) ? 30 : 12),
     padding: EdgeInsets.all((showMore || home || home2) ? 12 : 0),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: home ? Colors.black26 : Pallet.secondaryColor, width: 1.2)),

@@ -53,7 +53,8 @@ class _SavedPagesState extends State<SavedPages> {
             AppBarMenu(
               logout: true,
               myAccount: true,
-              clearSave: true, propertyIDS:homeCtrl.user.value.savedProperties!,
+              //clearSave: true,
+              propertyIDS:homeCtrl.user.value.savedProperties!,
             ),
           ],
         ),

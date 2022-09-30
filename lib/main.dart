@@ -18,6 +18,7 @@ import 'utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setPathUrlStrategy();
   if (Utils.userFirebase) {
     await Firebase.initializeApp();

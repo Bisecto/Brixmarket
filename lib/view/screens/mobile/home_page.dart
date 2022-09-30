@@ -1,6 +1,8 @@
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/models/notification.dart';
+import 'package:brixmarket/testingPage.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,9 +20,38 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
 import '../../widgets/search_bar.dart';
 
-class MobileHomePage extends StatelessWidget {
+class MobileHomePage extends StatefulWidget {
   const MobileHomePage({Key? key}) : super(key: key);
 
+  @override
+  State<MobileHomePage> createState() => _MobileHomePageState();
+}
+
+class _MobileHomePageState extends State<MobileHomePage> {
+  void initDynamicLinks(BuildContext context) async {
+    final PendingDynamicLinkData? data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deeplink = data!.link;
+    //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
+    //print('Category SLug $categorySlug');
+    String property_id = deeplink.queryParameters['id'] ?? 'pro';
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Testing(proertyID: property_id,
+            )));
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initDynamicLinks(context!);
+    // Navigator.push(
+    //     context!,
+    //     MaterialPageRoute(
+    //         builder: (context) => Testing(proertyID: 'MDI0MzIyNDY3MTc3MjI4',
+    //         )));
+  }
   @override
   Widget build(BuildContext context) {
     homeCtrl.isGoBack = true;

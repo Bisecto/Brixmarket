@@ -172,7 +172,7 @@ class Str with RouteStr, ImgStr {
   static const String linkedInLink = 'https://www.linkedin.com/company/brixmarketplace/';
   static const String facebookLink = 'https://www.facebook.com/BRIXMARKET';
   static const String downloadIOSLink = 'https://apps.apple.com/app/brixmarket/id1645681904';
-  static const String downloadAndroidLink = 'https://play.google.com/store/apps/details?id=com.brixmarket.brixmarket';
+  static const String downloadAndroidLink = 'https://play.google.com/store/apps/details?id=com.brixx.brixmarket';
 
   static const String buy = 'Buy';
   static const String rent = 'Rent';

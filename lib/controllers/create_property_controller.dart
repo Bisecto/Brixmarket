@@ -77,6 +77,14 @@ class CreatePropertyCtrl extends GetxController {
     }
     cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
+
+  ToLastpage() {
+    createPropScrollCtrl.jumpTo(0);
+    if (createPropPageIndex.value < 5) {
+      createPropPageIndex.value=5;
+    }
+    cPPageController.animateToPage(5, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+  }
   Toinitial(){
     createPropPageIndex.value=0;
   }

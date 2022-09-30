@@ -57,7 +57,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
 
-        applicationId "com.brixmarket.brixmarket"
+        applicationId "com.brixx.brixmarket"
         minSdkVersion 19 //flutter.minSdkVersion
         targetSdkVersion 31 //flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

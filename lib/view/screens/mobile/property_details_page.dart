@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:readmore/readmore.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
@@ -16,6 +17,7 @@ import '../../../libs/launch_urls.dart';
 import '../../../models/media_model.dart';
 import '../../../models/property_model.dart';
 import '../../../models/review_model.dart';
+import '../../../redirect/dynamic_link.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
@@ -67,6 +69,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
     Property property = propCtrl.property;
     List<Media> images = property.media ?? [];
     imageList = images;
+
     var details = property.features!.map((feature) {
       return Container(
         width: Get.width * 0.9,
@@ -478,7 +481,17 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                       //   ),
                       // ),
                       GestureDetector(
-                        onTap: () => homeCtrl.shareApp(property: property),
+                        onTap: () async {
+                          String generatedDeepLink =
+                              await FirebaseDynamicLinkService
+                              .createDynamicLink(property,propertyImgPath+property.media![0].media![0],true,);
+                          print(
+                              "GENARATED DEEP LINK ${generatedDeepLink.length}");
+                          print(
+                              "GENARATED DEEP LINK ${generatedDeepLink}");
+                          await Share.share("Check out this property at brixmarket " + generatedDeepLink,);
+                        },
+                        // homeCtrl.shareApp(property: property),
                         child: Container(
                           height: 42,
                           width: 42,
