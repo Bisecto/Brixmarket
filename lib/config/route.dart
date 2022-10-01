@@ -66,7 +66,7 @@ List<GetPage<dynamic>> webPages = [
 List<GetPage<dynamic>> mobileLandingPages = [
   GetPage(name: RouteStr.mobileLanding, page: () => const MobileLandingPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.mobileSplashscreen, page: () => const SplashScreen(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
-  GetPage(name: RouteStr.mobileAcceptLocationUsage, page: () => const AcceptLocationUsage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+  //GetPage(name: RouteStr.mobileAcceptLocationUsage, page: () => const AcceptLocationUsage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(
     name: RouteStr.mobileOnboard,
     page: () => const OnBoardingPage(),

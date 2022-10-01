@@ -482,9 +482,26 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                       // ),
                       GestureDetector(
                         onTap: () async {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => const AlertDialog(
+                              title: Text("Msg"),
+                              content: Text("Please wait while link is been generated"),
+                              actions: <Widget>[
+                            Center(
+                              child: CircularProgressIndicator(
+                              backgroundColor: Colors.red,
+                                strokeWidth: 3,),
+                            )
+                            ],
+                            ),
+                          );
+                          print(imageList);
+                          print(imageList.length);
                           String generatedDeepLink =
                               await FirebaseDynamicLinkService
-                              .createDynamicLink(property,propertyImgPath+property.media![0].media![0],true,);
+                              .createDynamicLink(property,imageList[0].media.toString(),true,);
+                          Navigator.pop(context);
                           print(
                               "GENARATED DEEP LINK ${generatedDeepLink.length}");
                           print(

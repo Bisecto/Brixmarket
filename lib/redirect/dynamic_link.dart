@@ -36,12 +36,12 @@ class FirebaseDynamicLinkService {
         ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: property.title,
-        imageUrl:Uri.parse(userImgPath+images[0].toString())
+        imageUrl:Uri.parse(propertyImgPath+images.toString())
       )
     );
     Uri url;
     //if (short) {
-    print(userImgPath+images[0].toString());
+    print(propertyImgPath+images.toString());
       final ShortDynamicLink shortDynamicLink =
       await parameters.buildShortLink();
       url = shortDynamicLink.shortUrl;

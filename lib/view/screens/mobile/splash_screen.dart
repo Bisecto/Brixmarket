@@ -11,6 +11,8 @@ import '../../../config/theme/color.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/custom_text.dart';
+import 'landing_page.dart';
+import 'onboard_page.dart';
 
 class SplashScreen extends StatefulWidget {
   static String splashScreen = '/splash_screen';
@@ -54,10 +56,10 @@ class _SplashScreenState extends State<SplashScreen> {
     // });
   }
   checkpermission()async{
-    await Utils.getCurrentLocation();
+    //await Utils.getCurrentLocation();
     var permission = await Geolocator.checkPermission();
     if(permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
-      await SharedPref.putBool('acceptLocationUsage', true);
+      //await SharedPref.putBool('acceptLocationUsage', true);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
           await openApp();
@@ -72,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
     } else {
-      await SharedPref.putBool('acceptLocationUsage', false);
+      //await SharedPref.putBool('acceptLocationUsage', false);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
           await openApp();
@@ -90,13 +92,26 @@ class _SplashScreenState extends State<SplashScreen> {
     bool firstOpen = (await SharedPref.getBool('firstOpen')) ?? false;
 
     if (firstOpen) {
-      Future.delayed(const Duration(seconds: 5), () {
-        Get.offAndToNamed(RouteStr.mobileLanding);
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const MobileLandingPage(),
+          ),
+        );
+        //Get.offAndToNamed(RouteStr.mobileLanding);
       });
     } else {
       await SharedPref.putBool('firstOpen', true);
-      Future.delayed(const Duration(seconds: 5), () {
-        Get.offAndToNamed(RouteStr.mobileOnboard);
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const OnBoardingPage(),
+          ),
+        );
+
+        //Get.offAndToNamed(RouteStr.mobileOnboard);
       });
     }
   }
