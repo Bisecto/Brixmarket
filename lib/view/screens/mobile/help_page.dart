@@ -4,6 +4,8 @@ import 'package:brixmarket/utils/validations.dart';
 import 'package:brixmarket/view/widgets/app_social_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
@@ -694,6 +696,18 @@ class AboutUsPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          TextStyles.richTexts(
+            centerText: true,
+            color: Colors.blueGrey,
+            decoration: TextDecoration.underline,
+            onPress1: () => launchUrl(Uri.parse('https://company.brixmarket.com/about/')),
+            onPress2: () {
+              launchUrlString('https://company.brixmarket.com/about/');
+            },
+            size: 16,
+            text1: 'For more information visit\n',
+            text2: 'Company.brixmarket.com',
+          )
         ],
       ),
     );

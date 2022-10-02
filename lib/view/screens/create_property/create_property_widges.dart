@@ -994,7 +994,7 @@ Future getFeatures() async {
         .postData("property/get-features/House", Property.map())
         .then((value) => features = value);
   }
-  return features;
+  return features?? [];
 }
 //
 // Widget createPropertyMorDetails(BuildContext context) {

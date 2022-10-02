@@ -35,7 +35,7 @@ class Provider extends GetConnect {
   }
 
   Future<dynamic> postData(String url, Map<String, dynamic> data) async {
-    // await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
+     //await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
     url = appBaseUrl + url;
     dnd(data);
     dnd(url);

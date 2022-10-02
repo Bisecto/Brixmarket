@@ -19,9 +19,14 @@ import '../../widgets/form_inputs.dart';
 import '../../widgets/image_widgets.dart';
 import '../dashboard/account_widgets.dart';
 
-class ProfilingPage extends StatelessWidget {
+class ProfilingPage extends StatefulWidget {
   const ProfilingPage({Key? key}) : super(key: key);
 
+  @override
+  State<ProfilingPage> createState() => _ProfilingPageState();
+}
+
+class _ProfilingPageState extends State<ProfilingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +91,7 @@ class ProfilingPage extends StatelessWidget {
                   title: 'Identity Document',
                   icon: Icons.featured_video_outlined,
                 ),buildListTile(
-            onTap: () => homeCtrl.deleteAccount(),
+            onTap: () => _displayDialog(context),
             title: 'Delete Account',
             color: Colors.red,
             icon: Icons.delete_outline_outlined,
@@ -98,7 +103,32 @@ class ProfilingPage extends StatelessWidget {
       ),
     );
   }
-
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Delete Account'),
+            content: Text(
+              'Are you sure you want to delete this account?'
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  homeCtrl.deleteAccount();
+                },
+              ),
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  homeCtrl.deleteAccount();
+                },
+              )
+            ],
+          );
+        });
+  }
   buildListTile({String title = '', IconData? icon, required Function onTap, Color? color}) {
     return InkWell(
       onTap: () {

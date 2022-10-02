@@ -46,6 +46,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
   @override
   void initState() {
     property = propCtrl.property;
+    EditCtrl.message.clear();
     super.initState();
   }
 
@@ -757,9 +758,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
             ),
           ),
           const SizedBox(height: 8),
-          user.id == property.user?.id
-              ? const SizedBox.shrink()
-              : Align(
+          if (user.id == property.user?.id) const SizedBox.shrink() else Align(
                   child: Container(
                     padding: const EdgeInsets.only(left: 16),
                     child: GestureDetector(
@@ -777,7 +776,9 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                 ),
           const SizedBox(height: 30),
           GestureDetector(
-            onTap: () => flagInappropriate(property.id),
+            onTap: () {
+              EditCtrl.message.clear();
+                flagInappropriate(property.id);},
             child: Container(
               height: 50,
               margin: const EdgeInsets.symmetric(horizontal: 12),
@@ -927,7 +928,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
       builder: (context) => SingleChildScrollView(
         controller: ModalScrollController.of(context),
         child: Container(
-          height: 380,
+          height: MediaQuery.of(context).size.height-120,
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           child: Column(
@@ -1034,14 +1035,15 @@ flagInappropriate(propertyId) {
     backgroundColor: Colors.transparent,
     context: Get.context!,
     builder: (context) => SingleChildScrollView(
+
       controller: ModalScrollController.of(context),
       child: Container(
-        height: 590,
+        height: MediaQuery.of(context).size.height-70,
         child: Align(
           alignment: Alignment.topRight,
           child: Container(
             color: Colors.white,
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 15, 16, 0),
             constraints: const BoxConstraints(maxWidth: 480),
             child: Column(
               children: [
@@ -1051,7 +1053,7 @@ flagInappropriate(propertyId) {
                   weight: FontWeight.w600,
                   text: 'Flag as Inappropriate',
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 FormInput(
                   value: isLogin ? accountName(user: user) : '',
                   width: double.infinity,
@@ -1061,7 +1063,7 @@ flagInappropriate(propertyId) {
                   label: 'Name',
                   hint: 'Enter full Name',
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 FormInput(
                   value: isLogin ? user.emailAddress : '',
                   width: double.infinity,
@@ -1071,7 +1073,7 @@ flagInappropriate(propertyId) {
                   label: 'Email',
                   hint: 'Enter Email',
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 FormInput(
                   value: isLogin &&
                           user.phoneNumber != null &&
@@ -1085,7 +1087,7 @@ flagInappropriate(propertyId) {
                   label: 'Phone number',
                   hint: 'Enter Phone number',
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 FormInput(
                   controller: EditCtrl.message,
                   validate: Val.name,
@@ -1121,9 +1123,9 @@ requestATour(propertyId) {
     builder: (context) => SingleChildScrollView(
       controller: ModalScrollController.of(context),
       child: Container(
-        height: 590,
+        height: MediaQuery.of(context).size.height-70,
         color: Colors.white,
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+        padding: const EdgeInsets.fromLTRB(16, 15, 16, 0),
         child: Column(
           children: [
             const CustomText(
@@ -1132,7 +1134,7 @@ requestATour(propertyId) {
               weight: FontWeight.w600,
               text: 'Request for a tour',
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             FormInput(
               value: isLogin ? accountName(user: user) : '',
               width: double.infinity,
@@ -1142,7 +1144,7 @@ requestATour(propertyId) {
               label: 'Name',
               hint: 'Enter full Name',
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             FormInput(
               value: isLogin ? user.emailAddress : '',
               width: double.infinity,
@@ -1152,7 +1154,7 @@ requestATour(propertyId) {
               label: 'Email',
               hint: 'Enter Email',
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             FormInput(
               value:
                   isLogin && user.phoneNumber != null && user.phoneNumber != ''
@@ -1165,7 +1167,7 @@ requestATour(propertyId) {
               label: 'Phone number',
               hint: 'Enter Phone number',
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             FormInput(
               controller: EditCtrl.messageTour,
               validate: Val.name,

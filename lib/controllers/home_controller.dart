@@ -215,7 +215,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   shareApp({Property? property}) async {
-    await Share.share("Find great and affordable properties for Sale, Rent, and Lease near you. You can also upload your properties to find customers on https://brixmarket.com/ You can also easily download our apps which are available on Google Playstore and App Store.", subject: 'Brixmarket');
+    await Share.share("https://brixmarket.com/", subject: 'Brixmarket');
     // MSG.snackBar("Successful", title: "Share");
   }
 
@@ -322,6 +322,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       if (response != null) {
         Preloader.hide();
         Get.back();
+        EditCtrl.message.clear();
         MSG.snackBar('Message sent');
       }
     }

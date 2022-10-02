@@ -30,7 +30,7 @@ class MobileHomePage extends StatefulWidget {
 class _MobileHomePageState extends State<MobileHomePage> {
   void initDynamicLinks(BuildContext context) async {
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri deeplink = data!.link;
     //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
     //print('Category SLug $categorySlug');
@@ -38,13 +38,16 @@ class _MobileHomePageState extends State<MobileHomePage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Testing(proertyID: property_id,
-            )));
+            builder: (context) => Testing(
+                  proertyID: property_id,
+                )));
   }
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    Utils.getCurrentLocation();
     initDynamicLinks(context!);
     // Navigator.push(
     //     context!,
@@ -52,6 +55,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
     //         builder: (context) => Testing(proertyID: 'MDI0MzIyNDY3MTc3MjI4',
     //         )));
   }
+
   @override
   Widget build(BuildContext context) {
     homeCtrl.isGoBack = true;
@@ -59,9 +63,8 @@ class _MobileHomePageState extends State<MobileHomePage> {
     return WillPopScope(
       onWillPop: () async {
         return (await showDialog(
-          context: context,
-          builder: (context) =>
-              AlertDialog(
+              context: context,
+              builder: (context) => AlertDialog(
                 title: const Text('Are you sure?'),
                 content: const Text('Do you want to exit an App'),
                 actions: <Widget>[
@@ -75,7 +78,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
                   ),
                 ],
               ),
-        )) ??
+            )) ??
             false;
       },
       child: Scaffold(
@@ -164,21 +167,20 @@ class _MobileHomePageState extends State<MobileHomePage> {
                               const SizedBox(width: 5),
                               const Spacer(),
                               HomeController.isLogin.value
-                                  ? Obx(() =>
-                                  Text(
-                                    accountName(
-                                        user: homeCtrl.user.value,
-                                        home: true),
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 15),
-                                  ))
+                                  ? Obx(() => Text(
+                                        accountName(
+                                            user: homeCtrl.user.value,
+                                            home: true),
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ))
                                   : InkWell(
-                                onTap: () => Get.toNamed(RouteStr.login),
-                                child: const CustomText(
-                                  text: Str.signIn,
-                                  color: Colors.white,
-                                ),
-                              )
+                                      onTap: () => Get.toNamed(RouteStr.login),
+                                      child: const CustomText(
+                                        text: Str.signIn,
+                                        color: Colors.white,
+                                      ),
+                                    )
                             ],
                           ),
                           SizedBox(height: Get.width * 0.1),
@@ -226,7 +228,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
                   height: 3,
                   margin: const EdgeInsets.only(top: 0),
                   decoration:
-                  const BoxDecoration(color: Pallet.secondaryColor)),
+                      const BoxDecoration(color: Pallet.secondaryColor)),
               const SizedBox(height: 36),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -278,16 +280,16 @@ class _MobileHomePageState extends State<MobileHomePage> {
                       return snap.connectionState == ConnectionState.waiting
                           ? Preloader.loadingWidget()
                           : ListView.builder(
-                          itemCount: properties.length,
-                          scrollDirection: Axis.horizontal,
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 15),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            Property property = properties[index];
-                            return buildPremiumList(
-                                showMore: false, property: property);
-                          });
+                              itemCount: properties.length,
+                              scrollDirection: Axis.horizontal,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                Property property = properties[index];
+                                return buildPremiumList(
+                                    showMore: false, property: property);
+                              });
                     }),
               ),
               const SizedBox(height: 20),
@@ -298,27 +300,27 @@ class _MobileHomePageState extends State<MobileHomePage> {
                     return snap.connectionState == ConnectionState.waiting
                         ? SizedBox(height: 48, child: Preloader.loadingWidget())
                         : ListView.builder(
-                        itemCount: properties.length,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          Property property = properties[index];
-                          return buildPremiumList(
-                              showMore: false,
-                              property: property,
-                              home: true);
-                        });
+                            itemCount: properties.length,
+                            scrollDirection: Axis.vertical,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              Property property = properties[index];
+                              return buildPremiumList(
+                                  showMore: false,
+                                  property: property,
+                                  home: true);
+                            });
                   }),
               const SizedBox(height: 36),
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: const BoxDecoration(
                   color: Colors.black12,
                   border:
-                  Border(bottom: BorderSide(color: Colors.red, width: 2)),
+                      Border(bottom: BorderSide(color: Colors.red, width: 2)),
                 ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -351,15 +353,15 @@ class _MobileHomePageState extends State<MobileHomePage> {
                       return snap.connectionState == ConnectionState.waiting
                           ? Preloader.loadingWidget()
                           : ListView.builder(
-                          itemCount: properties.length,
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return buildFeaturedListing(
-                                property: properties[index]);
-                          });
+                              itemCount: properties.length,
+                              scrollDirection: Axis.horizontal,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return buildFeaturedListing(
+                                    property: properties[index]);
+                              });
                     }),
               ),
               const SizedBox(height: 36),
@@ -414,18 +416,18 @@ class _MobileHomePageState extends State<MobileHomePage> {
                     return snap.connectionState == ConnectionState.waiting
                         ? Preloader.loadingWidget()
                         : ListView.builder(
-                        itemCount: properties.length,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          Property property = properties[index];
-                          return buildPremiumList(
-                              showMore: false,
-                              property: property,
-                              home2: true);
-                        });
+                            itemCount: properties.length,
+                            scrollDirection: Axis.vertical,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              Property property = properties[index];
+                              return buildPremiumList(
+                                  showMore: false,
+                                  property: property,
+                                  home2: true);
+                            });
                   }),
               const SizedBox(height: 24),
             ],
@@ -477,7 +479,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
               ),
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 margin: const EdgeInsets.only(left: 0),
                 child: Center(
                   child: CustomText(
@@ -507,7 +509,12 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   var myFocusNode = FocusNode().obs;
   TextEditingController tc = TextEditingController();
   String SearchValue = '';
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    propCtrl.exploreFilterProperties.clear();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -524,54 +531,82 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                 tag: 'search',
                 child: Material(
                   child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              SearchValue = value;
-                            });
-                          },
+                    onChanged: (value) {
+                      setState(() {
+                        SearchValue = value;
+                      });
+                    },
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: myFocusNode.value.hasFocus
                             ? IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () => Get.back(),
-                        )
+                                icon: const Icon(Icons.clear),
+                                onPressed: () => Get.back(),
+                              )
                             : const SizedBox.shrink(),
                         hintText: 'Search with name of property',
                         border: InputBorder.none),
-
-                        ),
+                  ),
                 ),
-
               ),
             ),
           )),
-
       body: Container(
         child: FutureBuilder(
-            future: propCtrl.getProperties(),
+            future: propCtrl.getProperties(navItem: 0),
             builder: (context, AsyncSnapshot snap) {
               List<Property> properties = snap.data ?? [];
-              return snap.connectionState == ConnectionState.waiting
+              // property.title!.trim().toLowerCase().contains(
+              //     SearchValue.trim().toLowerCase())
+              return Obx(() => propCtrl.showFeatureLoading.value
                   ? Preloader.loadingWidget()
-                  :
-              ListView.builder(
-                  itemCount: properties.length,
-                  scrollDirection: Axis.vertical,
-                  physics: const ScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    Property property = properties[index];
-                    if (SearchValue.trim().isNotEmpty && property.title!.trim().toLowerCase().contains(
-                        SearchValue.trim().toLowerCase())) {
-                      return
-                        buildPremiumList(
-                            showMore: false, property: property, home2: true);
-                    } else {
-                      return Container();
-                    }
-                  });
+                  : ListView.builder(
+                      itemCount: propCtrl.exploreFilterProperties.length + 1,
+                      padding: const EdgeInsets.only(
+                          left: 12.0, right: 12.0, bottom: 20),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              const SizedBox(height: 16),
+                              const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: CustomText(
+                                      color: Colors.blueGrey,
+                                      text: 'Searched Results',
+                                      weight: FontWeight.bold,
+                                      size: 16)),
+                              const Divider(color: Colors.black12),
+                              propCtrl.exploreFilterProperties.isEmpty
+                                  ? Column(children: [
+                                      SizedBox(
+                                        height: Get.height * 0.2,
+                                      ),
+                                      const CustomText(
+                                          color: Colors.blueGrey,
+                                          text: 'No Results Found',
+                                          weight: FontWeight.w400,
+                                          size: 18),
+                                      const SizedBox(height: 10),
+                                    ])
+                                  : const SizedBox.shrink(),
+                            ],
+                          );
+                        } else if (propCtrl
+                            .exploreFilterProperties[index - 1].title!
+                            .trim()
+                            .toLowerCase()
+                            .contains(SearchValue.trim().toLowerCase())) {
+                          return buildPremiumList(
+                              showMore: true,
+                              property:
+                                  propCtrl.exploreFilterProperties[index - 1]);
+                        } else {
+                          return Container();
+                        }
+                      }));
             }),
       ),
     );
@@ -619,26 +654,25 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
               child: Hero(
                 tag: 'search',
                 child: Obx(
-                      () =>
-                      Material(
-                        child: TextField(
-                          focusNode: myFocusNode.value,
-                          controller: EditCtrl.homeSearch,
-                          onEditingComplete: () {
-                            propCtrl.homeSearchProperties();
-                          },
-                          decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: myFocusNode.value.hasFocus
-                                  ? IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () => Get.back(),
-                              )
-                                  : const SizedBox.shrink(),
-                              hintText: 'Search...',
-                              border: InputBorder.none),
-                        ),
-                      ),
+                  () => Material(
+                    child: TextField(
+                      focusNode: myFocusNode.value,
+                      controller: EditCtrl.homeSearch,
+                      onEditingComplete: () {
+                        propCtrl.homeSearchProperties();
+                      },
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: myFocusNode.value.hasFocus
+                              ? IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () => Get.back(),
+                                )
+                              : const SizedBox.shrink(),
+                          hintText: 'Search...',
+                          border: InputBorder.none),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -646,139 +680,140 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
       body: SizedBox(
         height: Get.height,
         child: SingleChildScrollView(
-          child: Obx(() =>
-          propCtrl.searchLoading.value
+          child: Obx(() => propCtrl.searchLoading.value
               ? SizedBox(
-            height: Get.height,
-            width: Get.width,
-            child: const Center(
-              child: SizedBox(child: CircularProgressIndicator()),
-            ),
-          )
+                  height: Get.height,
+                  width: Get.width,
+                  child: const Center(
+                    child: SizedBox(child: CircularProgressIndicator()),
+                  ),
+                )
               : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const Icon(Icons.location_on,
-                        color: Pallet.secondaryColor),
-                    const SizedBox(width: 12),
-                    GestureDetector(
-                      onTap: () {
-                        var location = user.city != null &&
-                            user.city != ''
-                            ? user.city.toString()
-                            : homeCtrl.currentLocation
-                            .split(',')
-                            .length >
-                            1
-                            ? homeCtrl.currentLocation.split(',')[1]
-                            : '';
-                        if (location == '' || location == 'null') {
-                          MSG.errorSnackBar(
-                              'Your location has not yet ben set');
-                        } else {
-                          EditCtrl.homeSearch.text =
-                          location.contains('Federal') ||
-                              location.contains('FCT')
-                              ? 'Abuja'
-                              : location;
-                          propCtrl.homeSearchProperties();
-                        }
-                      },
-                      child: const CustomText(
-                          color: Pallet.secondaryColor,
-                          text: 'Use my current location',
-                          weight: FontWeight.normal,
-                          size: 16),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 14.0,bottom: 14),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => SearchByNameOfProperty()));
-                      },
-                      child: Row(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Row(
                         children: [
-                          Icon(Icons.house,color: Colors.red,),
-                          const CustomText(
-                              color: Pallet.secondaryColor,
-                              text: '   Search Using property name',
-                              weight: FontWeight.normal,
-                              size: 16),
+                          const Icon(Icons.location_on,
+                              color: Pallet.secondaryColor),
+                          const SizedBox(width: 12),
+                          GestureDetector(
+                            onTap: () {
+                              var location = user.city != null &&
+                                      user.city != ''
+                                  ? user.city.toString()
+                                  : homeCtrl.currentLocation.split(',').length >
+                                          1
+                                      ? homeCtrl.currentLocation.split(',')[1]
+                                      : '';
+                              if (location == '' || location == 'null') {
+                                MSG.errorSnackBar(
+                                    'Your location has not yet been set');
+                              } else {
+                                EditCtrl.homeSearch.text =
+                                    location.contains('Federal') ||
+                                            location.contains('FCT')
+                                        ? 'Abuja'
+                                        : location;
+                                propCtrl.homeSearchProperties();
+                              }
+                            },
+                            child: const CustomText(
+                                color: Pallet.secondaryColor,
+                                text: 'Use my current location',
+                                weight: FontWeight.normal,
+                                size: 16),
+                          ),
                         ],
                       ),
-                    ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 14.0, bottom: 14),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      SearchByNameOfProperty()));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.house,
+                                  color: Colors.red,
+                                ),
+                                const CustomText(
+                                    color: Pallet.secondaryColor,
+                                    text: '   Search Using property name',
+                                    weight: FontWeight.normal,
+                                    size: 16),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const CustomText(
+                              color: Colors.blueGrey,
+                              text: 'Search Results',
+                              weight: FontWeight.normal,
+                              size: 16),
+                          propCtrl.searchProperties.isEmpty
+                              ? const CustomText(
+                                  color: Pallet.secondaryColor,
+                                  text: 'No Results Found',
+                                  weight: FontWeight.w400,
+                                  size: 16)
+                              : CustomText(
+                                  color: Pallet.secondaryColor,
+                                  text:
+                                      '${propCtrl.searchProperties.length} results Found',
+                                  weight: FontWeight.w400,
+                                  size: 16),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      propCtrl.searchProperties.isNotEmpty
+                          ? SizedBox(
+                              child: ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: propCtrl.searchProperties.length,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return buildPremiumList(
+                                        showMore: true,
+                                        property:
+                                            propCtrl.searchProperties[index]);
+                                  }),
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: Get.height * 0.3,
+                                ),
+                                const CustomText(
+                                    color: Colors.blueGrey,
+                                    text: 'No Results Found',
+                                    weight: FontWeight.w400,
+                                    size: 18),
+                                const SizedBox(height: 10),
+                                const CustomText(
+                                    color: Colors.blueGrey,
+                                    text:
+                                        'Enable your location for better proximity',
+                                    weight: FontWeight.w400,
+                                    size: 16),
+                              ],
+                            ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CustomText(
-                        color: Colors.blueGrey,
-                        text: 'Search Results',
-                        weight: FontWeight.normal,
-                        size: 16),
-                    propCtrl.searchProperties.isEmpty
-                        ? const CustomText(
-                        color: Pallet.secondaryColor,
-                        text: 'No Results Found',
-                        weight: FontWeight.w400,
-                        size: 16)
-                        : CustomText(
-                        color: Pallet.secondaryColor,
-                        text:
-                        '${propCtrl.searchProperties.length} results Found',
-                        weight: FontWeight.w400,
-                        size: 16),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                propCtrl.searchProperties.isNotEmpty
-                    ? SizedBox(
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: propCtrl.searchProperties.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return buildPremiumList(
-                            showMore: true,
-                            property:
-                            propCtrl.searchProperties[index]);
-                      }),
-                )
-                    : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: Get.height * 0.3,
-                    ),
-                    const CustomText(
-                        color: Colors.blueGrey,
-                        text: 'No Results Found',
-                        weight: FontWeight.w400,
-                        size: 18),
-                    const SizedBox(height: 10),
-                    const CustomText(
-                        color: Colors.blueGrey,
-                        text:
-                        'Enable your location for better proximity',
-                        weight: FontWeight.w400,
-                        size: 16),
-                  ],
-                ),
-              ],
-            ),
-          )),
+                )),
         ),
       ),
     );
@@ -801,11 +836,11 @@ class _HomeNotificationsPageState extends State<HomeNotificationsPage> {
       backgroundColor: Pallet.homeBackground,
       appBar: AppBar(
         backgroundColor:
-        Utils.isMobileApp ? Pallet.secondaryColor : Colors.white,
+            Utils.isMobileApp ? Pallet.secondaryColor : Colors.white,
         automaticallyImplyLeading: true,
         title: const Text('Notifications'),
         foregroundColor:
-        Utils.isMobileApp ? Pallet.whiteColor : Pallet.secondaryColor,
+            Utils.isMobileApp ? Pallet.whiteColor : Pallet.secondaryColor,
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
@@ -817,98 +852,95 @@ class _HomeNotificationsPageState extends State<HomeNotificationsPage> {
                 child: snap.connectionState == ConnectionState.waiting
                     ? Preloader.loadingWidget()
                     : snap.connectionState == ConnectionState.done &&
-                    !snap.hasData
-                    ? const Center(
-                  child: CustomText(
-                    color: Colors.blueGrey,
-                    size: 16,
-                    text: 'No Notifications',
-                  ),
-                )
-                    : ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: notificationItems.length,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                            bottom: 4, top: (index == 0) ? 20 : 0),
-                        child: Material(
-                            type: MaterialType.card,
-                            elevation: 3,
-                            child: Column(children: [
-                              ListTile(
-                                onTap: () =>
-                                showDes.value = showDes
-                                    .value ==
-                                    notificationItems[index].time
-                                    ? ''
-                                    : notificationItems[index].time,
-                                leading: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: notificationItems[index]
-                                          .background),
-                                  child: Center(
-                                      child: Icon(
-                                          notificationItems[index].icon,
-                                          color:
-                                          notificationItems[index]
-                                              .iconColor)),
-                                ),
-                                title: CustomText(
-                                  color: const Color(0xFF282E3A),
-                                  size: 16,
-                                  text: notificationItems[index].title,
-                                  weight: FontWeight.w600,
-                                ),
-                                subtitle: Obx(() =>
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: showDes.value ==
-                                              notificationItems[
-                                              index]
-                                                  .time
-                                              ? 0
-                                              : 8.0),
-                                      child: Text(
-                                          notificationItems[index]
-                                              .description,
-                                          maxLines: 1,
-                                          overflow:
-                                          TextOverflow.ellipsis),
-                                    )),
-                                trailing: CustomText(
-                                    color: const Color(0xFF282E3A),
-                                    size: 14,
-                                    text:
-                                    notificationItems[index].time),
-                              ),
-                              Obx(() =>
-                              showDes.value !=
-                                  notificationItems[index].time
-                                  ? const SizedBox.shrink()
-                                  : Padding(
-                                padding: EdgeInsets.only(
-                                    left: 72,
-                                    right: 12,
-                                    bottom: showDes.value ==
-                                        notificationItems[
-                                        index]
-                                            .time
-                                        ? 16
-                                        : 8.0),
-                                child: Text(
-                                    notificationItems[index]
-                                        .description,
-                                    style: const TextStyle(
-                                        color: Colors.blueGrey)),
-                              )),
-                            ])),
-                      );
-                    })),
+                            !snap.hasData
+                        ? const Center(
+                            child: CustomText(
+                              color: Colors.blueGrey,
+                              size: 16,
+                              text: 'No Notifications',
+                            ),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: notificationItems.length,
+                            itemBuilder: ((context, index) {
+                              return Container(
+                                margin: EdgeInsets.only(
+                                    bottom: 4, top: (index == 0) ? 20 : 0),
+                                child: Material(
+                                    type: MaterialType.card,
+                                    elevation: 3,
+                                    child: Column(children: [
+                                      ListTile(
+                                        onTap: () => showDes.value = showDes
+                                                    .value ==
+                                                notificationItems[index].time
+                                            ? ''
+                                            : notificationItems[index].time,
+                                        leading: Container(
+                                          height: 35,
+                                          width: 35,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: notificationItems[index]
+                                                  .background),
+                                          child: Center(
+                                              child: Icon(
+                                                  notificationItems[index].icon,
+                                                  color:
+                                                      notificationItems[index]
+                                                          .iconColor)),
+                                        ),
+                                        title: CustomText(
+                                          color: const Color(0xFF282E3A),
+                                          size: 16,
+                                          text: notificationItems[index].title,
+                                          weight: FontWeight.w600,
+                                        ),
+                                        subtitle: Obx(() => Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: showDes.value ==
+                                                          notificationItems[
+                                                                  index]
+                                                              .time
+                                                      ? 0
+                                                      : 8.0),
+                                              child: Text(
+                                                  notificationItems[index]
+                                                      .description,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            )),
+                                        trailing: CustomText(
+                                            color: const Color(0xFF282E3A),
+                                            size: 14,
+                                            text:
+                                                notificationItems[index].time),
+                                      ),
+                                      Obx(() => showDes.value !=
+                                              notificationItems[index].time
+                                          ? const SizedBox.shrink()
+                                          : Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 72,
+                                                  right: 12,
+                                                  bottom: showDes.value ==
+                                                          notificationItems[
+                                                                  index]
+                                                              .time
+                                                      ? 16
+                                                      : 8.0),
+                                              child: Text(
+                                                  notificationItems[index]
+                                                      .description,
+                                                  style: const TextStyle(
+                                                      color: Colors.blueGrey)),
+                                            )),
+                                    ])),
+                              );
+                            })),
               );
             }),
       ),

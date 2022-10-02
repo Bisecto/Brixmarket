@@ -98,7 +98,9 @@ class AccountPage extends StatelessWidget {
                 icon: Icons.verified),
             buildListTile(
                 onTap: () {
-                  Get.toNamed(RouteStr.mobileProfileHome);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const ProfilingPage()));
+
+                  //Get.toNamed(RouteStr.mobileProfileHome);
                 },
                 title: 'My Profile',
                 icon: Icons.account_box_outlined),

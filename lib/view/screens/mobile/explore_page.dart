@@ -71,7 +71,8 @@ class _ExplorePageState extends State<ExplorePage> {
                 future: propCtrl.getProperties(navItem: 0),
                 builder: (context, AsyncSnapshot snap) {
                   List<Property> properties = snap.data ?? [];
-
+                  // property.title!.trim().toLowerCase().contains(
+                  //     SearchValue.trim().toLowerCase())
                   return Obx(() => propCtrl.showFeatureLoading.value
                       ? Preloader.loadingWidget()
                       : ListView.builder(

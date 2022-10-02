@@ -425,7 +425,7 @@ class CreatePropertyCtrl extends GetxController {
   completeDraftProperty(Property property) async {
     cPropCtrl.showMyPropertyMenu.value = false;
     cPropCtrl.createPropPageIndex.value = 0;
-    Preloader.show();
+    Preloader.show(msg: 'Please wait while we get all saved data.');
     EditCtrl.title.text = property.title ?? '';
     EditCtrl.reference.text = property.reference ?? '';
     EditCtrl.description.text = property.description ?? '';
