@@ -2,6 +2,7 @@ import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/models/notification.dart';
 import 'package:brixmarket/testingPage.dart';
+import 'package:brixmarket/view/screens/mobile/profiling_page.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,19 +36,27 @@ class _MobileHomePageState extends State<MobileHomePage> {
     //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
     //print('Category SLug $categorySlug');
     String property_id = deeplink.queryParameters['id'] ?? 'pro';
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Testing(
-                  proertyID: property_id,
-                )));
+    if (property_id != 'pro') {
+      print(deeplink);
+      print(property_id +
+          'dfghjkiuytertyuii87654323456789iuytfcvbjuytredfghtrYUTRDCVBJU765RDCVBJU65434567');
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Testing(
+                    proertyID: property_id,
+                  )));
+    } else {
+      return;
+    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Utils.getCurrentLocation();
+    //Utils.getCurrentLocation();
     initDynamicLinks(context!);
     // Navigator.push(
     //     context!,
@@ -167,12 +176,21 @@ class _MobileHomePageState extends State<MobileHomePage> {
                               const SizedBox(width: 5),
                               const Spacer(),
                               HomeController.isLogin.value
-                                  ? Obx(() => Text(
-                                        accountName(
-                                            user: homeCtrl.user.value,
-                                            home: true),
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 15),
+                                  ? Obx(() => GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PersonalInformation()));
+                                        },
+                                        child: Text(
+                                          accountName(
+                                              user: homeCtrl.user.value,
+                                              home: true),
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15),
+                                        ),
                                       ))
                                   : InkWell(
                                       onTap: () => Get.toNamed(RouteStr.login),
@@ -509,12 +527,14 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   var myFocusNode = FocusNode().obs;
   TextEditingController tc = TextEditingController();
   String SearchValue = '';
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     propCtrl.exploreFilterProperties.clear();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -555,7 +575,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
         child: FutureBuilder(
             future: propCtrl.getProperties(navItem: 0),
             builder: (context, AsyncSnapshot snap) {
-              List<Property> properties = snap.data ?? [];
+              //List<Property> properties = snap.data ?? [];
               // property.title!.trim().toLowerCase().contains(
               //     SearchValue.trim().toLowerCase())
               return Obx(() => propCtrl.showFeatureLoading.value
@@ -594,17 +614,18 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                                   : const SizedBox.shrink(),
                             ],
                           );
-                        } else if (propCtrl
-                            .exploreFilterProperties[index - 1].title!
-                            .trim()
-                            .toLowerCase()
-                            .contains(SearchValue.trim().toLowerCase())) {
-                          return buildPremiumList(
-                              showMore: true,
-                              property:
-                                  propCtrl.exploreFilterProperties[index - 1]);
                         } else {
-                          return Container();
+                          if (propCtrl.exploreFilterProperties[index - 1].title!
+                              .trim()
+                              .toLowerCase()
+                              .contains(SearchValue.trim().toLowerCase())) {
+                            return buildPremiumList(
+                                showMore: true,
+                                property: propCtrl
+                                    .exploreFilterProperties[index - 1]);
+                          } else {
+                            return Container();
+                          }
                         }
                       }));
             }),
@@ -669,7 +690,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                                   onPressed: () => Get.back(),
                                 )
                               : const SizedBox.shrink(),
-                          hintText: 'Search...',
+                          hintText: 'Search using location',
                           border: InputBorder.none),
                     ),
                   ),

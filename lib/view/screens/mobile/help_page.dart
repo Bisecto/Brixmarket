@@ -326,7 +326,7 @@ class ContactPage extends StatelessWidget {
             color: Colors.blueGrey,
             size: 18,
             weight: FontWeight.w600,
-            text: 'Mail a request or Complaints',
+            text: 'Mail a request or Complaint',
           ),
           const SizedBox(height: 20),
           FormInput(

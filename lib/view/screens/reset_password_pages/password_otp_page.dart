@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/res/strings.dart';
@@ -8,13 +10,52 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../controllers/instance.dart';
+import '../../../core/dialogs.dart';
 
-class PasswordOtpPage extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
-  String smsOTP = '';
+class PasswordOtpPage extends StatefulWidget {
 
   PasswordOtpPage({Key? key}) : super(key: key);
 
+  @override
+  State<PasswordOtpPage> createState() => _PasswordOtpPageState();
+}
+
+class _PasswordOtpPageState extends State<PasswordOtpPage> {
+  final formKey = GlobalKey<FormState>();
+
+  String smsOTP = '';
+  late Timer _timer;
+  int _start = 59;
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_start == 0) {
+          //_start = 59;
+          _timer.cancel();
+
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var vh = Get.height;
@@ -92,8 +133,21 @@ class PasswordOtpPage extends StatelessWidget {
                     children: [
                       Flexible(
                         child: TextStyles.richTexts(
-                            onPress1: homeCtrl.sendPasswordTOP,
-                            onPress2: () {},
+                            onPress1: (){
+                              if (_start==0) {
+                                //resendOTP();
+                                homeCtrl.sendPasswordTOP();
+                                setState(() {
+                                  _start = 59;
+                                  startTimer();
+                                });
+
+                              } else {
+                                MSG.snackBar('Resend Code after 1:00');
+                              }
+                            },
+                            onPress2: () {
+                            },
                             size: 14,
                             weight: FontWeight.w600,
                             color: const Color.fromARGB(255, 19, 48, 63),
@@ -104,10 +158,10 @@ class PasswordOtpPage extends StatelessWidget {
                             text4: ''),
                       ),
                       const SizedBox(width: 55),
-                      const Flexible(
+                       Flexible(
                         child: CustomText(
                           maxLines: 1,
-                          text: 'Resend in 2:00',
+                          text: '00:$_start',
                           size: 14,
                           color: Color.fromARGB(255, 19, 48, 63),
                           weight: FontWeight.w600,

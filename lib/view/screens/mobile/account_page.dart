@@ -1,8 +1,14 @@
+import 'package:brixmarket/models/user_model.dart';
 import 'package:brixmarket/res/strings.dart';
+import 'package:brixmarket/utils/shared_preferences.dart';
 import 'package:brixmarket/view/screens/mobile/profiling_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:brixmarket/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
@@ -18,8 +24,70 @@ import '../../widgets/image_widgets.dart';
 import 'add_property_page.dart';
 import 'my_ads_page.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
+
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  bool isSwitched = false;
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Become a verified agent'),
+            content: const Text(
+                'Follow few easy steps to become a verified agent on Brixmarket'),
+            actions: <Widget>[
+              Column(
+                children: [
+                  Switch(
+                    value: isSwitched,
+                    onChanged: (value) {
+                      setState(() async {
+                        isSwitched = value;
+                        await SharedPref.putBool("stop", isSwitched);
+                        print(isSwitched);
+                      });
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                  ),
+                  Row(
+                    children: [
+                      FlatButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      FlatButton(
+                        child: const Text('Continue'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  )
+                ],
+              )
+            ],
+          );
+        });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (user.isAgent == true && user.isVerified == false && SharedPref.getBool('stop') == false) {
+      _displayDialog(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +103,8 @@ class AccountPage extends StatelessWidget {
           backgroundColor: Pallet.secondaryColor,
           automaticallyImplyLeading: false,
           leading: InkWell(
-            onTap: () => Get.find<MobileHomeController>().bottomNavIndex.value = 0,
+            onTap: () =>
+                Get.find<MobileHomeController>().bottomNavIndex.value = 0,
             child: const Padding(
               padding: EdgeInsets.fromLTRB(8.0, 14, 0, 14),
               child: Icon(Icons.arrow_back),
@@ -47,7 +116,13 @@ class AccountPage extends StatelessWidget {
             text: 'My Account',
             weight: FontWeight.w600,
           ),
-          actions: const [AppBarMenu(logout: true, myAccount: false, propertyIDS: [],)],
+          actions: const [
+            AppBarMenu(
+              logout: true,
+              myAccount: false,
+              propertyIDS: [],
+            )
+          ],
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(
@@ -66,10 +141,13 @@ class AccountPage extends StatelessWidget {
               ),
             ),
             buildListTile(
-                onTap: ()  {
-                   EditCtrl.disposeControllers();
-                   cPropCtrl.Toinitial();
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> AddPropertyPage(isEdit: false,)));
+                onTap: () {
+                  EditCtrl.disposeControllers();
+                  cPropCtrl.Toinitial();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AddPropertyPage(
+                            isEdit: false,
+                          )));
                   //Get.toNamed(RouteStr.mobileCreateProperty);
                 },
                 title: 'Place Ad',
@@ -77,7 +155,8 @@ class AccountPage extends StatelessWidget {
             buildListTile(
                 onTap: () {
                   EditCtrl.disposeControllers();
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const MyAdsPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MyAdsPage()));
                   //Get.toNamed(RouteStr.mobileMyProperties);
                 },
                 title: 'My Ads',
@@ -90,7 +169,8 @@ class AccountPage extends StatelessWidget {
                 icon: Icons.stacked_bar_chart),
             buildListTile(
                 onTap: () {
-                  MSG.snackBar("This Feature is in active development",title: "Coming Soon!");
+                  MSG.snackBar("This Feature is in active development",
+                      title: "Coming Soon!");
 
                   //Get.toNamed(RouteStr.mobileSubscription);
                 },
@@ -98,7 +178,8 @@ class AccountPage extends StatelessWidget {
                 icon: Icons.verified),
             buildListTile(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const ProfilingPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ProfilingPage()));
 
                   //Get.toNamed(RouteStr.mobileProfileHome);
                 },
@@ -129,9 +210,18 @@ class AccountPage extends StatelessWidget {
                 weight: FontWeight.w400,
               ),
             ),
-            buildListTile(onTap: () => Get.toNamed(RouteStr.mobileChatHistory), title: 'Chat History', icon: Icons.wechat),
-            buildListTile(onTap: homeCtrl.shareApp, title: 'Send an Invite', icon: Icons.share),
-            buildListTile(onTap: () => sendFeedback(), title: 'Send us a feedback', icon: Icons.feedback_outlined),
+            buildListTile(
+                onTap: () => Get.toNamed(RouteStr.mobileChatHistory),
+                title: 'Chat History',
+                icon: Icons.wechat),
+            buildListTile(
+                onTap: homeCtrl.shareApp,
+                title: 'Send an Invite',
+                icon: Icons.share),
+            buildListTile(
+                onTap: () => sendFeedback(),
+                title: 'Send us a feedback',
+                icon: Icons.feedback_outlined),
             const SizedBox(
               height: 20,
             ),
@@ -188,14 +278,17 @@ class AccountPage extends StatelessWidget {
         onTap();
       },
       child: Container(
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300, width: 0.8))),
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(color: Colors.grey.shade300, width: 0.8))),
         child: ListTile(
           trailing: Icon(
             Icons.arrow_forward_ios,
             color: Colors.blueGrey[500],
             size: 12,
           ),
-          leading: Icon(icon ?? Icons.dashboard, size: 22, color: Pallet.secondaryColor),
+          leading: Icon(icon ?? Icons.dashboard,
+              size: 22, color: Pallet.secondaryColor),
           title: CustomText(
             color: Colors.black87,
             size: 16,
@@ -232,7 +325,7 @@ sendFeedback() {
                       child: Icon(Icons.arrow_back),
                     ),
                   ),
-                   const Spacer(),
+                  const Spacer(),
                   const CustomText(
                     color: Colors.blueGrey,
                     size: 18,
@@ -264,7 +357,11 @@ sendFeedback() {
               ),
               const SizedBox(height: 20),
               FormInput(
-                value: isLogin && user.phoneNumber != null && user.phoneNumber != '' ? user.phoneNumber : '',
+                value: isLogin &&
+                        user.phoneNumber != null &&
+                        user.phoneNumber != ''
+                    ? user.phoneNumber
+                    : '',
                 controller: EditCtrl.phone,
                 error: EditCtrl.phoneErr,
                 validate: Val.phone,

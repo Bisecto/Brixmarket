@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // });
   }
   checkpermission()async{
-    //await Utils.getCurrentLocation();
+    await Utils.getCurrentLocation();
     var permission = await Geolocator.checkPermission();
     if(permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
       //await SharedPref.putBool('acceptLocationUsage', true);

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../utils/utils.dart';
+
 class FirebaseDynamicLinkService {
   static Future<String> createDynamicLink(
   Property property,
@@ -25,17 +27,17 @@ class FirebaseDynamicLinkService {
         androidParameters: AndroidParameters(
           fallbackUrl: Uri.parse(Str.downloadAndroidLink),
           packageName: 'com.brixx.brixmarket',
-          minimumVersion: 1,
+          minimumVersion: 8,
         ),
 
         iosParameters: IosParameters(
           fallbackUrl: Uri.parse(Str.downloadIOSLink),
           bundleId: 'com.brixx.brixmarket',
-          minimumVersion: '1.0.0',
+          minimumVersion: '1.0.8',
           appStoreId: '1645681904',
         ),
       socialMetaTagParameters: SocialMetaTagParameters(
-        title: property.title,
+        title: '${property.title}\nPrice: ${Utils.amount(property.price)}',
         imageUrl:Uri.parse(propertyImgPath+images.toString())
       )
     );

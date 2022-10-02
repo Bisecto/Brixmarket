@@ -23,8 +23,39 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
   final formKey = GlobalKey<FormState>();
   String smsOTP = '';
 
-  bool isTimerEnded = false;
+   //bool isTimerEnded = false;
+  late Timer _timer;
+  int _start = 59;
 
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_start == 0) {
+          //_start = 59;
+          _timer.cancel();
+
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var vh = Get.height;
@@ -105,10 +136,16 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                       Flexible(
                         child: TextStyles.richTexts(
                             onPress1: () {
-                              if (isTimerEnded) {
-                                homeCtrl.resendOTP;
+                              if (_start==0) {
+                                //resendOTP();
+                                homeCtrl.resendOTP();
+                                setState(() {
+                                  _start = 59;
+                                  startTimer();
+                                });
+
                               } else {
-                                MSG.snackBar('Resend Code after 2 minutes');
+                                MSG.snackBar('Resend Code after 1:00');
                               }
                             },
                             onPress2: () {},
@@ -123,30 +160,16 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                       ),
                       const SizedBox(width: 55),
                       Flexible(
-                        child: TweenAnimationBuilder<Duration>(
-                            duration: Duration(minutes: 2),
-                            tween: Tween(
-                                begin: Duration(minutes: 2),
-                                end: Duration.zero),
-                            onEnd: () {
-                              isTimerEnded = true;
-                              print('Timer ended');
-                            },
-                            builder: (BuildContext context, Duration value,
-                                Widget? child) {
-                              final minutes = value.inMinutes;
-                              final seconds = value.inSeconds % 60;
-                              return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: CustomText(
-                                    maxLines: 1,
-                                    text: '$minutes:$seconds',
-                                    size: 18,
-                                    color: Color.fromARGB(255, 19, 48, 63),
-                                    weight: FontWeight.w600,
-                                  ));
-                            }),
+                        child: Padding(
+                            padding:
+                            const EdgeInsets.symmetric(vertical: 5),
+                            child: CustomText(
+                              maxLines: 1,
+                              text: '00:$_start',
+                              size: 18,
+                              color: Color.fromARGB(255, 19, 48, 63),
+                              weight: FontWeight.w600,
+                            ))
                       )
                     ],
                   ),
