@@ -6,7 +6,6 @@ import 'package:brixmarket/view/screens/mobile/profiling_page.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
@@ -20,7 +19,6 @@ import '../../widgets/current_location.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
 import '../../widgets/search_bar.dart';
-
 class MobileHomePage extends StatefulWidget {
   const MobileHomePage({Key? key}) : super(key: key);
 
@@ -29,35 +27,15 @@ class MobileHomePage extends StatefulWidget {
 }
 
 class _MobileHomePageState extends State<MobileHomePage> {
-  void initDynamicLinks(BuildContext context) async {
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deeplink = data!.link;
-    //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
-    //print('Category SLug $categorySlug');
-    String property_id = deeplink.queryParameters['id'] ?? 'pro';
-    if (property_id != 'pro') {
-      print(deeplink);
-      print(property_id +
-          'dfghjkiuytertyuii87654323456789iuytfcvbjuytredfghtrYUTRDCVBJU765RDCVBJU65434567');
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Testing(
-                    proertyID: property_id,
-                  )));
-    } else {
-      return;
-    }
-  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //Utils.getCurrentLocation();
-    initDynamicLinks(context!);
+
+
     // Navigator.push(
     //     context!,
     //     MaterialPageRoute(

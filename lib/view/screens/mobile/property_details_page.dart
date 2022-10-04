@@ -82,7 +82,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
             Expanded(
                 child: CustomText(
                     color: Colors.black54,
-                    text: feature.featureValue,
+                    text: feature.feature,
                     weight: FontWeight.w500,
                     size: 16)),
           ],

@@ -117,7 +117,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
             //   return Container();
             // }}),
             SizedBox(
-              height: 1050,
+              height: 1150,
               child: PageView(
                 controller: cPropCtrl.cPPageController,
                 physics: const NeverScrollableScrollPhysics(),
@@ -307,7 +307,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const CustomText(
-                              text: 'More Details(Optional)',
+                              text: 'More Details(Nearby location)',
                               color: Colors.black,
                               size: 16,
                               weight: FontWeight.bold),
@@ -331,107 +331,155 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                             child: FutureBuilder(
                                 future: getFeatures(),
                                 builder: (context, AsyncSnapshot snap) {
-                                  var featuresData = snap.data ?? [];
-                                  var features = {};
-                                  featuresData.forEach((e) {
-                                    if (features[e['feature']] == null) {
-                                      features[e['feature']] = [
-                                        e['feature_value'].toString()
-                                      ];
-                                    } else {
-                                      features[e['feature']]
-                                          .add(e['feature_value'].toString());
-                                    }
-                                  });
-                                  var initialList = [];
-                                  if (featuresData.isNotEmpty) {
-                                    initialList = EditCtrl.ctrlList;
-                                    EditCtrl.ctrlList = [];
-                                  }
-                                  int i = -1;
-                                  if (snap.connectionState ==
-                                      ConnectionState.done) {
-                                    // If we got an error
-                                    if (snap.hasError) {
-                                      return Center(
-                                        child: Text(
-                                          '${snap.error} occurred',
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                      );
+                                  var featureData = snap.data ?? [];
 
-                                      // if we got our data
-                                    } else if (snap.hasData) {
-                                      // Extracting data from snapshot object
-                                      return Wrap(
-                                        children: [
-                                          ...features.entries.map((feature) {
-                                            EditCtrl.ctrlList.add(
-                                                TextEditingController().obs);
-                                            EditCtrl.ctrlListKeys.add(
-                                                TextEditingController(
-                                                    text: feature.key));
-                                            i++;
-                                            if ((feature.value[0] ?? '')
-                                                .isEmpty) {
-                                              return Container(
-                                                padding: EdgeInsets.only(
-                                                    right: Get.width * 0.01,
-                                                    bottom: 10),
-                                                width: Get.width < 480
-                                                    ? double.infinity
-                                                    : Get.width * 0.31,
-                                                child: FormInput(
-                                                  width: double.infinity,
-                                                  controller: EditCtrl
-                                                      .ctrlList[i].value,
-                                                  label: feature.key,
-                                                  hint:
-                                                      'Enter ${feature.key} Nearby',
-                                                  value: initialList.isEmpty
-                                                      ? ''
-                                                      : initialList[i]
-                                                          .value
-                                                          .text,
-                                                ),
-                                              );
-                                            } else {
-                                              return Container(
-                                                padding: EdgeInsets.only(
-                                                    right: Get.width * 0.01,
-                                                    bottom: 10),
-                                                width: Get.width < 480
-                                                    ? double.infinity
-                                                    : Get.width * 0.31,
-                                                child: SizedBox(
-                                                  child: DropDown(
-                                                    initialValue:
-                                                        initialList.isEmpty
-                                                            ? ''
-                                                            : initialList[i]
-                                                                .value
-                                                                .text,
-                                                    controller:
-                                                        EditCtrl.ctrlList[i],
-                                                    label:
-                                                        feature.key + ' Nearby',
-                                                    items: feature.value
-                                                        as List<String>,
+                                  return GridView.builder(
+                                      shrinkWrap: true,
+                                      padding: const EdgeInsets.only(right: 0),
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      itemCount: featureData.length,
+                                      gridDelegate:
+                                      const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        mainAxisExtent: 53,
+                                        maxCrossAxisExtent: 200,
+                                      ),
+                                      itemBuilder: (_, i) {
+                                        var feature = featureData[i]['feature_value'];
+
+                                        return Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Transform.scale(
+                                                scale: 0.7,
+                                                child: Obx(
+                                                      () => Checkbox(
+                                                    activeColor: Pallet.secondaryColor,
+                                                    checkColor: Colors.white,
+                                                    side: const BorderSide(
+                                                        color: Colors.black54),
+                                                    value:
+                                                    EditCtrl.features.contains(feature),
+                                                    onChanged: (state) {
+                                                      if (EditCtrl.features
+                                                          .contains(feature)) {
+                                                        EditCtrl.features.remove(feature);
+                                                      } else {
+                                                        EditCtrl.features.add(feature);
+                                                        EditCtrl.features.refresh();
+                                                      }
+                                                    },
                                                   ),
                                                 ),
-                                              );
-                                            }
-                                          }).toList(),
-                                        ],
-                                      );
-                                    }
-                                  }
-
-                                  // Displaying LoadingSpinner to indicate waiting state
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
+                                              ),
+                                              Expanded(
+                                                  child: Text(feature,
+                                                      style: const TextStyle(fontSize: 16))),
+                                            ]);
+                                      });
                                 }),
+
+                            // child: FutureBuilder(
+                            //     future: getFeatures(),
+                            //     builder: (context, AsyncSnapshot snap) {
+                            //       var featuresData = snap.data ?? [];
+                            //       var features = {};
+                            //       featuresData.forEach((e) {
+                            //         if (features[e['feature']] == null) {
+                            //           features[e['feature']] = [
+                            //             e['feature_value'].toString()
+                            //           ];
+                            //         } else {
+                            //           features[e['feature']]
+                            //               .add(e['feature_value'].toString());
+                            //         }
+                            //       });
+                            //       var initialList = [];
+                            //       if (featuresData.isNotEmpty) {
+                            //         initialList = EditCtrl.ctrlList;
+                            //         EditCtrl.ctrlList = [];
+                            //       }
+                            //       int i = -1;
+                            //       if (snap.connectionState ==
+                            //           ConnectionState.done) {
+                            //         // If we got an error
+                            //         if (snap.hasError) {
+                            //           return Center(
+                            //             child: Text(
+                            //               '${snap.error} occurred',
+                            //               style: TextStyle(fontSize: 18),
+                            //             ),
+                            //           );
+                            //
+                            //           // if we got our data
+                            //         } else if (snap.hasData) {
+                            //           // Extracting data from snapshot object
+                            //           return Wrap(
+                            //             children: [
+                            //               ...features.entries.map((feature) {
+                            //                 EditCtrl.ctrlList.add(
+                            //                     TextEditingController().obs);
+                            //                 EditCtrl.ctrlListKeys.add(
+                            //                     TextEditingController(
+                            //                         text: feature.key));
+                            //                 i++;
+                            //                 if ((feature.value[0] ?? '')
+                            //                     .isEmpty) {
+                            //                   return Container(
+                            //                     padding: EdgeInsets.only(
+                            //                         right: Get.width * 0.01,
+                            //                         bottom: 10),
+                            //                     width: Get.width < 480
+                            //                         ? double.infinity
+                            //                         : Get.width * 0.31,
+                            //                     child: FormInput(
+                            //                       width: double.infinity,
+                            //                       controller: EditCtrl
+                            //                           .ctrlList[i].value,
+                            //                       label: feature.key,
+                            //                       hint:
+                            //                           'Enter ${feature.key} Nearby',
+                            //                       value: initialList.isEmpty
+                            //                           ? ''
+                            //                           : initialList[i]
+                            //                               .value
+                            //                               .text,
+                            //                     ),
+                            //                   );
+                            //                 } else {
+                            //                   return Container(
+                            //                     padding: EdgeInsets.only(
+                            //                         right: Get.width * 0.01,
+                            //                         bottom: 10),
+                            //                     width: Get.width < 480
+                            //                         ? double.infinity
+                            //                         : Get.width * 0.31,
+                            //                     child: SizedBox(
+                            //                       child: DropDown(
+                            //                         initialValue:
+                            //                             initialList.isEmpty
+                            //                                 ? ''
+                            //                                 : feature.value[i],
+                            //                         controller:
+                            //                             EditCtrl.ctrlList[i],
+                            //                         label:
+                            //                             feature.key + ' Nrby',
+                            //                         items: feature.value
+                            //                             as List<String>,
+                            //                       ),
+                            //                     ),
+                            //                   );
+                            //                 }
+                            //               }).toList(),
+                            //             ],
+                            //           );
+                            //         }
+                            //       }
+                            //
+                            //       // Displaying LoadingSpinner to indicate waiting state
+                            //       return Center(
+                            //         child: CircularProgressIndicator(),
+                            //       );
+                            //     }),
                           ),
                           buttonRow(cPropCtrl.submitPropertyMoreDetails),
                           const SizedBox(
@@ -987,8 +1035,8 @@ Future getAmenities({all = false}) async {
 
 List? features;
 
-Future getFeatures() async {
-  features ??= [];
+Future getFeatures({all=false}) async {
+  features = [];
   if (features!.isEmpty && EditCtrl.category.value.text.isNotEmpty) {
     await Provider()
         .postData("property/get-features/House", Property.map())

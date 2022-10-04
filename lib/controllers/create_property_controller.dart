@@ -260,21 +260,22 @@ class CreatePropertyCtrl extends GetxController {
   }
 
   submitPropertyMoreDetails() async {
-    bool isValidData = true;
+   // bool isValidData = true;
     int i = 0;
     Map<String, dynamic> map = {};
-    for (var ctrl in EditCtrl.ctrlList) {
-      var key = EditCtrl.ctrlListKeys[i++];
-      if (ctrl.value.text.trim().isEmpty && isValidData) {
-        isValidData = false;
-        MSG.errorSnackBar(
-          '${key.text} field is required',
-        );
-      } else {
-        map['features[${key.text}]'] = ctrl.value.text.trim();
-      }
+    for (var ctrl in EditCtrl.features) {
+      //var key = EditCtrl.ctrlListKeys[i++];
+     // if (ctrl.value.text.trim().isEmpty && isValidData) {
+        //isValidData = false;
+        //MSG.errorSnackBar(
+       //   '${key.text} field is required',
+      //  );
+      //} else {
+        map['features[${EditCtrl.features[i++]}]'] = ctrl;
+            //ctrl.value.text.trim();
+      //}
     }
-    if (isValidData) {
+   // if (isValidData) {
       Preloader.show();
       Map<String, dynamic> data = Property.map();
       data.addAll(map);
@@ -284,7 +285,7 @@ class CreatePropertyCtrl extends GetxController {
         Preloader.hide();
         gotoNext(pageIndex: 4);
       }
-    }
+   // }
   }
 
   submitPropertyAmenities() async {
@@ -456,21 +457,23 @@ class CreatePropertyCtrl extends GetxController {
     }
 
     if (property.features != null) {
-      var featuresData = property.features;
-      var feature = {};
-      for (var e in featuresData!) {
-        if (feature[e.feature] == null) {
-          feature[e.feature] = [e.featureValue.toString()];
-        } else {
-          feature[e.feature].add(e.featureValue.toString());
-        }
-        features ??= [];
-        features!.add(e.toJson());
+      //var featuresData = property.features;
+      //var feature = {};
+      for (var e in property.features!) {
+        // if (feature[e.feature] == null) {
+        //   feature[e.feature] = [e.featureValue.toString()];
+        // } else {
+        //   feature[e.feature].add(e.featureValue.toString());
+        // }
+        // features ??= [];
+        //features!.add(e.toJson());
+        EditCtrl.features.add(e.feature);
       }
-      feature.entries.map((feature) {
-        EditCtrl.ctrlList.add(TextEditingController().obs);
-        EditCtrl.ctrlListKeys.add(TextEditingController(text: feature.key));
-      });
+      EditCtrl.features.refresh();
+     // feature.entries.map((feature) {
+        //EditCtrl.features.add(e.feature);
+        //EditCtrl.ctrlListKeys.add(TextEditingController(text: feature.key));
+     // });
     }
 
     if (property.amenities != null) {

@@ -123,9 +123,10 @@ class EditCtrl extends GetxController {
   static var filterStatus = ['Any'].obs;
   static var filterAmenities = ['Any'].obs;
 
-  static var ctrlList = [];
-  static var ctrlListKeys = [];
+  //static var ctrlList = [];
+  //static var ctrlListKeys = [];
   static var amenities = [].obs;
+  static var features=[].obs;
 
   static var userType = ''.obs;
 
@@ -238,9 +239,9 @@ class EditCtrl extends GetxController {
       bathsMax.value.text = '';
       webSearchKeyWord.text = '';
       filterCategoriesWeb.value.text = '';
-
-      ctrlList = [];
-      ctrlListKeys = [];
+      features.value=[];
+      // ctrlList = [];
+      // ctrlListKeys = [];
       amenities.value = [];
 
       acceptTerms.value = false;

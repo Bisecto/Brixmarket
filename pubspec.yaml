@@ -49,6 +49,12 @@ dependencies:
   change_app_package_name:
   firebase_remote_config:
   firebase_dynamic_links: ^3.0.2
+  cloud_firestore: ^3.1.7
+  firebase_analytics:
+  firebase_auth: ^3.3.6
+  firebase_storage:
+  youtube_player_flutter: ^8.0.0
+  package_info_plus: ^1.0.2
 
 dev_dependencies:
   flutter_test:
