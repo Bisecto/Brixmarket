@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../models/chat_message.dart';
 import '../../models/chat_user.dart';
 import '../../models/property_model.dart';
+import '../../redirect/push_notification.dart';
 import '../../res/strings.dart';
 import '../../services/provider.dart';
 import '../../utils/utils.dart';
@@ -46,6 +47,8 @@ mixin Chat {
     chatKey = generateChatKey(thisUserId, otherUserId);
 
     homeCtrl.property = property;
+    print(thisUserId);
+    print(otherUserId);
     Get.toNamed(RouteStr.chat);
   }
 
@@ -115,8 +118,9 @@ mixin Chat {
         });
         Provider().postData('chat/save-user', thisUserMap);
         Provider().postData('chat/save-user', otherUserMap);
-        EditCtrl.chatMessage.text = '';
-      }
+
+          await sendPushNotification(otherUserId, thisUserName, EditCtrl.chatMessage.text, 'Message_Notification');
+        EditCtrl.chatMessage.text = '';}
     }
   }
 

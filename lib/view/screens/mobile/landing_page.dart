@@ -17,6 +17,8 @@ import '../../../testingPage.dart';
 import '../../../utils/utils.dart';
 import 'dart:io' show Platform;
 
+import 'chat_details_page.dart';
+
 class MobileLandingPage extends StatefulWidget {
   const MobileLandingPage({Key? key}) : super(key: key);
 
@@ -138,10 +140,11 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Utils.getCurrentLocation();
     Fetch_App_Details();
     CheckUpdate();
     initDynamicLinks(context);
-    Utils.getCurrentLocation();
+    //Utils.getCurrentLocation();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
@@ -251,6 +254,10 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
               });
       }else if(message.data['value']=="Message_Notification"){
              print('Message Notification');
+             Navigator.push(
+               context,
+               MaterialPageRoute(builder: (context) => const ChatDetailPage()),
+             );
       }
         // Navigator.push(
         //     context,

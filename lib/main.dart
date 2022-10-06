@@ -17,26 +17,55 @@ import 'controllers/property_controller.dart';
 import 'controllers/terms_controller.dart';
 import 'res/strings.dart';
 import 'utils/utils.dart';
+
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'id', 'name',
     importance: Importance.high, playSound: true);
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 Future<void> _FirebaseMessagingBacground(RemoteMessage message) async {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //   statusBarColor: Colors.deepOrange,
   // ));
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+        authDomain: "brimarket-3e1d9.firebaseapp.com",
+        projectId: "brimarket-3e1d9",
+        storageBucket: "brimarket-3e1d9.appspot.com",
+        messagingSenderId: "591770978937",
+        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+        measurementId: "G-5MFHT3RCLW"),
+  );
   print('A message just Poped: ${message.messageId}');
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+        authDomain: "brimarket-3e1d9.firebaseapp.com",
+        projectId: "brimarket-3e1d9",
+        storageBucket: "brimarket-3e1d9.appspot.com",
+        messagingSenderId: "591770978937",
+        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+        measurementId: "G-5MFHT3RCLW"),
+  );
   setPathUrlStrategy();
   if (Utils.userFirebase) {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+          authDomain: "brimarket-3e1d9.firebaseapp.com",
+          projectId: "brimarket-3e1d9",
+          storageBucket: "brimarket-3e1d9.appspot.com",
+          messagingSenderId: "591770978937",
+          appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+          measurementId: "G-5MFHT3RCLW"),
+    );
   }
   Get.put(TermsController());
   Get.put(AccountPageController());
@@ -58,7 +87,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_FirebaseMessagingBacground);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -66,7 +95,8 @@ void main() async {
     badge: true,
     sound: true,
   );
-  runApp(const Directionality(textDirection: TextDirection.ltr, child: MyApp()));
+  runApp(
+      const Directionality(textDirection: TextDirection.ltr, child: MyApp()));
 }
 
 // const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -95,9 +125,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
-
+    if (Utils.isMobileApp) {
+      FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: ((context, constraints, orientation) {
@@ -111,7 +143,8 @@ class _MyAppState extends State<MyApp> {
         ),
         // home: Utils.isMobileApp ? const SplashScreen() : HomePage(),
         // initialRoute: Utils.isMobileApp ? regBasicInfoPage : homePage,
-        initialRoute: Utils.isMobileApp ? RouteStr.mobileSplashscreen : RouteStr.webHome,
+        initialRoute:
+            Utils.isMobileApp ? RouteStr.mobileSplashscreen : RouteStr.webHome,
         getPages: Utils.isMobileApp ? mobileRoutes : webRoutes,
       );
     }));

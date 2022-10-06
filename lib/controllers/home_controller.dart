@@ -117,6 +117,8 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
         var response = (await Provider().postData("login/user", User.map(userId: tmpUserId)));
         if (response != null) {
           tmpLogin(User.fromJson(response));
+          FirebaseMessaging.instance.subscribeToTopic(_userId);
+          print('$_userId*******00000000001231234567812345678`12345678**************');
         }
       }
     } else {
@@ -256,7 +258,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       if (response != null) {
         Preloader.hide();
         Get.back();
-        MSG.snackBar('Message sent');
+        MSG.snackBar('Thank you for subscribing to our newsletter');
       }
     }
   }

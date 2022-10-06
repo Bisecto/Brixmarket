@@ -129,8 +129,9 @@ mixin Auth {
             await propCtrl.getSavedProperties();
             Preloader.hide();
             MSG.snackBar('Login successful');
-            //FirebaseMessaging.instance.subscribeToTopic(_userId);
-            //print('$_userId*******00000000001231234567812345678`12345678**************');
+            if (Utils.isMobileApp) {
+            FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+            print('${userObj.id.toString()}*******00000000001231234567812345678`12345678**************');}
             Utils.gotoHomePage();
           }
         }
@@ -180,6 +181,9 @@ mixin Auth {
         if (!(userObj.isUser ?? false)) {
           Get.offAndToNamed(RouteStr.regAgency);
         } else {
+          if (Utils.isMobileApp) {
+          FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+          print('${userObj.id.toString()}*******00000000001231234567812345678`12345678**************');}
           Utils.gotoHomePage();
         }
       }
@@ -257,6 +261,9 @@ mixin Auth {
         await homeCtrl.loginUser(userObj);
         Preloader.hide();
         Utils.gotoHomePage();
+        if (Utils.isMobileApp) {
+        FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+        print('${userObj.id.toString()}*******00000000001231234567812345678`12345678**************');}
       }
     }
   }

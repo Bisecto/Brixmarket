@@ -93,7 +93,9 @@ mixin ImgStr {
 
 class Str with RouteStr, ImgStr {
   static const String appName = 'Brixmarket';
-
+  static const String adminNotification = 'Admin_Notification';
+  static const String messageNotification = 'Message_Notification';
+  static const String ReviewNotification = 'Review_Notification';
   static const String signIn = 'Sign In';
   static const String createNewPassword = 'Create New Password';
   static const String resetPassword = 'Reset Password';

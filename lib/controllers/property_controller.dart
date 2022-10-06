@@ -4,6 +4,7 @@ import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/core/dialogs.dart';
 import 'package:brixmarket/models/user_model.dart';
+import 'package:brixmarket/redirect/push_notification.dart';
 import 'package:brixmarket/utils/utils.dart';
 import 'package:get/get.dart';
 
@@ -299,9 +300,20 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           await Provider().postData("user/review-property/$propertyId", data);
       if (response != null) {
         Preloader.hide();
-        EditCtrl.messageReview.text = '';
-        if (Utils.isMobileApp) Get.back();
-        MSG.snackBar('Review submitted successfully');
+        //if (property.user!.settings!.inAppAlert.isTrue) {
+          await sendPushNotification(
+              property.user!.id.toString(),
+              property.user!.firstName.toString(),
+              EditCtrl.messageReview.text,
+              'Review_Notification');
+          EditCtrl.messageReview.text = '';
+          if (Utils.isMobileApp) Get.back();
+          MSG.snackBar('Review submitted successfully');
+        // } else {
+        //   EditCtrl.messageReview.text = '';
+        //   if (Utils.isMobileApp) Get.back();
+        //   MSG.snackBar('Review submitted successfully');
+        // }
       }
     }
   }
@@ -389,13 +401,31 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       var response =
           await Provider().postData("user/request-a-tour/$propertyId", data);
       if (response != null) {
+        //if (property.user!.settings!.inAppAlert.isTrue&&property.user!.settings!.requestTourAlert.isTrue) {
+
+          await sendPushNotification(
+            property.user!.id.toString(),
+            EditCtrl.name.text,
+            EditCtrl.messageTour.text,
+            'Request_Tour_Notification');
         EditCtrl.messageTour.text = '';
         EditCtrl.phone.text = '';
         EditCtrl.email.text = '';
         EditCtrl.name.text = '';
         Preloader.hide();
         if (Utils.isMobileApp) Get.back();
+
         MSG.snackBar('Submitted successfully');
+      // }else{
+      //     EditCtrl.messageTour.text = '';
+      //     EditCtrl.phone.text = '';
+      //     EditCtrl.email.text = '';
+      //     EditCtrl.name.text = '';
+      //     Preloader.hide();
+      //     if (Utils.isMobileApp) Get.back();
+      //
+      //     MSG.snackBar('Submitted successfully');
+      //   }
       }
     }
   }

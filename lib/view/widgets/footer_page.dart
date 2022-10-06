@@ -195,7 +195,7 @@ Widget pageFooter() {
                                 hint: 'Email address',
                                 borderColor: Colors.white,
                               ),
-                              FormButton(onPressed: () => homeCtrl.subscribeToNewsLetter, txtColor: Colors.white),
+                              FormButton(onPressed: () => homeCtrl.subscribeToNewsLetter(), txtColor: Colors.white),
                             ],
                           ),
                         );
