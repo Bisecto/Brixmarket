@@ -5,10 +5,13 @@ import 'package:brixmarket/res/strings.dart';
 import 'package:brixmarket/view/screens/mobile/updateApp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../../main.dart';
 import '../../../res/lists.dart';
 import '../../../testingPage.dart';
 import '../../../utils/utils.dart';
@@ -129,14 +132,164 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       });    }
 
   }
+  bool isNotification = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Fetch_App_Details();
     CheckUpdate();
-    initDynamicLinks(context!);
+    initDynamicLinks(context);
     Utils.getCurrentLocation();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        //print('...............................................' + message.data['categorySlug']);
+        //print(message.data['news_id']);
+        setState(() {
+          isNotification = true;
+
+          ///cat_Slug = message.data['categorySlug'];
+          ///news_Id = message.data['news_id'];
+          /// print("..............................................." + message.data['news_id']);
+          /// print("..............................................." + message.data['categorySlug']);
+        });
+
+        ///print("..............................................." + message.data['news_id']);
+        /// print("..............................................." + message.data['categorySlug']);
+        if (message.data['value']=='Admin_Notification'){
+          showDialog<AlertDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  actions: <Widget>[
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Text(
+                            'Message from admin',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/brimarket-3e1d9.appspot.com/o/brix-logo-dark.png?alt=media&token=7dac3711-a18b-4a58-ac43-31509362aff7',
+                            height: 100,width: 100,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 5,
+                                  backgroundColor: Colors.white,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.red),
+                                ),);
+                              // You can use LinearProgressIndicator, CircularProgressIndicator, or a GIF instead
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${message.notification!.title}',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${message.notification!.body}',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                                ),
+                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     FlatButton(
+                          //       child: const Text(
+                          //         'Cancel',
+                          //         style: TextStyle(color: Colors.red),
+                          //       ),
+                          //       onPressed: () {
+                          //         Navigator.of(context).pop();
+                          //       },
+                          //     ),
+                          //     FlatButton(
+                          //       child: const Text(
+                          //         'View message',
+                          //         style: TextStyle(color: Colors.green),
+                          //       ),
+                          //       onPressed: () {
+                          //         // Navigator.push(
+                          //         //     context,
+                          //         //     MaterialPageRoute(
+                          //         //         builder: (context) => TestingNews(
+                          //         //             categorySlug:
+                          //         //             message.data['categorySlug'],
+                          //         //             news_id: message.data['news_id'])));
+                          //       },
+                          //     )
+                          //   ],
+                          // )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              });
+      }else if(message.data['value']=="Message_Notification"){
+             print('Message Notification');
+      }
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => TestingNews(categorySlug: message.data['categorySlug'], news_id: message.data['news_id'])
+        //     ));
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+                android: AndroidNotificationDetails(
+                  channel.id,
+                  channel.name,
+                  //channel.description,
+                  color: Colors.blueAccent,
+                  playSound: true,
+                  icon: 'assets/images/brix-logo.ico',
+                )));
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new MessageOpenedApp event was published');
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        setState(() {
+          isNotification = true;
+          // cat_Slug = message.data['categorySlug'];
+          // news_Id = message.data['news_id'];
+        });
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => TestingNews(
+        //             categorySlug: message.data['categorySlug'],
+        //             news_id: message.data['news_id'])));
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {

@@ -93,6 +93,8 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
         var response = (await Provider().postData("login/user", User.map()));
         if (response != null) {
           loginUser(User.fromJson(response));
+          FirebaseMessaging.instance.subscribeToTopic(_userId);
+          print('$_userId*******00000000001231234567812345678`12345678**************');
         }
       }
     } else {

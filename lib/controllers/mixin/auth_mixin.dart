@@ -13,6 +13,7 @@ import '../../view/screens/mobile/sub_payment.dart';
 import '../edit_controller.dart';
 import '../home_controller.dart';
 import '../instance.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 mixin Auth {
   var loading = false;
@@ -123,11 +124,13 @@ mixin Auth {
                 return null;
               }
             }
-
+            print('{{}}}}}}}}}}}{{{{{{{{}}}}}}}}PPPPPP{}}{{&&&&&******((()()))');
             await homeCtrl.loginUser(userObj);
             await propCtrl.getSavedProperties();
             Preloader.hide();
             MSG.snackBar('Login successful');
+            //FirebaseMessaging.instance.subscribeToTopic(_userId);
+            //print('$_userId*******00000000001231234567812345678`12345678**************');
             Utils.gotoHomePage();
           }
         }

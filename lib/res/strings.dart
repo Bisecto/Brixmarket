@@ -88,6 +88,7 @@ mixin ImgStr {
   static const String chatBg = "assets/images/chat-bg.jpg";
   static const String loadingRedBalls = "assets/images/loading-red.gif";
   static const String loadingBalls = "assets/images/loading.gif";
+  static const String notificationBell="assets/images/notification-bell.gif";
 }
 
 class Str with RouteStr, ImgStr {
