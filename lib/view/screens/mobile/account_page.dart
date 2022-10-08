@@ -191,12 +191,12 @@ class _AccountPageState extends State<AccountPage> {
                 },
                 title: 'Privacy and Security',
                 icon: Icons.security_outlined),
-            buildListTile(
-                onTap: () {
-                  Get.toNamed(RouteStr.mobileNotificationSettings);
-                },
-                title: 'Notification Settings',
-                icon: Icons.app_settings_alt),
+            // buildListTile(
+            //     onTap: () {
+            //       Get.toNamed(RouteStr.mobileNotificationSettings);
+            //     },
+            //     title: 'Notification Settings',
+            //     icon: Icons.app_settings_alt),
             const SizedBox(
               height: 20,
             ),

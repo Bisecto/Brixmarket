@@ -21,11 +21,13 @@ reInitInstance() {
 }
 
 accountName({required User user, home = false}) {
-  return user.isUser == true
-      ? home
-          ? user.firstName
-          : '${user.firstName} ${user.surname}'
-      : user.agency?.name;
+  if (user.isUser == true) {
+    return home
+          ? "${user.firstName}"
+          : '${user.firstName} ${user.surname}';
+  } else {
+    return user.agency?.name??'${user.firstName}';
+  }
 }
 
 noInternetFunction({function}) {}

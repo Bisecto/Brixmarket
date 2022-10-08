@@ -91,7 +91,9 @@ class _ProfilingPageState extends State<ProfilingPage> {
                   title: 'Identity Document',
                   icon: Icons.featured_video_outlined,
                 ),buildListTile(
-            onTap: () => _displayDialog(context),
+            onTap: () {
+              homeCtrl.deleteAccount();
+            },
             title: 'Delete Account',
             color: Colors.red,
             icon: Icons.delete_outline_outlined,
@@ -103,32 +105,32 @@ class _ProfilingPageState extends State<ProfilingPage> {
       ),
     );
   }
-  _displayDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Delete Account'),
-            content: Text(
-              'Are you sure you want to delete this account?'
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('No'),
-                onPressed: () {
-                  homeCtrl.deleteAccount();
-                },
-              ),
-              FlatButton(
-                child: Text('Yes'),
-                onPressed: () {
-                  homeCtrl.deleteAccount();
-                },
-              )
-            ],
-          );
-        });
-  }
+  // _displayDialog(BuildContext context) async {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('Delete Account'),
+  //           content: Text(
+  //             'Are you sure you want to delete this account?'
+  //           ),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text('No'),
+  //               onPressed: () {
+  //                 Navigator.pop(context);
+  //               },
+  //             ),
+  //             FlatButton(
+  //               child: Text('Yes'),
+  //               onPressed: () {
+  //                 homeCtrl.deleteAccount();
+  //               },
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
   buildListTile({String title = '', IconData? icon, required Function onTap, Color? color}) {
     return InkWell(
       onTap: () {

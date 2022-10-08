@@ -97,7 +97,7 @@ List<GetPage<dynamic>> mobileDashboardPages = [
   GetPage(name: RouteStr.mobileSubscription, page: () => SubScriptionPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.mobileProfileHome, page: () => const ProfilingPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(
-      name: RouteStr.mobileSecurityHome, page: () => const PrivacySecurityPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+      name: RouteStr.mobileSecurityHome, page: () => const PrivacySecurityPage(), ),
   GetPage(
       name: RouteStr.mobileNotificationSettings, page: () => const Notifications(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.mobileHelpHome, page: () => const HelpPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),

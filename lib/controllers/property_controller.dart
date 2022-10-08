@@ -303,7 +303,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         //if (property.user!.settings!.inAppAlert.isTrue) {
           await sendPushNotification(
               property.user!.id.toString(),
-              property.user!.firstName.toString(),
+              property.user!.firstName.toString()+" Just sent a review on a property you uploaded",
               EditCtrl.messageReview.text,
               'Review_Notification');
           EditCtrl.messageReview.text = '';
@@ -405,7 +405,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
           await sendPushNotification(
             property.user!.id.toString(),
-            EditCtrl.name.text,
+            EditCtrl.name.text+" Requested a tour on a property you uploaded",
             EditCtrl.messageTour.text,
             'Request_Tour_Notification');
         EditCtrl.messageTour.text = '';

@@ -101,7 +101,7 @@ class Str with RouteStr, ImgStr {
   static const String resetPassword = 'Reset Password';
   static const String signUp = 'Sign Up';
   static const String accountBasic = 'Account Basic Info';
-  static const String uploadProfileLogo = 'Upload your Logo';
+  static const String uploadProfileLogo = 'Upload profile logo/profile picture';
   static const String uploadProfileImage = 'Upload Profile image';
   static const String editProfileLogo = 'Edit your Logo';
   static const String editProfileImage = 'Edit Profile image';

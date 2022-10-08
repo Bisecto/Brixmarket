@@ -119,7 +119,7 @@ mixin Chat {
         Provider().postData('chat/save-user', thisUserMap);
         Provider().postData('chat/save-user', otherUserMap);
 
-          await sendPushNotification(otherUserId, thisUserName, EditCtrl.chatMessage.text, 'Message_Notification');
+          await sendPushNotification(otherUserId, "You just got a message from $thisUserName", EditCtrl.chatMessage.text, 'Message_Notification');
         EditCtrl.chatMessage.text = '';}
     }
   }

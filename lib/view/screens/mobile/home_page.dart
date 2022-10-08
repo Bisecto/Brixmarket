@@ -510,7 +510,6 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    propCtrl.exploreFilterProperties.clear();
   }
 
   @override
@@ -744,7 +743,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                                 ),
                                 const CustomText(
                                     color: Pallet.secondaryColor,
-                                    text: '   Search Using property name',
+                                    text: '   Search using property name',
                                     weight: FontWeight.normal,
                                     size: 16),
                               ],
