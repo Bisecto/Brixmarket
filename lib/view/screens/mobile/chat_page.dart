@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
+import '../../../main.dart';
 import 'conversation_lists.dart';
 
 class ChatPage extends StatefulWidget {
@@ -18,6 +19,8 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     homeCtrl.fetchChatUsers();
+    flutterLocalNotificationsPlugin.cancelAll();
+
     super.initState();
   }
 

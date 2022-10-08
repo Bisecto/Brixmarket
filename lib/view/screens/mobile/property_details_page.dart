@@ -874,6 +874,47 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     ],
                   ),
                 ),
+                user.id == property.user?.id
+                    ?  FormButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => const AlertDialog(
+                        title: Text("Msg"),
+                        content: Text("Please wait while link is been generated"),
+                        actions: <Widget>[
+                          Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.red,
+                              strokeWidth: 3,),
+                          )
+                        ],
+                      ),
+                    );
+                    print(imageList);
+                    print(imageList.length);
+                    String generatedDeepLink =
+                        await FirebaseDynamicLinkService
+                        .createDynamicLink(property,imageList[0].media.toString(),true,);
+                    Navigator.pop(context);
+                    print(
+                        "GENARATED DEEP LINK ${generatedDeepLink.length}");
+                    print(
+                        "GENARATED DEEP LINK ${generatedDeepLink}");
+                    await Share.share("Check out this property at brixmarket " + generatedDeepLink,);
+                  },
+                  text: 'Share property',
+                  width: 140,
+                  height: 48,
+                  size: 16,
+                  radius: 4,
+                  top: 12,
+                  txtColor: Colors.white,
+                )
+                    : const SizedBox(height: 24),
+                user.id == property.user?.id
+                    ? const SizedBox.shrink()
+                    :
                 FormButton(
                   onPressed: () => requestATour(property.id),
                   text: 'Request Tour',

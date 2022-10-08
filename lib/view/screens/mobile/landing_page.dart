@@ -278,6 +278,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
     CheckUpdate();
     initDynamicLinks(context);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       AppleNotification? ios = message.notification?.apple;

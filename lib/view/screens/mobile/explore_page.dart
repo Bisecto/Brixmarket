@@ -23,6 +23,12 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    propCtrl.exploreFilterProperties.shuffle();
+  }
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Future.delayed(const Duration(milliseconds: 10), () {

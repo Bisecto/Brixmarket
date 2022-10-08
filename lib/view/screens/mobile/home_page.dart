@@ -1,9 +1,7 @@
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/models/notification.dart';
-import 'package:brixmarket/testingPage.dart';
 import 'package:brixmarket/view/screens/mobile/profiling_page.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/edit_controller.dart';
@@ -11,6 +9,7 @@ import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
 import '../../../core/dialogs.dart';
 import '../../../core/preloader.dart';
+import '../../../main.dart';
 import '../../../models/property_model.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
@@ -34,7 +33,6 @@ class _MobileHomePageState extends State<MobileHomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
 
     // Navigator.push(
     //     context!,
@@ -827,7 +825,12 @@ class HomeNotificationsPage extends StatefulWidget {
 
 class _HomeNotificationsPageState extends State<HomeNotificationsPage> {
   bool isEmpty = true;
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    flutterLocalNotificationsPlugin.cancelAll();
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

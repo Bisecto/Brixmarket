@@ -56,6 +56,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
     exploreFilterProperties.value = globalProperties;
     exploreFilterProperties.refresh();
+    exploreFilterProperties.shuffle();
     showFeatureLoading.value = false;
 
     allProperties.value = globalProperties;
@@ -303,7 +304,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         //if (property.user!.settings!.inAppAlert.isTrue) {
           await sendPushNotification(
               property.user!.id.toString(),
-              property.user!.firstName.toString()+" Just sent a review on a property you uploaded",
+              "You just got a review on a property you uploaded",
               EditCtrl.messageReview.text,
               'Review_Notification');
           EditCtrl.messageReview.text = '';
