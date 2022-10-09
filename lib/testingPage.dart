@@ -28,21 +28,24 @@ class _TestingState extends State<Testing> {
       ),
       body: Container(
         child: FutureBuilder(
-            future: propCtrl.getProperties(),
+            future: propCtrl.fetchAllProperties(),
             builder: (context, AsyncSnapshot snap) {
-              List<Property> properties = snap.data ?? [];
+              List<Property> properties_2 = snap.data ?? [];
+
               // property.title!.trim().toLowerCase().contains(
               //     SearchValue.trim().toLowerCase())
 
               return snap.connectionState == ConnectionState.waiting
                   ? Preloader.loadingWidget()
                   :  ListView.builder(
-                  itemCount: properties.length,
+                  itemCount: properties_2.length,
                   padding: const EdgeInsets.only(
                       left: 12.0, right: 12.0, bottom: 20),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
+                    Property property = properties_2[index];
+
                     if (index == 0) {
                       return Column(
                         children: [
@@ -55,7 +58,7 @@ class _TestingState extends State<Testing> {
                                   weight: FontWeight.bold,
                                   size: 16)),
                           const Divider(color: Colors.black12),
-                          propCtrl.exploreFilterProperties.isEmpty
+                          properties_2.isEmpty
                               ? Column(children: [
                             SizedBox(
                               height: Get.height * 0.2,
@@ -71,11 +74,11 @@ class _TestingState extends State<Testing> {
                         ],
                       );
                     } else {
-                      if (properties[index].id
+                      if (property.id
                           ==widget.proertyID) {
                         return buildPremiumList(
                             showMore: true,
-                            property: properties[index]);
+                            property: property);
                       } else {
                         return Container();
                       }

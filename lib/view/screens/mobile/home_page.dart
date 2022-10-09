@@ -18,6 +18,7 @@ import '../../widgets/current_location.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
 import '../../widgets/search_bar.dart';
+
 class MobileHomePage extends StatefulWidget {
   const MobileHomePage({Key? key}) : super(key: key);
 
@@ -26,9 +27,6 @@ class MobileHomePage extends StatefulWidget {
 }
 
 class _MobileHomePageState extends State<MobileHomePage> {
-
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -503,7 +501,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   var myFocusNode = FocusNode().obs;
   TextEditingController tc = TextEditingController();
   String SearchValue = '';
-
+  bool isSubmitted=false;
   @override
   void initState() {
     // TODO: implement initState
@@ -526,10 +524,20 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                 tag: 'search',
                 child: Material(
                   child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        SearchValue = value;
-                      });
+                    onSubmitted: (value) {
+                      if (value.isEmpty) {
+                        MSG.errorSnackBar(
+                          'Empty field',
+                        );
+                        setState(() {
+                          isSubmitted=false;
+                        });
+                      } else {
+                        setState(() {
+                          isSubmitted=true;
+                          SearchValue = value;
+                        });
+                      }
                     },
                     decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.search),
@@ -547,21 +555,42 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
             ),
           )),
       body: Container(
-        child: FutureBuilder(
-            future: propCtrl.getProperties(navItem: 0),
+        child:
+        FutureBuilder(
+            future: propCtrl.fetchAllProperties(),
             builder: (context, AsyncSnapshot snap) {
               //List<Property> properties = snap.data ?? [];
               // property.title!.trim().toLowerCase().contains(
               //     SearchValue.trim().toLowerCase())
-              return Obx(() => propCtrl.showFeatureLoading.value
-                  ? Preloader.loadingWidget()
-                  : ListView.builder(
-                      itemCount: propCtrl.exploreFilterProperties.length + 1,
+              // FutureBuilder(
+              //     future: propCtrl.fetchFeaturedProperties(),
+              //     builder: (context, AsyncSnapshot snap) {
+              //       List<Property> properties = snap.data ?? [];
+              //       return snap.connectionState == ConnectionState.waiting
+              //           ? Preloader.loadingWidget()
+              //           : ListView.builder(
+              //           itemCount: properties.length,
+              //           scrollDirection: Axis.horizontal,
+              //           padding:
+              //           const EdgeInsets.symmetric(horizontal: 15),
+              //           shrinkWrap: true,
+              //           itemBuilder: (context, index) {
+              //             Property property = properties[index];
+              //             return buildPremiumList(
+              //                 showMore: false, property: property);
+              //           });
+              //     }),
+              List<Property> properties_1 = snap.data ?? [];
+              return snap.connectionState == ConnectionState.waiting
+                         ? Preloader.loadingWidget()
+                         :  ListView.builder(
+                      itemCount: properties_1.length,
                       padding: const EdgeInsets.only(
                           left: 12.0, right: 12.0, bottom: 20),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
+                        Property property = properties_1[index];
                         if (index == 0) {
                           return Column(
                             children: [
@@ -574,7 +603,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                                       weight: FontWeight.bold,
                                       size: 16)),
                               const Divider(color: Colors.black12),
-                              propCtrl.exploreFilterProperties.isEmpty
+                              properties_1.isEmpty
                                   ? Column(children: [
                                       SizedBox(
                                         height: Get.height * 0.2,
@@ -590,19 +619,18 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                             ],
                           );
                         } else {
-                          if (propCtrl.exploreFilterProperties[index - 1].title!
+                          if (property.title!
                               .trim()
                               .toLowerCase()
-                              .contains(SearchValue.trim().toLowerCase())) {
+                              .contains(SearchValue.trim().toLowerCase())&&isSubmitted) {
                             return buildPremiumList(
                                 showMore: true,
-                                property: propCtrl
-                                    .exploreFilterProperties[index - 1]);
+                                property: property);
                           } else {
                             return Container();
                           }
                         }
-                      }));
+                      });
             }),
       ),
     );
@@ -825,12 +853,14 @@ class HomeNotificationsPage extends StatefulWidget {
 
 class _HomeNotificationsPageState extends State<HomeNotificationsPage> {
   bool isEmpty = true;
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     flutterLocalNotificationsPlugin.cancelAll();
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

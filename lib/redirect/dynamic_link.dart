@@ -33,7 +33,7 @@ class FirebaseDynamicLinkService {
         iosParameters: IosParameters(
           fallbackUrl: Uri.parse(Str.downloadIOSLink),
           bundleId: 'com.brixx.brixmarket',
-          minimumVersion: '1.0.8',
+          minimumVersion: '1.0.10',
           appStoreId: '1645681904',
         ),
       socialMetaTagParameters: SocialMetaTagParameters(

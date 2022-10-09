@@ -33,6 +33,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var currentIndex = ''.obs;
 
   var isFeaturedProperties = false.obs;
+  var isAll_Properties = false.obs;
+
 
   void toggleList() {
     isList.value = !isList.value;
@@ -41,6 +43,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var allProperties = <Property>[].obs;
   var globalProperties = <Property>[];
+  var globalAllProperties = <Property>[];
+
   var propertiesList = <List<Property>>[];
   var loadingAllProperties = true.obs;
 
@@ -161,13 +165,35 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       if (response != null) {
         for (var e in (response['properties'] as List)) {
           featuredProperties.addIf(
-              featuredProperties.length < 20, Property.fromJson(e));
+              featuredProperties.length < 1000, Property.fromJson(e));
+          /// CHANGED THE ABOVE FROM featuredProperties.addIf(
+          ///              featuredProperties.length < 20, Property.fromJson(e));
+          ///              TO
+          ///              featuredProperties.addIf(
+          ///               featuredProperties.length < 10000, Property.fromJson(e));
           globalProperties.add(Property.fromJson(e));
         }
         isFeaturedProperties.value = true;
+        featuredProperties.shuffle();
       }
     }
     return featuredProperties;
+  }
+  List<Property> allproperty = <Property>[];
+  Future<List<Property>> fetchAllProperties() async {
+    if (allproperty.isEmpty) {
+      // var response = await Provider().getData("property/featured-properties");
+      var response = await Provider().getData("property/get-all");
+      if (response != null) {
+        for (var e in (response['properties'] as List)) {
+          allproperty.add(Property.fromJson(e));
+          globalAllProperties.add(Property.fromJson(e));
+        }
+        isAll_Properties.value = true;
+        allproperty.shuffle();
+      }
+    }
+    return allproperty;
   }
 
   toggleSelectedFilterBox({required String filter, required String item}) {
