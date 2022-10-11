@@ -59,6 +59,7 @@ class EditCtrl extends GetxController {
   static var city = TextEditingController().obs;
   static var cityErr = ''.obs;
   static var state = TextEditingController().obs;
+  static var country=TextEditingController().obs;
   static var stateErr = ''.obs;
   static var idNumber = TextEditingController();
   static var idNumberErr = ''.obs;

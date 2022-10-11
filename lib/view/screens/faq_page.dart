@@ -84,13 +84,13 @@ class _FaqPageState extends State<FaqPage> {
                                         color: Pallet.secondaryColor,
                                       ),
                                     ]),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Image.asset('assets/images/banner.png'),
-                                    )
+                                    // const SizedBox(
+                                    //   height: 30,
+                                    // ),
+                                    // Align(
+                                    //   alignment: Alignment.centerLeft,
+                                    //   child: Image.asset('assets/images/banner.png'),
+                                    // )
                                   ],
                                 )),
                         const SizedBox(

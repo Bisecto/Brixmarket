@@ -90,6 +90,13 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                           Text(
                             Str.contactPhone2,
                             style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            Str.contactPhone1,
+                            style: TextStyle(color: Colors.white, fontSize: 14),
                           )
                         ],
                       ),

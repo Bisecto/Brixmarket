@@ -912,13 +912,6 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                               ],
                                             ),
                                     ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Image.asset('assets/images/banner.png'),
-                                    )
                                   ]),
                             )),
                       ],

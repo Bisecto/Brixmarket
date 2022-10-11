@@ -16,7 +16,9 @@ class TermsWeb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double mainPadding = Get.width < 480 ? Get.width * 0.05 : Get.width * 0.06 + Get.width * 0.009;
+    double mainPadding = Get.width < 480
+        ? Get.width * 0.05
+        : Get.width * 0.06 + Get.width * 0.009;
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         key: homeScaffoldKey,
@@ -35,7 +37,10 @@ class TermsWeb extends StatelessWidget {
                   children: [
                     Container(
                       width: Get.width,
-                      decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage('assets/images/hero1.jpg'))),
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/hero1.jpg'))),
                       child: Container(
                         width: Get.width,
                         height: isMobile() ? 140 : 300,

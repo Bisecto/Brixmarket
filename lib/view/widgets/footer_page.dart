@@ -1,4 +1,5 @@
 import 'package:brixmarket/controllers/edit_controller.dart';
+import 'package:brixmarket/core/dialogs.dart';
 import 'package:brixmarket/res/strings.dart';
 import 'package:brixmarket/utils/validations.dart';
 import 'package:brixmarket/view/widgets/custom_button.dart';
@@ -11,11 +12,14 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../config/theme/color.dart';
 import '../../controllers/instance.dart';
 import '../../res/enums.dart';
+import '../../res/lists.dart';
+import '../../res/states.dart';
 import '../../utils/utils.dart';
 import '../screens/faq_page.dart';
 import '../screens/mobile/account_page.dart';
 import '../screens/mobile/help_page.dart';
 import 'app_social_icons.dart';
+import 'drop_down.dart';
 
 Widget pageFooter() {
   double mainPadding = Get.width < 480 ? Get.width * 0.05 : Get.width * 0.065;
@@ -132,6 +136,18 @@ Widget pageFooter() {
                                   : 12
                               : 16),
                     ),
+                    const SizedBox(height: 12),
+                    Text(
+                      Str.contactPhone2,
+                      style: TextStyle(
+                          color: Colors.white54,
+                          fontWeight: FontWeight.w300,
+                          fontSize: isTabletDown()
+                              ? isMobile()
+                              ? 14
+                              : 12
+                              : 16),
+                    ),
                   ],
                 ),
               ),
@@ -146,7 +162,7 @@ Widget pageFooter() {
                       footerQuickLind('Buy', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.buy)),
                       footerQuickLind('Rent', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.rent)),
                       footerQuickLind('New Home', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes)),
-                      footerQuickLind('Short Stay', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay)),
+                      footerQuickLind('Short-stay', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay)),
                       footerQuickLind('Commercial', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.commercial)),
                       footerQuickLind('Premium Realtors', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.premiumRealtors)),
                     ]),
@@ -159,7 +175,8 @@ Widget pageFooter() {
                       const SizedBox(height: 15),
                       footerQuickLindTitle('COMPANY'),
                       footerQuickLind('About', onTap: () => Get.toNamed(RouteStr.webAboutUs)),
-                      footerQuickLind('Privacy Policy', onTap: () => Get.toNamed(RouteStr.webTerms)),
+                      footerQuickLind('Terms & Conditions', onTap: () => Get.toNamed(RouteStr.webTerms)),
+                      footerQuickLind('Privacy Policy', onTap: () => Get.toNamed(RouteStr.webPolicy)),
                     ]),
                     isTabletDown() ? const SizedBox.shrink() : const Spacer(),
                     Expanded(
@@ -196,6 +213,59 @@ Widget pageFooter() {
                                 borderColor: Colors.white,
                               ),
                               FormButton(onPressed: () => homeCtrl.subscribeToNewsLetter(), txtColor: Colors.white),
+                              SizedBox(height:20),
+                              Container(
+                                width: double.infinity,
+                                height: 44,
+                                padding: const EdgeInsets.only(left: 0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                                    border: true ? Border.all(color: Colors.black12) : null),
+                                margin: const EdgeInsets.only(left: 0, right: 0),
+                                child: DropdownButton<String>(
+                                  iconEnabledColor:Colors.black54,
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 32,
+                                  ),
+                                  isExpanded: true,
+                                  iconSize: 24,
+                                  focusColor: Colors.black12,
+                                  alignment: Alignment.bottomCenter,
+                                  elevation: 3,
+                                  underline: Container(color: Colors.white),
+                                  value: EditCtrl.country.value.text,
+                                  onChanged: (newValue) {
+                                    if(newValue=='Nigeria'){
+                                      MSG.snackBar('Property are available in this country');
+                                      EditCtrl.country.value.text = newValue!;
+                                     // EditCtrl.country.refresh();
+                                    }else{
+                                      MSG.errorSnackBar('Not Available');
+                                      EditCtrl.country.value.text = newValue!;
+                                      //EditCtrl.country.refresh();
+                                    }
+
+                                  },
+                                  hint: const Padding(
+                                    padding: EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      'Select Country',
+                                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                                    ),
+                                  ),
+                                  items: countryList.map((data) {
+                                    return DropdownMenuItem<String>(
+                                      value: data.toString(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 12),
+                                        child: Text(data, style: const TextStyle(color: Colors.black87, fontSize: 16)),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                             ],
                           ),
                         );

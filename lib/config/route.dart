@@ -36,6 +36,7 @@ import '../view/screens/property_page_web.dart';
 import '../view/screens/reset_password_pages/create_new_password.dart';
 import '../view/screens/reset_password_pages/forgot_password.dart';
 import '../view/screens/reset_password_pages/password_otp_page.dart';
+import '../view/screens/web_policy.dart';
 import '../view/screens/web_terms.dart';
 
 //Authentication Pages
@@ -60,6 +61,9 @@ List<GetPage<dynamic>> webPages = [
   GetPage(name: RouteStr.webAboutUs, page: () => AboutUsWeb(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.webContactUs, page: () => DashboardPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.webTerms, page: () => TermsWeb(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+
+  GetPage(name: RouteStr.webPolicy, page: () => PolicyWeb(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+
 ];
 
 //Mobile Landing Pages

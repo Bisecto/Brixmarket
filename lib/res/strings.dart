@@ -21,6 +21,8 @@ mixin RouteStr {
   static const String webAboutUs = '/about-us';
   static const String webContactUs = '/contact-us';
   static const String webTerms = '/terms';
+  static const String webPolicy = '/policy';
+
 
   //Mobile Landing Routes
   static const String mobileSplashscreen = '/splash';
@@ -180,7 +182,7 @@ class Str with RouteStr, ImgStr {
   static const String buy = 'Buy';
   static const String rent = 'Rent';
   static const String newHome = 'New Homes';
-  static const String shortStay = 'Short Stay';
+  static const String shortStay = 'Short-stay';
   static const String commercial = 'Commercial';
   static const String premiumRealtors = 'Premium Realtors';
 
