@@ -4,6 +4,7 @@ import 'package:brixmarket/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/edit_controller.dart';
 import '../../controllers/home_controller.dart';
 import '../../controllers/instance.dart';
 import '../../core/dialogs.dart';
@@ -189,6 +190,7 @@ class MyPropertyMenu extends StatelessWidget {
             property: property, state: PublishedState.publish);
       } else if (value == 2) {
         cPropCtrl.completeDraftProperty(property);
+        EditCtrl.isEdits.value=true;
       } else if (value == 3) {
         cPropCtrl.changePublishState(
             property: property, state: PublishedState.delete);

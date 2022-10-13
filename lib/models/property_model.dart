@@ -65,6 +65,7 @@ class Property {
 
   Property.fromJson(json) {
     id = json['id'];
+    views=json['views'];
     title = json['title'];
     description = json['description'];
     price = json['price'] != null ? int.parse(json['price'].toString()) : 0;

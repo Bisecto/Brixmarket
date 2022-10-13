@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-
+import 'package:universal_html/html.dart' as html;
 import '../core/dialogs.dart';
 import '../core/preloader.dart';
 import '../models/insight_model.dart';
@@ -14,6 +14,7 @@ import '../res/strings.dart';
 import '../services/provider.dart';
 import '../utils/utils.dart';
 import '../view/screens/create_property/create_property_widges.dart';
+import '../view/screens/dashboard_page.dart';
 import '../view/screens/mobile/my_ads_page.dart';
 import 'instance.dart';
 
@@ -35,18 +36,23 @@ class CreatePropertyCtrl extends GetxController {
 
   var showMyPropertyMenu = false.obs;
   var showMyPropertyMenuIndex = 0.obs;
+  var isEdit = false;
 
   static const historyLength = 5;
 
   FloatingSearchBarController? searchController;
-  final oCcy = NumberFormat("#,##0.00","en_US");
+  final oCcy = NumberFormat("#,##0.00", "en_US");
   var accountIndex = 0.obs;
 
   var createPropPageIndex = 0.obs;
   var sideNavIndex = 0.obs;
+  var isWebEdit = false;
 
   onSelected(int index) {
     sideNavIndex.value = index;
+    if (index == 1) {
+      EditCtrl.disposeControllers();
+    }
     sideNavIndex.refresh();
   }
 
@@ -68,41 +74,58 @@ class CreatePropertyCtrl extends GetxController {
     if (createPropPageIndex.value > 0) {
       createPropPageIndex.value--;
     }
-    cPPageController.animateToPage(cPPageController.page!.toInt() - 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+    cPPageController.animateToPage(cPPageController.page!.toInt() - 1,
+        duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
+
   ToSpecifiedpage() {
     createPropScrollCtrl.jumpTo(0);
     if (createPropPageIndex.value < 5) {
       createPropPageIndex.value++;
     }
-    cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+    cPPageController.animateToPage(cPPageController.page!.toInt() + 1,
+        duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
 
   ToLastpage() {
     createPropScrollCtrl.jumpTo(0);
     if (createPropPageIndex.value < 5) {
-      createPropPageIndex.value=5;
+      createPropPageIndex.value = 5;
     }
-    cPPageController.animateToPage(5, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+    cPPageController.animateToPage(5,
+        duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
-  Toinitial(){
-    createPropPageIndex.value=0;
+
+  Toinitial() {
+    createPropPageIndex.value = 0;
   }
+
   bool saveToDraft = false;
+
   gotoNext({required int pageIndex}) {
     createPropScrollCtrl.jumpTo(0);
     if (saveToDraft == true) {
-      MSG.snackBar('Save property to my draft');
+      MSG.snackBar('Proper to my draft');
       saveToDraft = false;
       createPropPageIndex.value = 1;
       sideNavIndex.value = 2;
       sideNavIndex.refresh();
       createPropPageIndex.refresh();
-      //EditCtrl.disposeControllers();
+      EditCtrl.disposeControllers();
+      if (!Utils.isMobileApp) {
+        //   onInit();
+        // }
+        //DashboardPage
+        // Navigator.pushReplacement(
+        //   context!,
+        //   MaterialPageRoute(builder: (context) =>  DashboardPage()),
+        // );
+        html.window.location.reload();
+      }
     } else {
       createPropPageIndex.value = pageIndex;
-      cPPageController.animateToPage(cPPageController.page!.toInt() + 1, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
-
+      cPPageController.animateToPage(cPPageController.page!.toInt() + 1,
+          duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
     }
   }
 
@@ -156,9 +179,10 @@ class CreatePropertyCtrl extends GetxController {
         gotoNext(pageIndex: 1);
         getAmenities();
         getFeatures();
-      } else{
+      } else {
         Preloader.hide();
-        MSG.errorSnackBar('There was a problem uploading product details',title: 'Message');
+        MSG.errorSnackBar('There was a problem uploading product details',
+            title: 'Message');
       }
     }
   }
@@ -184,19 +208,20 @@ class CreatePropertyCtrl extends GetxController {
     } else {
       Preloader.show(msg: 'Images uploading..... please wait');
       var data = Property.map();
-      var response = await Provider().postFiles("property/store-media/${data['property']}", EditCtrl.image8Lists.value, data: data);
+      var response = await Provider().postFiles(
+          "property/store-media/${data['property']}",
+          EditCtrl.image8Lists.value,
+          data: data);
       if (response != null) {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         gotoNext(pageIndex: 2);
-      }
-
-       else{
+      } else {
         gotoNext(pageIndex: 2);
-      //   Preloader.hide();
-      //   MSG.errorSnackBar('Something is wrong with the image',title: 'Message');
-      //   Preloader.hide();
-       }
+        //   Preloader.hide();
+        //   MSG.errorSnackBar('Something is wrong with the image',title: 'Message');
+        //   Preloader.hide();
+      }
     }
   }
 
@@ -244,48 +269,51 @@ class CreatePropertyCtrl extends GetxController {
         latitude: EditCtrl.latitude.value.text,
       );
 
-      var response = await Provider().postData("property/store-location/${data['property']}", data);
+      var response = await Provider()
+          .postData("property/store-location/${data['property']}", data);
       if (response != null) {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         getAmenities();
         getFeatures();
         gotoNext(pageIndex: 3);
-      }else{
+      } else {
         Preloader.hide();
-        MSG.errorSnackBar('Problem Occurred while Uploading product location',title: 'Message');
+        MSG.errorSnackBar('Problem Occurred while Uploading product location',
+            title: 'Message');
         Preloader.hide();
       }
     }
   }
 
   submitPropertyMoreDetails() async {
-   // bool isValidData = true;
+    // bool isValidData = true;
     int i = 0;
     Map<String, dynamic> map = {};
     for (var ctrl in EditCtrl.features) {
       //var key = EditCtrl.ctrlListKeys[i++];
-     // if (ctrl.value.text.trim().isEmpty && isValidData) {
-        //isValidData = false;
-        //MSG.errorSnackBar(
-       //   '${key.text} field is required',
+      // if (ctrl.value.text.trim().isEmpty && isValidData) {
+      //isValidData = false;
+      //MSG.errorSnackBar(
+      //   '${key.text} field is required',
       //  );
       //} else {
-        map['features[${EditCtrl.features[i++]}]'] = ctrl;
-            //ctrl.value.text.trim();
+      map['features[${EditCtrl.features[i++]}]'] = ctrl;
+      //ctrl.value.text.trim();
       //}
     }
-   // if (isValidData) {
-      Preloader.show();
-      Map<String, dynamic> data = Property.map();
-      data.addAll(map);
-      var response = await Provider().postData("property/store-features/${data['property']}", data);
-      if (response != null) {
-        propCtrl.property = Property.fromJson(response);
-        Preloader.hide();
-        gotoNext(pageIndex: 4);
-      }
-   // }
+    // if (isValidData) {
+    Preloader.show();
+    Map<String, dynamic> data = Property.map();
+    data.addAll(map);
+    var response = await Provider()
+        .postData("property/store-features/${data['property']}", data);
+    if (response != null) {
+      propCtrl.property = Property.fromJson(response);
+      Preloader.hide();
+      gotoNext(pageIndex: 4);
+    }
+    // }
   }
 
   submitPropertyAmenities() async {
@@ -298,7 +326,8 @@ class CreatePropertyCtrl extends GetxController {
     Map<String, dynamic> data = Property.map();
     data.addAll(map);
 
-    var response = await Provider().postData("property/store-amenities/${data['property']}", data);
+    var response = await Provider()
+        .postData("property/store-amenities/${data['property']}", data);
     if (response != null) {
       propCtrl.property = Property.fromJson(response);
       Preloader.hide();
@@ -328,7 +357,8 @@ class CreatePropertyCtrl extends GetxController {
         whatsAppNumber: EditCtrl.whatsAppNumber.text,
       );
 
-      var response = await Provider().postData("property/store-user-contact/${data['property']}", data);
+      var response = await Provider()
+          .postData("property/store-user-contact/${data['property']}", data);
       if (response != null) {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
@@ -339,19 +369,25 @@ class CreatePropertyCtrl extends GetxController {
           cPropCtrl.createPropPageIndex.value = 0;
           Get.off(() => const MyAdsPage());
         } else {
-          createPropPageIndex.value = 0;
-          createPropPageIndex.refresh();
+          cPropCtrl.createPropPageIndex.value = 0;
+          cPropCtrl.createPropPageIndex.refresh();
           sideNavIndex.value = 2;
           sideNavIndex.refresh();
+          //onInit();
+          html.window.location.reload();
+
         }
       }
     }
   }
 
   Insight? insight;
+
   Future getInsight() async {
     // if (insight == null) {
-    await Provider().postData("property/get-insight", User.map()).then((value) => insight = Insight.fromJson(value));
+    await Provider()
+        .postData("property/get-insight", User.map())
+        .then((value) => insight = Insight.fromJson(value));
     // }
     return insight;
   }
@@ -361,10 +397,12 @@ class CreatePropertyCtrl extends GetxController {
   var myDraftProperties = <Property>[].obs;
   var mySuspendedProperties = <Property>[].obs;
   var myPublishedProperties = <Property>[].obs;
+
   Future getMyProperties() async {
     // if (myProperties.isEmpty) {
     var map = User.map();
-    var response = await Provider().postData("property/get-user-properties", map);
+    var response =
+        await Provider().postData("property/get-user-properties", map);
     if (response != null) {
       myProperties.value = [];
       mySoldProperties.value = [];
@@ -373,10 +411,14 @@ class CreatePropertyCtrl extends GetxController {
       myPublishedProperties.value = [];
       if (response != null && response.isNotEmpty) {
         for (var e in response['properties']) {
-          mySoldProperties.addIf(e['publish_state'] == 'Sold', Property.fromJson(e));
-          myDraftProperties.addIf(e['publish_state'] == 'Draft', Property.fromJson(e));
-          mySuspendedProperties.addIf(e['publish_state'] == 'Suspended', Property.fromJson(e));
-          myPublishedProperties.addIf(e['publish_state'] == 'Published', Property.fromJson(e));
+          mySoldProperties.addIf(
+              e['publish_state'] == 'Sold', Property.fromJson(e));
+          myDraftProperties.addIf(
+              e['publish_state'] == 'Draft', Property.fromJson(e));
+          mySuspendedProperties.addIf(
+              e['publish_state'] == 'Suspended', Property.fromJson(e));
+          myPublishedProperties.addIf(
+              e['publish_state'] == 'Published', Property.fromJson(e));
           myProperties.add(Property.fromJson(e));
         }
       }
@@ -388,7 +430,8 @@ class CreatePropertyCtrl extends GetxController {
   Future changePublishState({property, state}) async {
     cPropCtrl.showMyPropertyMenu.value = false;
     var map = Property.map(id: property.id, publishState: state);
-    var response = await Provider().postData("property/change-property-publish-state", map);
+    var response = await Provider()
+        .postData("property/change-property-publish-state", map);
     if (response != null) {
       if (response != null && response.isNotEmpty) {
         dnd(response['properties'].length);
@@ -398,10 +441,14 @@ class CreatePropertyCtrl extends GetxController {
         mySuspendedProperties.value = [];
         myPublishedProperties.value = [];
         for (var e in response['properties']) {
-          mySoldProperties.addIf(e['publish_state'] == 'Sold', Property.fromJson(e));
-          myDraftProperties.addIf(e['publish_state'] == 'Draft', Property.fromJson(e));
-          mySuspendedProperties.addIf(e['publish_state'] == 'Suspended', Property.fromJson(e));
-          myPublishedProperties.addIf(e['publish_state'] == 'Published', Property.fromJson(e));
+          mySoldProperties.addIf(
+              e['publish_state'] == 'Sold', Property.fromJson(e));
+          myDraftProperties.addIf(
+              e['publish_state'] == 'Draft', Property.fromJson(e));
+          mySuspendedProperties.addIf(
+              e['publish_state'] == 'Suspended', Property.fromJson(e));
+          myPublishedProperties.addIf(
+              e['publish_state'] == 'Published', Property.fromJson(e));
           myProperties.add(Property.fromJson(e));
         }
         myProperties.refresh();
@@ -414,11 +461,15 @@ class CreatePropertyCtrl extends GetxController {
   }
 
   List? amenities;
+
   Future getAmenities({all = false}) async {
     amenities = [];
     if (amenities!.isEmpty && EditCtrl.category.value.text.isNotEmpty || all) {
       String category = all ? 'all' : EditCtrl.category.value.text;
-      await Provider().postData("property/get-amenities/${EditCtrl.category.value.text}", Property.map()).then((value) => amenities = value);
+      await Provider()
+          .postData("property/get-amenities/${EditCtrl.category.value.text}",
+              Property.map())
+          .then((value) => amenities = value);
     }
     return amenities ?? [];
   }
@@ -432,17 +483,18 @@ class CreatePropertyCtrl extends GetxController {
     EditCtrl.description.text = property.description ?? '';
 
     EditCtrl.price.text = property.price.toString();
-    EditCtrl.priceDuration.value.text = property.priceDuration ?? '';
-    EditCtrl.category.value.text = property.category ?? '';
-    EditCtrl.type.value.text = property.type ?? '';
-    EditCtrl.status.value.text = property.status ?? '';
+    EditCtrl.priceDuration.value.text = property.priceDuration! ?? '';
+    EditCtrl.category.value.text = property.category! ?? '';
+    EditCtrl.type.value.text = property.type! ?? '';
+    EditCtrl.status.value.text = property.status! ?? '';
 
     if (property.media != null) {
       // EditCtrl.imageFiles.value = [];
       EditCtrl.image8Lists.value = [];
       for (var element in property.media!) {
         // EditCtrl.imageFiles.add(File.fromUri(Uri.parse('$propertyImgPath${element.media}')));
-        EditCtrl.image8Lists.add(await Utils.imgUrlToFile('$propertyImgPath${element.media}'));
+        EditCtrl.image8Lists
+            .add(await Utils.imgUrlToFile('$propertyImgPath${element.media}'));
       }
       EditCtrl.imageFiles.refresh();
     }
@@ -470,10 +522,10 @@ class CreatePropertyCtrl extends GetxController {
         EditCtrl.features.add(e.feature);
       }
       EditCtrl.features.refresh();
-     // feature.entries.map((feature) {
-        //EditCtrl.features.add(e.feature);
-        //EditCtrl.ctrlListKeys.add(TextEditingController(text: feature.key));
-     // });
+      // feature.entries.map((feature) {
+      //EditCtrl.features.add(e.feature);
+      //EditCtrl.ctrlListKeys.add(TextEditingController(text: feature.key));
+      // });
     }
 
     if (property.amenities != null) {

@@ -273,7 +273,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Utils.getCurrentLocation();
+    //Utils.getCurrentLocation();
     Fetch_App_Details();
     CheckUpdate();
     initDynamicLinks(context);

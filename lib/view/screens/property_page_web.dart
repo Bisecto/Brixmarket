@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';
 import '../../core/app.dart';
 import '../../models/media_model.dart';
 import '../../models/property_model.dart';
+import '../../redirect/dynamic_link.dart';
 import '../../res/strings.dart';
 import '../../utils/utils.dart';
 import '../widgets/custom_button.dart';
@@ -806,39 +808,87 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                       ),
                                     ),
                                     const SizedBox(height: 24),
-                                    Container(
-                                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(4),
-                                        boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 2, offset: Offset(0, 2))],
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          const CustomText(color: Colors.black, text: 'share via:', weight: FontWeight.w600, size: 16),
-                                          const SizedBox(height: 20),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Image.asset('assets/images/share.png', height: 16, width: 16, color: Colors.red),
-                                                const SizedBox(width: 6),
-                                                Image.asset('assets/images/facebook1.png', height: 16, width: 16),
-                                                const SizedBox(width: 10),
-                                                Image.asset('assets/images/twitter1.png', height: 20, width: 20),
-                                                const SizedBox(width: 10),
-                                                Image.asset('assets/images/instagram1.png', height: 20, width: 20),
-                                                const SizedBox(width: 10),
-                                                Image.asset('assets/images/whatsapp.png', height: 16, width: 16),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
+                                    //   decoration: BoxDecoration(
+                                    //     color: Colors.white,
+                                    //     borderRadius: BorderRadius.circular(4),
+                                    //     boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 2, offset: Offset(0, 2))],
+                                    //   ),
+                                    //   child: Column(
+                                    //     children: [
+                                    //       const CustomText(color: Colors.black, text: 'share via:', weight: FontWeight.w600, size: 16),
+                                    //       const SizedBox(height: 20),
+                                    //       Padding(
+                                    //         padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                    //         child:           GestureDetector(
+                                    //           onTap: () async {
+                                    //             showDialog(
+                                    //               context: context,
+                                    //               builder: (ctx) => const AlertDialog(
+                                    //                 title: Text("Msg"),
+                                    //                 content: Text(
+                                    //                     "Please wait while link is been generated"),
+                                    //                 actions: <Widget>[
+                                    //                   Center(
+                                    //                     child: CircularProgressIndicator(
+                                    //                       backgroundColor: Colors.red,
+                                    //                       strokeWidth: 3,
+                                    //                     ),
+                                    //                   )
+                                    //                 ],
+                                    //               ),
+                                    //             );
+                                    //             print(images);
+                                    //             print(images.length);
+                                    //             String generatedDeepLink =
+                                    //                 await FirebaseDynamicLinkService
+                                    //                 .createDynamicLink(
+                                    //               property,
+                                    //                   images[0].media.toString(),
+                                    //               true,
+                                    //             );
+                                    //             Navigator.pop(context);
+                                    //             print(
+                                    //                 "GENARATED DEEP LINK ${generatedDeepLink.length}");
+                                    //             print("GENARATED DEEP LINK ${generatedDeepLink}");
+                                    //             await Share.share(
+                                    //               "Check out this property at brixmarket " +
+                                    //                   generatedDeepLink,
+                                    //             );
+                                    //           },
+                                    //           child: Container(
+                                    //             height: 50,
+                                    //             margin: const EdgeInsets.symmetric(horizontal: 12),
+                                    //             width: double.infinity,
+                                    //             decoration: BoxDecoration(
+                                    //                 borderRadius: BorderRadius.circular(4),
+                                    //                 border: Border.all(color: Colors.blueGrey, width: 1.5)),
+                                    //             child: Row(
+                                    //               mainAxisAlignment: MainAxisAlignment.center,
+                                    //               children: const [
+                                    //                 Icon(
+                                    //                   Icons.share,
+                                    //                   color: Pallet.secondaryColor,
+                                    //                 ),
+                                    //                 SizedBox(width: 10),
+                                    //                 CustomText(
+                                    //                     color: Colors.black,
+                                    //                     text: 'Share to a Friend',
+                                    //                     weight: FontWeight.w400,
+                                    //                     size: 14),
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         )
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     const SizedBox(height: 24),
-                                    Container(
+                                    user.id == property.user?.id
+                                        ? const SizedBox.shrink()
+                                        :Container(
                                       padding: const EdgeInsets.all(0),
                                       decoration: BoxDecoration(
                                         color: Colors.white,

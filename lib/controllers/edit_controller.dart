@@ -16,6 +16,7 @@ class EditCtrl extends GetxController {
   }
 
   static var chatMessage = TextEditingController();
+  static var isEdits = false.obs;
 
   static var userAddress = TextEditingController();
   static var userAddressErr = ''.obs;
@@ -143,7 +144,7 @@ class EditCtrl extends GetxController {
   static void disposeControllers() {
     try {
       chatMessage.text = '';
-
+      isEdits.value=false;
       userAddress.text = '';
       userAddressErr.value = '';
       email.text = '';

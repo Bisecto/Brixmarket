@@ -213,7 +213,7 @@ Widget pageFooter() {
                                 borderColor: Colors.white,
                               ),
                               FormButton(onPressed: () => homeCtrl.subscribeToNewsLetter(), txtColor: Colors.white),
-                              SizedBox(height:20),
+                              const SizedBox(height: 10),
                               Container(
                                 width: double.infinity,
                                 height: 44,
@@ -223,47 +223,48 @@ Widget pageFooter() {
                                     borderRadius: BorderRadius.all(Radius.circular(4)),
                                     border: true ? Border.all(color: Colors.black12) : null),
                                 margin: const EdgeInsets.only(left: 0, right: 0),
-                                child: DropdownButton<String>(
-                                  iconEnabledColor:Colors.black54,
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down_outlined,
-                                    size: 32,
-                                  ),
-                                  isExpanded: true,
-                                  iconSize: 24,
-                                  focusColor: Colors.black12,
-                                  alignment: Alignment.bottomCenter,
-                                  elevation: 3,
-                                  underline: Container(color: Colors.white),
-                                  value: EditCtrl.country.value.text,
-                                  onChanged: (newValue) {
-                                    if(newValue=='Nigeria'){
-                                      MSG.snackBar('Property are available in this country');
-                                      EditCtrl.country.value.text = newValue!;
-                                     // EditCtrl.country.refresh();
-                                    }else{
-                                      MSG.errorSnackBar('Not Available');
-                                      EditCtrl.country.value.text = newValue!;
-                                      //EditCtrl.country.refresh();
-                                    }
-
-                                  },
-                                  hint: const Padding(
-                                    padding: EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      'Select Country',
-                                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                                child: Obx(() =>DropdownButton<String>(
+                                    iconEnabledColor:Colors.black54,
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down_outlined,
+                                      size: 32,
                                     ),
-                                  ),
-                                  items: countryList.map((data) {
-                                    return DropdownMenuItem<String>(
-                                      value: data.toString(),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 12),
-                                        child: Text(data, style: const TextStyle(color: Colors.black87, fontSize: 16)),
+                                    isExpanded: true,
+                                    iconSize: 24,
+                                    focusColor: Colors.black12,
+                                    alignment: Alignment.bottomCenter,
+                                    elevation: 3,
+                                    underline: Container(color: Colors.white),
+                                    value: EditCtrl.country.value.text == ' ' || !countryList.contains(EditCtrl.country.value.text) ? null : EditCtrl.country.value.text,
+                                    onChanged: (newValue) {
+                                      if(newValue=='Nigeria'){
+                                        MSG.snackBar('Property are available in this country');
+                                        EditCtrl.country.value.text = newValue!;
+                                       EditCtrl.country.refresh();
+                                      }else{
+                                        MSG.errorSnackBar('No property is available in this location');
+                                        EditCtrl.country.value.text = newValue!;
+                                        EditCtrl.country.refresh();
+                                      }
+
+                                    },
+                                    hint: const Padding(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        'Select Country',
+                                        style: TextStyle(color: Colors.grey, fontSize: 16),
                                       ),
-                                    );
-                                  }).toList(),
+                                    ),
+                                    items: countryList.map((data) {
+                                      return DropdownMenuItem<String>(
+                                        value: data.toString(),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 12),
+                                          child: Text(data, style: const TextStyle(color: Colors.black87, fontSize: 16)),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                                 ),
                               ),
                             ],

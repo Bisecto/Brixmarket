@@ -43,8 +43,8 @@ class AccountWidget extends StatelessWidget {
                   if (user.isUser == false) baseCard(legalDocumentInfo(), title: Lst.accountCards[3].title),
                   baseCard(locationInfo(), title: Lst.accountCards[4].title),
                   if (user.isUser == true) baseCard(identityInfo(), title: Lst.accountCards[5].title),
-                  baseCard(notificationSettingsInfo(), title: Lst.accountCards[6].title),
-                  baseCard(changePassword(), title: Lst.accountCards[7].title),
+                  //baseCard(notificationSettingsInfo(), title: Lst.accountCards[6].title),
+                  baseCard(changePassword(), title: Lst.accountCards[6].title),
                   // baseCard(financialInfo(), title: Lst.accountCards[5].title),
                 ],
               )),
@@ -60,7 +60,7 @@ baseCard(Widget item, {String? title}) {
     accountCard(4, user.isUser == true ? 2 : 4),
     if (user.isUser == true) accountCard(5, 3),
     accountCard(6, user.isUser == true ? 4 : 5),
-    accountCard(7, user.isUser == true ? 5 : 5),
+   // accountCard(7, user.isUser == true ? 5 : 5),
   ];
   double dashPadding = Get.width * 0.033;
   return ListView(

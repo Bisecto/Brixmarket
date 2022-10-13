@@ -42,7 +42,7 @@ class Lst {
     const AccountCard(Icons.balance, "Legal Documentation", 'Some random string to be shown here'),
     const AccountCard(Icons.location_on, "Location Information", 'Some random string to be shown here'),
     const AccountCard(Icons.featured_video_outlined, "Identity Document", 'Some random string to be shown here'),
-    const AccountCard(Icons.app_settings_alt, "Notifications Settings", 'Some random string to be shown here'),
+    //const AccountCard(Icons.app_settings_alt, "Notifications Settings", 'Some random string to be shown here'),
     const AccountCard(Icons.security_outlined, "Change Password", 'Some random string to be shown here'),
   ];
 

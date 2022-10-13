@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/instance.dart';
@@ -12,7 +13,9 @@ class CurrentLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var permission =  Geolocator.checkPermission();
     // dnd(homeCtrl.currentLocation.value);
+    if(permission == LocationPermission.always || permission == LocationPermission.whileInUse){
     return FutureBuilder(
         future: Utils.getState(),
         builder: (context, AsyncSnapshot snap) {
@@ -29,6 +32,11 @@ class CurrentLocation extends StatelessWidget {
                         : '${snap.data}',
                     color: color,
                   ));
-        });
+        });}
+    else {
+      return  CustomText(
+        color: color,
+          text:'...',);
+      }
   }
 }

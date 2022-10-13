@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:brixmarket/utils/shared_preferences.dart';
 import 'package:brixmarket/view/screens/no_internet.dart';
@@ -16,6 +17,7 @@ import 'onboard_page.dart';
 
 class SplashScreen extends StatefulWidget {
   static String splashScreen = '/splash_screen';
+
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -55,33 +57,30 @@ class _SplashScreenState extends State<SplashScreen> {
     //
     // });
   }
-  checkpermission()async{
+
+  checkpermission() async {
     var permission = await Geolocator.checkPermission();
-    if(permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
       //await SharedPref.putBool('acceptLocationUsage', true);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
           await openApp();
         } else {
-          Get.to(() =>
-              NoInternet(
-                  callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
-                  reInitApp: true));
+          Get.to(() => NoInternet(
+              callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
+              reInitApp: true));
         }
       });
-
-
-
     } else {
       //await SharedPref.putBool('acceptLocationUsage', false);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
           await openApp();
         } else {
-          Get.to(() =>
-              NoInternet(
-                  callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
-                  reInitApp: true));
+          Get.to(() => NoInternet(
+              callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
+              reInitApp: true));
         }
       });
     }
@@ -102,16 +101,121 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     } else {
       await SharedPref.putBool('firstOpen', true);
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const OnBoardingPage(),
-          ),
-        );
+      if (Platform.isAndroid) {
+        showDialog<AlertDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                actions: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const Text(
+                          'Allow Brixmarket to Use your location',
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          'This app collects location data to enable you find and discover properties near you even when the app is closed or when not in use',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FlatButton(
+                              child: const Text(
+                                'Deny',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: ()  {
+                                 //Navigator.of(context).pop();
+                               // Future.delayed(const Duration(seconds: 3), () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const OnBoardingPage(),
+                                    ),
+                                  );
+                                  //Get.offAndToNamed(RouteStr.mobileLanding);
+                               // });
+                              },
+                            ),
+                            FlatButton(
+                              child: const Text(
+                                'Accept',
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              onPressed: () async {
+                                //Navigator.pop(context);
+                                await Utils.getCurrentLocation();
 
-        //Get.offAndToNamed(RouteStr.mobileOnboard);
-      });
+                                //Future.delayed(const Duration(seconds: 3), () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const OnBoardingPage(),
+                                    ),
+                                  );
+                                  //Get.offAndToNamed(RouteStr.mobileLanding);
+                               // });
+                                // switch (heading) {
+                                //   case 'Message':
+                                //     homeCtrl.loginRequest(
+                                //         request: () {
+                                //           Navigator.push(
+                                //             context,
+                                //             MaterialPageRoute(
+                                //                 builder: (context) =>
+                                //                 const ChatPage()),
+                                //           );
+                                //         });
+                                //
+                                //     break;
+                                //   case 'Review':
+                                //     return;
+                                //   default:
+                                //     Navigator.push(
+                                //       context,
+                                //       MaterialPageRoute(
+                                //           builder: (context) =>
+                                //           const HomeNotificationsPage()),
+                                //     );
+                                //     break;
+                                // }
+                              },
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            });
+      } else {
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const OnBoardingPage(),
+            ),
+          );
+
+          //Get.offAndToNamed(RouteStr.mobileOnboard);
+        });
+      }
     }
   }
 

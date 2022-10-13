@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../config/theme/color.dart';
+import '../../controllers/edit_controller.dart';
 import '../../controllers/home_controller.dart';
 import '../../controllers/instance.dart';
 import '../widgets/image_widgets.dart';
@@ -44,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     return LayoutBuilder(builder: (context, constraints) {
       var dashboardWidgets = [
         const InsightWidget(),
-         CreatePropertyWidget(isEdt: false,),
+         CreatePropertyWidget(isEdt: EditCtrl.isEdits.value,),
         MyPropertiesWidget(provider: this),
         SavedPropertiesWidget(constraints: constraints.maxWidth),
         UpgradePricingWidget(constraints: constraints.maxWidth),
@@ -134,7 +135,14 @@ class DashBoardSideBar extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          sideBarItem(index: 1, icon: Icons.list_alt_outlined, title: 'Create listing'),
+          GestureDetector(
+
+            onTap: (){
+              EditCtrl.disposeControllers();
+              cPropCtrl.Toinitial();
+              cPropCtrl.gotoNext(pageIndex: 0);
+            },
+              child: sideBarItem(index: 1, icon: Icons.list_alt_outlined, title: 'Create listing')),
           const SizedBox(
             height: 20,
           ),

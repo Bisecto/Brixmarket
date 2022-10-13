@@ -487,27 +487,35 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                             context: context,
                             builder: (ctx) => const AlertDialog(
                               title: Text("Msg"),
-                              content: Text("Please wait while link is been generated"),
+                              content: Text(
+                                  "Please wait while link is been generated"),
                               actions: <Widget>[
-                            Center(
-                              child: CircularProgressIndicator(
-                              backgroundColor: Colors.red,
-                                strokeWidth: 3,),
-                            )
-                            ],
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.red,
+                                    strokeWidth: 3,
+                                  ),
+                                )
+                              ],
                             ),
                           );
                           print(imageList);
                           print(imageList.length);
                           String generatedDeepLink =
                               await FirebaseDynamicLinkService
-                              .createDynamicLink(property,imageList[0].media.toString(),true,);
+                                  .createDynamicLink(
+                            property,
+                            imageList[0].media.toString(),
+                            true,
+                          );
                           Navigator.pop(context);
                           print(
                               "GENARATED DEEP LINK ${generatedDeepLink.length}");
-                          print(
-                              "GENARATED DEEP LINK ${generatedDeepLink}");
-                          await Share.share("Check out this property at brixmarket " + generatedDeepLink,);
+                          print("GENARATED DEEP LINK ${generatedDeepLink}");
+                          await Share.share(
+                            "Check out this property at brixmarket " +
+                                generatedDeepLink,
+                          );
                         },
                         // homeCtrl.shareApp(property: property),
                         child: Container(
@@ -758,48 +766,55 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
             ),
           ),
           const SizedBox(height: 8),
-          if (user.id == property.user?.id) const SizedBox.shrink() else Align(
+          if (user.id == property.user?.id)
+            const SizedBox.shrink()
+          else
+            Align(
+              child: Container(
+                padding: const EdgeInsets.only(left: 16),
+                child: GestureDetector(
+                  onTap: () => homeCtrl.loginRequest(
+                      request: () => writeReview(property.id)),
+                  child: const Text(
+                    'Write a Review',
+                    style: TextStyle(
+                        color: Pallet.secondaryColor,
+                        decoration: TextDecoration.underline,
+                        fontSize: 16),
+                  ),
+                ),
+              ),
+            ),
+          const SizedBox(height: 30),
+          user.id == property.user?.id
+              ? const SizedBox.shrink()
+              : GestureDetector(
+                  onTap: () {
+                    EditCtrl.message.clear();
+                    flagInappropriate(property.id);
+                  },
                   child: Container(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: GestureDetector(
-                      onTap: () => homeCtrl.loginRequest(
-                          request: () => writeReview(property.id)),
-                      child: const Text(
-                        'Write a Review',
-                        style: TextStyle(
-                            color: Pallet.secondaryColor,
-                            decoration: TextDecoration.underline,
-                            fontSize: 16),
-                      ),
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: Colors.blueGrey, width: 1.5)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/images/megap.png',
+                            height: 25, width: 25),
+                        const SizedBox(width: 10),
+                        const CustomText(
+                            color: Colors.black,
+                            text: 'Flag as inappropriate',
+                            weight: FontWeight.w400,
+                            size: 14),
+                      ],
                     ),
                   ),
                 ),
-          const SizedBox(height: 30),
-          GestureDetector(
-            onTap: () {
-              EditCtrl.message.clear();
-                flagInappropriate(property.id);},
-            child: Container(
-              height: 50,
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Colors.blueGrey, width: 1.5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/megap.png', height: 25, width: 25),
-                  const SizedBox(width: 10),
-                  const CustomText(
-                      color: Colors.black,
-                      text: 'Flag as inappropriate',
-                      weight: FontWeight.w400,
-                      size: 14),
-                ],
-              ),
-            ),
-          ),
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () => homeCtrl.shareApp(property: property),
@@ -875,56 +890,63 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                   ),
                 ),
                 user.id == property.user?.id
-                    ?  FormButton(
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => const AlertDialog(
-                        title: Text("Msg"),
-                        content: Text("Please wait while link is been generated"),
-                        actions: <Widget>[
-                          Center(
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.red,
-                              strokeWidth: 3,),
-                          )
-                        ],
-                      ),
-                    );
-                    print(imageList);
-                    print(imageList.length);
-                    String generatedDeepLink =
-                        await FirebaseDynamicLinkService
-                        .createDynamicLink(property,imageList[0].media.toString(),true,);
-                    Navigator.pop(context);
-                    print(
-                        "GENARATED DEEP LINK ${generatedDeepLink.length}");
-                    print(
-                        "GENARATED DEEP LINK ${generatedDeepLink}");
-                    await Share.share("Check out this property at brixmarket " + generatedDeepLink,);
-                  },
-                  text: 'Share property',
-                  width: 140,
-                  height: 48,
-                  size: 16,
-                  radius: 4,
-                  top: 12,
-                  txtColor: Colors.white,
-                )
+                    ? FormButton(
+                        onPressed: () async {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => const AlertDialog(
+                              title: Text("Msg"),
+                              content: Text(
+                                  "Please wait while link is been generated"),
+                              actions: <Widget>[
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.red,
+                                    strokeWidth: 3,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                          print(imageList);
+                          print(imageList.length);
+                          String generatedDeepLink =
+                              await FirebaseDynamicLinkService
+                                  .createDynamicLink(
+                            property,
+                            imageList[0].media.toString(),
+                            true,
+                          );
+                          Navigator.pop(context);
+                          print(
+                              "GENARATED DEEP LINK ${generatedDeepLink.length}");
+                          print("GENARATED DEEP LINK ${generatedDeepLink}");
+                          await Share.share(
+                            "Check out this property at brixmarket " +
+                                generatedDeepLink,
+                          );
+                        },
+                        text: 'Share property',
+                        width: 140,
+                        height: 48,
+                        size: 16,
+                        radius: 4,
+                        top: 12,
+                        txtColor: Colors.white,
+                      )
                     : const SizedBox(height: 24),
                 user.id == property.user?.id
                     ? const SizedBox.shrink()
-                    :
-                FormButton(
-                  onPressed: () => requestATour(property.id),
-                  text: 'Request Tour',
-                  width: 140,
-                  height: 48,
-                  size: 16,
-                  radius: 4,
-                  top: 12,
-                  txtColor: Colors.white,
-                )
+                    : FormButton(
+                        onPressed: () => requestATour(property.id),
+                        text: 'Request Tour',
+                        width: 140,
+                        height: 48,
+                        size: 16,
+                        radius: 4,
+                        top: 12,
+                        txtColor: Colors.white,
+                      )
               ],
             )),
       ),
@@ -969,7 +991,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
       builder: (context) => SingleChildScrollView(
         controller: ModalScrollController.of(context),
         child: Container(
-          height: MediaQuery.of(context).size.height-120,
+          height: MediaQuery.of(context).size.height - 120,
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           child: Column(
@@ -1076,10 +1098,9 @@ flagInappropriate(propertyId) {
     backgroundColor: Colors.transparent,
     context: Get.context!,
     builder: (context) => SingleChildScrollView(
-
       controller: ModalScrollController.of(context),
       child: Container(
-        height: MediaQuery.of(context).size.height-70,
+        height: MediaQuery.of(context).size.height - 70,
         child: Align(
           alignment: Alignment.topRight,
           child: Container(
@@ -1164,7 +1185,7 @@ requestATour(propertyId) {
     builder: (context) => SingleChildScrollView(
       controller: ModalScrollController.of(context),
       child: Container(
-        height: MediaQuery.of(context).size.height-70,
+        height: MediaQuery.of(context).size.height - 70,
         color: Colors.white,
         padding: const EdgeInsets.fromLTRB(16, 15, 16, 0),
         child: Column(

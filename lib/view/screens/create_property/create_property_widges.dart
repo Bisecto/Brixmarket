@@ -44,6 +44,10 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    cPropCtrl.Toinitial();
+    setState(() {
+      cPropCtrl.createPropPageIndex.value ==0;
+    });
     checkFeture();
     //if()
     //Timer.periodic(const Duration(m: 2), (timer) {
@@ -678,7 +682,9 @@ Widget buttonRow(Function() nextFunction) {
                 text: (cPropCtrl.createPropPageIndex.value == 5)
                     ? 'Publish'
                     : 'Next',
-                onPressed: nextFunction,
+                onPressed: (){
+                  nextFunction();
+                },
               ),
             )),
       ],
