@@ -113,6 +113,7 @@ class _FaqPageState extends State<FaqPage> {
                                         type: MaterialType.card,
                                         child: ListView.builder(
                                             shrinkWrap: true,
+                                            physics: NeverScrollableScrollPhysics(),
                                             itemCount: homeCtrl.faqs.length,
                                             itemBuilder: ((context, index) {
                                               return Column(
@@ -125,7 +126,7 @@ class _FaqPageState extends State<FaqPage> {
                                                     }),
                                                     child: Container(
                                                         height: 50,
-                                                        width: double.infinity,
+                                                        width: MediaQuery.of(context).size.width,
                                                         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                                                         padding: const EdgeInsets.symmetric(vertical: 8),
                                                         decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade200))),
@@ -133,8 +134,9 @@ class _FaqPageState extends State<FaqPage> {
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
                                                             CustomText(
+                                                              maxLines: 2,
                                                               text: homeCtrl.faqs[index].question,
-                                                              size: 18,
+                                                              size: 15,
                                                               weight: FontWeight.w600,
                                                               color: Colors.black,
                                                             ),
@@ -142,12 +144,12 @@ class _FaqPageState extends State<FaqPage> {
                                                                 ? const Icon(
                                                                     Icons.remove,
                                                                     color: Pallet.secondaryColor,
-                                                                    size: 24,
+                                                                    size: 17,
                                                                   )
                                                                 : const Icon(
                                                                     Icons.add,
                                                                     color: Pallet.secondaryColor,
-                                                                    size: 24,
+                                                                    size: 17,
                                                                   )
                                                           ],
                                                         )),
@@ -160,7 +162,7 @@ class _FaqPageState extends State<FaqPage> {
                                                       duration: const Duration(seconds: 1),
                                                       child: Text(
                                                         homeCtrl.faqs[index].answer,
-                                                        style: const TextStyle(fontSize: 16, color: Colors.blueGrey),
+                                                        style: const TextStyle(fontSize: 14, color: Colors.blueGrey),
                                                       ),
                                                     ),
                                                   ),
@@ -192,15 +194,15 @@ class _FaqPageState extends State<FaqPage> {
                         color: Colors.blueGrey,
                         text: 'Need support? Reach out to us',
                         weight: FontWeight.w400,
-                        size: 22,
+                        size: 18,
                         maxLines: 2,
                       ),
-                      const SizedBox(width: 80),
+                      const SizedBox(width: 20),
                       InkWell(
                         onTap: () => openWebContact(),
                         child: Container(
                           height: 35,
-                          width: 95,
+                          width: 70,
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.only(left: 8),
                           child: const Center(

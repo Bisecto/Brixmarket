@@ -268,8 +268,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   Future subscribeToNewsLetter() async {
     EditCtrl.newsLetterEmailErr.value = Val.email(EditCtrl.newsLetterEmail.text);
     if (EditCtrl.newsLetterEmailErr.value.isNotEmpty) {
-      MSG.errorSnackBar(
-        EditCtrl.newsLetterEmailErr.value,
+      MSG.errorSnackBar('Invalid input or email has already been saved',
       );
     } else {
       Preloader.show();

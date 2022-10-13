@@ -237,12 +237,12 @@ Widget pageFooter() {
                                     underline: Container(color: Colors.white),
                                     value: EditCtrl.country.value.text == ' ' || !countryList.contains(EditCtrl.country.value.text) ? null : EditCtrl.country.value.text,
                                     onChanged: (newValue) {
-                                      if(newValue=='Nigeria'){
-                                        MSG.snackBar('Property are available in this country');
+                                      if(newValue=='🇳🇬 Nigeria'){
+                                        MSG.snackBar('Explore Our diverse collection of properties');
                                         EditCtrl.country.value.text = newValue!;
                                        EditCtrl.country.refresh();
                                       }else{
-                                        MSG.errorSnackBar('No property is available in this location');
+                                        MSG.errorSnackBar('We do not have properties available here now');
                                         EditCtrl.country.value.text = newValue!;
                                         EditCtrl.country.refresh();
                                       }
