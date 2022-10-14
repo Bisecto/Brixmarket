@@ -238,7 +238,7 @@ Widget pageFooter() {
                                     value: EditCtrl.country.value.text == ' ' || !countryList.contains(EditCtrl.country.value.text) ? null : EditCtrl.country.value.text,
                                     onChanged: (newValue) {
                                       if(newValue=='🇳🇬 Nigeria'){
-                                        MSG.snackBar('Explore Our diverse collection of properties');
+                                        MSG.snackBar('Explore our diverse collection of properties');
                                         EditCtrl.country.value.text = newValue!;
                                        EditCtrl.country.refresh();
                                       }else{

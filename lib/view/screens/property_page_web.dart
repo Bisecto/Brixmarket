@@ -510,7 +510,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                           const SizedBox(
                                             width: 20,
                                           ),
-                                          const CustomText(color: Colors.black, text: 'Property Details', weight: FontWeight.w800, size: 18),
+                                          const CustomText(color: Colors.black, text: 'Institution near this property', weight: FontWeight.w800, size: 18),
                                         ],
                                       ),
                                       const SizedBox(

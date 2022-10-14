@@ -229,7 +229,6 @@ class EditCtrl extends GetxController {
       homeSearchErr.value = '';
       exploreSearch.text = '';
       exploreSearchErr.value = '';
-
       filterState.value.text = '';
       filterCity.value.text = '';
       filterLandMark.value.text = '';

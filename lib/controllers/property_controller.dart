@@ -464,7 +464,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   int iM = 0;
 
   animateHomeHeroImage({bool stopTimer = false}) {
-    if (!Utils.isMobileApp && false) {
+    if (!Utils.isMobileApp) {
       if (stopTimer) {
         messageTimer.cancel();
       } else {
