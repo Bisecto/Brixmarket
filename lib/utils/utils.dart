@@ -311,7 +311,9 @@ class Utils {
       return null;
     }
     try {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true);
+      Position? position = await Geolocator.getLastKnownPosition(forceAndroidLocationManager: false);
+
+      //Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true);
       return position;
     } catch (e) {
       dnd('Location position Error: ' + e.toString());

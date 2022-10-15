@@ -62,6 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
+      await SharedPref.putBool("isPermissionEnabled", false);
       //await SharedPref.putBool('acceptLocationUsage', true);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
@@ -73,6 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       });
     } else {
+      await SharedPref.putBool("isPermissionEnabled", false);
       //await SharedPref.putBool('acceptLocationUsage', false);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {

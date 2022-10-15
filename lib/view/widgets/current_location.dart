@@ -15,7 +15,7 @@ class CurrentLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     var permission =  Geolocator.checkPermission();
     // dnd(homeCtrl.currentLocation.value);
-    if(permission == LocationPermission.always || permission == LocationPermission.whileInUse){
+    // if(permission == LocationPermission.denied || permission == LocationPermission.whileInUse){
     return FutureBuilder(
         future: Utils.getState(),
         builder: (context, AsyncSnapshot snap) {
@@ -33,10 +33,10 @@ class CurrentLocation extends StatelessWidget {
                     color: color,
                   ));
         });}
-    else {
-      return  CustomText(
-        color: color,
-          text:'...',);
-      }
+    // else {
+    //   return  CustomText(
+    //     color: color,
+    //       text:'...',);
+    //   }
   }
-}
+//}

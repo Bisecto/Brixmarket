@@ -1,3 +1,4 @@
+import 'package:another_xlider/another_xlider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,25 +11,21 @@ import '../screens/mobile/explore_filter_page.dart';
 import 'drop_down.dart';
 import 'form_inputs.dart';
 
-class WebHeroSearch extends StatelessWidget {
-// class WebHeroSearch extends StatefulWidget {
-//   const WebHeroSearch({Key? key}) : super(key: key);
-//
-//   @override
-//   State<WebHeroSearch> createState() => _WebHeroSearchState();
-// }
-//
-// class _WebHeroSearchState extends State<WebHeroSearch> {
-  late OverlayEntry entry;
-  final layerLink = LayerLink();
+class WebHeroSearch extends StatefulWidget {
 
   WebHeroSearch({Key? key}) : super(key: key);
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  State<WebHeroSearch> createState() => _WebHeroSearchState();
+}
 
+class _WebHeroSearchState extends State<WebHeroSearch> {
+// class WebHeroSearch extends StatefulWidget {
+  late OverlayEntry entry;
+
+  final layerLink = LayerLink();
+
+  // @override
   showOverlayFilterBox(BuildContext context) {
     final overlay = Overlay.of(context)!;
     final renderBox = context.findRenderObject() as RenderBox;
@@ -152,7 +149,8 @@ class WebHeroSearch extends StatelessWidget {
       ),
     );
   }
-
+  double _lowerValue = 0;
+  double _upperValue = 10000000000;
   Widget buildOverlay() {
     return Material(
       color: Colors.white,
@@ -165,41 +163,76 @@ class WebHeroSearch extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             Wrap(children: [
-              Column(
-                children: [
-                  const Text('Price', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: DropDown(
-                          width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
-                          color: Colors.white10,
-                          showLabel: false,
-                          labelColor: Colors.black54,
-                          controller: EditCtrl.priceMin,
-                          label: 'Min',
-                          items: Lst.minFilterPrices,
-                        ),
-                      ),
-                      const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: DropDown(
-                          width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
-                          color: Colors.white10,
-                          showLabel: false,
-                          controller: EditCtrl.priceMax,
-                          label: 'Max',
-                          items: Lst.maxFilterPrices,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              SizedBox(
+                height: 20,
               ),
+              const Text('Adjust the slider to select the range of price.', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+              FlutterSlider(
+                  handlerHeight: 30,
+                  //handlerWidth: 300,
+                  values:  [_lowerValue, _upperValue],
+                  rangeSlider: true,
+                  max: 10000000000,
+                  min: 0,
+                  // handlerAnimation: const FlutterSliderHandlerAnimation(
+                  //     curve: Curves.elasticOut,
+                  //     reverseCurve: Curves.bounceIn,
+                  //     duration: Duration(milliseconds: 500),
+                  //     scale: 1.5
+                  // ),
+                  onDragging: (handlerIndex, lowerValue, upperValue) {
+                    _lowerValue = lowerValue;
+                    _upperValue = upperValue;
+                    //setState(() {
+                      EditCtrl.priceMin.value.text=lowerValue.toString();
+                      EditCtrl.priceMax.value.text=upperValue.toString();
+
+                    //});
+                  },
+                ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                     Text('Min price ${Utils.amount(_lowerValue)}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                     Text('Max price ${Utils.amount(_upperValue)}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+
+                  ],
+                ),
+              // Column(
+              //   children: [
+              //     const Text('Price', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //           child: DropDown(
+              //             width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+              //             color: Colors.white10,
+              //             showLabel: false,
+              //             labelColor: Colors.black54,
+              //             controller: EditCtrl.priceMin,
+              //             label: 'Min',
+              //             items: Lst.minFilterPrices,
+              //           ),
+              //         ),
+              //         const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
+              //         Padding(
+              //           padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //           child: DropDown(
+              //             width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+              //             color: Colors.white10,
+              //             showLabel: false,
+              //             controller: EditCtrl.priceMax,
+              //             label: 'Max',
+              //             items: Lst.maxFilterPrices,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

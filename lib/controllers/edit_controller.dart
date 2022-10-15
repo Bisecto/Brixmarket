@@ -74,6 +74,8 @@ class EditCtrl extends GetxController {
   static var priceDurationErr = ''.obs;
   static var price = TextEditingController();
   static var priceErr = ''.obs;
+  static var maxPriceErr=''.obs;
+  static var minPriceErr=''.obs;
   static var title = TextEditingController();
   static var titleErr = ''.obs;
   static var description = TextEditingController();

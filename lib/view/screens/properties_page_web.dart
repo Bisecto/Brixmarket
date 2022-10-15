@@ -134,20 +134,6 @@ class PropertiesPage extends StatelessWidget {
                         isMobile()
                             ? const SizedBox.shrink()
                             : const SizedBox(width: 24),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 16),
-                          child: Obx(() => Text(
-                              //'${propCtrl.searchResultCount.value} result Found',
-                            'Your filtered result',
-                              style: TextStyle(
-                                  fontSize: isMobile()
-                                      ? 16
-                                      : isDesktop()
-                                          ? 18
-                                          : 20,
-                                  fontWeight: FontWeight.w600))),
-                        ),
                       ]),
                     ),
                     const SizedBox(height: 24),
