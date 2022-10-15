@@ -223,6 +223,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.priceMin.value.text = '';
     EditCtrl.priceMax.value.text = '';
     EditCtrl.priceMin.refresh();
+    //EditCtrl.webSearchKeyword
     EditCtrl.priceMax.refresh();
     EditCtrl.bathsMin.value.text = '';
     EditCtrl.bathsMax.value.text = '';
@@ -233,9 +234,13 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.roomMax.refresh();
     EditCtrl.roomMin.refresh();
     EditCtrl.filterState.value.text = '';
+    EditCtrl.filterCategoriesWeb.value.text = '';
+    EditCtrl.webSearchKeyWord.text = '';
+    EditCtrl.webSearchKeyWord.clear();
     EditCtrl.filterCity.value.text = '';
     EditCtrl.filterLandMark.value.text = '';
     EditCtrl.filterState.refresh();
+    EditCtrl.filterCategoriesWeb.refresh();
     EditCtrl.filterCity.refresh();
     EditCtrl.filterLandMark.refresh();
     EditCtrl.filterAmenities.value = ['Any'];

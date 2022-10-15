@@ -120,6 +120,7 @@ class EditCtrl extends GetxController {
   static var roomMax = TextEditingController().obs;
   static var bathsMin = TextEditingController().obs;
   static var bathsMax = TextEditingController().obs;
+
   static var webSearchKeyWord = TextEditingController();
   static var filterCategoriesWeb = TextEditingController().obs;
   static var filterCategories = ['Any'].obs;
@@ -226,7 +227,6 @@ class EditCtrl extends GetxController {
       messageErr.value = '';
       rating.text = '';
       ratingErr.value = '';
-
       homeSearch.text = '';
       homeSearchErr.value = '';
       exploreSearch.text = '';
@@ -242,6 +242,7 @@ class EditCtrl extends GetxController {
       bathsMax.value.text = '';
       webSearchKeyWord.text = '';
       filterCategoriesWeb.value.text = '';
+      webSearchKeyWord.text='';
       features.value=[];
       // ctrlList = [];
       // ctrlListKeys = [];

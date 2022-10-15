@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -30,41 +31,40 @@ Future<void> _FirebaseMessagingBacground(RemoteMessage message) async {
   //   statusBarColor: Colors.deepOrange,
   // ));
   await Firebase.initializeApp(
-    // options: const FirebaseOptions(
-    //     apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-    //     authDomain: "brimarket-3e1d9.firebaseapp.com",
-    //     projectId: "brimarket-3e1d9",
-    //     storageBucket: "brimarket-3e1d9.appspot.com",
-    //     messagingSenderId: "591770978937",
-    //     appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-    //     measurementId: "G-5MFHT3RCLW"),
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+        authDomain: "brimarket-3e1d9.firebaseapp.com",
+        projectId: "brimarket-3e1d9",
+        storageBucket: "brimarket-3e1d9.appspot.com",
+        messagingSenderId: "591770978937",
+        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+        measurementId: "G-5MFHT3RCLW"),
   );
   print('A message just Poped: ${message.messageId}');
 }
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    // options: const FirebaseOptions(
-    //     apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-    //     authDomain: "brimarket-3e1d9.firebaseapp.com",
-    //     projectId: "brimarket-3e1d9",
-    //     storageBucket: "brimarket-3e1d9.appspot.com",
-    //     messagingSenderId: "591770978937",
-    //     appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-    //     measurementId: "G-5MFHT3RCLW"),
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+        authDomain: "brimarket-3e1d9.firebaseapp.com",
+        projectId: "brimarket-3e1d9",
+        storageBucket: "brimarket-3e1d9.appspot.com",
+        messagingSenderId: "591770978937",
+        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+        measurementId: "G-5MFHT3RCLW"),
   );
   setPathUrlStrategy();
   if (Utils.userFirebase) {
     await Firebase.initializeApp(
-      // options: const FirebaseOptions(
-      //     apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-      //     authDomain: "brimarket-3e1d9.firebaseapp.com",
-      //     projectId: "brimarket-3e1d9",
-      //     storageBucket: "brimarket-3e1d9.appspot.com",
-      //     messagingSenderId: "591770978937",
-      //     appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-      //     measurementId: "G-5MFHT3RCLW"),
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+          authDomain: "brimarket-3e1d9.firebaseapp.com",
+          projectId: "brimarket-3e1d9",
+          storageBucket: "brimarket-3e1d9.appspot.com",
+          messagingSenderId: "591770978937",
+          appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+          measurementId: "G-5MFHT3RCLW"),
     );
   }
   Get.put(TermsController());
@@ -129,7 +129,9 @@ class _MyAppState extends State<MyApp> {
       FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
     }
   }
-
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: ((context, constraints, orientation) {
@@ -137,6 +139,8 @@ class _MyAppState extends State<MyApp> {
         title: 'Brix Market',
         textDirection: TextDirection.ltr,
         debugShowCheckedModeBanner: false,
+        navigatorObservers: [observer],
+
         theme: ThemeData(
           primaryColor: Pallet.secondaryColor,
           primarySwatch: Colors.pink,

@@ -212,32 +212,31 @@ class PropertiesPage extends StatelessWidget {
                                       child: Stack(children: [
                                         Column(
                                           children: [
-                                            Positioned(
-                                                bottom: 0,
+                                            Container(
+                                              width: maxWidth,
+                                              color: Colors.white,
+                                              padding:
+                                                  const EdgeInsets.only(
+                                                      top: 8),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  propCtrl.clearFilter();
+                                                },
                                                 child: Container(
-                                                  width: maxWidth,
-                                                  color: Colors.white,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 8),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      propCtrl.clearFilter();
-                                                    },
-                                                    child: Container(
-                                                      height: 48,
-                                                      color:
-                                                          Pallet.secondaryColor,
-                                                      child: const Center(
-                                                        child: CustomText(
-                                                          color: Colors.white,
-                                                          size: 16,
-                                                          text: 'CLEAR FILTER',
-                                                        ),
-                                                      ),
+                                                  height: 48,
+                                                  color:
+                                                      Pallet.secondaryColor,
+                                                  child: const Center(
+                                                    child: CustomText(
+                                                      color: Colors.white,
+                                                      size: 16,
+                                                      text: 'CLEAR FILTER',
                                                     ),
                                                   ),
-                                                )),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 20,),
                                             const Text('Price',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w600,

@@ -8,6 +8,7 @@ import '../../controllers/instance.dart';
 import '../../res/lists.dart';
 import '../../utils/utils.dart';
 import '../screens/mobile/explore_filter_page.dart';
+import 'custom_text.dart';
 import 'drop_down.dart';
 import 'form_inputs.dart';
 
@@ -163,6 +164,29 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
           padding: const EdgeInsets.all(16),
           children: [
             Wrap(children: [
+              Container(
+                color: Colors.white,
+                padding:
+                const EdgeInsets.only(
+                    top: 8),
+                child: InkWell(
+                  onTap: () {
+                    propCtrl.clearFilter();
+                  },
+                  child: Container(
+                    height: 48,
+                    color:
+                    Pallet.secondaryColor,
+                    child:  Center(
+                      child: CustomText(
+                        color: Colors.white,
+                        size: 16,
+                        text: 'CLEAR FILTER',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
