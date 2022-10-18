@@ -1,5 +1,5 @@
 name: brixmarket
-description: A new Flutter project.
+description: Buy, Rent and Lease Properties in a safe space. Find Great Properties at Competitive Price.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -55,7 +55,6 @@ dependencies:
   firebase_storage:
   youtube_player_flutter: ^8.0.0
   package_info_plus: ^1.0.2
-  universal_html:
   another_xlider: ^1.1.2
   restart_app: ^1.1.0+1
 

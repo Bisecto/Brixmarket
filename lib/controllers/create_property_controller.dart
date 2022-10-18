@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:universal_html/html.dart' as html;
+import 'package:restart_app/restart_app.dart';
 import '../core/dialogs.dart';
 import '../core/preloader.dart';
 import '../models/insight_model.dart';
@@ -120,7 +120,7 @@ class CreatePropertyCtrl extends GetxController {
         //   context!,
         //   MaterialPageRoute(builder: (context) =>  DashboardPage()),
         // );
-        html.window.location.reload();
+        Restart.restartApp();
       }
     } else {
       createPropPageIndex.value = pageIndex;
@@ -374,8 +374,8 @@ class CreatePropertyCtrl extends GetxController {
           sideNavIndex.value = 2;
           sideNavIndex.refresh();
           //onInit();
-          html.window.location.reload();
-
+           EditCtrl.disposeControllers();
+          Restart.restartApp();
         }
       }
     }

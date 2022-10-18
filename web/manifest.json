@@ -1,11 +1,11 @@
 {
-    "name": "brixmarket",
-    "short_name": "brixmarket",
+    "name": "Brixmarket",
+    "short_name": "Brixmarket",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Buy, Rent and Lease Properties in a safe space. Find Great Properties at Competitive Price.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

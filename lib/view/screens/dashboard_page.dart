@@ -45,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     return LayoutBuilder(builder: (context, constraints) {
       var dashboardWidgets = [
         const InsightWidget(),
-         CreatePropertyWidget(isEdt: EditCtrl.isEdits.value,),
+         CreatePropertyWidget(isEdt: false),//EditCtrl.isEdits.value,),
         MyPropertiesWidget(provider: this),
         SavedPropertiesWidget(constraints: constraints.maxWidth),
         UpgradePricingWidget(constraints: constraints.maxWidth),
@@ -146,7 +146,13 @@ class DashBoardSideBar extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          sideBarItem(index: 2, icon: Icons.ads_click, title: 'My Ads'),
+          GestureDetector(
+            onTap: (){
+              EditCtrl.disposeControllers();
+              cPropCtrl.Toinitial();
+              cPropCtrl.gotoNext(pageIndex: 0);
+            },
+              child: sideBarItem(index: 2, icon: Icons.ads_click, title: 'My Ads')),
           const SizedBox(
             height: 20,
           ),

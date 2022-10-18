@@ -226,7 +226,7 @@ class HomePageWeb extends StatelessWidget {
                                   alignment: WrapAlignment.center,
                                   children: [
                                     PropertyCard1(
-                                        property: propCtrl.featuredProperties[3],
+                                        property: propCtrl.featuredProperties[1],
                                         height: isTabletDown() ? 260 : 540,
                                         width: isTablet() ? card1Width * 2 + card1Space : card1Width),
                                     SizedBox(height: card1Space, width: isTabletDown() ? double.infinity : card1Space),
@@ -234,15 +234,15 @@ class HomePageWeb extends StatelessWidget {
                                       width: isTablet() ? card1Width * 2 + card1Space + 8 : card1Width,
                                       child: Wrap(
                                         children: [
-                                          PropertyCard1(property: propCtrl.featuredProperties[5], height: 260, width: card1Width),
+                                          PropertyCard1(property: propCtrl.featuredProperties[2], height: 260, width: card1Width),
                                           SizedBox(width: card1Space, height: card1Space),
-                                          PropertyCard1(property: propCtrl.featuredProperties[6], height: 260, width: card1Width),
+                                          PropertyCard1(property: propCtrl.featuredProperties[3], height: 260, width: card1Width),
                                         ],
                                       ),
                                     ),
                                     SizedBox(width: isTabletDown() ? double.infinity : card1Space, height: card1Space),
                                     PropertyCard1(
-                                        property: propCtrl.featuredProperties[8],
+                                        property: propCtrl.featuredProperties[4],
                                         height: isTabletDown() ? 260 : 540,
                                         width: isTablet() ? card1Width * 2 + card1Space : card1Width),
                                   ],
@@ -254,7 +254,7 @@ class HomePageWeb extends StatelessWidget {
                 ),
                 const SizedBox(height: 100),
                 CustomText(
-                  text: 'Featured Property',
+                  text: 'Featured Properties',
                   size: 32,
                   color: Colors.blueGrey[900],
                   weight: FontWeight.w400,
