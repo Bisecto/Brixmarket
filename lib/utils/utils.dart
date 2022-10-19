@@ -31,8 +31,9 @@ class Utils {
   static int count = 0;
   static final NumberFormat numberFormat = NumberFormat("#,##0", "en_US");
 
-  static  bool isMobileApp = !kIsWeb;// && !Platform.isWindows;
+  static bool isMobileApp = !kIsWeb; // && !Platform.isWindows;
   static final bool userFirebase = !Platform.isWindows && false;
+
   static int getTimestamp() {
     return DateTime.now().millisecondsSinceEpoch;
   }
@@ -99,28 +100,38 @@ class Utils {
 
     try {
       if (kIsWeb) {
-        deviceData = DeviceInfo.readWebBrowserInfo(await DeviceInfo.deviceInfoPlugin.webBrowserInfo);
+        deviceData = DeviceInfo.readWebBrowserInfo(
+            await DeviceInfo.deviceInfoPlugin.webBrowserInfo);
       } else {
         if (Platform.isAndroid) {
-          deviceData = DeviceInfo.readAndroidBuildData(await DeviceInfo.deviceInfoPlugin.androidInfo);
+          deviceData = DeviceInfo.readAndroidBuildData(
+              await DeviceInfo.deviceInfoPlugin.androidInfo);
         } else if (Platform.isIOS) {
-          deviceData = DeviceInfo.readIosDeviceInfo(await DeviceInfo.deviceInfoPlugin.iosInfo);
+          deviceData = DeviceInfo.readIosDeviceInfo(
+              await DeviceInfo.deviceInfoPlugin.iosInfo);
         } else if (Platform.isLinux) {
-          deviceData = DeviceInfo.readLinuxDeviceInfo(await DeviceInfo.deviceInfoPlugin.linuxInfo);
+          deviceData = DeviceInfo.readLinuxDeviceInfo(
+              await DeviceInfo.deviceInfoPlugin.linuxInfo);
         } else if (Platform.isMacOS) {
-          deviceData = DeviceInfo.readMacOsDeviceInfo(await DeviceInfo.deviceInfoPlugin.macOsInfo);
+          deviceData = DeviceInfo.readMacOsDeviceInfo(
+              await DeviceInfo.deviceInfoPlugin.macOsInfo);
         } else if (Platform.isWindows) {
-          deviceData = DeviceInfo.readWindowsDeviceInfo(await DeviceInfo.deviceInfoPlugin.windowsInfo);
+          deviceData = DeviceInfo.readWindowsDeviceInfo(
+              await DeviceInfo.deviceInfoPlugin.windowsInfo);
         }
       }
     } on PlatformException {
-      deviceData = <String, dynamic>{'Error:': 'Failed to get platform version.'};
+      deviceData = <String, dynamic>{
+        'Error:': 'Failed to get platform version.'
+      };
     }
     return deviceData;
   }
 
   static authInputWidth(width) {
-    return width <= 870 ? (width <= 600 && width >= 480 ? 210.0 : 430.0) : 210.0;
+    return width <= 870
+        ? (width <= 600 && width >= 480 ? 210.0 : 430.0)
+        : 210.0;
   }
 
   static imagePicker(File? imageFile) async {
@@ -168,7 +179,8 @@ class Utils {
     if (result != null) {
       imageFiles = result.files.map((file) => file.bytes).toList();
       if (imageFiles[0] == null) {
-        imageFiles = result.paths.map((path) => File(path!).readAsBytesSync()).toList();
+        imageFiles =
+            result.paths.map((path) => File(path!).readAsBytesSync()).toList();
       }
     }
     return imageFiles;
@@ -204,12 +216,16 @@ class Utils {
     return response.bodyBytes;
   }
 
-  static Widget savedPropertyIcon(propertyId, {double size = 18.0, user, Color? color, required List state}) {
+  static Widget savedPropertyIcon(propertyId,
+      {double size = 18.0, user, Color? color, required List state}) {
     if (state.contains(propertyId)) {
       return Container(
           margin: const EdgeInsets.only(right: 8),
           padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(color: Pallet.secondaryColor.withOpacity(0.2), shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(6)),
+          decoration: BoxDecoration(
+              color: Pallet.secondaryColor.withOpacity(0.2),
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(6)),
           child: Image.asset(ImgStr.loadingLove1, height: size, width: size));
     }
     if (homeCtrl.user.value.savedProperties != null) {
@@ -217,24 +233,39 @@ class Utils {
         return Container(
             margin: const EdgeInsets.only(right: 8),
             padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(color: Pallet.secondaryColor.withOpacity(0.2), shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(6)),
+            decoration: BoxDecoration(
+                color: Pallet.secondaryColor.withOpacity(0.2),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(6)),
             child: Icon(Icons.favorite, color: Colors.red, size: size));
       }
     }
     return Container(
         margin: const EdgeInsets.only(right: 8),
         padding: const EdgeInsets.all(6),
-        decoration: BoxDecoration(color: Pallet.secondaryColor.withOpacity(0.2), shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(6)),
-        child: Icon(Icons.favorite_border, color: color ?? Colors.black87, size: size));
+        decoration: BoxDecoration(
+            color: Pallet.secondaryColor.withOpacity(0.2),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(6)),
+        child: Icon(Icons.favorite_border,
+            color: color ?? Colors.black87, size: size));
   }
 
   static Widget savedPropertyText(propertyId, {double size = 16.0}) {
     if (homeCtrl.user.value.savedProperties != null) {
       if (homeCtrl.user.value.savedProperties!.contains(propertyId)) {
-        return CustomText(color: Colors.black.withOpacity(0.6), text: 'saved', weight: FontWeight.w200, size: size);
+        return CustomText(
+            color: Colors.black.withOpacity(0.6),
+            text: 'saved',
+            weight: FontWeight.w200,
+            size: size);
       }
     }
-    return CustomText(color: Colors.black.withOpacity(0.4), text: 'save for later', weight: FontWeight.w200, size: size);
+    return CustomText(
+        color: Colors.black.withOpacity(0.4),
+        text: 'save for later',
+        weight: FontWeight.w200,
+        size: size);
   }
 
   static savePropertyTextIcon(Property property, {user, required List state}) {
@@ -244,7 +275,8 @@ class Utils {
         margin: const EdgeInsets.only(right: 25),
         child: Row(
           children: [
-            Utils.savedPropertyIcon(property.id, size: 18, user: user, state: state),
+            Utils.savedPropertyIcon(property.id,
+                size: 18, user: user, state: state),
             const SizedBox(width: 8),
             Utils.savedPropertyText(property.id, size: 16),
             const SizedBox(width: 8),
@@ -268,13 +300,13 @@ class Utils {
     if (isMobileApp && enableGoBack) {
       Navigator.pushReplacement(
         context!,
-        MaterialPageRoute(builder: (context) =>  const MobileLandingPage()),
+        MaterialPageRoute(builder: (context) => const MobileLandingPage()),
       );
       //Get.toNamed(RouteStr.mobileLanding);
     } else if (isMobileApp) {
       Navigator.pushReplacement(
         context!,
-        MaterialPageRoute(builder: (context) =>  const MobileLandingPage()),
+        MaterialPageRoute(builder: (context) => const MobileLandingPage()),
       );
       //Get.offAndToNamed(RouteStr.mobileLanding);
     } else if (enableGoBack) {
@@ -311,10 +343,16 @@ class Utils {
       return null;
     }
     try {
-      Position? position = await Geolocator.getLastKnownPosition(forceAndroidLocationManager: false);
-
-      //Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high, forceAndroidLocationManager: true);
-      return position;
+      if (Platform.isAndroid) {
+        Position? position = await Geolocator.getLastKnownPosition(
+            forceAndroidLocationManager: false);
+        return position;
+      } else {
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+            forceAndroidLocationManager: true);
+        return position;
+      }
     } catch (e) {
       dnd('Location position Error: ' + e.toString());
     }
@@ -327,7 +365,8 @@ class Utils {
       dnd(position);
       return '...';
     }
-    var address = await getAddressFromLatLng(position.latitude, position.longitude);
+    var address =
+        await getAddressFromLatLng(position.latitude, position.longitude);
 
     if (address == null) return '...';
     saveLocation(
@@ -339,7 +378,8 @@ class Utils {
       street: address.street,
     );
 
-    return homeCtrl.currentLocation.value = '${address.country}, ${address.administrativeArea}';
+    return homeCtrl.currentLocation.value =
+        '${address.country}, ${address.administrativeArea}';
   }
 
   static saveLocation({lng, lat, country, state, city, street}) async {
@@ -369,8 +409,9 @@ class Utils {
   static Future<Placemark?> getAddressFromLatLng(lat, lng) async {
     Placemark? place;
     try {
-      var response = await Provider()
-          .getData("https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&sensor=true&key=AIzaSyBshGRGOCF3iXJLxZzYbsBob_oc8dtlIcI", thirdPartyRequest: true);
+      var response = await Provider().getData(
+          "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&sensor=true&key=AIzaSyBshGRGOCF3iXJLxZzYbsBob_oc8dtlIcI",
+          thirdPartyRequest: true);
       var body = jsonDecode(response.body);
       var country = '';
       var state = '';

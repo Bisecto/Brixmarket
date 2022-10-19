@@ -8,6 +8,7 @@ import 'package:brixmarket/view/widgets/form_inputs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../config/theme/color.dart';
 import '../../controllers/instance.dart';
@@ -31,28 +32,40 @@ Widget pageFooter() {
         padding: EdgeInsets.symmetric(vertical: 42, horizontal: mainPadding),
         color: Pallet.secondaryColor,
         child: Wrap(
-          alignment: isTabletDown() ? WrapAlignment.center : WrapAlignment.spaceBetween,
+          alignment: isTabletDown()
+              ? WrapAlignment.center
+              : WrapAlignment.spaceBetween,
           crossAxisAlignment: WrapCrossAlignment.center,
           runSpacing: 24,
           children: [
             Column(
-              crossAxisAlignment: isTabletDown() ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+              crossAxisAlignment: isTabletDown()
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start,
               children: [
                 Text(
                   'Want to Become a Real Estate Agent?',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: isTabletDown() ? 24 : 28, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: isTabletDown() ? 24 : 28,
+                      fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'We will help you grow your career and bring your listings to prospective customers.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: isMobile() ? Get.width * 0.04 : 16, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: isMobile() ? Get.width * 0.04 : 16,
+                      fontWeight: FontWeight.w500),
                 ),
               ],
             ),
             Container(
-                decoration: BoxDecoration(color: Colors.white30, borderRadius: BorderRadius.circular(32)),
+                decoration: BoxDecoration(
+                    color: Colors.white30,
+                    borderRadius: BorderRadius.circular(32)),
                 child: InkWell(
                   onTap: () => Get.toNamed(RouteStr.registerHome),
                   child: Container(
@@ -61,12 +74,17 @@ Widget pageFooter() {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(36),
-                        boxShadow: const [BoxShadow(color: Colors.white30, spreadRadius: 6)],
+                        boxShadow: const [
+                          BoxShadow(color: Colors.white30, spreadRadius: 6)
+                        ],
                       ),
                       child: Center(
                         child: Text(
                           'Sign up Today',
-                          style: TextStyle(fontSize: 16, color: Colors.blueGrey[800], fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.blueGrey[800],
+                              fontWeight: FontWeight.w600),
                         ),
                       )),
                 ))
@@ -75,7 +93,8 @@ Widget pageFooter() {
       ),
       Container(
         width: Get.width,
-        padding: EdgeInsets.symmetric(vertical: isDesktop() ? 72 : 42, horizontal: mainPadding),
+        padding: EdgeInsets.symmetric(
+            vertical: isDesktop() ? 72 : 42, horizontal: mainPadding),
         color: Pallet.topBarColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -144,8 +163,8 @@ Widget pageFooter() {
                           fontWeight: FontWeight.w300,
                           fontSize: isTabletDown()
                               ? isMobile()
-                              ? 14
-                              : 12
+                                  ? 14
+                                  : 12
                               : 16),
                     ),
                   ],
@@ -157,27 +176,49 @@ Widget pageFooter() {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     isMobile() ? const SizedBox.shrink() : const Spacer(),
-                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      footerQuickLindTitle('SOLUTIONS'),
-                      footerQuickLind('Buy', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.buy)),
-                      footerQuickLind('Rent', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.rent)),
-                      footerQuickLind('New Home', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes)),
-                      footerQuickLind('Short-stay', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay)),
-                      footerQuickLind('Commercial', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.commercial)),
-                      footerQuickLind('Premium Realtors', onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.premiumRealtors)),
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          footerQuickLindTitle('SOLUTIONS'),
+                          footerQuickLind('Buy',
+                              onTap: () => propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.buy)),
+                          footerQuickLind('Rent',
+                              onTap: () => propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.rent)),
+                          footerQuickLind('New Home',
+                              onTap: () => propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.newHomes)),
+                          footerQuickLind('Short-stay',
+                              onTap: () => propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.shortStay)),
+                          footerQuickLind('Commercial',
+                              onTap: () => propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.commercial)),
+                          footerQuickLind('Premium Realtors',
+                              onTap: () => propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.premiumRealtors)),
+                        ]),
                     const Spacer(flex: 2),
-                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      footerQuickLindTitle('SUPPORT'),
-                      footerQuickLind('FAQs', onTap: () => Get.to(() => FaqPage())),
-                      footerQuickLind('Contact', onTap: () => openWebContact()),
-                      footerQuickLind('Feedback', onTap: () => sendFeedback()),
-                      const SizedBox(height: 15),
-                      footerQuickLindTitle('COMPANY'),
-                      footerQuickLind('About', onTap: () => Get.toNamed(RouteStr.webAboutUs)),
-                      footerQuickLind('Terms & Conditions', onTap: () => Get.toNamed(RouteStr.webTerms)),
-                      footerQuickLind('Privacy Policy', onTap: () => Get.toNamed(RouteStr.webPolicy)),
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          footerQuickLindTitle('SUPPORT'),
+                          footerQuickLind('FAQs',
+                              onTap: () => Get.to(() => FaqPage())),
+                          footerQuickLind('Contact',
+                              onTap: () => openWebContact()),
+                          footerQuickLind('Feedback',
+                              onTap: () => sendFeedback()),
+                          const SizedBox(height: 15),
+                          footerQuickLindTitle('COMPANY'),
+                          footerQuickLind('About',
+                              onTap: () => Get.toNamed(RouteStr.webAboutUs)),
+                          footerQuickLind('Terms & Conditions',
+                              onTap: () => Get.toNamed(RouteStr.webTerms)),
+                          footerQuickLind('Privacy Policy',
+                              onTap: () => Get.toNamed(RouteStr.webPolicy)),
+                        ]),
                     isTabletDown() ? const SizedBox.shrink() : const Spacer(),
                     Expanded(
                       flex: 4,
@@ -190,7 +231,11 @@ Widget pageFooter() {
                             children: [
                               SizedBox(
                                   width: constraint.maxWidth,
-                                  child: const CustomText(color: Colors.white, text: 'Subscribe to Our Newsletter', weight: FontWeight.w600, size: 18)),
+                                  child: const CustomText(
+                                      color: Colors.white,
+                                      text: 'Subscribe to Our Newsletter',
+                                      weight: FontWeight.w600,
+                                      size: 18)),
                               const SizedBox(
                                 height: 12,
                               ),
@@ -212,7 +257,10 @@ Widget pageFooter() {
                                 hint: 'Email address',
                                 borderColor: Colors.white,
                               ),
-                              FormButton(onPressed: () => homeCtrl.subscribeToNewsLetter(), txtColor: Colors.white),
+                              FormButton(
+                                  onPressed: () =>
+                                      homeCtrl.subscribeToNewsLetter(),
+                                  txtColor: Colors.white),
                               const SizedBox(height: 10),
                               Container(
                                 width: double.infinity,
@@ -220,11 +268,16 @@ Widget pageFooter() {
                                 padding: const EdgeInsets.only(left: 0),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                                    border: true ? Border.all(color: Colors.black12) : null),
-                                margin: const EdgeInsets.only(left: 0, right: 0),
-                                child: Obx(() =>DropdownButton<String>(
-                                    iconEnabledColor:Colors.black54,
+                                    borderRadius:
+                                        const BorderRadius.all(const Radius.circular(4)),
+                                    border: true
+                                        ? Border.all(color: Colors.black12)
+                                        : null),
+                                margin:
+                                    const EdgeInsets.only(left: 0, right: 0),
+                                child: Obx(
+                                  () => DropdownButton<String>(
+                                    iconEnabledColor: Colors.black54,
                                     icon: const Icon(
                                       Icons.arrow_drop_down_outlined,
                                       size: 32,
@@ -235,32 +288,42 @@ Widget pageFooter() {
                                     alignment: Alignment.bottomCenter,
                                     elevation: 3,
                                     underline: Container(color: Colors.white),
-                                    value: EditCtrl.country.value.text == ' ' || !countryList.contains(EditCtrl.country.value.text) ? null : EditCtrl.country.value.text,
+                                    value: EditCtrl.country.value.text == ' ' ||
+                                            !countryList.contains(
+                                                EditCtrl.country.value.text)
+                                        ? null
+                                        : EditCtrl.country.value.text,
                                     onChanged: (newValue) {
-                                      if(newValue=='🇳🇬 Nigeria'){
-                                        MSG.snackBar('Explore our diverse collection of properties');
+                                      if (newValue == '🇳🇬 Nigeria') {
+                                        MSG.snackBar(
+                                            'Explore our diverse collection of properties');
                                         EditCtrl.country.value.text = newValue!;
-                                       EditCtrl.country.refresh();
-                                      }else{
-                                        MSG.errorSnackBar('We do not have properties available here now');
+                                        EditCtrl.country.refresh();
+                                      } else {
+                                        MSG.errorSnackBar(
+                                            'We do not have properties available here now');
                                         EditCtrl.country.value.text = newValue!;
                                         EditCtrl.country.refresh();
                                       }
-
                                     },
                                     hint: const Padding(
                                       padding: EdgeInsets.only(left: 8.0),
                                       child: Text(
                                         'Select Country',
-                                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 16),
                                       ),
                                     ),
                                     items: countryList.map((data) {
                                       return DropdownMenuItem<String>(
                                         value: data.toString(),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(left: 12),
-                                          child: Text(data, style: const TextStyle(color: Colors.black87, fontSize: 16)),
+                                          padding:
+                                              const EdgeInsets.only(left: 12),
+                                          child: Text(data,
+                                              style: const TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 16)),
                                         ),
                                       );
                                     }).toList(),
@@ -293,15 +356,44 @@ Widget pageFooter() {
               children: [
                 Container(
                     padding: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white)),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white)),
                     child: const CustomText(
                       text: 'C',
                       size: 10,
                       color: Colors.white,
                     )),
                 const SizedBox(width: 6),
-                const CustomText(color: Colors.white54, text: '2022 Brix Market, Inc. All rights reserved', weight: FontWeight.w300, size: 14),
+                const CustomText(
+                    color: Colors.white54,
+                    text: '2022 Brix Market, Inc. All rights reserved',
+                    weight: FontWeight.w300,
+                    size: 14),
               ],
+            ),
+            GestureDetector(
+              onTap: () {
+                launchUrl(Uri.parse('https://swizel.co/'));
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  CustomText(
+                    text: 'Built by',
+                    size: 17,
+                    weight: FontWeight.w300,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 6),
+                  CustomText(
+                      color: Colors.red,
+                      text: 'Swizel',
+                      weight: FontWeight.w300,
+                      size: 17),
+                ],
+              ),
             ),
             const AppSocialIcons(),
           ],
@@ -351,27 +443,51 @@ columnList({text1, text2, text3, text4, text5, text6}) {
           : 12
       : 16;
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    CustomText(color: Colors.white, text: text1, weight: FontWeight.w500, size: fontSize),
+    CustomText(
+        color: Colors.white,
+        text: text1,
+        weight: FontWeight.w500,
+        size: fontSize),
     const SizedBox(
       height: 20,
     ),
-    CustomText(color: Colors.white54, text: text2, weight: FontWeight.w300, size: fontSize),
+    CustomText(
+        color: Colors.white54,
+        text: text2,
+        weight: FontWeight.w300,
+        size: fontSize),
     const SizedBox(
       height: 10,
     ),
-    CustomText(color: Colors.white54, text: text3, weight: FontWeight.w300, size: fontSize),
+    CustomText(
+        color: Colors.white54,
+        text: text3,
+        weight: FontWeight.w300,
+        size: fontSize),
     const SizedBox(
       height: 12,
     ),
-    CustomText(color: Colors.white54, text: text4, weight: FontWeight.w300, size: fontSize),
+    CustomText(
+        color: Colors.white54,
+        text: text4,
+        weight: FontWeight.w300,
+        size: fontSize),
     const SizedBox(
       height: 12,
     ),
-    CustomText(color: Colors.white54, text: text5, weight: FontWeight.w300, size: fontSize),
+    CustomText(
+        color: Colors.white54,
+        text: text5,
+        weight: FontWeight.w300,
+        size: fontSize),
     const SizedBox(
       height: 12,
     ),
-    CustomText(color: Colors.white54, text: text6, weight: FontWeight.w300, size: fontSize),
+    CustomText(
+        color: Colors.white54,
+        text: text6,
+        weight: FontWeight.w300,
+        size: fontSize),
   ]);
 }
 

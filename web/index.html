@@ -1,37 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+    <!--
+      If you are serving your web app in a path other than the root, change the
+      href value below to reflect the base path you are serving from.
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+      The path provided below has to start and end with a slash "/" in order for
+      it to work correctly.
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+      For more details:
+      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.//// python -m http.server 8000
-  -->
-  <base href="$FLUTTER_BASE_HREF">
+      This is a placeholder for base href that will be replaced by the value of
+      the `--base-href` argument provided to `flutter build`.//// python -m http.server 8000
+    -->
+    <!-- IOS smart banner -->
+    <meta name="apple-itunes-app" content="app-id=1645681904">
+    <!--Android smart banner -->
+    <meta name="google-play-app" content="app-id=com.brixx.brixmarket">
+    <link rel="stylesheet" href="jquery.smartbanner.css" type="text/css" media="screen">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="jquery.smartbanner.js"></script>
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Buy, Rent and Lease Properties in a safe space. Find Great Properties at Competitive Price.">
+    <!-- Google tag (gtag.js) -->
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="brixmarket">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11006297401"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="brix.png"/>
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  gtag('config', 'AW-11006297401');
+</script>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '511564927278256'); fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1"
+                   src="https://www.facebook.com/tr?id=511564927278256&ev=PageView&noscript=1"/>
+    </noscript><!-- End Facebook Pixel Code -->
+    <base href="$FLUTTER_BASE_HREF">
 
-  <title>Brixmarket</title>
-  <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description"
+          content="Buy, Rent and Lease Properties in a safe space. Find Great Properties at Competitive Price.">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="brixmarket">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="brix.png"/>
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+    <title>Brixmarket</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         body {
             height: 100%;
@@ -47,16 +73,17 @@
           display: inline-block;
         }
 
+
     </style>
 </head>
 <body>
 <div id="container">
-  <div class="img"><img src="brix-logo-dark.png" width="auto" height="64"></div>
+    <div class="img"><img src="brix-logo-dark.png" width="auto" height="64"></div>
 </div>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
+<!-- This script installs service_worker.js to provide PWA functionality to
+     application. For more information, see:
+     https://developers.google.com/web/fundamentals/primers/service-workers -->
+<script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
@@ -119,8 +146,9 @@
       // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
-  </script>
-  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+</script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <!--<script type="text/javascript">-->
 <!--  window.flutterWebRenderer = "html";-->
 <!--</script>-->

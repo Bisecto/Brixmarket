@@ -7,7 +7,13 @@
     "theme_color": "#0175C2",
     "description": "Buy, Rent and Lease Properties in a safe space. Find Great Properties at Competitive Price.",
     "orientation": "portrait-primary",
-    "prefer_related_applications": false,
+    "prefer_related_applications": true,
+    "related_applications": [
+        {
+            "platform": "play",
+            "id": "com.brixx.brixmarket"
+        }
+    ],
     "icons": [
         {
             "src": "icons/Icon-192.png",
