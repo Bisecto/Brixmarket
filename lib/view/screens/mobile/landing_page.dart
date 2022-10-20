@@ -32,12 +32,16 @@ class MobileLandingPage extends StatefulWidget {
 
 class _MobileLandingPageState extends State<MobileLandingPage> {
   void initDynamicLinks(BuildContext context) async {
+    print(" ...............................................................................................");
+
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deeplink = data!.link;
+    if (data != null) {
+    final Uri deeplink = data.link;
     //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
     //print('Category SLug $categorySlug');
     String property_id = deeplink.queryParameters['id'] ?? 'pro';
+    print(" .......................................$property_id........................................................$deeplink");
     if (property_id != 'pro') {
       print(deeplink);
       Navigator.push(
@@ -47,8 +51,9 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                     proertyID: property_id,
                   )));
     } else {
+      print('Null Value');
       return;
-    }
+    }}
   }
 
   String appName = '';
@@ -274,9 +279,10 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
     // TODO: implement initState
     super.initState();
     //Utils.getCurrentLocation();
+    initDynamicLinks(context);
+
     Fetch_App_Details();
     CheckUpdate();
-    initDynamicLinks(context);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
 
       RemoteNotification? notification = message.notification;
