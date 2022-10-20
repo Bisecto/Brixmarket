@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:brixmarket/testingPage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -121,12 +125,97 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  void Dynamic() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+          final Uri? deepLink = dynamicLink?.link;
+
+          print('on link deep link');
+          print(deepLink);
+
+          if (deepLink != null) {
+            String property_id = deepLink.queryParameters['id']?? 'pro';
+            print(
+                " .......................................$property_id..."
+                    ".....................................................");
+            if (property_id != 'pro') {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Testing(
+                        proertyID: property_id,
+                      )));
+            } else {
+              print('Null Value');
+              return;
+            }
+          }
+        }, onError: (OnLinkErrorException e) async {
+      print('OnLinkError');
+      print(e.message);
+      print(e.stacktrace);
+    });
+
+    final PendingDynamicLinkData? data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+
+    if (deepLink != null) {
+      String property_id = deepLink.queryParameters['id']?? 'pro';
+      print(
+          " .......................................$property_id......"
+              "..................................................");
+      if (property_id != 'pro') {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Testing(
+                  proertyID: property_id,
+                )));
+      } else {
+        print('Null Value');
+        return;
+      }
+    }
+  }
+  void initDynamicLinks(BuildContext context) async {
+    print(
+        " ..............................gfd.................................................................");
+
+    final PendingDynamicLinkData? data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    if (data != null) {
+      final Uri deeplink = data.link;
+      //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
+      //print('Category SLug $categorySlug');
+      String property_id = deeplink.queryParameters['id'] ?? 'pro';
+      print(
+          " .......................................$property_id........................................................$deeplink");
+      if (property_id != 'pro') {
+        print(deeplink);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Testing(
+                  proertyID: property_id,
+                )));
+      } else {
+        print('Null Value');
+        return;
+      }
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if(Utils.isMobileApp){
       FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
+      if(Platform.isAndroid){
+        initDynamicLinks(context);}else{
+        Dynamic();
+      }
     }
   }
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
@@ -140,7 +229,6 @@ class _MyAppState extends State<MyApp> {
         textDirection: TextDirection.ltr,
         debugShowCheckedModeBanner: false,
         navigatorObservers: [observer],
-
         theme: ThemeData(
           primaryColor: Pallet.secondaryColor,
           primarySwatch: Colors.pink,

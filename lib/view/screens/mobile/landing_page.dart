@@ -32,28 +32,31 @@ class MobileLandingPage extends StatefulWidget {
 
 class _MobileLandingPageState extends State<MobileLandingPage> {
   void initDynamicLinks(BuildContext context) async {
-    print(" ...............................................................................................");
+    print(
+        " ..............................gfd.................................................................");
 
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
-    final Uri deeplink = data.link;
-    //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
-    //print('Category SLug $categorySlug');
-    String property_id = deeplink.queryParameters['id'] ?? 'pro';
-    print(" .......................................$property_id........................................................$deeplink");
-    if (property_id != 'pro') {
-      print(deeplink);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Testing(
-                    proertyID: property_id,
-                  )));
-    } else {
-      print('Null Value');
-      return;
-    }}
+      final Uri deeplink = data.link;
+      //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
+      //print('Category SLug $categorySlug');
+      String property_id = deeplink.queryParameters['id'] ?? 'pro';
+      print(
+          " .......................................$property_id........................................................$deeplink");
+      if (property_id != 'pro') {
+        print(deeplink);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Testing(
+                      proertyID: property_id,
+                    )));
+      } else {
+        print('Null Value');
+        return;
+      }
+    }
   }
 
   String appName = '';
@@ -162,15 +165,13 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                           onPressed: () {
                             switch (heading) {
                               case 'Message':
-                                homeCtrl.loginRequest(
-                                    request: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                            const ChatPage()),
-                                      );
-                                    });
+                                homeCtrl.loginRequest(request: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const ChatPage()),
+                                  );
+                                });
 
                                 break;
                               case 'Review':
@@ -273,18 +274,72 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
   }
 
   bool isNotification = false;
+  void Dynamic() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+          final Uri? deepLink = dynamicLink?.link;
 
+          print('on link deep link');
+          print(deepLink);
+
+          if (deepLink != null) {
+            String property_id = deepLink.queryParameters['id']?? 'pro';
+            print(
+                " .......................................$property_id..."
+                    ".....................................................");
+            if (property_id != 'pro') {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Testing(
+                        proertyID: property_id,
+                      )));
+            } else {
+              print('Null Value');
+              return;
+            }
+          }
+        }, onError: (OnLinkErrorException e) async {
+      print('OnLinkError');
+      print(e.message);
+      print(e.stacktrace);
+    });
+
+    final PendingDynamicLinkData? data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+
+    if (deepLink != null) {
+      String property_id = deepLink.queryParameters['id']?? 'pro';
+      print(
+          " .......................................$property_id......"
+              "..................................................");
+      if (property_id != 'pro') {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Testing(
+                  proertyID: property_id,
+                )));
+      } else {
+        print('Null Value');
+        return;
+      }
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     //Utils.getCurrentLocation();
-    initDynamicLinks(context);
+    if(Platform.isAndroid){
+    initDynamicLinks(context);}else{
+      Dynamic();
+    }
 
     Fetch_App_Details();
     CheckUpdate();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       AppleNotification? ios = message.notification?.apple;
@@ -387,15 +442,12 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                 builder: (context) => const HomeNotificationsPage()),
           );
         } else if (message.data['value'] == "Message_Notification") {
-          homeCtrl.loginRequest(
-              request: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                      const ChatPage()),
-                );
-              });
+          homeCtrl.loginRequest(request: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatPage()),
+            );
+          });
         } else if (message.data['value'] == "Review_Notification") {
           // Navigator.push(
           //   context,
@@ -424,15 +476,12 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                 builder: (context) => const HomeNotificationsPage()),
           );
         } else if (message.data['value'] == "Message_Notification") {
-          homeCtrl.loginRequest(
-              request: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                      const ChatPage()),
-                );
-              });
+          homeCtrl.loginRequest(request: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatPage()),
+            );
+          });
         } else if (message.data['value'] == "Review_Notification") {
           // Navigator.push(
           //   context,

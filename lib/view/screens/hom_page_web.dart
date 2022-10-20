@@ -377,23 +377,24 @@ class HomePageWeb extends StatelessWidget {
                                       }),
                                 ),
                                 Positioned(
-                                  top: !isMobile() ? Get.width * 0.2 : Get.width * 0.2,
+                                  top: !isMobile() ? Get.width * 0.1 : Get.width * 0.2,
                                   right: Get.width * 0.03,
                                   child: InkWell(
                                     onTap: () => _controller.nextPage(duration: const Duration(seconds: 1)),
                                     child: Container(
+
                                       height: 30,
                                       width: 30,
                                       child: const Icon(
                                         Icons.arrow_forward_ios,
                                         size: 10,
                                       ),
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white.withOpacity(0.4)),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white),
                                     ),
                                   ),
                                 ),
                                 Positioned(
-                                  top: !isMobile() ? Get.width * 0.2 : Get.width * 0.2,
+                                  top: !isMobile() ? Get.width * 0.1 : Get.width * 0.2,
                                   left: Get.width * 0.03,
                                   child: InkWell(
                                     onTap: () => _controller.previousPage(duration: const Duration(seconds: 1)),
@@ -404,7 +405,7 @@ class HomePageWeb extends StatelessWidget {
                                         Icons.arrow_back_ios,
                                         size: 10,
                                       ),
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white.withOpacity(0.4)),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white),
                                     ),
                                   ),
                                 ),

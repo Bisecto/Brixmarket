@@ -381,17 +381,15 @@ Widget pageFooter() {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: const [
                   CustomText(
-                    text: 'Built by',
-                    size: 17,
-                    weight: FontWeight.w300,
+                    text: 'Developed by',
+                    size: 14,
                     color: Colors.white,
                   ),
                   SizedBox(width: 6),
                   CustomText(
                       color: Colors.red,
                       text: 'Swizel',
-                      weight: FontWeight.w300,
-                      size: 17),
+                      size: 14),
                 ],
               ),
             ),
