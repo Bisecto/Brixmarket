@@ -1,12 +1,14 @@
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/res/strings.dart';
 import 'package:brixmarket/utils/utils.dart';
+import 'package:brixmarket/view/screens/shortstay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../config/theme/color.dart';
 import '../../controllers/instance.dart';
+import '../../core/app.dart';
 import '../../res/enums.dart';
 import '../screens/mobile/home_page.dart';
 import 'app_social_icons.dart';
@@ -197,7 +199,12 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                             ),
                             const SizedBox(width: 32),
                             InkWell(
-                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay),
+                              onTap: ()  {
+                                //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                                homeCtrl.activeNavItem.value=NavItems.shortStay;
+                                Navigator.of(context!).push(MaterialPageRoute(builder: (context) => Short_stay()));
+                                //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                              },
                               child: Obx(() => Text(
                                 Str.shortStay,
                                 style: TextStyle(
@@ -209,7 +216,10 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                             ),
                             const SizedBox(width: 32),
                             InkWell(
-                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.commercial),
+                              onTap: () {
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                                homeCtrl.activeNavItem.value=NavItems.commercial;
+                              },
                               child: Obx(() => Text(
                                     Str.commercial,
                                     style: TextStyle(

@@ -154,6 +154,9 @@ class Provider extends GetConnect {
             dnd('$e Trace: $t');
             Preloader.hide();
             MSG.errorSnackBar(apiResponse.message.toString());
+
+
+
             print('2');
             dnd(e);
           }

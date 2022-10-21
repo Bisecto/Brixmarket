@@ -161,15 +161,16 @@ class PropertiesPage extends StatelessWidget {
                                                   milliseconds: 1500),
                                               () => propCtrl.searchResultCount
                                                   .value = properties.length);
-                                          return snap.connectionState ==
-                                                  ConnectionState.waiting
-                                              ? SizedBox(
+                                          if (snap.connectionState ==
+                                                  ConnectionState.waiting) {
+                                            return SizedBox(
                                                   height: 520,
                                                   child: Center(
                                                       child: Preloader
                                                           .loadingWidget()),
-                                                )
-                                              : Obx(
+                                                );
+                                          } else {
+                                            return Obx(
                                                   () => homeCtrl.isList.value &&
                                                           !isTabletDown()
                                                       ? buildListContainer(
@@ -179,6 +180,7 @@ class PropertiesPage extends StatelessWidget {
                                                           properties:
                                                               properties),
                                                 );
+                                          }
                                         }),
                                   ],
                                 )),
@@ -216,16 +218,14 @@ class PropertiesPage extends StatelessWidget {
                                               width: maxWidth,
                                               color: Colors.white,
                                               padding:
-                                                  const EdgeInsets.only(
-                                                      top: 8),
+                                                  const EdgeInsets.only(top: 8),
                                               child: InkWell(
                                                 onTap: () {
                                                   propCtrl.clearFilter();
                                                 },
                                                 child: Container(
                                                   height: 48,
-                                                  color:
-                                                      Pallet.secondaryColor,
+                                                  color: Pallet.secondaryColor,
                                                   child: const Center(
                                                     child: CustomText(
                                                       color: Colors.white,
@@ -236,7 +236,9 @@ class PropertiesPage extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(height: 20,),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
                                             const Text('Price',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w600,
@@ -745,366 +747,378 @@ class PropertiesPage extends StatelessWidget {
           if (EditCtrl.webSearchKeyWord.value.text.trim().isNotEmpty) {
             if (property.title!.trim().toLowerCase().contains(
                 EditCtrl.webSearchKeyWord.value.text.trim().toLowerCase())) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
-                child: Material(
-                  color: Colors.white,
-                  elevation: 5,
-                  type: MaterialType.card,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(10, 10, 0, 3),
-                              height: 268,
-                              width: Get.width * 0.4,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image:
-                                        NetworkImage(propertyImgPath + image),
-                                  )),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  top: 0, left: 10, bottom: 10),
-                              height: 68,
-                              child: ListView.builder(
-                                itemCount:
-                                    images.length > 5 ? 5 : images.length,
-                                reverse: false,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {},
-                                    child: (index == 4)
-                                        ? Stack(
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets.only(
+              return GestureDetector(
+                onTap: (){
+                  homeCtrl.viewSingleProperty(property);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 24.0),
+                  child: Material(
+                    color: Colors.white,
+                    elevation: 5,
+                    type: MaterialType.card,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4)),
+                    child: GestureDetector(
+                      onTap: (){
+                        homeCtrl.viewSingleProperty(property);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.fromLTRB(10, 10, 0, 3),
+                                  height: 268,
+                                  width: Get.width * 0.4,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image:
+                                            NetworkImage(propertyImgPath + image),
+                                      )),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      top: 0, left: 10, bottom: 10),
+                                  height: 68,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        images.length > 5 ? 5 : images.length,
+                                    reverse: false,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          homeCtrl.viewSingleProperty(property);
+                                        },
+                                        child: (index == 4)
+                                            ? Stack(
+                                                children: [
+                                                  Container(
+                                                    margin: const EdgeInsets.only(
+                                                        top: 5),
+                                                    color: Colors.white,
+                                                    height: 80,
+                                                    // width: 69,
+                                                    child: Image.network(
+                                                      propertyImgPath +
+                                                          images[index].media!,
+                                                      height: 80,
+                                                      width: Get.width * 0.4 * 0.15,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  images.length > 5
+                                                      ? Container(
+                                                          margin:
+                                                              const EdgeInsets.only(
+                                                                  right: 5, top: 5),
+                                                          color: Colors.black
+                                                              .withOpacity(0.6),
+                                                          height: 80,
+                                                          width: 72,
+                                                          child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                CustomText(
+                                                                    text: (images.length >
+                                                                                5
+                                                                            ? (images.length - 5).toString() +
+                                                                                ' images'
+                                                                            : '')
+                                                                        .toString(),
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 10),
+                                                                const SizedBox(
+                                                                    width: 5),
+                                                                const Icon(
+                                                                    Icons
+                                                                        .arrow_forward_ios,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 12),
+                                                              ]),
+                                                        )
+                                                      : const SizedBox.shrink(),
+                                                ],
+                                              )
+                                            : Container(
+                                                margin: EdgeInsets.only(
+                                                    right: Get.width * 0.4 * 0.01,
                                                     top: 5),
                                                 color: Colors.white,
                                                 height: 80,
-                                                // width: 69,
+                                                width: Get.width * 0.4 * 0.16,
                                                 child: Image.network(
                                                   propertyImgPath +
                                                       images[index].media!,
                                                   height: 80,
-                                                  width: Get.width * 0.4 * 0.15,
+                                                  width: 72,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              images.length > 5
-                                                  ? Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              right: 5, top: 5),
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                      height: 80,
-                                                      width: 72,
-                                                      child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            CustomText(
-                                                                text: (images.length >
-                                                                            5
-                                                                        ? (images.length - 5).toString() +
-                                                                            ' images'
-                                                                        : '')
-                                                                    .toString(),
-                                                                color: Colors
-                                                                    .white,
-                                                                size: 10),
-                                                            const SizedBox(
-                                                                width: 5),
-                                                            const Icon(
-                                                                Icons
-                                                                    .arrow_forward_ios,
-                                                                color: Colors
-                                                                    .white,
-                                                                size: 12),
-                                                          ]),
-                                                    )
-                                                  : const SizedBox.shrink(),
-                                            ],
-                                          )
-                                        : Container(
-                                            margin: EdgeInsets.only(
-                                                right: Get.width * 0.4 * 0.01,
-                                                top: 5),
-                                            color: Colors.white,
-                                            height: 80,
-                                            width: Get.width * 0.4 * 0.16,
-                                            child: Image.network(
-                                              propertyImgPath +
-                                                  images[index].media!,
-                                              height: 80,
-                                              width: 72,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                  );
-                                },
-                              ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                          ),
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10, left: 10, bottom: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 32,
+                                            width: 120,
+                                            padding: const EdgeInsets.only(top: 2),
+                                            child: Center(
+                                              child: CustomText(
+                                                  color: const Color(0xFF308b85),
+                                                  text:
+                                                      property.type!.toUpperCase(),
+                                                  weight: FontWeight.w500,
+                                                  size: 14),
+                                            ),
+                                            color: const Color(0xFFebfcfb),
+                                          ),
+                                          Container(
+                                            height: 32,
+                                            width: 84,
+                                            padding: const EdgeInsets.only(top: 3),
+                                            margin: const EdgeInsets.only(left: 8),
+                                            child: Center(
+                                              child: CustomText(
+                                                  color: Colors.white,
+                                                  text: property.status!
+                                                      .toUpperCase(),
+                                                  weight: FontWeight.w500,
+                                                  size: 14),
+                                            ),
+                                            color: Pallet.secondaryColor,
+                                          )
+                                        ],
+                                      ),
+                                      property.user!.agency!.isVerified == null
+                                          ? const SizedBox.shrink()
+                                          : property.user!.agency!.isVerified!
+                                              ? Container(
+                                                  height: 32,
+                                                  width: 112,
+                                                  decoration: const BoxDecoration(
+                                                      color: Color.fromARGB(
+                                                          255, 247, 241, 241),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft:
+                                                                  Radius.circular(
+                                                                      20),
+                                                              bottomLeft:
+                                                                  Radius.circular(
+                                                                      20))),
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                left: 13.0),
+                                                        child: Icon(
+                                                          Icons.verified,
+                                                          size: 18,
+                                                          color: Colors.green[700],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      const CustomText(
+                                                          color: Colors.black54,
+                                                          text: 'verified',
+                                                          weight: FontWeight.w500,
+                                                          size: 16),
+                                                    ],
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  CustomText(
+                                      color: Colors.black,
+                                      text: property.title,
+                                      weight: FontWeight.w800,
+                                      size: 18),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
                                   Row(
                                     children: [
-                                      Container(
-                                        height: 32,
-                                        width: 120,
-                                        padding: const EdgeInsets.only(top: 2),
-                                        child: Center(
-                                          child: CustomText(
-                                              color: const Color(0xFF308b85),
-                                              text:
-                                                  property.type!.toUpperCase(),
-                                              weight: FontWeight.w500,
-                                              size: 14),
-                                        ),
-                                        color: const Color(0xFFebfcfb),
+                                      const Icon(Icons.location_on,
+                                          color: Pallet.secondaryColor, size: 18),
+                                      const SizedBox(
+                                        width: 12,
                                       ),
-                                      Container(
-                                        height: 32,
-                                        width: 84,
-                                        padding: const EdgeInsets.only(top: 3),
-                                        margin: const EdgeInsets.only(left: 8),
-                                        child: Center(
-                                          child: CustomText(
-                                              color: Colors.white,
-                                              text: property.status!
-                                                  .toUpperCase(),
+                                      Expanded(
+                                        child: CustomText(
+                                            color: Colors.black,
+                                            text:
+                                                '${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
+                                            weight: FontWeight.w200,
+                                            size: 16),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Row(
+                                    children: [
+                                      ...property.features!.map((feature) {
+                                        iFeature++;
+                                        return iFeature >= 4
+                                            ? const SizedBox.shrink()
+                                            : Row(
+                                                children: [
+                                                  const Icon(Icons.bed,
+                                                      color: Colors.black54,
+                                                      size: 18),
+                                                  const SizedBox(width: 5),
+                                                  CustomText(
+                                                      color: Colors.black54,
+                                                      text: feature.featureValue,
+                                                      weight: FontWeight.w200,
+                                                      size: 16),
+                                                  const SizedBox(width: 12),
+                                                ],
+                                              );
+                                      }).toList(),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 36),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          RatingBarIndicator(
+                                            rating: property.averageRating ?? 0,
+                                            unratedColor: Colors.black26,
+                                            itemBuilder: (context, index) => Icon(
+                                              Icons.star,
+                                              color: Colors.yellow[900],
+                                              size: 18,
+                                            ),
+                                            itemCount: 5,
+                                            itemSize: 18.0,
+                                            direction: Axis.horizontal,
+                                          ),
+                                          const SizedBox(width: 4),
+                                          CustomText(
+                                            color: Colors.black,
+                                            text: (property.numberOfRatingUsers ??
+                                                    'No Review')
+                                                .toString(),
+                                            weight: FontWeight.w200,
+                                            size: 16,
+                                          ),
+                                        ],
+                                      ),
+                                      Obx(() => SavePropertyIconText(
+                                          property: property,
+                                          user: homeCtrl.user.value,
+                                          state: homeCtrl.savingProperty.value)),
+                                    ],
+                                  ),
+                                  Container(
+                                      margin: const EdgeInsets.only(right: 30),
+                                      child: const Divider()),
+                                  const SizedBox(height: 5),
+                                  const CustomText(
+                                      color: Colors.black,
+                                      text: 'Price',
+                                      weight: FontWeight.w100,
+                                      size: 14),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CustomText(
+                                              color: Pallet.secondaryColor,
+                                              text: Utils.amount(property.price!),
+                                              weight: FontWeight.w700,
+                                              size: 20),
+                                          const SizedBox(width: 3),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: CustomText(
+                                              color: Colors.black.withOpacity(0.4),
+                                              text: property.priceDuration!
+                                                          .substring(0, 3) ==
+                                                      'Per'
+                                                  ? property.priceDuration!
+                                                      .toUpperCase()
+                                                  : '',
                                               weight: FontWeight.w500,
-                                              size: 14),
+                                              size: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      InkWell(
+                                        onTap: () =>
+                                            homeCtrl.viewSingleProperty(property),
+                                        child: Container(
+                                          margin: const EdgeInsets.only(right: 30),
+                                          height: 40,
+                                          width: 120,
+                                          color: Colors.grey[900],
+                                          child: const Center(
+                                            child: CustomText(
+                                              text: 'Take a tour',
+                                              size: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
-                                        color: Pallet.secondaryColor,
                                       )
                                     ],
                                   ),
-                                  property.user!.agency!.isVerified == null
-                                      ? const SizedBox.shrink()
-                                      : property.user!.agency!.isVerified!
-                                          ? Container(
-                                              height: 32,
-                                              width: 112,
-                                              decoration: const BoxDecoration(
-                                                  color: Color.fromARGB(
-                                                      255, 247, 241, 241),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  20),
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  20))),
-                                              child: Row(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 13.0),
-                                                    child: Icon(
-                                                      Icons.verified,
-                                                      size: 18,
-                                                      color: Colors.green[700],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  const CustomText(
-                                                      color: Colors.black54,
-                                                      text: 'verified',
-                                                      weight: FontWeight.w500,
-                                                      size: 16),
-                                                ],
-                                              ),
-                                            )
-                                          : const SizedBox.shrink(),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 24,
-                              ),
-                              CustomText(
-                                  color: Colors.black,
-                                  text: property.title,
-                                  weight: FontWeight.w800,
-                                  size: 18),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                children: [
-                                  const Icon(Icons.location_on,
-                                      color: Pallet.secondaryColor, size: 18),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Expanded(
-                                    child: CustomText(
-                                        color: Colors.black,
-                                        text:
-                                            '${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
-                                        weight: FontWeight.w200,
-                                        size: 16),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 24),
-                              Row(
-                                children: [
-                                  ...property.features!.map((feature) {
-                                    iFeature++;
-                                    return iFeature >= 4
-                                        ? const SizedBox.shrink()
-                                        : Row(
-                                            children: [
-                                              const Icon(Icons.bed,
-                                                  color: Colors.black54,
-                                                  size: 18),
-                                              const SizedBox(width: 5),
-                                              CustomText(
-                                                  color: Colors.black54,
-                                                  text: feature.featureValue,
-                                                  weight: FontWeight.w200,
-                                                  size: 16),
-                                              const SizedBox(width: 12),
-                                            ],
-                                          );
-                                  }).toList(),
-                                ],
-                              ),
-                              const SizedBox(height: 36),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: property.averageRating ?? 0,
-                                        unratedColor: Colors.black26,
-                                        itemBuilder: (context, index) => Icon(
-                                          Icons.star,
-                                          color: Colors.yellow[900],
-                                          size: 18,
-                                        ),
-                                        itemCount: 5,
-                                        itemSize: 18.0,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      CustomText(
-                                        color: Colors.black,
-                                        text: (property.numberOfRatingUsers ??
-                                                'No Review')
-                                            .toString(),
-                                        weight: FontWeight.w200,
-                                        size: 16,
-                                      ),
-                                    ],
-                                  ),
-                                  Obx(() => SavePropertyIconText(
-                                      property: property,
-                                      user: homeCtrl.user.value,
-                                      state: homeCtrl.savingProperty.value)),
-                                ],
-                              ),
-                              Container(
-                                  margin: const EdgeInsets.only(right: 30),
-                                  child: const Divider()),
-                              const SizedBox(height: 5),
-                              const CustomText(
-                                  color: Colors.black,
-                                  text: 'Price',
-                                  weight: FontWeight.w100,
-                                  size: 14),
-                              const SizedBox(height: 4),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CustomText(
-                                          color: Pallet.secondaryColor,
-                                          text: Utils.amount(property.price!),
-                                          weight: FontWeight.w700,
-                                          size: 20),
-                                      const SizedBox(width: 3),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: CustomText(
-                                          color: Colors.black.withOpacity(0.4),
-                                          text: property.priceDuration!
-                                                      .substring(0, 3) ==
-                                                  'Per'
-                                              ? property.priceDuration!
-                                                  .toUpperCase()
-                                              : '',
-                                          weight: FontWeight.w500,
-                                          size: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: () =>
-                                        homeCtrl.viewSingleProperty(property),
-                                    child: Container(
-                                      margin: const EdgeInsets.only(right: 30),
-                                      height: 40,
-                                      width: 120,
-                                      color: Colors.grey[900],
-                                      child: const Center(
-                                        child: CustomText(
-                                          text: 'Take a tour',
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               );

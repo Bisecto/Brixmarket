@@ -311,8 +311,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
     if (deepLink != null) {
       String property_id = deepLink.queryParameters['id']?? 'pro';
-      print(
-          " .......................................$property_id......"
+      print(".......................................$property_id......"
               "..................................................");
       if (property_id != 'pro') {
         Navigator.push(
