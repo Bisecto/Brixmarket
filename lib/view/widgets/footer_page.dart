@@ -1,4 +1,5 @@
 import 'package:brixmarket/controllers/edit_controller.dart';
+import 'package:brixmarket/core/app.dart';
 import 'package:brixmarket/core/dialogs.dart';
 import 'package:brixmarket/res/strings.dart';
 import 'package:brixmarket/utils/validations.dart';
@@ -19,6 +20,7 @@ import '../../utils/utils.dart';
 import '../screens/faq_page.dart';
 import '../screens/mobile/account_page.dart';
 import '../screens/mobile/help_page.dart';
+import '../screens/shortstay.dart';
 import 'app_social_icons.dart';
 import 'drop_down.dart';
 
@@ -189,12 +191,18 @@ Widget pageFooter() {
                           footerQuickLind('New Home',
                               onTap: () => propCtrl.setAllPropertiesWeb(
                                   navItem: NavItems.newHomes)),
-                          footerQuickLind('Short-stay',
-                              onTap: () => propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.shortStay)),
-                          footerQuickLind('Commercial',
-                              onTap: () => propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.commercial)),
+                          footerQuickLind('Short-stay', onTap: () {
+                            homeCtrl.activeNavItem.value = NavItems.shortStay;
+                            Navigator.of(context!).push(MaterialPageRoute(
+                                builder: (context) => Short_stay()));
+                          }),
+                          footerQuickLind('Commercial', onTap: () {
+
+                            propCtrl.setAllPropertiesWeb(
+                                navItem: NavItems.shortStay);
+                            homeCtrl.activeNavItem.value = NavItems.commercial;
+
+                          }),
                           footerQuickLind('Premium Realtors',
                               onTap: () => propCtrl.setAllPropertiesWeb(
                                   navItem: NavItems.premiumRealtors)),
@@ -268,8 +276,8 @@ Widget pageFooter() {
                                 padding: const EdgeInsets.only(left: 0),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius:
-                                        const BorderRadius.all(const Radius.circular(4)),
+                                    borderRadius: const BorderRadius.all(
+                                        const Radius.circular(4)),
                                     border: true
                                         ? Border.all(color: Colors.black12)
                                         : null),
@@ -386,10 +394,7 @@ Widget pageFooter() {
                     color: Colors.white,
                   ),
                   SizedBox(width: 6),
-                  CustomText(
-                      color: Colors.red,
-                      text: 'Swizel',
-                      size: 14),
+                  CustomText(color: Colors.red, text: 'Swizel', size: 14),
                 ],
               ),
             ),
