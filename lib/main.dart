@@ -35,40 +35,40 @@ Future<void> _FirebaseMessagingBacground(RemoteMessage message) async {
   //   statusBarColor: Colors.deepOrange,
   // ));
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-        authDomain: "brimarket-3e1d9.firebaseapp.com",
-        projectId: "brimarket-3e1d9",
-        storageBucket: "brimarket-3e1d9.appspot.com",
-        messagingSenderId: "591770978937",
-        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-        measurementId: "G-5MFHT3RCLW"),
+    // options: const FirebaseOptions(
+    //     apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+    //     authDomain: "brimarket-3e1d9.firebaseapp.com",
+    //     projectId: "brimarket-3e1d9",
+    //     storageBucket: "brimarket-3e1d9.appspot.com",
+    //     messagingSenderId: "591770978937",
+    //     appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+    //     measurementId: "G-5MFHT3RCLW"),
   );
   print('A message just Poped: ${message.messageId}');
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-        authDomain: "brimarket-3e1d9.firebaseapp.com",
-        projectId: "brimarket-3e1d9",
-        storageBucket: "brimarket-3e1d9.appspot.com",
-        messagingSenderId: "591770978937",
-        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-        measurementId: "G-5MFHT3RCLW"),
+    // options: const FirebaseOptions(
+    //     apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+    //     authDomain: "brimarket-3e1d9.firebaseapp.com",
+    //     projectId: "brimarket-3e1d9",
+    //     storageBucket: "brimarket-3e1d9.appspot.com",
+    //     messagingSenderId: "591770978937",
+    //     appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+    //     measurementId: "G-5MFHT3RCLW"),
   );
   setPathUrlStrategy();
   if (Utils.userFirebase) {
     await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-          authDomain: "brimarket-3e1d9.firebaseapp.com",
-          projectId: "brimarket-3e1d9",
-          storageBucket: "brimarket-3e1d9.appspot.com",
-          messagingSenderId: "591770978937",
-          appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-          measurementId: "G-5MFHT3RCLW"),
+      // options: const FirebaseOptions(
+      //     apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+      //     authDomain: "brimarket-3e1d9.firebaseapp.com",
+      //     projectId: "brimarket-3e1d9",
+      //     storageBucket: "brimarket-3e1d9.appspot.com",
+      //     messagingSenderId: "591770978937",
+      //     appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+      //     measurementId: "G-5MFHT3RCLW"),
     );
   }
   Get.put(TermsController());

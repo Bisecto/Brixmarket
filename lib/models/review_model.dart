@@ -14,7 +14,7 @@ class Review {
     user = json['user'];
     property = json['property'];
     rating = int.parse(json['rating'].toString());
-    message = json['message'];
+    message = json['message'].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\'');
     deleted = json['deleted'].toString() == '1';
     createdAt = Utils.formatDateTime(json['created_at']);
   }

@@ -117,8 +117,10 @@ profileImgAndBasicInfo(int num) {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Status: '),
-                    Obx(() => homeCtrl.user.value.agency?.isVerified == true
+                    const Text('Status: ',style: TextStyle(
+                      color: Colors.white
+                    ),),
+                    Obx(() => homeCtrl.user.value.isVerified == true
                         ? Row(
                             children: const [
                               Icon(

@@ -166,11 +166,12 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     width: 35,
                     child: const Icon(
                       Icons.arrow_back_ios_new,
-                      size: 10,
+                      color: Colors.white,
+                      size: 15,
                     ),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: Colors.white.withOpacity(0.6)),
+                        color: Colors.black),
                   ),
                 ),
               ),
@@ -186,11 +187,13 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     width: 35,
                     child: const Icon(
                       Icons.arrow_forward_ios,
-                      size: 10,
+                      color: Colors.white,
+
+                      size: 15,
                     ),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: Colors.white.withOpacity(0.4)),
+                        color: Colors.black),
                   ),
                 ),
               ),
@@ -208,11 +211,12 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                         },
                         child: const CircleAvatar(
                           radius: 18,
-                          backgroundColor: Colors.black26,
+                          backgroundColor: Colors.black,
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             size: 18,
-                            color: Pallet.secondaryColor,
+
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -220,7 +224,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                           property: property,
                           user: propCtrl.user.value,
                           state: homeCtrl.savingProperty.value,
-                          color: Colors.red)),
+                          color: Colors.white)),
                     ],
                   ),
                 ),

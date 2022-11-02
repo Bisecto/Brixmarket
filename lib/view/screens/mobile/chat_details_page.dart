@@ -2,6 +2,7 @@ import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:brixmarket/res/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/edit_controller.dart';
@@ -21,7 +22,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     homeCtrl.fetchChatMessages();
     super.initState();
   }
-
+  String quote='"';
+  String quote2="'";
   @override
   void dispose() {
     homeCtrl.messageTimer.cancel();
@@ -181,9 +183,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       children: <Widget>[
                         Expanded(
                           child: TextField(
+                            autocorrect: true,
                             controller: EditCtrl.chatMessage,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
+                            //inputFormatters: <TextInputFormatter> [FilteringTextInputFormatter.deny(RegExp(r'[/<>£¥€&\$]'))],
                             decoration: InputDecoration(
                               hintText: "Write message...",
                               hintStyle: const TextStyle(color: Colors.black54),

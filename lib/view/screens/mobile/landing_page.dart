@@ -274,65 +274,67 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
   }
 
   bool isNotification = false;
+
   void Dynamic() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-          final Uri? deepLink = dynamicLink?.link;
+      final Uri? deepLink = dynamicLink?.link;
 
-          print('on link deep link');
-          print(deepLink);
+      print('on link deep link');
+      print(deepLink);
 
-          if (deepLink != null) {
-            String property_id = deepLink.queryParameters['id']?? 'pro';
-            print(
-                " .......................................$property_id..."
-                    ".....................................................");
-            if (property_id != 'pro') {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Testing(
+      if (deepLink != null) {
+        String property_id = deepLink.queryParameters['id'] ?? 'pro';
+        print(" .......................................$property_id..."
+            ".....................................................");
+        if (property_id != 'pro') {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Testing(
                         proertyID: property_id,
                       )));
-            } else {
-              print('Null Value');
-              return;
-            }
-          }
-        }, onError: (OnLinkErrorException e) async {
+        } else {
+          print('Null Value');
+          return;
+        }
+      }
+    }, onError: (OnLinkErrorException e) async {
       print('OnLinkError');
       print(e.message);
       print(e.stacktrace);
     });
 
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri? deepLink = data?.link;
 
     if (deepLink != null) {
-      String property_id = deepLink.queryParameters['id']?? 'pro';
+      String property_id = deepLink.queryParameters['id'] ?? 'pro';
       print(".......................................$property_id......"
-              "..................................................");
+          "..................................................");
       if (property_id != 'pro') {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => Testing(
-                  proertyID: property_id,
-                )));
+                      proertyID: property_id,
+                    )));
       } else {
         print('Null Value');
         return;
       }
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     //Utils.getCurrentLocation();
-    if(Platform.isAndroid){
-    initDynamicLinks(context);}else{
+    if (Platform.isAndroid) {
+      initDynamicLinks(context);
+    } else {
       Dynamic();
     }
 
@@ -509,7 +511,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Colors.white,
               type: BottomNavigationBarType.fixed,
-              items: const <BottomNavigationBarItem>[
+              items:  <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home_outlined, size: 24), label: 'Home'),
                 BottomNavigationBarItem(
@@ -536,6 +538,12 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                     return;
                   }
                 }
+                if (index == 0) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MobileLandingPage()), // this mymainpage is your page to refresh
+                        (Route<dynamic> route) => false,
+                  );                }
                 Get.find<MobileHomeController>().bottomNavIndex.value = index;
               },
             ),

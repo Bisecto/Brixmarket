@@ -22,8 +22,8 @@ class AppNotification {
   });
 
   factory AppNotification.fromJson(Map<String, dynamic> json) => AppNotification(
-        title: asT(json, 'title'),
-        description: asT(json, 'description'),
+        title: asT(json, 'title').toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),
+        description: asT(json, 'description').replaceAll('&#039;', '\'').toString().replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),
         time: asT(json, 'created_at'),
         seen: asT(json, 'seen'),
         tag: asT(json, 'tag'),

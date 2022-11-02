@@ -15,7 +15,7 @@ class ChatMessage {
 
   factory ChatMessage.fromJson(json) => ChatMessage(
         chatKey: json['chatkey'],
-        message: json['message'],
+        message: json['message'].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),//.toString().replaceAll(from, replace),
         sender: json['sender'],
         fromMe: json['sender'] == HomeController.userId,
         time: Utils.formatDateTime(json['created_at']),
