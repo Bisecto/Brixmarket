@@ -9,6 +9,7 @@ import 'package:brixmarket/utils/utils.dart';
 import 'package:get/get.dart';
 
 import '../core/preloader.dart';
+import '../models/home_property_model.dart'as home_property;
 import '../models/property_model.dart';
 import '../res/lists.dart';
 import '../res/strings.dart';
@@ -33,8 +34,9 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var currentIndex = ''.obs;
 
   var isFeaturedProperties = false.obs;
-  var isAll_Properties = false.obs;
+  var isHomeProperties = false.obs;
 
+  var isAll_Properties = false.obs;
 
   void toggleList() {
     isList.value = !isList.value;
@@ -43,6 +45,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var allProperties = <Property>[].obs;
   var globalProperties = <Property>[];
+  var homeGlobalProperties = <Property>[];
+
   var globalAllProperties = <Property>[];
 
   var propertiesList = <List<Property>>[];
@@ -161,11 +165,14 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   Future<List<Property>> fetchFeaturedProperties() async {
     if (featuredProperties.isEmpty) {
       // var response = await Provider().getData("property/featured-properties");
+
       var response = await Provider().getData("property/get-all");
       if (response != null) {
         for (var e in (response['properties'] as List)) {
-          featuredProperties.addIf(
-              featuredProperties.length < 1000, Property.fromJson(e));
+          featuredProperties.add(
+              //featuredProperties.length < 100,
+              Property.fromJson(e));
+
           /// CHANGED THE ABOVE FROM featuredProperties.addIf(
           ///              featuredProperties.length < 20, Property.fromJson(e));
           ///              TO
@@ -179,7 +186,112 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
     return featuredProperties;
   }
+
+  List<home_property.Latest> homeProperty = <home_property.Latest>[];
+
+  Future<List<home_property.Latest>> getHomeproperty() async {
+    if (homeProperty.isEmpty) {
+      var response = await Provider().getData("property/get-home-properties");
+      //print(response + '..............................................');
+      if (response != null) {
+        for (var e in (response['latest'] as List)) {
+          homeProperty.add(
+              //featuredProperties.length < 100,
+              home_property.Latest.fromJson(e));
+
+          /// CHANGED THE ABOVE FROM featuredProperties.addIf(
+          ///              featuredProperties.length < 20, Property.fromJson(e));
+          ///              TO
+          ///              featuredProperties.addIf(
+          ///               featuredProperties.length < 10000, Property.fromJson(e));
+          //homeGlobalProperties.add(home_property.HomeProperty.fromJson(e));
+        }
+        isHomeProperties.value = true;
+        homeProperty.shuffle();
+      }
+    }
+    return homeProperty;
+  }
+  List<home_property.Latest> latestProperty = <home_property.Latest>[];
+
+  Future<List<home_property.Latest>> getLatestproperty() async {
+    if (latestProperty.isEmpty) {
+      var response = await Provider().getData("property/get-home-properties");
+      //print(response + '..............................................');
+      if (response != null) {
+        for (var e in (response['latest'] as List)) {
+          latestProperty.add(
+            //featuredProperties.length < 100,
+              home_property.Latest.fromJson(e));
+
+          /// CHANGED THE ABOVE FROM featuredProperties.addIf(
+          ///              featuredProperties.length < 20, Property.fromJson(e));
+          ///              TO
+          ///              featuredProperties.addIf(
+          ///               featuredProperties.length < 10000, Property.fromJson(e));
+          //homeGlobalProperties.add(home_property.HomeProperty.fromJson(e));
+        }
+        isHomeProperties.value = true;
+        latestProperty.shuffle();
+      }
+    }
+    return latestProperty;
+  }
+  List<home_property.Latest> featuredProperty = <home_property.Latest>[];
+
+  Future<List<home_property.Latest>> getFeaturedproperty1() async {
+
+    if (featuredProperty.isEmpty) {
+      var response = await Provider().getData("property/get-home-properties");
+      //print(response + '..............................................');
+      if (response != null) {
+        for (var e in (response['latest'] as List)) {
+          featuredProperty.add(
+            //featuredProperties.length < 100,
+              home_property.Latest.fromJson(e));
+
+          /// CHANGED THE ABOVE FROM featuredProperties.addIf(
+          ///              featuredProperties.length < 20, Property.fromJson(e));
+          ///              TO
+          ///              featuredProperties.addIf(
+          ///               featuredProperties.length < 10000, Property.fromJson(e));
+          //homeGlobalProperties.add(home_property.HomeProperty.fromJson(e));
+        }
+        isHomeProperties.value = true;
+        featuredProperty.shuffle();
+      }
+    }
+    return featuredProperty;
+  }
+  List<home_property.Latest> featuredProperty2 = <home_property.Latest>[];
+
+  Future<List<home_property.Latest>> getFeaturedproperty2() async {
+
+    if (featuredProperty2.isEmpty) {
+      var response = await Provider().getData("property/get-home-properties");
+      //print(response + '..............................................');
+      if (response != null) {
+        for (var e in (response['latest'] as List)) {
+          featuredProperty2.add(
+            //featuredProperties.length < 100,
+              home_property.Latest.fromJson(e));
+
+          /// CHANGED THE ABOVE FROM featuredProperties.addIf(
+          ///              featuredProperties.length < 20, Property.fromJson(e));
+          ///              TO
+          ///              featuredProperties.addIf(
+          ///               featuredProperties.length < 10000, Property.fromJson(e));
+          //homeGlobalProperties.add(home_property.HomeProperty.fromJson(e));
+        }
+        isHomeProperties.value = true;
+        featuredProperty2.shuffle();
+      }
+    }
+    return featuredProperty2;
+  }
+
   List<Property> allproperty = <Property>[];
+
   Future<List<Property>> fetchAllProperties() async {
     if (allproperty.isEmpty) {
       // var response = await Provider().getData("property/featured-properties");
@@ -333,14 +445,14 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       if (response != null) {
         Preloader.hide();
         //if (property.user!.settings!.inAppAlert.isTrue) {
-          await sendPushNotification(
-              property.user!.id.toString(),
-              "You just got a review on a property you uploaded",
-              EditCtrl.messageReview.text,
-              'Review_Notification');
-          EditCtrl.messageReview.text = '';
-          if (Utils.isMobileApp) Get.back();
-          MSG.snackBar('Review submitted successfully');
+        await sendPushNotification(
+            property.user!.id.toString(),
+            "You just got a review on a property you uploaded",
+            EditCtrl.messageReview.text,
+            'Review_Notification');
+        EditCtrl.messageReview.text = '';
+        if (Utils.isMobileApp) Get.back();
+        MSG.snackBar('Review submitted successfully');
         // } else {
         //   EditCtrl.messageReview.text = '';
         //   if (Utils.isMobileApp) Get.back();
@@ -435,9 +547,9 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       if (response != null) {
         //if (property.user!.settings!.inAppAlert.isTrue&&property.user!.settings!.requestTourAlert.isTrue) {
 
-          await sendPushNotification(
+        await sendPushNotification(
             property.user!.id.toString(),
-            EditCtrl.name.text+" Requested a tour on a property you uploaded",
+            EditCtrl.name.text + " Requested a tour on a property you uploaded",
             EditCtrl.messageTour.text,
             'Request_Tour_Notification');
         EditCtrl.messageTour.text = '';
@@ -448,16 +560,16 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         if (Utils.isMobileApp) Get.back();
 
         MSG.snackBar('Submitted successfully');
-      // }else{
-      //     EditCtrl.messageTour.text = '';
-      //     EditCtrl.phone.text = '';
-      //     EditCtrl.email.text = '';
-      //     EditCtrl.name.text = '';
-      //     Preloader.hide();
-      //     if (Utils.isMobileApp) Get.back();
-      //
-      //     MSG.snackBar('Submitted successfully');
-      //   }
+        // }else{
+        //     EditCtrl.messageTour.text = '';
+        //     EditCtrl.phone.text = '';
+        //     EditCtrl.email.text = '';
+        //     EditCtrl.name.text = '';
+        //     Preloader.hide();
+        //     if (Utils.isMobileApp) Get.back();
+        //
+        //     MSG.snackBar('Submitted successfully');
+        //   }
       }
     }
   }

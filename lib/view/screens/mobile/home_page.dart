@@ -4,12 +4,14 @@ import 'package:brixmarket/models/notification.dart';
 import 'package:brixmarket/view/screens/mobile/profiling_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../adapter/property_adapter.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
 import '../../../core/dialogs.dart';
 import '../../../core/preloader.dart';
 import '../../../main.dart';
+import '../../../models/home_property_model.dart';
 import '../../../models/property_model.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
@@ -30,13 +32,34 @@ class _MobileHomePageState extends State<MobileHomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    getProper();
 
     // Navigator.push(
     //     context!,
     //     MaterialPageRoute(
     //         builder: (context) => Testing(proertyID: 'MDI0MzIyNDY3MTc3MjI4',
     //         )));
+  }
+
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Widget _buildProgressIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Opacity(
+          opacity: isLoading ? 1.0 : 00,
+          child: const CircularProgressIndicator(
+            color: Colors.red,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -228,7 +251,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       CustomText(
-                        text: 'Top Premium Realtors',
+                        text: 'Latest Property',
                         color: Colors.blueGrey,
                         size: 16,
                         weight: FontWeight.w600,
@@ -266,9 +289,9 @@ class _MobileHomePageState extends State<MobileHomePage> {
               SizedBox(
                 height: 320,
                 child: FutureBuilder(
-                    future: propCtrl.fetchFeaturedProperties(),
+                    future: propCtrl.getHomeproperty(),
                     builder: (context, AsyncSnapshot snap) {
-                      List<Property> properties = snap.data ?? [];
+                      List<Latest> properties = snap.data ?? [];
                       return snap.connectionState == ConnectionState.waiting
                           ? Preloader.loadingWidget()
                           : ListView.builder(
@@ -278,17 +301,17 @@ class _MobileHomePageState extends State<MobileHomePage> {
                                   const EdgeInsets.symmetric(horizontal: 15),
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                Property property = properties[index];
-                                return buildPremiumList(
+                                Latest property = properties[index];
+                                return buildHomeList(
                                     showMore: false, property: property);
                               });
                     }),
               ),
               const SizedBox(height: 20),
               FutureBuilder(
-                  future: propCtrl.fetchFeaturedProperties(),
+                  future: propCtrl.getLatestproperty(),
                   builder: (context, AsyncSnapshot snap) {
-                    List<Property> properties = snap.data ?? [];
+                    List<Latest> properties = snap.data ?? [];
                     return snap.connectionState == ConnectionState.waiting
                         ? SizedBox(height: 48, child: Preloader.loadingWidget())
                         : ListView.builder(
@@ -298,12 +321,17 @@ class _MobileHomePageState extends State<MobileHomePage> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              Property property = properties[index];
-                              return buildPremiumList(
-                                  showMore: false,
-                                  property: property,
-                                  home: true);
-                            });
+                              Latest property = properties[index];
+                              if (index == properties.length - 1) {
+                                return _buildProgressIndicator();
+                              } else {
+                                return buildHomeList(
+                                    showMore: false,
+                                    property: property,
+                                    home: true);
+                              }
+                            },
+                          );
                   }),
               const SizedBox(height: 36),
               Container(
@@ -339,22 +367,28 @@ class _MobileHomePageState extends State<MobileHomePage> {
                 color: Colors.black12,
                 height: 174,
                 child: FutureBuilder(
-                    future: propCtrl.fetchFeaturedProperties(),
-                    builder: (context, AsyncSnapshot snap) {
-                      List<Property> properties = snap.data ?? [];
-                      return snap.connectionState == ConnectionState.waiting
-                          ? Preloader.loadingWidget()
-                          : ListView.builder(
-                              itemCount: properties.length,
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
+                  future: propCtrl.getFeaturedproperty1(),
+                  builder: (context, AsyncSnapshot snap) {
+                    List<Latest> properties = snap.data ?? [];
+                    return snap.connectionState == ConnectionState.waiting
+                        ? Preloader.loadingWidget()
+                        : ListView.builder(
+                            itemCount: properties.length,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              if (index == properties.length) {
+                                return _buildProgressIndicator();
+                              } else {
                                 return buildFeaturedListing(
-                                    property: properties[index]);
-                              });
-                    }),
+                                    homeProperty: properties[index]);
+                              }
+                            },
+                          );
+                  },
+                ),
               ),
               const SizedBox(height: 36),
               // Container(
@@ -402,9 +436,9 @@ class _MobileHomePageState extends State<MobileHomePage> {
                     ],
                   )),
               FutureBuilder(
-                  future: propCtrl.fetchFeaturedProperties(),
+                  future: propCtrl.getFeaturedproperty2(),
                   builder: (context, AsyncSnapshot snap) {
-                    List<Property> properties = snap.data ?? [];
+                    List<Latest> properties = snap.data ?? [];
                     return snap.connectionState == ConnectionState.waiting
                         ? Preloader.loadingWidget()
                         : ListView.builder(
@@ -414,12 +448,17 @@ class _MobileHomePageState extends State<MobileHomePage> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              Property property = properties[index];
-                              return buildPremiumList(
-                                  showMore: false,
-                                  property: property,
-                                  home2: true);
-                            });
+                              Latest property = properties[index];
+                              if (index == properties.length) {
+                                return _buildProgressIndicator();
+                              } else {
+                                return buildHomeList(
+                                    showMore: false,
+                                    property: property,
+                                    home2: true);
+                              }
+                            },
+                          );
                   }),
               const SizedBox(height: 24),
             ],
@@ -429,8 +468,9 @@ class _MobileHomePageState extends State<MobileHomePage> {
     );
   }
 
-  buildFeaturedListing({required Property property}) {
-    String image = property.media!.isNotEmpty ? property.media![0].media! : '';
+  buildFeaturedListing({required Latest homeProperty}) {
+    //String image = property.media!.isNotEmpty ? property.media![0].media! : '';
+    String imag=homeProperty.media.isNotEmpty? homeProperty.media[0].media:'';
     return Stack(
       children: [
         Container(
@@ -440,7 +480,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: NetworkImage(
-                  propertyImgPath + image,
+                  propertyImgPath + imag,
                 ),
                 fit: BoxFit.cover),
             borderRadius: BorderRadius.circular(12),
@@ -461,7 +501,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: property.title ?? '',
+                text: homeProperty.title ?? '',
                 color: Colors.white,
                 size: 16,
                 weight: FontWeight.w400,
@@ -476,7 +516,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
                 child: Center(
                   child: CustomText(
                       color: Colors.yellow,
-                      text: Utils.amount(property.price ?? 0),
+                      text: Utils.amount(homeProperty.price),
                       weight: FontWeight.bold,
                       size: 13),
                 ),
@@ -501,7 +541,8 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   var myFocusNode = FocusNode().obs;
   TextEditingController tc = TextEditingController();
   String SearchValue = '';
-  bool isSubmitted=false;
+  bool isSubmitted = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -530,11 +571,11 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                           'Empty field',
                         );
                         setState(() {
-                          isSubmitted=false;
+                          isSubmitted = false;
                         });
                       } else {
                         setState(() {
-                          isSubmitted=true;
+                          isSubmitted = true;
                           SearchValue = value;
                         });
                       }
@@ -555,8 +596,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
             ),
           )),
       body: Container(
-        child:
-        FutureBuilder(
+        child: FutureBuilder(
             future: propCtrl.fetchAllProperties(),
             builder: (context, AsyncSnapshot snap) {
               //List<Property> properties = snap.data ?? [];
@@ -582,8 +622,8 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
               //     }),
               List<Property> properties_1 = snap.data ?? [];
               return snap.connectionState == ConnectionState.waiting
-                         ? Preloader.loadingWidget()
-                         :  ListView.builder(
+                  ? Preloader.loadingWidget()
+                  : ListView.builder(
                       itemCount: properties_1.length,
                       padding: const EdgeInsets.only(
                           left: 12.0, right: 12.0, bottom: 20),
@@ -620,12 +660,12 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                           );
                         } else {
                           if (property.title!
-                              .trim()
-                              .toLowerCase()
-                              .contains(SearchValue.trim().toLowerCase())&&isSubmitted) {
+                                  .trim()
+                                  .toLowerCase()
+                                  .contains(SearchValue.trim().toLowerCase()) &&
+                              isSubmitted) {
                             return buildPremiumList(
-                                showMore: true,
-                                property: property);
+                                showMore: true, property: property);
                           } else {
                             return Container();
                           }

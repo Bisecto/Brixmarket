@@ -210,6 +210,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     if(Utils.isMobileApp){
       FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
       if(Platform.isAndroid){

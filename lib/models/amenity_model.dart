@@ -6,9 +6,9 @@ class Amenities {
   Amenities({this.property, this.amenity, this.amenityValue});
 
   Amenities.fromJson(Map<String, dynamic> json) {
-    property = json['property'];
-    amenity = json['amenity'];
-    amenityValue = json['amenity_value'];
+    property = json['property']??" ";
+    amenity = json['amenity']??" ";
+    amenityValue = json['amenity_value']??" ";
   }
 
   Map<String, dynamic> toJson() {
