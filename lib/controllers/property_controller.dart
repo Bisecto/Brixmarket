@@ -263,6 +263,17 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
     return featuredProperty;
   }
+  Property single_property = Property();
+
+  Future<Property> getSingleproperty2(String id) async {
+
+      var response = await Provider().getData("property/get-single-property/MDM2NzM1OTAyNTk5MjE4");
+      if (response != null) {
+        single_property= Property.fromJson(response);
+      }
+
+    return single_property;
+  }
   List<home_property.Latest> featuredProperty2 = <home_property.Latest>[];
 
   Future<List<home_property.Latest>> getFeaturedproperty2() async {

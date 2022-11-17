@@ -32,8 +32,6 @@ class _MobileHomePageState extends State<MobileHomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    getProper();
-
     // Navigator.push(
     //     context!,
     //     MaterialPageRoute(

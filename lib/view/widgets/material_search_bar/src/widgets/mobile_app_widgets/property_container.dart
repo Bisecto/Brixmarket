@@ -10,6 +10,7 @@ import '../../../../../../models/home_property_model.dart'as latest;
 import '../../../../../../models/media_model.dart';
 import '../../../../../../res/strings.dart';
 import '../../../../../../utils/utils.dart';
+import '../../../../../screens/mobile/single_property_page.dart';
 import '../../../../custom_text.dart';
 import '../../../../save_property_icon.dart';
 
@@ -263,10 +264,13 @@ buildHomeList({required bool showMore, borderColor, latest.Latest? property, boo
     padding: EdgeInsets.all((showMore || home || home2) ? 12 : 0),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: home ? Colors.black26 : Pallet.secondaryColor, width: 1.2)),
     child: InkWell(
-      // onTap: () {
-      //   homeCtrl.property = property;
-      //   Get.toNamed(RouteStr.mobileProperty);
-      // },
+      onTap: () {
+        //homeCtrl.property = property;
+        Navigator.of(context!).push(MaterialPageRoute(
+            builder: (context) =>
+                Single_Property(property_id: property.id,)));
+        //Get.toNamed(RouteStr.mobileProperty);
+      },
       child: Column(
         children: [
           Stack(
