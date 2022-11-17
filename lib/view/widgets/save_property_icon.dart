@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/property_model.dart';
 import '../../models/user_model.dart';
 import '../../utils/utils.dart';
-
+import '../../../models/singleProperty_model.dart'as single;
 class SavePropertyIcon extends StatelessWidget {
   final Property property;
   final User user;

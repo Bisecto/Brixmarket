@@ -88,7 +88,7 @@ List<GetPage<dynamic>> mobileHomePages = [
   GetPage(
       name: RouteStr.mobileExploreFilter, page: () => const FilterExplorePage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.mobileDashboard, page: () => const AccountPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
-  GetPage(name: RouteStr.mobileProperty, page: () => const PropertyPageMobile(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+  //GetPage(name: RouteStr.mobileProperty, page: () =>  PropertyPageMobile(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
 ];
 
 //Mobile Dashboard Pages

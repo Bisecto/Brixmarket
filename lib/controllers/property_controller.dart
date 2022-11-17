@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/core/dialogs.dart';
+import 'package:brixmarket/models/singleProperty_model.dart'as singleProperty;
 import 'package:brixmarket/models/user_model.dart';
 import 'package:brixmarket/redirect/push_notification.dart';
 import 'package:brixmarket/utils/utils.dart';
@@ -22,6 +23,7 @@ import 'mixin/fetch_property_mixin.dart';
 class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var isList = false.obs;
   var property = Property();
+
   var showLargeFilerBox = true.obs;
   var showPremiumForm = false.obs;
 
@@ -52,10 +54,10 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var propertiesList = <List<Property>>[];
   var loadingAllProperties = true.obs;
 
-  Future<List<Property>> getProperties({navItem}) async {
+  Future<List<Property>> getProperties({navItem,int page=1}) async {
     loadingAllProperties.value = true;
     map['nav_item'] = (navItem ?? navbarIndex.value).toString();
-    var response = await Provider().postData("property/filter-properties", map);
+    var response = await Provider().postData("property/filter-properties?page=$page", map);
     if (response != null && response.isNotEmpty) {
       globalProperties = (response['properties'] as List)
           .map((e) => Property.fromJson(e))
@@ -263,17 +265,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
     return featuredProperty;
   }
-  Property single_property = Property();
 
-  Future<Property> getSingleproperty2(String id) async {
 
-      var response = await Provider().getData("property/get-single-property/MDM2NzM1OTAyNTk5MjE4");
-      if (response != null) {
-        single_property= Property.fromJson(response);
-      }
-
-    return single_property;
-  }
   List<home_property.Latest> featuredProperty2 = <home_property.Latest>[];
 
   Future<List<home_property.Latest>> getFeaturedproperty2() async {
@@ -302,7 +295,6 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   List<Property> allproperty = <Property>[];
-
   Future<List<Property>> fetchAllProperties() async {
     if (allproperty.isEmpty) {
       // var response = await Provider().getData("property/featured-properties");
@@ -318,6 +310,17 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
     return allproperty;
   }
+  Future<Property> fetchSingleProperty(String property_id) async {
+      var response = await Provider().getData("property/get-single-property/$property_id");
+      if (response != null) {
+
+          Property.fromJson(response['property']);
+      }
+      homeCtrl.property = Property.fromJson(response['property']);
+
+    return Property.fromJson(response['property']);
+  }
+
 
   toggleSelectedFilterBox({required String filter, required String item}) {
     var filterCat = Lst.filterMap[filter]!;
@@ -421,7 +424,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       exploreFilterProperties.refresh();
     } else {
       showWebFilter.value = false;
-      getProperties();
+      //getProperties();
     }
   }
 

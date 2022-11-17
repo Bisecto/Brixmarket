@@ -2,6 +2,7 @@ import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/controllers/mobile_app_controllers/homepage_controller.dart';
 import 'package:brixmarket/res/strings.dart';
+import 'package:brixmarket/view/screens/mobile/single_property_page.dart';
 import 'package:brixmarket/view/screens/mobile/updateApp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -46,12 +47,15 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
           " .......................................$property_id........................................................$deeplink");
       if (property_id != 'pro') {
         print(deeplink);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Testing(
-                      proertyID: property_id,
-                    )));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                Single_Property(property_id: property_id,)));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => Testing(
+        //               proertyID: property_id,
+        //             )));
       } else {
         print('Null Value');
         return;
@@ -103,7 +107,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                   children: <Widget>[
                     Text(
                       heading,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.red,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
@@ -511,7 +515,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Colors.white,
               type: BottomNavigationBarType.fixed,
-              items:  <BottomNavigationBarItem>[
+              items:  const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home_outlined, size: 24), label: 'Home'),
                 BottomNavigationBarItem(

@@ -22,11 +22,19 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
+  ScrollController _controller=ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     propCtrl.exploreFilterProperties.shuffle();
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        setState(() {
+          _future = getData(page);
+        });
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {

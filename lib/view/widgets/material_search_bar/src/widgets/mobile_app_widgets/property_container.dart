@@ -32,7 +32,10 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
     child: InkWell(
       onTap: () {
         homeCtrl.property = property;
-        Get.toNamed(RouteStr.mobileProperty);
+        //Get.toNamed(RouteStr.mobileProperty);
+        Navigator.of(context!).push(MaterialPageRoute(
+            builder: (context) =>
+                Single_Property(property_id: property.id!,)));
       },
       child: Column(
         children: [

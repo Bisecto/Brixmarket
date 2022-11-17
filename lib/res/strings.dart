@@ -37,7 +37,7 @@ mixin RouteStr {
   static const String mobileExplore = '/explore';
   static const String mobileExploreFilter = '/explore';
   static const String mobileDashboard = '/dashboard';
-  static const String mobileProperty = '/property';
+  //static const String mobileProperty = '/property';
 
   //Mobile Dashboard Routes
   static const String mobileCreateProperty = '/create-property';
