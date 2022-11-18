@@ -362,7 +362,9 @@ class FilterExplorePage extends StatelessWidget {
                   color: Colors.white,
                   padding: const EdgeInsets.only(top: 8),
                   child: InkWell(
-                    onTap: propCtrl.applyFilterParameters,
+                    onTap: (){
+                      propCtrl.applyFilterParameters(1);
+                    },
                     child: Container(
                       height: 48,
                       color: Pallet.secondaryColor,

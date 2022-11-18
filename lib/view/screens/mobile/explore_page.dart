@@ -23,15 +23,20 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage> {
   ScrollController _controller=ScrollController();
+  late Future _future;
+  int page=1;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    propCtrl.exploreFilterProperties.shuffle();
+    _future =  propCtrl.getProperties(navItem: 0,page: page);
+    page++;
+    //propCtrl.exploreFilterProperties.shuffle();
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         setState(() {
-          _future = getData(page);
+          _future =  propCtrl.getProperties(navItem: 0,page: page);
+          page++;
         });
       }
     });
@@ -82,7 +87,7 @@ class _ExplorePageState extends State<ExplorePage> {
           height: Get.height,
           child: SizedBox(
             child: FutureBuilder(
-                future: propCtrl.getProperties(navItem: 0),
+                future: _future,
                 builder: (context, AsyncSnapshot snap) {
                   List<Property> properties = snap.data ?? [];
                   // property.title!.trim().toLowerCase().contains(
@@ -90,11 +95,13 @@ class _ExplorePageState extends State<ExplorePage> {
                   return Obx(() => propCtrl.showFeatureLoading.value
                       ? Preloader.loadingWidget()
                       : ListView.builder(
-                          itemCount: propCtrl.exploreFilterProperties.length + 1,
+                      controller: _controller,
+                          itemCount: propCtrl.exploreFilterProperties.length,
                           padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
+                            Property property = properties[index];
                             return index == 0
                                 ? Column(
                                     children: [
@@ -119,7 +126,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                           : const SizedBox.shrink(),
                                     ],
                                   )
-                                : buildPremiumList(showMore: true, property: propCtrl.exploreFilterProperties[index - 1]);
+                                : buildPremiumList(showMore: true, property: property);
                           }));
                 }),
           ),

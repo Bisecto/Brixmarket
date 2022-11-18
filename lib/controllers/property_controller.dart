@@ -54,14 +54,19 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var propertiesList = <List<Property>>[];
   var loadingAllProperties = true.obs;
 
-  Future<List<Property>> getProperties({navItem,int page=1}) async {
+  Future<List<Property>> getProperties({navItem,int page=4}) async {
     loadingAllProperties.value = true;
     map['nav_item'] = (navItem ?? navbarIndex.value).toString();
-    var response = await Provider().postData("property/filter-properties?page=$page", map);
+    var response = await Provider().postData("property/filter-properties?page=4", map);
     if (response != null && response.isNotEmpty) {
-      globalProperties = (response['properties'] as List)
-          .map((e) => Property.fromJson(e))
-          .toList();
+      for (var e in (response['properties'] as List)) {
+        featuredProperties.add(
+            Property.fromJson(e));
+      }
+
+      // globalProperties = (response['properties'] as List)
+      //     .map((e) => Property.fromJson(e))
+      //     .toList();
     }
 
     exploreFilterProperties.value = globalProperties;
@@ -378,7 +383,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var userFilterData = false.obs;
   var map = <String, String>{};
 
-  void applyFilterParameters() async {
+  void applyFilterParameters(int page) async {
     userFilterData.value = true;
     showFeatureLoading.value = true;
     map = {
@@ -413,7 +418,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
       exploreFilterProperties.value = [];
       var response =
-          await Provider().postData("property/filter-properties", map);
+          await Provider().postData("property/filter-properties?page=$page", map);
       if (response != null && response.isNotEmpty) {
         exploreFilterProperties.value = (response['properties'] as List)
             .map((e) => Property.fromJson(e))
@@ -424,7 +429,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       exploreFilterProperties.refresh();
     } else {
       showWebFilter.value = false;
-      //getProperties();
+      getProperties();
     }
   }
 
