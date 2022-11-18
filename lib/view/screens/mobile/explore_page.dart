@@ -24,11 +24,28 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   ScrollController _controller=ScrollController();
   late Future _future;
-  int page=1;
+  int page=10;
+  PageController controller=PageController();
+  List<Widget> _list=<Widget>[
+    //for(int i=1;i<=propCtrl.num_page;i++){
+    //}
+    Center(child:Pages(page: 1,)),
+    Center(child:Pages(page: 2,)),
+    Center(child:Pages(page: 3,)),
+    Center(child:Pages(page: 4,)),
+    Center(child:Pages(page: 5,)),
+    Center(child:Pages(page: 6,)),
+    Center(child:Pages(page: 7,)),
+    Center(child:Pages(page: 8,)),
+    Center(child:Pages(page: 9,)),
+
+  ];
+  int _curr=0;
   @override
-  void initState() {
+   initState()  {
     // TODO: implement initState
     super.initState();
+    //await propCtrl.getProperties();
     _future =  propCtrl.getProperties(navItem: 0,page: page);
     page++;
     //propCtrl.exploreFilterProperties.shuffle();
@@ -86,51 +103,101 @@ class _ExplorePageState extends State<ExplorePage> {
         body: SizedBox(
           height: Get.height,
           child: SizedBox(
-            child: FutureBuilder(
-                future: _future,
-                builder: (context, AsyncSnapshot snap) {
-                  List<Property> properties = snap.data ?? [];
-                  // property.title!.trim().toLowerCase().contains(
-                  //     SearchValue.trim().toLowerCase())
-                  return Obx(() => propCtrl.showFeatureLoading.value
-                      ? Preloader.loadingWidget()
-                      : ListView.builder(
-                      controller: _controller,
-                          itemCount: propCtrl.exploreFilterProperties.length,
-                          padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            Property property = properties[index];
-                            return index == 0
-                                ? Column(
-                                    children: [
-                                      const SizedBox(height: 16),
-                                      const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: CustomText(color: Colors.blueGrey, text: 'Filter Results', weight: FontWeight.bold, size: 16)),
-                                      const Divider(color: Colors.black12),
-                                      propCtrl.exploreFilterProperties.isEmpty
-                                          ? Column(children: [
-                                              SizedBox(
-                                                height: Get.height * 0.2,
-                                              ),
-                                              const CustomText(color: Colors.blueGrey, text: 'No Results Found', weight: FontWeight.w400, size: 18),
-                                              const SizedBox(height: 10),
-                                              const Text(
-                                                'Adjust your filter parameter to find a property',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.w400, fontSize: 16),
-                                              )
-                                            ])
-                                          : const SizedBox.shrink(),
-                                    ],
-                                  )
-                                : buildPremiumList(showMore: true, property: property);
-                          }));
-                }),
+            child: PageView(
+              children:
+              _list,
+              physics: NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+
+              // reverse: true,
+              // physics: BouncingScrollPhysics(),
+              controller: controller,
+              onPageChanged: (num){
+                setState(() {
+                  _curr=num;
+                });
+              },
+            ),
+            // child: FutureBuilder(
+            //     future: _future,
+            //     builder: (context, AsyncSnapshot snap) {
+            //       List<Property> properties = snap.data ?? [];
+            //       // property.title!.trim().toLowerCase().contains(
+            //       //     SearchValue.trim().toLowerCase())
+            //       return Obx(() => propCtrl.showFeatureLoading.value
+            //           ? Preloader.loadingWidget()
+            //           : ListView.builder(
+            //           controller: _controller,
+            //               itemCount: propCtrl.exploreFilterProperties.length,
+            //               padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
+            //               scrollDirection: Axis.vertical,
+            //               shrinkWrap: true,
+            //               itemBuilder: (context, index) {
+            //                 Property property = properties[index];
+            //                 return index == 0
+            //                     ? Column(
+            //                         children: [
+            //                           const SizedBox(height: 16),
+            //                           const Align(
+            //                               alignment: Alignment.topLeft,
+            //                               child: CustomText(color: Colors.blueGrey, text: 'Filter Results', weight: FontWeight.bold, size: 16)),
+            //                           const Divider(color: Colors.black12),
+            //                           propCtrl.exploreFilterProperties.isEmpty
+            //                               ? Column(children: [
+            //                                   SizedBox(
+            //                                     height: Get.height * 0.2,
+            //                                   ),
+            //                                   const CustomText(color: Colors.blueGrey, text: 'No Results Found', weight: FontWeight.w400, size: 18),
+            //                                   const SizedBox(height: 10),
+            //                                   const Text(
+            //                                     'Adjust your filter parameter to find a property',
+            //                                     textAlign: TextAlign.center,
+            //                                     style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.w400, fontSize: 16),
+            //                                   )
+            //                                 ])
+            //                               : const SizedBox.shrink(),
+            //                         ],
+            //                       )
+            //                     : buildPremiumList(showMore: true, property: property);
+            //               }));
+            //     }),
           ),
         ),
+          floatingActionButton:Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:<Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: FloatingActionButton(
+                      onPressed: (){
+                        _list.removeAt(_curr);
+                        setState(() {
+                          //page=1;
+                          controller.jumpToPage(_curr-1);
+                        });
+                      },
+                      child:Icon(Icons.navigate_before)),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: FloatingActionButton(
+                      onPressed: () {
+                        setState(() {
+                          page++;
+                          _list.add(
+                            Center(child:Pages(page: page,)),
+                          );
+                        });
+                        if(_curr!=_list.length-1)
+                          controller.jumpToPage(_curr+1);
+                        else
+                          controller.jumpToPage(0);
+                      },
+                      child:Icon(Icons.navigate_next)),
+                ),
+              ]
+          )
       ),
     );
   }
@@ -144,6 +211,102 @@ List<String> imageList = [
   'assets/images/room1.jpg',
   'assets/images/home_bg1.jpg'
 ];
+class Pages extends StatefulWidget {
+  final page;
+  Pages({this.page});
+
+  @override
+  State<Pages> createState() => _PagesState();
+}
+
+class _PagesState extends State<Pages> {
+  ScrollController scrollController = ScrollController();
+  bool showbtn = false;
+  @override
+  void initState() {
+    scrollController.addListener(() { //scroll listener
+      double showoffset = 10.0; //Back to top botton will show on scroll offset 10.0
+
+      if(scrollController.offset > showoffset){
+        showbtn = true;
+        setState(() {
+          //update state
+        });
+      }else{
+        showbtn = false;
+        setState(() {
+          //update state
+        });
+      }
+    });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+          future: propCtrl.getProperties(navItem: 0,page: widget.page),
+          builder: (context, AsyncSnapshot snap) {
+            List<Property> properties = snap.data ?? [];
+            // property.title!.trim().toLowerCase().contains(
+            //     SearchValue.trim().toLowerCase())
+            if(snap.connectionState==ConnectionState.waiting) {
+              return Preloader.loadingWidget();
+            }else{return Obx(() => propCtrl.showFeatureLoading.value
+                ? Preloader.loadingWidget()
+                : ListView.builder(
+                //controller: scrollController,
+                itemCount: propCtrl.exploreFilterProperties.length,
+                padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  Property property = properties[index];
+                  return index == 0
+                      ? Column(
+                    children: [
+                      const SizedBox(height: 16),
+                      const Align(
+                          alignment: Alignment.topLeft,
+                          child: CustomText(color: Colors.blueGrey, text: 'Filter Results', weight: FontWeight.bold, size: 16)),
+                      const Divider(color: Colors.black12),
+                      propCtrl.exploreFilterProperties.isEmpty
+                          ? Column(children: [
+                        SizedBox(
+                          height: Get.height * 0.2,
+                        ),
+                        const CustomText(color: Colors.blueGrey, text: 'No Results Found', weight: FontWeight.w400, size: 18),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Adjust your filter parameter to find a property',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.w400, fontSize: 16),
+                        )
+                      ])
+                          : const SizedBox.shrink(),
+                    ],
+                  )
+                      : buildPremiumList(showMore: true, property: property);
+                }));}
+          }),
+      floatingActionButton: AnimatedOpacity(
+        duration: Duration(milliseconds: 1000),  //show/hide animation
+        opacity: showbtn?1.0:0.0, //set obacity to 1 on visible, or hide
+        child: FloatingActionButton(
+          onPressed: () {
+            scrollController.animateTo( //go to top of scroll
+                0,  //scroll offset to go
+                duration: Duration(milliseconds: 500), //duration of scroll
+                curve:Curves.fastOutSlowIn //scroll type
+            );
+          },
+          child: Icon(Icons.arrow_upward),
+          backgroundColor: Colors.redAccent,
+        ),
+      ),
+    );
+  }
+}
 
 class ExploreGallery extends StatelessWidget {
   ExploreGallery({Key? key}) : super(key: key);

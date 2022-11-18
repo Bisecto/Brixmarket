@@ -292,12 +292,15 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
         print(" .......................................$property_id..."
             ".....................................................");
         if (property_id != 'pro') {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Testing(
-                        proertyID: property_id,
-                      )));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  Single_Property(property_id: property_id,)));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => Testing(
+          //               proertyID: property_id,
+          //             )));
         } else {
           print('Null Value');
           return;
@@ -318,12 +321,15 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       print(".......................................$property_id......"
           "..................................................");
       if (property_id != 'pro') {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Testing(
-                      proertyID: property_id,
-                    )));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                Single_Property(property_id: property_id,)));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => Testing(
+        //               proertyID: property_id,
+        //             )));
       } else {
         print('Null Value');
         return;
