@@ -46,13 +46,13 @@ class _ExplorePageState extends State<ExplorePage> {
     // TODO: implement initState
     super.initState();
     //await propCtrl.getProperties();
-    _future =  propCtrl.getProperties(navItem: 0,page: page);
+    //_future =  propCtrl.getfilterProperties(navItem: 0,page: page);
     page++;
     //propCtrl.exploreFilterProperties.shuffle();
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         setState(() {
-          _future =  propCtrl.getProperties(navItem: 0,page: page);
+          _future =  propCtrl.getfilterProperties(navItem: 0,page: page);
           page++;
         });
       }
@@ -245,14 +245,17 @@ class _PagesState extends State<Pages> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: propCtrl.getProperties(navItem: 0,page: widget.page),
+          future: propCtrl.getfilterProperties(navItem: 1,page: widget.page),
           builder: (context, AsyncSnapshot snap) {
-            List<Property> properties = snap.data ?? [];
             // property.title!.trim().toLowerCase().contains(
             //     SearchValue.trim().toLowerCase())
             if(snap.connectionState==ConnectionState.waiting) {
               return Preloader.loadingWidget();
-            }else{return Obx(() => propCtrl.showFeatureLoading.value
+            }else{
+              List<Property> properties = snap.data ?? [];
+              propCtrl.showFeatureLoading.value= false;
+
+              return Obx(() => propCtrl.showFeatureLoading.value
                 ? Preloader.loadingWidget()
                 : ListView.builder(
                 //controller: scrollController,

@@ -17,7 +17,9 @@ import '../../../../save_property_icon.dart';
 buildPremiumList({required bool showMore, borderColor, Property? property, bool home = false, home2 = false}) {
   if (property == null) return Container();
   int iFeature = 0;
-  String image = property.media!.isNotEmpty ? property.media![0].media! : '';
+  print('Precious12345');
+  print(property.media);
+  String image = (property.media ?? []).isNotEmpty ? property.media![0].media! : '';
   List<Media> images = property.media ?? [];
   return Container(
     width: 240,
@@ -172,7 +174,7 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
                                 ? Get.width * 0.5
                                 : Get.width * 0.6
                             : 164,
-                        child: Text('${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
+                        child: Text('${property.location?.address}, ${property.location?.city}, ${property.location?.state}',
                             overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14)),
                       ),
                     ],

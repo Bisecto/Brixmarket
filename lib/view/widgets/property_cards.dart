@@ -21,7 +21,7 @@ class PropertyCard1 extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         homeCtrl.property = property;
-        //Get.toNamed(RouteStr.mobileProperty);
+        Get.toNamed(RouteStr.mobileProperty);
       },
       child: Container(
           decoration: BoxDecoration(

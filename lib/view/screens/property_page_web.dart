@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/libs/launch_urls.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
@@ -10,6 +12,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';
 import '../../core/app.dart';
+import '../../core/preloader.dart';
 import '../../models/media_model.dart';
 import '../../models/property_model.dart';
 import '../../redirect/dynamic_link.dart';
@@ -35,13 +38,15 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
   late PageController _controller;
   bool checkState = true;
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
-  late Property property;
+   Property property=Property();
   @override
   void initState() {
     _controller = PageController(
       initialPage: 0,
     );
-    property = homeCtrl.property;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      property = homeCtrl.property;    });
+
     super.initState();
   }
 
@@ -86,8 +91,18 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
               ),
             );
           }).toList();
-    var reviews = productReviews(property);
-    return LayoutBuilder(builder: (context, constraints) {
+    var reviews = productReviews(homeCtrl.property);
+    print(123456789);
+    print(property.id!);
+    return FutureBuilder(
+        future: propCtrl.fetchSingleProperty(property.id!),
+        builder: (context, AsyncSnapshot snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return Preloader.loadingWidget();
+          } else {
+            homeCtrl.property = snap.data;
+
+            return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         backgroundColor: Pallet.primaryBackgroundLight,
         drawer: buildDrawer(context),
@@ -972,7 +987,8 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
           ),
         ),
       );
-    });
+    });}
+});
   }
 
   void nextPage() {

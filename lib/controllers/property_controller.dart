@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/core/dialogs.dart';
@@ -46,6 +47,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   var allProperties = <Property>[].obs;
+  var filterProperties = <Property>[].obs;
+
   var globalProperties = <Property>[];
   var homeGlobalProperties = <Property>[];
 
@@ -53,24 +56,39 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var propertiesList = <List<Property>>[];
   var loadingAllProperties = true.obs;
-  Future<List<Property>> getProperties({navItem,int page=1}) async {
+  Future<List<Property>> getFilter(String value) async {
+    // Give your sever URL of get_employees_details.php file
+    var url = 'https://api.brixmarket.com/property/filter-properties';
+
+    final response = await http.post(Uri.parse(url), body: map);
+    if (response.statusCode == 200) {
+      print(response.body);
+      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+
+      return parsed
+          .map<Property>(
+              (json) => Property.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load Data');
+    }
+  }
+
+  Future<List<Property>> getfilterProperties({navItem,int page=1}) async {
     loadingAllProperties.value = true;
     map['nav_item'] = (navItem ?? navbarIndex.value).toString();
-    var response = await Provider().postData("property/filter-properties?page=$page", map);
+    var response = await Provider().postData("property/filter-properties?page=1", map);
     if (response != null && response.isNotEmpty) {
-      for (var e in (response['properties'] as List)) {
-        featuredProperties.add(
-            Property.fromJson(e));
-      }
-      num_page=response['pages'];
-      // for (var e in (response['properties'] as List)) {
-      //   globalProperties.add(
-      //       Property.fromJson(e));
-      // }
+      print("Precious12345678");
+      print(response['properties'][0]);
+      globalProperties = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
 
-      // globalProperties = (response['properties'] as List)
-      //     .map((e) => Property.fromJson(e))
-      //     .toList();
+      //globalProperties.add(Property.fromJson(response['properties']));
+      //for (var e in (response['properties'] as List)) {
+        // exploreProperties.add(
+        //     Property.fromJson(e));
+     // }
+      num_page=response['pages'];
 
     }
 
@@ -78,11 +96,13 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     exploreFilterProperties.refresh();
    // exploreFilterProperties.shuffle();
     showFeatureLoading.value = false;
-
-    allProperties.value = globalProperties;
-    allProperties.refresh();
+    print(12345678);
+    print(globalProperties[0]);
+    filterProperties.value = exploreFilterProperties.value;
+    filterProperties.refresh();
     loadingAllProperties.value = false;
-    return allProperties;
+    print(num_page);
+    return globalProperties;
   }
 
   var searchLoading = false.obs;
@@ -173,6 +193,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var allP = <Property>[];
   List<Property> featuredProperties = <Property>[];
+  ///*******************will get back to thid
 
   Future<List<Property>> fetchFeaturedProperties() async {
     if (featuredProperties.isEmpty) {
@@ -190,7 +211,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           ///              TO
           ///              featuredProperties.addIf(
           ///               featuredProperties.length < 10000, Property.fromJson(e));
-          globalProperties.add(Property.fromJson(e));
+          //globalProperties.add(Property.fromJson(e));
         }
         isFeaturedProperties.value = true;
         featuredProperties.shuffle();

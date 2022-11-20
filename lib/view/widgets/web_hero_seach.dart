@@ -46,106 +46,401 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: layerLink,
-      child: Container(
-        height: isTabletDown() ? 48 : 62,
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4)),
-        child: Row(
-          children: [
-            Expanded(
-                child: FormInput(
-              topSpace: false,
-              borderColor: Colors.white,
-              width: double.infinity,
-              controller: EditCtrl.webSearchKeyWord,
-              color: Colors.white,
-              height: isTabletDown() ? 48 : 62,
-              hint: 'Enter key word here...',
-            )),
-            isTabletDown()
-                ? const SizedBox.shrink()
-                : Expanded(
-                    child: DropDown(
-                      borderRadius: 0,
-                      dropIconColor: Colors.red,
-                      height: isTabletDown() ? 48 : 62,
-                      color: Colors.white,
-                      showLabel: false,
-                      labelColor: Colors.black54,
-                      controller: EditCtrl.filterState,
-                      label: 'Location',
-                      items: Lst.ngStates,
-                    ),
-                  ),
-            isMobile()
-                ? const SizedBox.shrink()
-                : Expanded(
-                    child: DropDown(
-                      borderRadius: 0,
-                      borderColor: Colors.white,
-                      dropIconColor: Colors.red,
-                      height: isTabletDown() ? 48 : 62,
-                      color: Colors.white,
-                      showLabel: false,
-                      labelColor: Colors.black54,
-                      controller: EditCtrl.filterCategoriesWeb,
-                      label: 'Category',
-                      items: Lst.propertyCategories,
-                    ),
-                  ),
-            GestureDetector(
-              onTap: () {
-                if (propCtrl.showLargeFilerBox.value) {
-                  propCtrl.showLargeFilerBox.value = false;
-                  WidgetsBinding.instance.addPostFrameCallback((_) => showOverlayFilterBox(context));
-                } else {
-                  propCtrl.showLargeFilerBox.value = true;
-                  try {
-                    entry.remove();
-                  } catch (e) {
-                    dnd(e);
-                  }
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 18.0, left: 18),
-                child: Image.asset(
-                  'assets/images/filter.png',
-                  color: Pallet.secondaryColor,
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                propCtrl.showLargeFilerBox.value = true;
-                propCtrl.setAllPropertiesWeb(filter: true);
-                try {
-                  entry.remove();
-                } catch (e) {
-                  dnd(e);
-                }
-              },
-              child: Container(
-                width: isMobile()
-                    ? isTabletDown()
-                        ? 48
-                        : 62
-                    : 120,
-                height: isTabletDown() ? 48 : 62,
-                decoration: const BoxDecoration(
-                  color: Pallet.secondaryColor,
-                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(4), topRight: Radius.circular(4)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      child: SingleChildScrollView(
+        child: Container(
+          height: isTabletDown() ? 410 : 410,
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    isMobile() ? const SizedBox.shrink() : const Text('Search', style: TextStyle(color: Colors.white, fontSize: 18)),
-                    isMobile() ? const SizedBox.shrink() : const SizedBox(width: 8),
-                    const Icon(Icons.search, color: Colors.white),
+                    Expanded(
+                        child: FormInput(
+                      topSpace: false,
+                      borderColor: Colors.red,
+                      width: double.infinity,
+                      controller: EditCtrl.webSearchKeyWord,
+                      color: Colors.white,
+                      height: isTabletDown() ? 35 : 42,
+                      hint: 'key word',
+                    )),
+                    isTabletDown()
+                        ? const SizedBox.shrink()
+                        : Expanded(
+                            child: DropDown(
+                              borderRadius: 0,
+                              dropIconColor: Colors.red,
+                              height: isTabletDown() ? 35 : 42,
+                              color: Colors.white,
+                              borderColor: Colors.red,
+                              showLabel: false,
+                              labelColor: Colors.black54,
+                              controller: EditCtrl.filterState,
+                              label: 'Location',
+                              items: Lst.ngStates,
+                            ),
+                          ),
+                    isMobile()
+                        ? const SizedBox.shrink()
+                        : Expanded(
+                            child: DropDown(
+                              borderRadius: 0,
+                              borderColor: Colors.red,
+                              dropIconColor: Colors.red,
+                              height: isTabletDown() ? 35 : 42,
+                              color: Colors.white,
+                              showLabel: false,
+                              labelColor: Colors.black54,
+                              controller: EditCtrl.filterCategoriesWeb,
+                              label: 'Category',
+                              items: Lst.propertyCategories,
+                            ),
+                          ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     if (propCtrl.showLargeFilerBox.value) {
+                    //       propCtrl.showLargeFilerBox.value = false;
+                    //       WidgetsBinding.instance.addPostFrameCallback((_) => showOverlayFilterBox(context));
+                    //     } else {
+                    //       propCtrl.showLargeFilerBox.value = true;
+                    //       try {
+                    //         entry.remove();
+                    //       } catch (e) {
+                    //         dnd(e);
+                    //       }
+                    //     }
+                    //   },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(right: 10.0, left: 10),
+                    //     child: Image.asset(
+                    //       'assets/images/filter.png',
+                    //       color: Pallet.secondaryColor,
+                    //     ),
+                    //   ),
+                    // ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     propCtrl.showLargeFilerBox.value = true;
+                    //     propCtrl.setAllPropertiesWeb(filter: true);
+                    //     try {
+                    //       entry.remove();
+                    //     } catch (e) {
+                    //       dnd(e);
+                    //     }
+                    //   },
+                    //   child: Container(
+                    //     width: isMobile()
+                    //         ? isTabletDown()
+                    //             ? 35 : 42
+                    //         : 100,
+                    //     height: isTabletDown() ? 35 : 42,
+                    //     decoration: const BoxDecoration(
+                    //       color: Pallet.secondaryColor,
+                    //       borderRadius: BorderRadius.only(bottomRight: Radius.circular(4), topRight: Radius.circular(4)),
+                    //     ),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         isMobile() ? const SizedBox.shrink() : const Text('Search', style: TextStyle(color: Colors.white, fontSize: 18)),
+                    //         isMobile() ? const SizedBox.shrink() : const SizedBox(width: 8),
+                    //         const Icon(Icons.search, color: Colors.white),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
-              ),
-            )
-          ],
+                Container(
+                  height: 320,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Column(
+                    //padding: const EdgeInsets.all(16),
+                    children: [
+                      Wrap(children: [
+                        Container(
+                          color: Colors.white,
+                          padding:
+                          const EdgeInsets.only(
+                              top: 8),
+                          child: InkWell(
+                            onTap: () {
+                              propCtrl.clearFilter();
+                            },
+                            child: Container(
+                              height: 48,
+                              color:
+                              Pallet.secondaryColor,
+                              child:  Center(
+                                child: CustomText(
+                                  color: Colors.white,
+                                  size: 16,
+                                  text: 'CLEAR FILTER',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        const Text('Adjust the slider to select the range of price.', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                        FlutterSlider(
+                          handlerHeight: 30,
+                          //handlerWidth: 300,
+                          values:  [_lowerValue, _upperValue],
+                          rangeSlider: true,
+                          max: 10000000000,
+                          min: 0,
+                          // handlerAnimation: const FlutterSliderHandlerAnimation(
+                          //     curve: Curves.elasticOut,
+                          //     reverseCurve: Curves.bounceIn,
+                          //     duration: Duration(milliseconds: 500),
+                          //     scale: 1.5
+                          // ),
+                          onDragging: (handlerIndex, lowerValue, upperValue) {
+                            _lowerValue = lowerValue;
+                            _upperValue = upperValue;
+                            //setState(() {
+                            EditCtrl.priceMin.value.text=lowerValue.toString();
+                            EditCtrl.priceMax.value.text=upperValue.toString();
+
+                            //});
+                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text('Min price ${Utils.amount(_lowerValue)}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                            Text('Max price ${Utils.amount(_upperValue)}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+
+                          ],
+                        ),
+                        // Column(
+                        //   children: [
+                        //     const Text('Price', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                        //     Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         Padding(
+                        //           padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        //           child: DropDown(
+                        //             width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+                        //             color: Colors.white10,
+                        //             showLabel: false,
+                        //             labelColor: Colors.black54,
+                        //             controller: EditCtrl.priceMin,
+                        //             label: 'Min',
+                        //             items: Lst.minFilterPrices,
+                        //           ),
+                        //         ),
+                        //         const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
+                        //         Padding(
+                        //           padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        //           child: DropDown(
+                        //             width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+                        //             color: Colors.white10,
+                        //             showLabel: false,
+                        //             controller: EditCtrl.priceMax,
+                        //             label: 'Max',
+                        //             items: Lst.maxFilterPrices,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Text('Type', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                            Wrap(
+                              alignment: WrapAlignment.spaceAround,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Obx(() => filterBox(
+                                  text: 'Any',
+                                  width: isMobile() ? 100 : 120,
+                                  selected: EditCtrl.filterTypes.contains('Any'),
+                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'type', item: 'Any'),
+                                )),
+                                ...Lst.propertyTypes
+                                    .map((e) => Obx(() => filterBox(
+                                  text: e,
+                                  width: isMobile() ? 100 : 120,
+                                  selected: EditCtrl.filterTypes.contains(e),
+                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'type', item: e),
+                                )))
+                                    .toList(),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            const Text('Status', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                            Wrap(
+                              alignment: WrapAlignment.spaceAround,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Obx(() => filterBox(
+                                  text: 'Any',
+                                  width: isMobile() ? 100 : 120,
+                                  selected: EditCtrl.filterStatus.contains('Any'),
+                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'status', item: 'Any'),
+                                )),
+                                ...Lst.propertyStatus
+                                    .map((e) => Obx(() => filterBox(
+                                  text: e,
+                                  width: Get.width * 0.115,
+                                  selected: EditCtrl.filterStatus.contains(e),
+                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'status', item: e),
+                                )))
+                                    .toList(),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            const Text('Amenities', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                            const SizedBox(height: 8),
+
+                            // Wrap(alignment: WrapAlignment.spaceAround, children: [
+                            //   SizedBox(
+                            //     width: isMobile() ? 140 : 160,
+                            //     child: Row(
+                            //       children: [
+                            //         Obx(
+                            //               () => Checkbox(
+                            //             activeColor: Pallet.secondaryColor,
+                            //             checkColor: Colors.white,
+                            //             side: const BorderSide(color: Colors.black54),
+                            //             value: EditCtrl.filterAmenities.contains('Any'),
+                            //             onChanged: (state) {
+                            //               if (EditCtrl.filterAmenities.contains('Any') && EditCtrl.filterAmenities.isNotEmpty) {
+                            //                 EditCtrl.filterAmenities.remove('Any');
+                            //               } else {
+                            //                 if (EditCtrl.filterAmenities.isNotEmpty) {
+                            //                   EditCtrl.filterAmenities.removeRange(0, EditCtrl.filterAmenities.length);
+                            //                 }
+                            //                 EditCtrl.filterAmenities.add('Any');
+                            //               }
+                            //               EditCtrl.filterAmenities.refresh();
+                            //             },
+                            //           ),
+                            //         ),
+                            //         const SizedBox(width: 10),
+                            //         const Expanded(child: Text('Any', style: TextStyle(fontSize: 16))),
+                            //       ],
+                            //     ),
+                            //   ),
+                            //   ...propCtrl.allAmenities
+                            //       .map((e) => Container(
+                            //     width: isMobile() ? 140 : 160,
+                            //     margin: const EdgeInsets.only(bottom: 8),
+                            //     child: Row(
+                            //       mainAxisSize: MainAxisSize.min,
+                            //       children: [
+                            //         Obx(
+                            //               () => Checkbox(
+                            //             activeColor: Pallet.secondaryColor,
+                            //             checkColor: Colors.white,
+                            //             side: const BorderSide(color: Colors.black54),
+                            //             value: EditCtrl.filterAmenities.contains(e['amenity']),
+                            //             onChanged: (state) {
+                            //               if (EditCtrl.filterAmenities.contains(e['amenity'])) {
+                            //                 EditCtrl.filterAmenities.remove(e['amenity']);
+                            //                 if (EditCtrl.filterAmenities.isEmpty) {
+                            //                   EditCtrl.filterAmenities.add('Any');
+                            //                 }
+                            //               } else {
+                            //                 if (EditCtrl.filterAmenities.contains('Any')) {
+                            //                   EditCtrl.filterAmenities.remove('Any');
+                            //                 }
+                            //                 EditCtrl.filterAmenities.add(e['amenity']);
+                            //               }
+                            //               EditCtrl.filterAmenities.refresh();
+                            //             },
+                            //           ),
+                            //         ),
+                            //         const SizedBox(width: 10),
+                            //         Expanded(child: Text(e['amenity'], style: const TextStyle(fontSize: 12))),
+                            //       ],
+                            //     ),
+                            //   ))
+                            //       .toList(),
+                            // ]),
+                            const SizedBox(height: 16),
+                            //const Text('Rooms', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   children: [
+                            //     Padding(
+                            //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            //       child: DropDown(
+                            //         width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+                            //         color: Colors.white10,
+                            //         showLabel: false,
+                            //         labelColor: Colors.black54,
+                            //         controller: EditCtrl.roomMin,
+                            //         label: 'Min',
+                            //         items: const ['1', '2', '3'],
+                            //       ),
+                            //     ),
+                            //     const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
+                            //     Padding(
+                            //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            //       child: DropDown(
+                            //         width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+                            //         color: Colors.white10,
+                            //         showLabel: false,
+                            //         controller: EditCtrl.roomMax,
+                            //         label: 'Max',
+                            //         items: const ['1', '2', '3'],
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            //const SizedBox(height: 16),
+                            //const Text('Baths', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   children: [
+                            //     Padding(
+                            //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            //       child: DropDown(
+                            //         width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+                            //         color: Colors.white10,
+                            //         showLabel: false,
+                            //         labelColor: Colors.black54,
+                            //         controller: EditCtrl.bathsMin,
+                            //         label: 'Min',
+                            //         items: const ['1', '2', '3'],
+                            //       ),
+                            //     ),
+                            //     const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
+                            //     Padding(
+                            //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            //       child: DropDown(
+                            //         width: isTabletDown() ? Get.width * 0.3 : Get.width * 0.15,
+                            //         color: Colors.white10,
+                            //         showLabel: false,
+                            //         controller: EditCtrl.bathsMax,
+                            //         label: 'Max',
+                            //         items: const ['1', '2', '3'],
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                          ],
+                        ),
+                      ]),
+                    ],
+                  ),
+                )
+
+              ],
+            ),
+          ),
         ),
       ),
     );

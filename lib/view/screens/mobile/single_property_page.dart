@@ -21,24 +21,7 @@ class Single_Property extends StatefulWidget {
 }
 
 class _Single_PropertyState extends State<Single_Property> {
-  // Future<single.Property> getSingleproperty(String id) async {
-  //   // Give your sever URL of get_employees_details.php file
-  //   var url = 'property/get-single-property/MDM2NzM1OTAyNTk5MjE4';
-  //   var response = await Provider().getData(url);
-  //   //final response = await http.get(Uri.parse(url));
-  //   if (response != null) {
-  //     //print(response.body);
-  //     //final parsed = json.decode(response['property']);
-  //    // print(parsed);
-  //
-  //       //_streamController_Single_property.sink.add(single.SingleProperty.fromJson(parsed));
-  //
-  //     return single.Property.fromJson(response['property']);
-  //    }
-  //      else {
-  //     throw Exception('Failed to load Data');
-  //    }
-  // }
+
 
 
   @override

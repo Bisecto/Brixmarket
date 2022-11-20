@@ -77,12 +77,12 @@ class HomePageWeb extends StatelessWidget {
                           duration: const Duration(milliseconds: 1000),
                           curve: Curves.easeInBack,
                           width: Get.width,
-                          height: heroHeight,
+                          height: heroHeight+145,
                           decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage(homeCtrl.heroImage.value))),
                         )),
                     Container(
                       width: Get.width,
-                      height: heroHeight,
+                      height: heroHeight+145,
                       color: Colors.black.withOpacity(0.7),
                       padding: EdgeInsets.only(top: Get.width * 0.1),
                       child: Column(
@@ -119,19 +119,19 @@ class HomePageWeb extends StatelessWidget {
                             maxLines: 3,
                             textAlign: TextAlign.center,
                             size: isMobile()
-                                ? 14
+                                ? 12
                                 : isTablet()
-                                    ? 18
-                                    : 24,
+                                    ? 14
+                                    : 18,
                             color: Pallet.whiteColor,
                             weight: FontWeight.w500,
                           ),
                           SizedBox(
                               height: isMobile()
-                                  ? 24
+                                  ? 18
                                   : isTablet()
-                                      ? 24
-                                      : 48),
+                                      ? 18
+                                      : 28),
                           const SizedBox(height: 8),
                           Container(
                               margin: EdgeInsets.symmetric(horizontal: isMobile() ? 16 : (isTablet() ? 48 : 84)),
