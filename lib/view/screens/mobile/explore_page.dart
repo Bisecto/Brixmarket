@@ -100,104 +100,109 @@ class _ExplorePageState extends State<ExplorePage> {
             )
           ],
         ),
-        body: SizedBox(
-          height: Get.height,
-          child: SizedBox(
-            child: PageView(
-              children:
-              _list,
-              physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
+        body: Stack(
+          children: [
+            SizedBox(
+              height: Get.height,
+              child: SizedBox(
+                child: PageView(
+                  children:
+                  _list,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
 
-              // reverse: true,
-              // physics: BouncingScrollPhysics(),
-              controller: controller,
-              onPageChanged: (num){
-                setState(() {
-                  _curr=num;
-                });
-              },
+                  // reverse: true,
+                  // physics: BouncingScrollPhysics(),
+                  controller: controller,
+                  onPageChanged: (num){
+                    setState(() {
+                      _curr=num;
+                    });
+                  },
+                ),
+                // child: FutureBuilder(
+                //     future: _future,
+                //     builder: (context, AsyncSnapshot snap) {
+                //       List<Property> properties = snap.data ?? [];
+                //       // property.title!.trim().toLowerCase().contains(
+                //       //     SearchValue.trim().toLowerCase())
+                //       return Obx(() => propCtrl.showFeatureLoading.value
+                //           ? Preloader.loadingWidget()
+                //           : ListView.builder(
+                //           controller: _controller,
+                //               itemCount: propCtrl.exploreFilterProperties.length,
+                //               padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
+                //               scrollDirection: Axis.vertical,
+                //               shrinkWrap: true,
+                //               itemBuilder: (context, index) {
+                //                 Property property = properties[index];
+                //                 return index == 0
+                //                     ? Column(
+                //                         children: [
+                //                           const SizedBox(height: 16),
+                //                           const Align(
+                //                               alignment: Alignment.topLeft,
+                //                               child: CustomText(color: Colors.blueGrey, text: 'Filter Results', weight: FontWeight.bold, size: 16)),
+                //                           const Divider(color: Colors.black12),
+                //                           propCtrl.exploreFilterProperties.isEmpty
+                //                               ? Column(children: [
+                //                                   SizedBox(
+                //                                     height: Get.height * 0.2,
+                //                                   ),
+                //                                   const CustomText(color: Colors.blueGrey, text: 'No Results Found', weight: FontWeight.w400, size: 18),
+                //                                   const SizedBox(height: 10),
+                //                                   const Text(
+                //                                     'Adjust your filter parameter to find a property',
+                //                                     textAlign: TextAlign.center,
+                //                                     style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.w400, fontSize: 16),
+                //                                   )
+                //                                 ])
+                //                               : const SizedBox.shrink(),
+                //                         ],
+                //                       )
+                //                     : buildPremiumList(showMore: true, property: property);
+                //               }));
+                //     }),
+              ),
             ),
-            // child: FutureBuilder(
-            //     future: _future,
-            //     builder: (context, AsyncSnapshot snap) {
-            //       List<Property> properties = snap.data ?? [];
-            //       // property.title!.trim().toLowerCase().contains(
-            //       //     SearchValue.trim().toLowerCase())
-            //       return Obx(() => propCtrl.showFeatureLoading.value
-            //           ? Preloader.loadingWidget()
-            //           : ListView.builder(
-            //           controller: _controller,
-            //               itemCount: propCtrl.exploreFilterProperties.length,
-            //               padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
-            //               scrollDirection: Axis.vertical,
-            //               shrinkWrap: true,
-            //               itemBuilder: (context, index) {
-            //                 Property property = properties[index];
-            //                 return index == 0
-            //                     ? Column(
-            //                         children: [
-            //                           const SizedBox(height: 16),
-            //                           const Align(
-            //                               alignment: Alignment.topLeft,
-            //                               child: CustomText(color: Colors.blueGrey, text: 'Filter Results', weight: FontWeight.bold, size: 16)),
-            //                           const Divider(color: Colors.black12),
-            //                           propCtrl.exploreFilterProperties.isEmpty
-            //                               ? Column(children: [
-            //                                   SizedBox(
-            //                                     height: Get.height * 0.2,
-            //                                   ),
-            //                                   const CustomText(color: Colors.blueGrey, text: 'No Results Found', weight: FontWeight.w400, size: 18),
-            //                                   const SizedBox(height: 10),
-            //                                   const Text(
-            //                                     'Adjust your filter parameter to find a property',
-            //                                     textAlign: TextAlign.center,
-            //                                     style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.w400, fontSize: 16),
-            //                                   )
-            //                                 ])
-            //                               : const SizedBox.shrink(),
-            //                         ],
-            //                       )
-            //                     : buildPremiumList(showMore: true, property: property);
-            //               }));
-            //     }),
-          ),
-        ),
-          floatingActionButton:Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children:<Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: FloatingActionButton(
-                      onPressed: (){
-                        _list.removeAt(_curr);
-                        setState(() {
-                          //page=1;
-                          controller.jumpToPage(_curr-1);
-                        });
-                      },
-                      child:Icon(Icons.navigate_before)),
-                ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:50.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children:<Widget>[
+                      FloatingActionButton(
+                          onPressed: (){
+                            _list.removeAt(_curr);
+                            setState(() {
+                              //page=1;
+                              controller.jumpToPage(_curr-1);
+                            });
+                          },
+                          child:Icon(Icons.navigate_before)),
 
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: FloatingActionButton(
-                      onPressed: () {
-                        setState(() {
-                          page++;
-                          _list.add(
-                            Center(child:Pages(page: page,)),
-                          );
-                        });
-                        if(_curr!=_list.length-1)
-                          controller.jumpToPage(_curr+1);
-                        else
-                          controller.jumpToPage(0);
-                      },
-                      child:Icon(Icons.navigate_next)),
+                      FloatingActionButton(
+                          onPressed: () {
+                            setState(() {
+                              page++;
+                              _list.add(
+                                Center(child:Pages(page: page,)),
+                              );
+                            });
+                            if(_curr!=_list.length-1)
+                              controller.jumpToPage(_curr+1);
+                            else
+                              controller.jumpToPage(0);
+                          },
+                          child:Icon(Icons.navigate_next)),
+                    ]
                 ),
-              ]
-          )
+              ),
+            )
+          ],
+        ),
+
       ),
     );
   }

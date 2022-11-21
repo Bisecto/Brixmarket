@@ -218,7 +218,7 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
                   child: Column(
                     children: [
 
-                      CustomText(
+                     const CustomText(
                         text: 'Institutions near this property',
                         color: Colors.red,
                         weight: FontWeight.bold,
@@ -229,7 +229,7 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          ...property.features!.map((feature) {
+                          ...?property.features?.map((feature) {
                             iFeature++;
                             return iFeature >= 4
                                 ? const SizedBox.shrink()

@@ -134,7 +134,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            FlatButton(
+                            TextButton(
                               child: const Text(
                                 'Deny',
                                 style: TextStyle(color: Colors.red),
@@ -153,7 +153,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                // });
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: const Text(
                                 'Accept',
                                 style: TextStyle(color: Colors.green),

@@ -57,15 +57,16 @@ class _AccountPageState extends State<AccountPage> {
                     activeTrackColor: Colors.lightGreenAccent,
                     activeColor: Colors.green,
                   ),
+
                   Row(
                     children: [
-                      FlatButton(
+                      TextButton(
                         child: const Text('Cancel'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
-                      FlatButton(
+                      TextButton(
                         child: const Text('Continue'),
                         onPressed: () {
                           Navigator.of(context).pop();

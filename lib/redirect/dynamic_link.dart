@@ -13,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/utils.dart';
 
 class FirebaseDynamicLinkService {
+
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   static Future<String> createDynamicLink(
   Property property,
       String images,
@@ -30,7 +32,7 @@ class FirebaseDynamicLinkService {
           minimumVersion: 8,
         ),
 
-        iosParameters: IosParameters(
+        iosParameters:  IOSParameters(
           fallbackUrl: Uri.parse(Str.downloadIOSLink),
           bundleId: 'com.brixx.brixmarket',
           minimumVersion: '1.0.12',
@@ -41,19 +43,20 @@ class FirebaseDynamicLinkService {
         imageUrl:Uri.parse(propertyImgPath+images.toString())
       )
     );
+
+    ///Commented out codes
     Uri url;
-    //if (short) {
-    print(propertyImgPath+images.toString());
-      final ShortDynamicLink shortDynamicLink =
-      await parameters.buildShortLink();
-      url = shortDynamicLink.shortUrl;
-      print('$url+==============================');
-   // } else {
-    //  url = await parameters.buildUrl();
-   // }
-    _linkMessage = url.toString();
+    if (short) {
+     // final ShortDynamicLink shortLink =
+      //await dynamicLinks.buildShortLink(parameters);
+     // url = shortLink.shortUrl;
+    } else {
+     // url = await dynamicLinks.buildLink(parameters);
+    }
+
+    //_linkMessage = url.toString();
     print('${property.id}=============++++++++++++++++++++++++++++');
-    return _linkMessage;
+    return '_linkMessage';
     //final Uri dynamicUrl = await parameters.buildUrl();
   }
 }

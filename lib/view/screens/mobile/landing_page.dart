@@ -152,7 +152,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        FlatButton(
+                        TextButton(
                           child: const Text(
                             'Cancel',
                             style: TextStyle(color: Colors.red),
@@ -161,7 +161,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                             Navigator.of(context).pop();
                           },
                         ),
-                        FlatButton(
+                        TextButton(
                           child: const Text(
                             'View',
                             style: TextStyle(color: Colors.green),
@@ -280,37 +280,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
   bool isNotification = false;
 
   void Dynamic() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-
-      print('on link deep link');
-      print(deepLink);
-
-      if (deepLink != null) {
-        String property_id = deepLink.queryParameters['id'] ?? 'pro';
-        print(" .......................................$property_id..."
-            ".....................................................");
-        if (property_id != 'pro') {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  Single_Property(property_id: property_id,)));
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //         builder: (context) => Testing(
-          //               proertyID: property_id,
-          //             )));
-        } else {
-          print('Null Value');
-          return;
-        }
-      }
-    }, onError: (OnLinkErrorException e) async {
-      print('OnLinkError');
-      print(e.message);
-      print(e.stacktrace);
-    });
+    FirebaseDynamicLinks.instance.onLink;
 
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();

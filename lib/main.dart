@@ -23,6 +23,8 @@ import 'controllers/property_controller.dart';
 import 'controllers/terms_controller.dart';
 import 'res/strings.dart';
 import 'utils/utils.dart';
+import 'package:flutter/foundation.dart';
+
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'id', 'name',
@@ -34,44 +36,31 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 Future<void> _FirebaseMessagingBacground(RemoteMessage message) async {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //   statusBarColor: Colors.deepOrange,
-  // ));
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-        authDomain: "brimarket-3e1d9.firebaseapp.com",
-        projectId: "brimarket-3e1d9",
-        storageBucket: "brimarket-3e1d9.appspot.com",
-        messagingSenderId: "591770978937",
-        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-        measurementId: "G-5MFHT3RCLW"),
-  );
+  // ));deepOrange
+
   print('A message just Poped: ${message.messageId}');
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-        authDomain: "brimarket-3e1d9.firebaseapp.com",
-        projectId: "brimarket-3e1d9",
-        storageBucket: "brimarket-3e1d9.appspot.com",
-        messagingSenderId: "591770978937",
-        appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-        measurementId: "G-5MFHT3RCLW"),
-  );
+
+    if(kIsWeb){
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+            authDomain: "brimarket-3e1d9.firebaseapp.com",
+            projectId: "brimarket-3e1d9",
+            storageBucket: "brimarket-3e1d9.appspot.com",
+            messagingSenderId: "591770978937",
+            appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+            measurementId: "G-5MFHT3RCLW"),
+      );
+    }else{
+      await Firebase.initializeApp();
+
+    }
+
   setPathUrlStrategy();
-  if (Utils.userFirebase) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-          authDomain: "brimarket-3e1d9.firebaseapp.com",
-          projectId: "brimarket-3e1d9",
-          storageBucket: "brimarket-3e1d9.appspot.com",
-          messagingSenderId: "591770978937",
-          appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-          measurementId: "G-5MFHT3RCLW"),
-    );
-  }
+
   Get.put(TermsController());
   Get.put(AccountPageController());
   Get.put(CreatePropertyCtrl());
@@ -127,32 +116,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   void Dynamic() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-          final Uri? deepLink = dynamicLink?.link;
-
-          print('on link deep link');
-          print(deepLink);
-
-          if (deepLink != null) {
-            String property_id = deepLink.queryParameters['id']?? 'pro';
-            print(
-                " .......................................$property_id..."
-                    ".....................................................");
-            if (property_id != 'pro') {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      Single_Property(property_id: property_id,)));
-            } else {
-              print('Null Value');
-              return;
-            }
-          }
-        }, onError: (OnLinkErrorException e) async {
-      print('OnLinkError');
-      print(e.message);
-      print(e.stacktrace);
-    });
+    FirebaseDynamicLinks.instance.onLink;
 
     final PendingDynamicLinkData? data =
     await FirebaseDynamicLinks.instance.getInitialLink();
