@@ -33,8 +33,6 @@ class MobileLandingPage extends StatefulWidget {
 
 class _MobileLandingPageState extends State<MobileLandingPage> {
   void initDynamicLinks(BuildContext context) async {
-    print(
-        " ..............................gfd.................................................................");
 
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
@@ -43,10 +41,8 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
       //print('Category SLug $categorySlug');
       String property_id = deeplink.queryParameters['id'] ?? 'pro';
-      print(
-          " .......................................$property_id........................................................$deeplink");
+
       if (property_id != 'pro') {
-        print(deeplink);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 Single_Property(property_id: property_id,)));
@@ -57,7 +53,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
         //               proertyID: property_id,
         //             )));
       } else {
-        print('Null Value');
         return;
       }
     }
@@ -77,14 +72,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       packageName = packageInfo.packageName;
       version = packageInfo.version;
       buildNumber = packageInfo.buildNumber;
-      print("........................" +
-          appName +
-          "........................" +
-          packageName +
-          "........................" +
-          version +
-          "........................" +
-          buildNumber);
+
     });
   }
 
@@ -216,8 +204,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
             LatestVersion = data['version'];
             LatestBuildNumber = data['buildNumber'];
 
-            print(LatestBuildNumber);
-            print(LatestVersion);
+
           });
           if (LatestVersion == version) {
             isAppUpdated = true;
@@ -252,8 +239,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
             LatestVersion = data['version'];
             LatestBuildNumber = data['buildNumber'];
 
-            print(LatestBuildNumber);
-            print(LatestVersion);
+
           });
           if (LatestVersion == version) {
             isAppUpdated = true;
@@ -288,8 +274,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
     if (deepLink != null) {
       String property_id = deepLink.queryParameters['id'] ?? 'pro';
-      print(".......................................$property_id......"
-          "..................................................");
+
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
@@ -301,7 +286,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
         //               proertyID: property_id,
         //             )));
       } else {
-        print('Null Value');
         return;
       }
     }
@@ -335,7 +319,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
               message.notification!.title.toString(),
               message.notification!.body.toString());
         } else if (message.data['value'] == "Message_Notification") {
-          print('Message Notification');
           showDialo('Message', message.notification!.title.toString(),
               message.notification!.body.toString());
         } else if (message.data['value'] == "Review_Notification") {
@@ -375,7 +358,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
               message.notification!.title.toString(),
               message.notification!.body.toString());
         } else if (message.data['value'] == "Message_Notification") {
-          print('Message Notification');
           showDialo('Message', message.notification!.title.toString(),
               message.notification!.body.toString());
           // Navigator.push(
@@ -408,7 +390,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new MessageOpenedApp event was published');
       RemoteNotification? notification = message.notification;
       AppleNotification? ios = message.notification?.apple;
       AndroidNotification? android = message.notification?.android;

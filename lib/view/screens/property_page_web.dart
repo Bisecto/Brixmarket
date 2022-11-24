@@ -44,8 +44,12 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
     _controller = PageController(
       initialPage: 0,
     );
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      property = homeCtrl.property;    });
+    //Timer.periodic(const Duration(seconds: 1), (timer) {
+      property = homeCtrl.property;
+      print(property.id);
+
+
+   // });
 
     super.initState();
   }
@@ -63,7 +67,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
 
     var details = property.features == null || property.features == []
         ? [Container()]
-        : property.features!.map((feature) {
+        : property.features?.map((feature) {
             return Container(
               width: Get.width * 0.9,
               margin: const EdgeInsets.only(bottom: 8),
@@ -78,7 +82,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
           }).toList();
     var amenities = property.amenities == null || property.amenities == []
         ? [Container()]
-        : property.amenities!.map((value) {
+        : property.amenities?.map((value) {
             return Container(
               width: Get.width * 0.9,
               margin: const EdgeInsets.only(bottom: 8),
@@ -92,15 +96,14 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
             );
           }).toList();
     var reviews = productReviews(homeCtrl.property);
-    print(123456789);
-    print(property.id!);
+
     return FutureBuilder(
-        future: propCtrl.fetchSingleProperty(property.id!),
+        future: propCtrl.fetchSingleProperty('MDM1MTIwODgzMzg3MTQ1' ?? '0'),
         builder: (context, AsyncSnapshot snap) {
           if (snap.connectionState == ConnectionState.waiting) {
             return Preloader.loadingWidget();
           } else {
-            homeCtrl.property = snap.data;
+             homeCtrl.property = snap.data;
 
             return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
@@ -223,7 +226,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                       Expanded(
                         flex: 2,
                         child: ListView.builder(
-                            itemCount: 3,
+                            itemCount: images?.length,
                             shrinkWrap: true,
                             itemBuilder: ((context, index) {
                               return (index == 2)
@@ -232,7 +235,9 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                         Container(
                                           height: Get.width * 0.4 * 0.32,
                                           decoration:
-                                              BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(propertyImgPath + images[index].media!))),
+                                              BoxDecoration(image:
+                                              DecorationImage(fit: BoxFit.cover,
+                                                  image: NetworkImage(propertyImgPath + images[index].media!))),
                                         ),
                                         Container(
                                           height: Get.width * 0.4 * 0.32,
@@ -538,12 +543,12 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                             child: GridView.builder(
                                               physics: const BouncingScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount: details.length,
+                                              itemCount: details?.length,
                                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: isMobile() ? 2 : 4,
                                                 mainAxisExtent: 32,
                                               ),
-                                              itemBuilder: (_, index) => details[index], //amenities
+                                              itemBuilder: (_, index) => details?[index] ?? const  SizedBox.shrink(), //amenities
                                             ),
                                           )),
                                     ],
@@ -581,12 +586,12 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                             child: GridView.builder(
                                               physics: const BouncingScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount: amenities.length,
+                                              itemCount: amenities?.length,
                                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: isMobile() ? 2 : 4,
                                                 mainAxisExtent: 32,
                                               ),
-                                              itemBuilder: (_, index) => amenities[index], //
+                                              itemBuilder: (_, index) => amenities?[index] ?? const  SizedBox.shrink(), //
                                             ),
                                           )),
                                       const SizedBox(
@@ -748,9 +753,9 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                             ),
                                           ),
                                           const SizedBox(height: 12),
-                                          CustomText(color: Colors.black, text: accountName(user: property.user!), weight: FontWeight.w600, size: 16),
+                                          CustomText(color: Colors.black, text: accountName(user: property?.user), weight: FontWeight.w600, size: 16),
                                           const SizedBox(height: 8),
-                                          property.contact!.phoneNumber == null
+                                          property.contact?.phoneNumber == null
                                               ? const SizedBox.shrink()
                                               : Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -769,8 +774,8 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                                         size: 11),
                                                   ],
                                                 ),
-                                          property.contact!.phoneNumber == null ? const SizedBox.shrink() : const SizedBox(height: 8),
-                                          property.contact!.whatsAppNumber == null
+                                          property.contact?.phoneNumber == null ? const SizedBox.shrink() : const SizedBox(height: 8),
+                                          property.contact?.whatsAppNumber == null
                                               ? const SizedBox.shrink()
                                               : OpenWhatsApp(
                                                   widget: Row(
@@ -792,8 +797,8 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                                   ),
                                                   phone: '${property.contact?.whatsAppNumber}',
                                                 ),
-                                          property.contact!.whatsAppNumber == null ? const SizedBox.shrink() : const SizedBox(height: 8),
-                                          property.contact!.emailAddress == null
+                                          property.contact?.whatsAppNumber == null ? const SizedBox.shrink() : const SizedBox(height: 8),
+                                          property.contact?.emailAddress == null
                                               ? const SizedBox.shrink()
                                               : Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -810,7 +815,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                                       child: CustomText(
                                                           underline: true,
                                                           color: Pallet.secondaryColor,
-                                                          text: property.contact!.emailAddress ?? '',
+                                                          text: property.contact?.emailAddress ?? '',
                                                           weight: FontWeight.w700,
                                                           size: 11),
                                                     ),

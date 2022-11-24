@@ -451,7 +451,7 @@ class Utils {
 
 void dnd(data) {
   if (kDebugMode) {
-    print('[ISAAC] ' + Utils.count.toString() + ': ' + data.toString());
+    print('[] ' + Utils.count.toString() + ': ' + data.toString());
   }
   Utils.count++;
 }

@@ -71,9 +71,9 @@ class AppBarMenu extends StatelessWidget {
             });
           } else if (value == 1) {
             //Todo: Clear save items
-            print("My account menu is selected.");
+
             //Preloader.show();
-            print(propertyIDS);
+
             var mySavedProperties = <Property>[].obs;
 
             for (int i=0;i<=propertyIDS.length;i++) {
@@ -97,7 +97,7 @@ class AppBarMenu extends StatelessWidget {
                 propCtrl.user.refresh();
                 MSG.snackBar(response['message']);
               }
-              print(propertyIDS[i]);
+
               homeCtrl.savingProperty.remove(i);
             }
 

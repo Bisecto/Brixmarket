@@ -42,9 +42,35 @@ class Latest {
 
   factory Latest.fromJson(Map<String, dynamic> json) => Latest(
     user: User.fromJson(json["user"]),
-    title: json["title"],
-    description: json["description"],
-    price: json["price"],
+    title: json['title']
+        .toString()
+        .replaceAll('&#039;', '\'')
+        .replaceAll('&bull;', '.')
+        .replaceAll('&yen;', '¥')
+        .replaceAll('&pound;', '£')
+        .replaceAll('&euro;', '€')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&ldquo;', '"')
+        .replaceAll('&rdquo;', '"')
+        .replaceAll('&lsquo;', '\'')
+        .replaceAll('&rsquo;', '\''),
+    description: json['description']
+        .toString()
+        .replaceAll('&#039;', '\'')
+        .replaceAll('&bull;', '.')
+        .replaceAll('&yen;', '¥')
+        .replaceAll('&pound;', '£')
+        .replaceAll('&euro;', '€')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&ldquo;', '"')
+        .replaceAll('&rdquo;', '"')
+        .replaceAll('&lsquo;', '\'')
+        .replaceAll('&rsquo;', '\''),
+    price: json['price'] != null ? int.parse(json['price'].toString()) : 0,
     priceDuration: json["price_duration"],
     reference: json["reference"],
     category: json["category"],

@@ -743,7 +743,7 @@ class PropertiesPage extends StatelessWidget {
           String image =
               property.media!.isNotEmpty ? property.media![0].media! : '';
           List<Media> images = property.media ?? [];
-          print(EditCtrl.webSearchKeyWord.value.text);
+
           if (EditCtrl.webSearchKeyWord.value.text.trim().isNotEmpty) {
             if (property.title!.trim().toLowerCase().contains(
                 EditCtrl.webSearchKeyWord.value.text.trim().toLowerCase())) {

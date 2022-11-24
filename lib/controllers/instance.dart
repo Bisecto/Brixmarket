@@ -20,13 +20,14 @@ reInitInstance() {
   user = homeCtrl.user.value;
 }
 
-accountName({required User user, home = false}) {
-  if (user.isUser == true) {
+accountName({required User? user, home = false}) {
+  if (user?.isUser == true) {
     return home
-          ? "${user.firstName}"
-          : '${user.firstName} ${user.surname}';
+          ? "${user?.firstName}"
+          : '${user?.firstName} ${user?.surname}';
+
   } else {
-    return user.agency?.name??'${user.firstName}';
+    return user?.agency?.name??'${user?.firstName}';
   }
 }
 

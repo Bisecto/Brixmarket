@@ -47,8 +47,7 @@ mixin Chat {
     chatKey = generateChatKey(thisUserId, otherUserId);
 
     homeCtrl.property = property;
-    print(thisUserId);
-    print(otherUserId);
+
     Get.toNamed(RouteStr.chat);
   }
 

@@ -56,38 +56,17 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   var propertiesList = <List<Property>>[];
   var loadingAllProperties = true.obs;
-  Future<List<Property>> getFilter(String value) async {
-    // Give your sever URL of get_employees_details.php file
-    var url = 'https://api.brixmarket.com/property/filter-properties';
-
-    final response = await http.post(Uri.parse(url), body: map);
-    if (response.statusCode == 200) {
-      print(response.body);
-      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-
-      return parsed
-          .map<Property>(
-              (json) => Property.fromJson(json))
-          .toList();
-    } else {
-      throw Exception('Failed to load Data');
-    }
-  }
 
   Future<List<Property>> getfilterProperties({navItem,int page=1}) async {
     loadingAllProperties.value = true;
     map['nav_item'] = (navItem ?? navbarIndex.value).toString();
     var response = await Provider().postData("property/filter-properties?page=1", map);
     if (response != null && response.isNotEmpty) {
-      print("Precious12345678");
-      print(response['properties'][0]);
+
       globalProperties = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
 
-      //globalProperties.add(Property.fromJson(response['properties']));
-      //for (var e in (response['properties'] as List)) {
-        // exploreProperties.add(
-        //     Property.fromJson(e));
-     // }
+
+
       num_page=response['pages'];
 
     }
@@ -96,12 +75,11 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     exploreFilterProperties.refresh();
    // exploreFilterProperties.shuffle();
     showFeatureLoading.value = false;
-    print(12345678);
-    print(globalProperties[0]);
+
     filterProperties.value = exploreFilterProperties.value;
     filterProperties.refresh();
     loadingAllProperties.value = false;
-    print(num_page);
+
     return globalProperties;
   }
 
@@ -513,7 +491,6 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.phoneErr.value = Val.phone(EditCtrl.phone.text);
     EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
     EditCtrl.messageErr.value = Val.name(EditCtrl.message.text);
-    print("Hello " + EditCtrl.nameErr.value);
 
     if (EditCtrl.nameErr.value.isNotEmpty) {
       MSG.errorSnackBar(
@@ -558,7 +535,6 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   Future submitRequestATour(propertyId) async {
     EditCtrl.nameErr.value = Val.name(EditCtrl.name.text);
     EditCtrl.phoneErr.value = Val.phone(EditCtrl.phone.text);
-    print("Hello " + EditCtrl.nameErr.value);
     EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
     EditCtrl.messageErr.value = Val.name(EditCtrl.messageTour.text);
 
@@ -642,7 +618,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
             Timer.periodic(const Duration(seconds: 6), (Timer timer) {
           homeCtrl.heroImage.value = images[iM % 5];
           iM++;
-          dnd(iM % 4);
+
         });
       }
     }

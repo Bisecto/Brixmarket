@@ -51,7 +51,6 @@ class _AccountPageState extends State<AccountPage> {
                       setState(() async {
                         isSwitched = value;
                         await SharedPref.putBool("stop", isSwitched);
-                        print(isSwitched);
                       });
                     },
                     activeTrackColor: Colors.lightGreenAccent,

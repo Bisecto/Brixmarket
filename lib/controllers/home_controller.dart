@@ -95,7 +95,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
           loginUser(User.fromJson(response));
           if(Utils.isMobileApp){
           FirebaseMessaging.instance.subscribeToTopic(_userId);
-          print('$_userId*******00000000001231234567812345678`12345678**************');}
+          }
         }
       }
     } else {
@@ -120,7 +120,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
           tmpLogin(User.fromJson(response));
           if(Utils.isMobileApp){
           FirebaseMessaging.instance.subscribeToTopic(_userId);
-          print('$_userId*******00000000001231234567812345678`12345678**************');}
+          }
         }
       }
     } else {

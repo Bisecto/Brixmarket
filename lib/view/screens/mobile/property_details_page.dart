@@ -503,8 +503,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                               ],
                             ),
                           );
-                          print(imageList);
-                          print(imageList.length);
+
                           String generatedDeepLink =
                               await FirebaseDynamicLinkService
                                   .createDynamicLink(
@@ -513,9 +512,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                             true,
                           );
                           Navigator.pop(context);
-                          print(
-                              "GENARATED DEEP LINK ${generatedDeepLink.length}");
-                          print("GENARATED DEEP LINK ${generatedDeepLink}");
+
                           await Share.share(
                             "Check out this property at brixmarket " +
                                 generatedDeepLink,
@@ -537,8 +534,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print(property.location!.landmarks);
-                          print(property.user!.phoneNumber);
+
                           _callNumber(property.user!.phoneNumber ?? '');
                         },
                         child: Container(
@@ -912,8 +908,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                               ],
                             ),
                           );
-                          print(imageList);
-                          print(imageList.length);
+
                           String generatedDeepLink =
                               await FirebaseDynamicLinkService
                                   .createDynamicLink(
@@ -922,9 +917,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                             true,
                           );
                           Navigator.pop(context);
-                          print(
-                              "GENARATED DEEP LINK ${generatedDeepLink.length}");
-                          print("GENARATED DEEP LINK ${generatedDeepLink}");
+
                           await Share.share(
                             "Check out this property at brixmarket " +
                                 generatedDeepLink,

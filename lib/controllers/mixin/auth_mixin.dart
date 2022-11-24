@@ -124,14 +124,14 @@ mixin Auth {
                 return null;
               }
             }
-            print('{{}}}}}}}}}}}{{{{{{{{}}}}}}}}PPPPPP{}}{{&&&&&******((()()))');
+
             await homeCtrl.loginUser(userObj);
             await propCtrl.getSavedProperties();
             Preloader.hide();
             MSG.snackBar('Login successful');
             if (Utils.isMobileApp) {
             FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
-            print('${userObj.id.toString()}*******00000000001231234567812345678`12345678**************');}
+            }
             Utils.gotoHomePage();
           }
         }
@@ -183,7 +183,7 @@ mixin Auth {
         } else {
           if (Utils.isMobileApp) {
           FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
-          print('${userObj.id.toString()}*******00000000001231234567812345678`12345678**************');}
+         }
           Utils.gotoHomePage();
         }
       }
@@ -263,7 +263,7 @@ mixin Auth {
         Utils.gotoHomePage();
         if (Utils.isMobileApp) {
         FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
-        print('${userObj.id.toString()}*******00000000001231234567812345678`12345678**************');}
+        }
       }
     }
   }

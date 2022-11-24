@@ -756,7 +756,6 @@ Widget buildListShort_stayContainer({required List<Property> properties}) {
         String image =
         property.media!.isNotEmpty ? property.media![0].media! : '';
         List<Media> images = property.media ?? [];
-        print(EditCtrl.webSearchKeyWord.value.text);
           if (property.type=='Short stay') {
             return GestureDetector(
               onTap: (){

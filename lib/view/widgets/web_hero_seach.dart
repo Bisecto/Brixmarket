@@ -153,7 +153,7 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
                   ],
                 ),
                 Container(
-                  height: 320,
+                  height: 350,
                   margin: const EdgeInsets.only(bottom: 8),
                   child: Column(
                     //padding: const EdgeInsets.all(16),

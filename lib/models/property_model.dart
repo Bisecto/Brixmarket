@@ -85,8 +85,8 @@ class Property {
       try {
         contact = json['contact'] != null ? Contact.fromJson(json['contact']) : Contact();
       } catch (e, t) {
-        dnd(e);
-        dnd(t);
+        // dnd(e);
+        // dnd(t);
       }
 
       media = json['media'].isNotEmpty ? (json['media'] as List).map((v) => Media.fromJson(v)).toList() : <Media>[];
@@ -97,7 +97,7 @@ class Property {
 
       averageRating = getAverageRating(reviews!);
     } catch (e) {
-      dnd(e);
+      // dnd(e);
     }
   }
 

@@ -20,6 +20,53 @@ import '../../widgets/current_location.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
 import '../../widgets/search_bar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'dart:async';
+import 'package:brixmarket/view/widgets/drop_down.dart';
+import '../../../config/theme/color.dart';
+import '../../../controllers/instance.dart';
+import '../../../controllers/mobile_app_controllers/homepage_controller.dart';
+import '../../../core/app.dart';
+import '../../../core/preloader.dart';
+import '../../../models/media_model.dart';
+import '../../../models/property_model.dart';
+import '../../../res/strings.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
+import 'explore_filter_page.dart';
+import 'package:brixmarket/models/filter_property_model.dart' as filter;
+import 'package:brixmarket/adapter/property_adapter.dart';
+import 'package:brixmarket/controllers/create_property_controller.dart';
+import 'package:brixmarket/libs/whatsapp.dart';
+import 'package:brixmarket/res/lists.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:readmore/readmore.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../../../config/theme/color.dart';
+import '../../../controllers/edit_controller.dart';
+import '../../../controllers/instance.dart';
+import '../../../core/app.dart';
+import '../../../libs/launch_urls.dart';
+import '../../../models/media_model.dart';
+import '../../../models/property_model.dart';
+import '../../../models/review_model.dart';
+import '../../../redirect/dynamic_link.dart';
+import '../../../res/strings.dart';
+import '../../../utils/utils.dart';
+import '../../../utils/validations.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/form_inputs.dart';
+import '../../widgets/save_property_icon.dart';
+import 'explore_page.dart';
 
 class MobileHomePage extends StatefulWidget {
   const MobileHomePage({Key? key}) : super(key: key);
@@ -540,13 +587,52 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   TextEditingController tc = TextEditingController();
   String SearchValue = '';
   bool isSubmitted = false;
+  ScrollController _controller = ScrollController();
+
+  ScrollController scrollController = ScrollController();
+  bool showbtn = false;
+  StreamController<filter.FilterModel> _filterStreamController =
+  StreamController.broadcast();
+  getSearchedResult(int page,String searchValue) async {
+    PropertyApi propertyApi = PropertyApi();
+    await propertyApi.getProperty(page,searchValue:searchValue);
+    setState(() {
+      _filterStreamController = propertyApi.getfilterProperty;
+      isLoading = false;
+    });
+  }
+  bool isLoading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
+    propCtrl.clearFilter();
+    scrollController.addListener(() {
+      //scroll listener
+      double showoffset =
+      10.0; //Back to top botton will show on scroll offset 10.0
 
+      if (scrollController.offset > showoffset) {
+        showbtn = true;
+        setState(() {
+          //update state
+        });
+      } else {
+        showbtn = false;
+        setState(() {
+          //update state
+        });
+      }
+    });
+  }
+  int page=1;
+
+  @override
+  void dispose() {
+    super.dispose();
+    //_filterStreamController.di
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -573,8 +659,10 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                         });
                       } else {
                         setState(() {
+                          page=1;
                           isSubmitted = true;
                           SearchValue = value;
+                          getSearchedResult(page,SearchValue);
                         });
                       }
                     },
@@ -594,83 +682,126 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
             ),
           )),
       body: Container(
-        // child: FutureBuilder(
-        //     future: propCtrl.fetchAllProperties(),
-        //     builder: (context, AsyncSnapshot snap) {
-        //       //List<Property> properties = snap.data ?? [];
-        //       // property.title!.trim().toLowerCase().contains(
-        //       //     SearchValue.trim().toLowerCase())
-        //       // FutureBuilder(
-        //       //     future: propCtrl.fetchFeaturedProperties(),
-        //       //     builder: (context, AsyncSnapshot snap) {
-        //       //       List<Property> properties = snap.data ?? [];
-        //       //       return snap.connectionState == ConnectionState.waiting
-        //       //           ? Preloader.loadingWidget()
-        //       //           : ListView.builder(
-        //       //           itemCount: properties.length,
-        //       //           scrollDirection: Axis.horizontal,
-        //       //           padding:
-        //       //           const EdgeInsets.symmetric(horizontal: 15),
-        //       //           shrinkWrap: true,
-        //       //           itemBuilder: (context, index) {
-        //       //             Property property = properties[index];
-        //       //             return buildPremiumList(
-        //       //                 showMore: false, property: property);
-        //       //           });
-        //       //     }),
-        //       List<Property> properties_1 = snap.data ?? [];
-        //       return snap.connectionState == ConnectionState.waiting
-        //           ? Preloader.loadingWidget()
-        //           : ListView.builder(
-        //               itemCount: properties_1.length,
-        //               padding: const EdgeInsets.only(
-        //                   left: 12.0, right: 12.0, bottom: 20),
-        //               scrollDirection: Axis.vertical,
-        //               shrinkWrap: true,
-        //               itemBuilder: (context, index) {
-        //                 Property property = properties_1[index];
-        //                 if (index == 0) {
-        //                   return Column(
-        //                     children: [
-        //                       const SizedBox(height: 16),
-        //                       const Align(
-        //                           alignment: Alignment.topLeft,
-        //                           child: CustomText(
-        //                               color: Colors.blueGrey,
-        //                               text: 'Searched Results',
-        //                               weight: FontWeight.bold,
-        //                               size: 16)),
-        //                       const Divider(color: Colors.black12),
-        //                       properties_1.isEmpty
-        //                           ? Column(children: [
-        //                               SizedBox(
-        //                                 height: Get.height * 0.2,
-        //                               ),
-        //                               const CustomText(
-        //                                   color: Colors.blueGrey,
-        //                                   text: 'No Results Found',
-        //                                   weight: FontWeight.w400,
-        //                                   size: 18),
-        //                               const SizedBox(height: 10),
-        //                             ])
-        //                           : const SizedBox.shrink(),
-        //                     ],
-        //                   );
-        //                 } else {
-        //                   if (property.title!
-        //                           .trim()
-        //                           .toLowerCase()
-        //                           .contains(SearchValue.trim().toLowerCase()) &&
-        //                       isSubmitted) {
-        //                     return buildPremiumList(
-        //                         showMore: true, property: property);
-        //                   } else {
-        //                     return Container();
-        //                   }
-        //                 }
-        //               });
-        //     }),
+        child: SingleChildScrollView(
+            controller: scrollController,
+            scrollDirection: Axis.vertical,
+            physics: ScrollPhysics(),
+            child:StreamBuilder<filter.FilterModel>(
+                stream: _filterStreamController.stream,
+                builder: (context, snapdata) {
+                  if (snapdata.connectionState == ConnectionState.waiting) {
+                    return Align(alignment:Alignment.center,child:Preloader.loadingWidget());
+                  } else if (isLoading) {
+                    return Align(alignment:Alignment.center,child:Preloader.loadingWidget());
+                  } else {
+                    List<filter.Property> properties =
+                        snapdata.data!.data.properties ?? [];
+                    print(snapdata.data!.data.pages);
+                    return Container(
+
+                        child:Column(
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.fromLTRB(14.0, 14, 0, 14),
+                                  child: CustomText(
+                                            color: Colors.blueGrey,
+                                            text: 'Searched Results',
+                                            weight: FontWeight.bold,
+                                            size: 16),
+                                     ),
+                              const SizedBox(height: 16),
+                              const Divider(color: Colors.black12),
+                              ListView.builder(
+                                //controller: scrollController,
+                                  physics: NeverScrollableScrollPhysics(),
+
+                                  itemCount: properties.length,
+                                  padding: const EdgeInsets.only(
+                                      left: 12.0, right: 12.0, bottom: 20),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    filter.Property property = properties[index];
+                                    if(snapdata.data!.data.properties.length<1){
+                                      return Column(
+                                        children: [
+                                          Column(children: [
+                                            SizedBox(
+                                              height: Get.height * 0.2,
+                                            ),
+                                            const CustomText(
+                                                color: Colors.blueGrey,
+                                                text: 'No Results Found',
+                                                weight: FontWeight.w400,
+                                                size: 18),
+                                            const SizedBox(height: 10),
+                                          ])
+                                        ],
+                                      );
+                                    }else{
+                                      return buildFilterList(showMore: true, property: property);}
+                                  }),
+                              if(snapdata.data!.data.pages>1)
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 50.0),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          GestureDetector(
+                                              onTap: () {
+                                                //_list.removeAt(_curr);
+                                                if(page==1){
+
+                                                }else{
+                                                  setState(() {
+                                                    page--;
+                                                    getSearchedResult(0,SearchValue);
+
+                                                  });
+                                                }
+                                              },
+                                              child: Icon(Icons.navigate_before,size: 40,)),
+                                          GestureDetector(
+                                              onTap: () {
+                                                if(snapdata.data!.data.pages==page){
+
+                                                }else{
+
+                                                }
+                                                setState(() {
+                                                  page++;
+                                                  getSearchedResult(0,SearchValue);
+                                                });
+                                              },
+                                              child: Icon(Icons.navigate_next,size: 40,)),
+                                        ]),
+                                  ),
+                                )
+                            ]));
+                  }
+                })),
+
       ),
+      floatingActionButton: AnimatedOpacity(
+        duration: Duration(milliseconds: 1000), //show/hide animation
+        opacity: showbtn ? 1.0 : 0.0, //set obacity to 1 on visible, or hide
+        child: FloatingActionButton(
+          onPressed: () {
+            ExplorePage explorePage = ExplorePage();
+            scrollController.animateTo(
+              //go to top of scroll
+                0, //scroll offset to go
+                duration: Duration(milliseconds: 500), //duration of scroll
+                curve: Curves.fastOutSlowIn //scroll type
+            );
+          },
+          child: Icon(Icons.arrow_upward),
+          backgroundColor: Colors.redAccent,
+        ),
+      ),
+
     );
   }
 }

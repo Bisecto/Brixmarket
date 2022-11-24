@@ -38,7 +38,6 @@ Future<void> _FirebaseMessagingBacground(RemoteMessage message) async {
   //   statusBarColor: Colors.deepOrange,
   // ));deepOrange
 
-  print('A message just Poped: ${message.messageId}');
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -124,22 +123,17 @@ class _MyAppState extends State<MyApp> {
 
     if (deepLink != null) {
       String property_id = deepLink.queryParameters['id']?? 'pro';
-      print(
-          " .......................................$property_id......"
-              "..................................................");
+
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 Single_Property(property_id: property_id,)));
       } else {
-        print('Null Value');
         return;
       }
     }
   }
   void initDynamicLinks(BuildContext context) async {
-    print(
-        " ..............................gfd.................................................................");
 
     final PendingDynamicLinkData? data =
     await FirebaseDynamicLinks.instance.getInitialLink();
@@ -148,15 +142,12 @@ class _MyAppState extends State<MyApp> {
       //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
       //print('Category SLug $categorySlug');
       String property_id = deeplink.queryParameters['id'] ?? 'pro';
-      print(
-          " .......................................$property_id........................................................$deeplink");
+
       if (property_id != 'pro') {
-        print(deeplink);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 Single_Property(property_id: property_id,)));
       } else {
-        print('Null Value');
         return;
       }
     }
