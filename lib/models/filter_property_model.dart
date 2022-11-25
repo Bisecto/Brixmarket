@@ -71,12 +71,10 @@ class Property {
     required this.updatedAt,
     required this.property,
     required this.views,
-    //required this.location,
+    required this.location,
     required this.media,
     required this.features,
     required this.amenities,
-    required this.reviews,
-    required this.reports,
     required this.contact,
   });
 
@@ -95,13 +93,10 @@ class Property {
   DateTime updatedAt;
   String property;
   int views;
-
-  //Location location;
+  Location location;
   List<Media> media;
   List<Feature> features;
   List<Amenity> amenities;
-  List<dynamic> reviews;
-  List<dynamic> reports;
   Contact contact;
 
   factory Property.fromJson(Map<String, dynamic> json) => Property(
@@ -146,14 +141,12 @@ class Property {
         updatedAt: DateTime.parse(json["updated_at"]),
         property: json["property"],
         views: json["views"],
-        //location: Contact.fromJson(json["location"]),
+        location: Location.fromJson(json["location"]),
         media: List<Media>.from(json["media"].map((x) => Media.fromJson(x))),
         features: List<Feature>.from(
             json["features"].map((x) => Feature.fromJson(x))),
         amenities: List<Amenity>.from(
             json["amenities"].map((x) => Amenity.fromJson(x))),
-        reviews: List<dynamic>.from(json["reviews"].map((x) => x)),
-        reports: List<dynamic>.from(json["reports"].map((x) => x)),
         contact: Contact.fromJson(json["contact"]),
       );
 
@@ -177,12 +170,60 @@ class Property {
         "media": List<dynamic>.from(media.map((x) => x.toJson())),
         "features": List<dynamic>.from(features.map((x) => x.toJson())),
         "amenities": List<dynamic>.from(amenities.map((x) => x.toJson())),
-        "reviews": List<dynamic>.from(reviews.map((x) => x)),
-        "reports": List<dynamic>.from(reports.map((x) => x)),
         "contact": contact.toJson(),
       };
 }
+class Location {
+  Location({
+    required this.property,
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.longitude,
+    required this.latitude,
+    required this.landmarks,
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
+  String property;
+  String address;
+  String city;
+  String state;
+  String longitude;
+  String latitude;
+  String landmarks;
+  String id;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+    property: json["property"],
+    address: json["address"],
+    city: json["city"],
+    state: json["state"],
+    longitude: json["longitude"],
+    latitude: json["latitude"],
+    landmarks: json["landmarks"],
+    id: json["id"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "property": property,
+    "address": address,
+    "city": city,
+    "state": state,
+    "longitude": longitude,
+    "latitude": latitude,
+    "landmarks": landmarks,
+    "id": id,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
 class Amenity {
   Amenity({
     required this.property,
@@ -322,7 +363,6 @@ class User {
     required this.isBlocked,
     required this.otp,
     required this.id,
-    required this.settings,
   });
 
   String surname;
@@ -350,7 +390,6 @@ class User {
   int isBlocked;
   String otp;
   String id;
-  bool settings;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         surname: json["surname"] ?? "null",
@@ -378,7 +417,6 @@ class User {
         isBlocked: json["is_blocked"],
         otp: json["otp"] ?? "null",
         id: json["id"] ?? "null",
-        settings: json["settings"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -407,6 +445,5 @@ class User {
         "is_blocked": isBlocked,
         "otp": otp,
         "id": id,
-        "settings": settings,
       };
 }

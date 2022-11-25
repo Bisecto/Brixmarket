@@ -9,7 +9,8 @@ import 'package:brixmarket/models/user_model.dart';
 import 'package:brixmarket/redirect/push_notification.dart';
 import 'package:brixmarket/utils/utils.dart';
 import 'package:get/get.dart';
-
+import 'package:brixmarket/models/home_property_model.dart'as home;
+import 'package:brixmarket/models/filter_property_model.dart'as filter;
 import '../core/preloader.dart';
 import '../models/home_property_model.dart'as home_property;
 import '../models/property_model.dart';
@@ -163,6 +164,61 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
     homeCtrl.savingProperty.remove(property.id);
   }
+  saveHomeProperty(home.Latest property) async {
+    homeCtrl.savingProperty.add(property.id);
+    if (HomeController.userId == '') {
+      Get.toNamed(RouteStr.login);
+    } else {
+      var response = await Provider()
+          .postData("user/save-property", Property.map(id: property.id));
+      if (response != null && response.isNotEmpty) {
+        mySavedProperties.value = [];
+        mySavedProperties.value = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
+      }
+      if (propCtrl.user.value.savedProperties != null) {
+        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
+          propCtrl.user.value.savedProperties!.remove(property.id);
+        } else {
+          propCtrl.user.value.savedProperties!.add(property.id!);
+        }
+      }
+
+      propCtrl.user.refresh();
+      MSG.snackBar(response['message']);
+    }
+
+    homeCtrl.savingProperty.remove(property.id);
+  }
+  saveFilterProperty(filter.Property property) async {
+    homeCtrl.savingProperty.add(property.id);
+    if (HomeController.userId == '') {
+      Get.toNamed(RouteStr.login);
+    } else {
+      var response = await Provider()
+          .postData("user/save-property", Property.map(id: property.id));
+      if (response != null && response.isNotEmpty) {
+        mySavedProperties.value = [];
+        mySavedProperties.value = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
+      }
+      if (propCtrl.user.value.savedProperties != null) {
+        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
+          propCtrl.user.value.savedProperties!.remove(property.id);
+        } else {
+          propCtrl.user.value.savedProperties!.add(property.id!);
+        }
+      }
+
+      propCtrl.user.refresh();
+      MSG.snackBar(response['message']);
+    }
+
+    homeCtrl.savingProperty.remove(property.id);
+  }
+
 
   // @override
   // void onInit() {
@@ -326,6 +382,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           Property.fromJson(response['property']);
       }
       homeCtrl.property = Property.fromJson(response['property']);
+      print(response['property']);
 
     return Property.fromJson(response['property']);
   }

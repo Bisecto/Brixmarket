@@ -27,6 +27,7 @@ class _Single_PropertyState extends State<Single_Property> {
   @override
   void initState() {
     // TODO: implement initState
+    print(widget.property_id);
      }
   @override
   Widget build(BuildContext context) {
@@ -37,10 +38,12 @@ class _Single_PropertyState extends State<Single_Property> {
             //homeCtrl.property = property;
             if (snap.connectionState == ConnectionState.waiting) {
               return Preloader.loadingWidget();
-            } else {
+            } else if(snap.connectionState == ConnectionState.done) {
 
               //homeCtrl.single_property = properties;
               return  PropertyPageMobile();
+            }else{
+              return Preloader.loadingWidget();
             }
           }),
     );

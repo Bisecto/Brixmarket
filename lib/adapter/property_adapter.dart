@@ -6,8 +6,10 @@ import 'package:brixmarket/controllers/edit_controller.dart';
 class PropertyApi {
 
   final StreamController<FilterModel> getfilterProperty = StreamController();
-  Future<void> getProperty(int page,{String searchValue=''}) async {
+  Future<void> getProperty(int page,{String searchValue='',String location=''}) async {
     print(page);
+    if(location.length>0){
+    EditCtrl.filterState.value.text=location;}
     var Url = Uri.parse('https://api.brixmarket.com/property/filter-properties?page=$page');
     var body={
       'search_term': searchValue,

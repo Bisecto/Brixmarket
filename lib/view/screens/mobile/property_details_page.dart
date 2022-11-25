@@ -67,11 +67,11 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
       initialPage: 0,
     );
 
-    Property property = propCtrl.property;
+    Property? property = propCtrl.property;
     List<Media> images = property.media ?? [];
     imageList = images;
 
-    var details = property.features!.map((feature) {
+    var details = property.features?.map((feature) {
       return Container(
         width: Get.width * 0.9,
         margin: const EdgeInsets.only(bottom: 8),
@@ -89,7 +89,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
         ),
       );
     }).toList();
-    var amenities = property.amenities!.map((value) {
+    var amenities = property.amenities?.map((value) {
       return Container(
         width: Get.width * 0.9,
         margin: const EdgeInsets.only(bottom: 8),

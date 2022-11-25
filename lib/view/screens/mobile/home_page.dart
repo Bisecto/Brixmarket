@@ -515,7 +515,8 @@ class _MobileHomePageState extends State<MobileHomePage> {
 
   buildFeaturedListing({required Latest homeProperty}) {
     //String image = property.media!.isNotEmpty ? property.media![0].media! : '';
-    String imag=homeProperty.media.isNotEmpty? homeProperty.media[0].media:'';
+    String imag =
+        homeProperty.media.isNotEmpty ? homeProperty.media[0].media : '';
     return Stack(
       children: [
         Container(
@@ -592,15 +593,17 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
   ScrollController scrollController = ScrollController();
   bool showbtn = false;
   StreamController<filter.FilterModel> _filterStreamController =
-  StreamController.broadcast();
-  getSearchedResult(int page,String searchValue) async {
+      StreamController.broadcast();
+
+  getSearchedResult(int page, String searchValue) async {
     PropertyApi propertyApi = PropertyApi();
-    await propertyApi.getProperty(page,searchValue:searchValue);
+    await propertyApi.getProperty(page, searchValue: searchValue);
     setState(() {
       _filterStreamController = propertyApi.getfilterProperty;
       isLoading = false;
     });
   }
+
   bool isLoading = false;
 
   @override
@@ -611,7 +614,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
     scrollController.addListener(() {
       //scroll listener
       double showoffset =
-      10.0; //Back to top botton will show on scroll offset 10.0
+          10.0; //Back to top botton will show on scroll offset 10.0
 
       if (scrollController.offset > showoffset) {
         showbtn = true;
@@ -626,13 +629,15 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
       }
     });
   }
-  int page=1;
+
+  int page = 1;
 
   @override
   void dispose() {
     super.dispose();
     //_filterStreamController.di
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -654,15 +659,12 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                         MSG.errorSnackBar(
                           'Empty field',
                         );
-                        setState(() {
-                          isSubmitted = false;
-                        });
                       } else {
                         setState(() {
-                          page=1;
-                          isSubmitted = true;
+                          page = 1;
+                          isLoading = true;
                           SearchValue = value;
-                          getSearchedResult(page,SearchValue);
+                          getSearchedResult(page, SearchValue);
                         });
                       }
                     },
@@ -681,109 +683,122 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
               ),
             ),
           )),
-      body: Container(
-        child: SingleChildScrollView(
-            controller: scrollController,
-            scrollDirection: Axis.vertical,
-            physics: ScrollPhysics(),
-            child:StreamBuilder<filter.FilterModel>(
-                stream: _filterStreamController.stream,
-                builder: (context, snapdata) {
-                  if (snapdata.connectionState == ConnectionState.waiting) {
-                    return Align(alignment:Alignment.center,child:Preloader.loadingWidget());
-                  } else if (isLoading) {
-                    return Align(alignment:Alignment.center,child:Preloader.loadingWidget());
-                  } else {
-                    List<filter.Property> properties =
-                        snapdata.data!.data.properties ?? [];
-                    print(snapdata.data!.data.pages);
-                    return Container(
-
-                        child:Column(
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.fromLTRB(14.0, 14, 0, 14),
-                                  child: CustomText(
-                                            color: Colors.blueGrey,
-                                            text: 'Searched Results',
-                                            weight: FontWeight.bold,
-                                            size: 16),
-                                     ),
-                              const SizedBox(height: 16),
-                              const Divider(color: Colors.black12),
-                              ListView.builder(
-                                //controller: scrollController,
-                                  physics: NeverScrollableScrollPhysics(),
-
-                                  itemCount: properties.length,
-                                  padding: const EdgeInsets.only(
-                                      left: 12.0, right: 12.0, bottom: 20),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    filter.Property property = properties[index];
-                                    if(snapdata.data!.data.properties.length<1){
-                                      return Column(
-                                        children: [
-                                          Column(children: [
-                                            SizedBox(
-                                              height: Get.height * 0.2,
-                                            ),
-                                            const CustomText(
-                                                color: Colors.blueGrey,
-                                                text: 'No Results Found',
-                                                weight: FontWeight.w400,
-                                                size: 18),
-                                            const SizedBox(height: 10),
-                                          ])
-                                        ],
-                                      );
-                                    }else{
-                                      return buildFilterList(showMore: true, property: property);}
-                                  }),
-                              if(snapdata.data!.data.pages>1)
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 50.0),
-                                    child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          GestureDetector(
-                                              onTap: () {
-                                                //_list.removeAt(_curr);
-                                                if(page==1){
-
-                                                }else{
-                                                  setState(() {
-                                                    page--;
-                                                    getSearchedResult(0,SearchValue);
-
-                                                  });
-                                                }
-                                              },
-                                              child: Icon(Icons.navigate_before,size: 40,)),
-                                          GestureDetector(
-                                              onTap: () {
-                                                if(snapdata.data!.data.pages==page){
-
-                                                }else{
-
-                                                }
-                                                setState(() {
-                                                  page++;
-                                                  getSearchedResult(0,SearchValue);
-                                                });
-                                              },
-                                              child: Icon(Icons.navigate_next,size: 40,)),
-                                        ]),
-                                  ),
-                                )
-                            ]));
-                  }
-                })),
-
-      ),
+        body:Container(
+          child: SingleChildScrollView(
+              controller: scrollController,
+              scrollDirection: Axis.vertical,
+              physics: ScrollPhysics(),
+              child: StreamBuilder<filter.FilterModel>(
+                  stream: _filterStreamController.stream,
+                  builder: (context, snapdata) {
+                    if (snapdata.connectionState == ConnectionState.waiting) {
+                      return Align(
+                          alignment: Alignment.center,
+                          child: Preloader.loadingWidget());
+                    } else if (isLoading) {
+                      return Align(
+                          alignment: Alignment.center,
+                          child: Preloader.loadingWidget());
+                    } else {
+                      List<filter.Property> properties =
+                          snapdata.data!.data.properties ?? [];
+                      print(snapdata.data!.data.pages);
+                      return Container(
+                          child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(14.0, 14, 0, 14),
+                          child: CustomText(
+                              color: Colors.blueGrey,
+                              text: 'Searched Results',
+                              weight: FontWeight.bold,
+                              size: 16),
+                        ),
+                        const SizedBox(height: 16),
+                        const Divider(color: Colors.black12),
+                        ListView.builder(
+                            //controller: scrollController,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: properties.length,
+                            padding: const EdgeInsets.only(
+                                left: 12.0, right: 12.0, bottom: 20),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              filter.Property property = properties[index];
+                              if (snapdata.data!.data.properties.length < 1) {
+                                return Column(
+                                  children: [
+                                    Column(children: [
+                                      SizedBox(
+                                        height: Get.height * 0.2,
+                                      ),
+                                      const CustomText(
+                                          color: Colors.blueGrey,
+                                          text: 'No Results Found',
+                                          weight: FontWeight.w400,
+                                          size: 18),
+                                      const SizedBox(height: 10),
+                                    ])
+                                  ],
+                                );
+                              } else {
+                                return buildFilterList(
+                                    showMore: true, property: property);
+                              }
+                            }),
+                        if (snapdata.data!.data.pages > 1)
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 50.0),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                        onTap: () {
+                                          //_list.removeAt(_curr);
+                                          if (page == 1) {
+                                          } else {
+                                            setState(() {
+                                              isLoading=true;
+                                              page--;
+                                              getSearchedResult(
+                                                  page, SearchValue);
+                                            });
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.navigate_before,
+                                          size: 40,
+                                        )),
+                                    if (isLoading)
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: Preloader.loadingWidget()),
+                                    GestureDetector(
+                                        onTap: () {
+                                          if (snapdata.data!.data.pages ==
+                                              page) {
+                                          } else {}
+                                          setState(() {
+                                            page++;
+                                            isLoading=true;
+                                            getSearchedResult(
+                                                page, SearchValue);
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.navigate_next,
+                                          size: 40,
+                                        )),
+                                  ]),
+                            ),
+                          )
+                      ]));
+                    }
+                  })),
+        ),
       floatingActionButton: AnimatedOpacity(
         duration: Duration(milliseconds: 1000), //show/hide animation
         opacity: showbtn ? 1.0 : 0.0, //set obacity to 1 on visible, or hide
@@ -791,17 +806,16 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
           onPressed: () {
             ExplorePage explorePage = ExplorePage();
             scrollController.animateTo(
-              //go to top of scroll
+                //go to top of scroll
                 0, //scroll offset to go
                 duration: Duration(milliseconds: 500), //duration of scroll
                 curve: Curves.fastOutSlowIn //scroll type
-            );
+                );
           },
           child: Icon(Icons.arrow_upward),
           backgroundColor: Colors.redAccent,
         ),
       ),
-
     );
   }
 }
@@ -816,15 +830,52 @@ class HomeSearchPage extends StatefulWidget {
 class _HomeSearchPageState extends State<HomeSearchPage> {
   var myFocusNode = FocusNode().obs;
   TextEditingController tc = TextEditingController();
+  String SearchValue = '';
+  bool isSubmitted = false;
+  ScrollController scrollController = ScrollController();
+  bool showbtn = false;
+  StreamController<filter.FilterModel> _filterStreamController =
+      StreamController.broadcast();
+
+  getSearchedResult(int page, String searchValue) async {
+    PropertyApi propertyApi = PropertyApi();
+    await propertyApi.getProperty(page, location: searchValue);
+    setState(() {
+      _filterStreamController = propertyApi.getfilterProperty;
+      isLoading = false;
+    });
+  }
+
+  bool isLoading = false;
 
   @override
   void initState() {
+    propCtrl.clearFilter();
     myFocusNode.value.requestFocus();
     myFocusNode.value.addListener(() {
       myFocusNode.refresh();
     });
+    scrollController.addListener(() {
+      //scroll listener
+      double showoffset =
+          10.0; //Back to top botton will show on scroll offset 10.0
+
+      if (scrollController.offset > showoffset) {
+        showbtn = true;
+        setState(() {
+          //update state
+        });
+      } else {
+        showbtn = false;
+        setState(() {
+          //update state
+        });
+      }
+    });
     super.initState();
   }
+
+  int page = 1;
 
   @override
   void dispose() {
@@ -846,25 +897,37 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
             child: Center(
               child: Hero(
                 tag: 'search',
-                child: Obx(
-                  () => Material(
-                    child: TextField(
-                      focusNode: myFocusNode.value,
-                      controller: EditCtrl.homeSearch,
-                      onEditingComplete: () {
-                        propCtrl.homeSearchProperties();
-                      },
-                      decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: myFocusNode.value.hasFocus
-                              ? IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () => Get.back(),
-                                )
-                              : const SizedBox.shrink(),
-                          hintText: 'Search using location',
-                          border: InputBorder.none),
-                    ),
+                child: Material(
+                  child: TextField(
+                    focusNode: myFocusNode.value,
+                    controller: EditCtrl.homeSearch,
+                    onSubmitted: (value) {
+                      if (value.isEmpty) {
+                        MSG.errorSnackBar(
+                          'Empty field',
+                        );
+                      } else {
+                        setState(() {
+                          EditCtrl.homeSearch.text = value;
+                          page = 1;
+                          isLoading = true;
+                          SearchValue = value;
+                          getSearchedResult(page, SearchValue);
+                        });
+                      }
+
+                      //propCtrl.homeSearchProperties();
+                    },
+                    decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: myFocusNode.value.hasFocus
+                            ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () => Get.back(),
+                              )
+                            : const SizedBox.shrink(),
+                        hintText: 'Search using location',
+                        border: InputBorder.none),
                   ),
                 ),
               ),
@@ -873,6 +936,8 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
       body: SizedBox(
         height: Get.height,
         child: SingleChildScrollView(
+          controller: scrollController,
+          physics: ScrollPhysics(),
           child: Obx(() => propCtrl.searchLoading.value
               ? SizedBox(
                   height: Get.height,
@@ -947,66 +1012,206 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const CustomText(
-                              color: Colors.blueGrey,
-                              text: 'Search Results',
-                              weight: FontWeight.normal,
-                              size: 16),
-                          propCtrl.searchProperties.isEmpty
-                              ? const CustomText(
-                                  color: Pallet.secondaryColor,
-                                  text: 'No Results Found',
-                                  weight: FontWeight.w400,
-                                  size: 16)
-                              : CustomText(
-                                  color: Pallet.secondaryColor,
-                                  text:
-                                      '${propCtrl.searchProperties.length} results Found',
-                                  weight: FontWeight.w400,
-                                  size: 16),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      propCtrl.searchProperties.isNotEmpty
-                          ? SizedBox(
-                              child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: propCtrl.searchProperties.length,
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return buildPremiumList(
-                                        showMore: true,
-                                        property:
-                                            propCtrl.searchProperties[index]);
-                                  }),
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: Get.height * 0.3,
-                                ),
-                                const CustomText(
-                                    color: Colors.blueGrey,
-                                    text: 'No Results Found',
-                                    weight: FontWeight.w400,
-                                    size: 18),
-                                const SizedBox(height: 10),
-                                const CustomText(
-                                    color: Colors.blueGrey,
-                                    text:
-                                        'Enable your location for better proximity',
-                                    weight: FontWeight.w400,
-                                    size: 16),
-                              ],
-                            ),
+                      if (isLoading)
+                        Align(
+                            alignment: Alignment.center,
+                            child: Preloader.loadingWidget()),
+
+                      if (!isLoading)
+                        StreamBuilder<filter.FilterModel>(
+                            stream: _filterStreamController.stream,
+                            builder: (context, snapdata) {
+                              if (snapdata.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Align(
+                                    alignment: Alignment.center,
+                                    child: Preloader.loadingWidget());
+                              } else if (isLoading) {
+                                return Align(
+                                    alignment: Alignment.center,
+                                    child: Preloader.loadingWidget());
+                              } else {
+                                List<filter.Property> properties =
+                                    snapdata.data!.data.properties ?? [];
+                                print(snapdata.data!.data.pages);
+                                return Container(
+                                    child: Column(children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: CustomText(
+                                        color: Colors.blueGrey,
+                                        text: 'Searched Results',
+                                        weight: FontWeight.bold,
+                                        size: 16),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Divider(color: Colors.black12),
+                                  ListView.builder(
+                                      //controller: scrollController,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: properties.length,
+                                      padding: const EdgeInsets.only(
+                                          left: 12.0, right: 12.0, bottom: 20),
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        filter.Property property =
+                                            properties[index];
+                                        if (snapdata
+                                                .data!.data.properties.length <
+                                            1) {
+                                          return Column(
+                                            children: [
+                                              Column(children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.2,
+                                                ),
+                                                const CustomText(
+                                                    color: Colors.blueGrey,
+                                                    text: 'No Results Found',
+                                                    weight: FontWeight.w400,
+                                                    size: 18),
+                                                const SizedBox(height: 10),
+                                              ])
+                                            ],
+                                          );
+                                        } else {
+                                          return buildFilterList(
+                                              showMore: true,
+                                              property: property);
+                                        }
+                                      }),
+                                  if (snapdata.data!.data.pages > 1)
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 50.0),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    //_list.removeAt(_curr);
+                                                    if (page == 1) {
+                                                    } else {
+                                                      setState(() {
+                                                        page--;
+                                                        getSearchedResult(
+                                                            page, SearchValue);
+                                                      });
+                                                    }
+                                                  },
+                                                  child: Icon(
+                                                    Icons.navigate_before,
+                                                    size: 40,
+                                                  )),
+    if (isLoading)
+     Align(
+    alignment: Alignment.center,
+    child: Preloader.loadingWidget()),
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    if (snapdata
+                                                            .data!.data.pages ==
+                                                        page) {
+                                                    } else {}
+                                                    setState(() {
+                                                      page++;
+                                                      getSearchedResult(
+                                                          page, SearchValue);
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.navigate_next,
+                                                    size: 40,
+                                                  )),
+                                            ]),
+                                      ),
+                                    )
+                                ]));
+                              }
+                            }),
+
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     const CustomText(
+                      //         color: Colors.blueGrey,
+                      //         text: 'Search Results',
+                      //         weight: FontWeight.normal,
+                      //         size: 16),
+                      //     propCtrl.searchProperties.isEmpty
+                      //         ? const CustomText(
+                      //             color: Pallet.secondaryColor,
+                      //             text: 'No Results Found',
+                      //             weight: FontWeight.w400,
+                      //             size: 16)
+                      //         : CustomText(
+                      //             color: Pallet.secondaryColor,
+                      //             text:
+                      //                 '${propCtrl.searchProperties.length} results Found',
+                      //             weight: FontWeight.w400,
+                      //             size: 16),
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 8),
+                      // propCtrl.searchProperties.isNotEmpty
+                      //     ? SizedBox(
+                      //         child: ListView.builder(
+                      //             physics: const NeverScrollableScrollPhysics(),
+                      //             itemCount: propCtrl.searchProperties.length,
+                      //             scrollDirection: Axis.vertical,
+                      //             shrinkWrap: true,
+                      //             itemBuilder: (context, index) {
+                      //               return buildPremiumList(
+                      //                   showMore: true,
+                      //                   property:
+                      //                       propCtrl.searchProperties[index]);
+                      //             }),
+                      //       )
+                      //     : Column(
+                      //         mainAxisAlignment: MainAxisAlignment.start,
+                      //         children: [
+                      //           SizedBox(
+                      //             height: Get.height * 0.3,
+                      //           ),
+                      //           const CustomText(
+                      //               color: Colors.blueGrey,
+                      //               text: 'No Results Found',
+                      //               weight: FontWeight.w400,
+                      //               size: 18),
+                      //           const SizedBox(height: 10),
+                      //           const CustomText(
+                      //               color: Colors.blueGrey,
+                      //               text:
+                      //                   'Enable your location for better proximity',
+                      //               weight: FontWeight.w400,
+                      //               size: 16),
+                      //         ],
+                      //       ),
                     ],
                   ),
                 )),
+        ),
+      ),
+      floatingActionButton: AnimatedOpacity(
+        duration: Duration(milliseconds: 1000), //show/hide animation
+        opacity: showbtn ? 1.0 : 0.0, //set obacity to 1 on visible, or hide
+        child: FloatingActionButton(
+          onPressed: () {
+            ExplorePage explorePage = ExplorePage();
+            scrollController.animateTo(
+                //go to top of scroll
+                0, //scroll offset to go
+                duration: Duration(milliseconds: 500), //duration of scroll
+                curve: Curves.fastOutSlowIn //scroll type
+                );
+          },
+          child: Icon(Icons.arrow_upward),
+          backgroundColor: Colors.redAccent,
         ),
       ),
     );

@@ -411,26 +411,26 @@ buildFilterList({required bool showMore, borderColor, filter.Property? property,
                         Icons.location_on,
                         color: Pallet.secondaryColor,
                       ),
-                      // SizedBox(
-                      //   width: showMore || home || home2
-                      //       ? Get.width < 300
-                      //       ? Get.width * 0.5
-                      //       : Get.width * 0.6
-                      //       : 164,
-                      //   child: Text('${property.location?.address}, ${property.location?.city}, ${property.location?.state}',
-                      //       overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14)),
-                      // ),
+                      SizedBox(
+                        width: showMore || home || home2
+                            ? Get.width < 300
+                            ? Get.width * 0.5
+                            : Get.width * 0.6
+                            : 164,
+                        child: Text('${property.location?.address}, ${property.location?.city}, ${property.location?.state}',
+                            overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14)),
+                      ),
                     ],
                   ),
                 ]),
               ),
-              // Obx(() => SavePropertyIcon(
-              //   property: property,
-              //   user: homeCtrl.user.value,
-              //   state: homeCtrl.savingProperty.value,
-              //   size: 22,
-              //   color: Colors.red,
-              // )),
+              Obx(() => SaveFilterPropertyIcon(
+                property: property,
+                user: homeCtrl.user.value,
+                state: homeCtrl.savingProperty.value,
+                size: 18,
+                color: Colors.red,
+              )),
             ],
           ),
           const SizedBox(
@@ -517,7 +517,7 @@ buildHomeList({required bool showMore, borderColor, latest.Latest? property, boo
         //homeCtrl.property = property;
         Navigator.of(context!).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property.id,)));
+                Single_Property(property_id: property.id!,)));
         //Get.toNamed(RouteStr.mobileProperty);
       },
       child: Column(
@@ -662,13 +662,13 @@ buildHomeList({required bool showMore, borderColor, latest.Latest? property, boo
                   ),
                 ]),
               ),
-              // Obx(() => SavePropertyIcon(
-              //   property: property,
-              //   user: homeCtrl.user.value,
-              //   state: homeCtrl.savingProperty.value,
-              //   size: 22,
-              //   color: Colors.red,
-              // )),
+              Obx(() => SavehomeProperty(
+                property: property,
+                user: homeCtrl.user.value,
+                state: homeCtrl.savingProperty.value,
+                size: 22,
+                color: Colors.red,
+              )),
             ],
           ),
           const SizedBox(
