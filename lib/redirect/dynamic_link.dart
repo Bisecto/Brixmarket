@@ -19,6 +19,7 @@ class FirebaseDynamicLinkService {
       bool short
       ) async {
     String _linkMessage;
+    FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
     final DynamicLinkParameters parameters = DynamicLinkParameters(
         uriPrefix: 'https://brixmarket.page.link',
 
@@ -30,7 +31,7 @@ class FirebaseDynamicLinkService {
           minimumVersion: 8,
         ),
 
-        iosParameters: IosParameters(
+        iosParameters:  IOSParameters(
           fallbackUrl: Uri.parse(Str.downloadIOSLink),
           bundleId: 'com.brixx.brixmarket',
           minimumVersion: '1.0.12',
@@ -43,16 +44,15 @@ class FirebaseDynamicLinkService {
     );
     Uri url;
     //if (short) {
-    print(propertyImgPath+images.toString());
     final ShortDynamicLink shortDynamicLink =
-    await parameters.buildShortLink();
+    await dynamicLinks.buildShortLink(parameters);
     url = shortDynamicLink.shortUrl;
-    print('$url+==============================');
+
     // } else {
     //  url = await parameters.buildUrl();
     // }
     _linkMessage = url.toString();
-    print('${property.id}=============++++++++++++++++++++++++++++');
+
     return _linkMessage;
     //final Uri dynamicUrl = await parameters.buildUrl();
   }

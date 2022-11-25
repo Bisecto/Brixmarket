@@ -2157,7 +2157,7 @@ class FullGalleryScreen extends StatelessWidget {
     Property property = propCtrl.property;
     images = property.media ?? [];
     _controller = PageController(initialPage: 0);
-    propCtrl.currentIndex.value = images[0].media ?? '';
+   //propCtrl.currentIndex.value = images?[0].media ?? '';
     return Stack(
       children: [
         Column(

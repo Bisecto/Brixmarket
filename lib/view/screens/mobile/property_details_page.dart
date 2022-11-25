@@ -370,7 +370,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                     SizedBox(
                       width: Get.width * 0.8,
                       child: Text(
-                        '${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
+                        '${property.location?.address}, ${property.location?.city}, ${property.location?.state}',
                         style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
@@ -425,7 +425,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                                     const EdgeInsets.only(top: 12, right: 24),
                                 child: CustomText(
                                     color: Colors.black,
-                                    text: accountName(user: property.user!),
+                                    text: accountName(user: property?.user),
                                     weight: FontWeight.bold,
                                     size: 16)),
                             property.user?.verifiedAgent == false
@@ -646,7 +646,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
             child: CustomText(
                 maxLines: 2,
                 color: Colors.black,
-                text: property.location!.landmarks,
+                text: property.location?.landmarks,
                 //weight: FontWeight.w400,
                 size: 18),
           ),
@@ -751,7 +751,7 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
                                                 alignment:
                                                     WrapAlignment.spaceBetween,
                                                 children:
-                                                    detailsDescription[index],
+                                                    detailsDescription?[index] ?? [],
                                               )
                                             : detailsDescription[index]),
                                   ),
@@ -1044,14 +1044,14 @@ class _PropertyPageMobileState extends State<PropertyPageMobile> {
 
 Widget productReviews(Property property) {
   List<Review>? reviews = property.reviews;
-  return reviews!.isEmpty
+  return (reviews == [])
       ? const Text(
           'No review for this property',
           style: TextStyle(fontSize: 16),
         )
       : Column(
           children: [
-            ...(reviews.map((e) {
+            ...?(reviews?.map((e) {
               return e.message == ''
                   ? const SizedBox.shrink()
                   : Column(
