@@ -11,6 +11,7 @@ import 'package:brixmarket/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:brixmarket/models/home_property_model.dart'as home;
 import 'package:brixmarket/models/filter_property_model.dart'as filter;
+import 'package:brixmarket/models/single_property_model.dart' as single;
 import '../core/preloader.dart';
 import '../models/home_property_model.dart'as home_property;
 import '../models/property_model.dart';
@@ -21,6 +22,7 @@ import '../utils/validations.dart';
 import 'instance.dart';
 import 'mixin/create_property_mixin.dart';
 import 'mixin/fetch_property_mixin.dart';
+import 'package:brixmarket/models/single_property_model.dart'as singleProp;
 
 class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var isList = false.obs;
@@ -164,6 +166,34 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
     homeCtrl.savingProperty.remove(property.id);
   }
+  saveProperty1(singleProp.Property property) async {
+    homeCtrl.savingProperty.add(property.id);
+    if (HomeController.userId == '') {
+      Get.toNamed(RouteStr.login);
+    } else {
+      var response = await Provider()
+          .postData("user/save-property", Property.map(id: property.id));
+      if (response != null && response.isNotEmpty) {
+        mySavedProperties.value = [];
+        mySavedProperties.value = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
+      }
+      if (propCtrl.user.value.savedProperties != null) {
+        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
+          propCtrl.user.value.savedProperties!.remove(property.id);
+        } else {
+          propCtrl.user.value.savedProperties!.add(property.id!);
+        }
+      }
+
+      propCtrl.user.refresh();
+      MSG.snackBar(response['message']);
+    }
+
+    homeCtrl.savingProperty.remove(property.id);
+  }
+
   saveHomeProperty(home.Latest property) async {
     homeCtrl.savingProperty.add(property.id);
     if (HomeController.userId == '') {
@@ -504,8 +534,45 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.image8Lists.add(await Utils.singleFilePicker());
     EditCtrl.image8Lists.refresh();
   }
-
   Future submitPropertyReview(propertyId) async {
+    EditCtrl.messageErr.value = Val.name(EditCtrl.messageReview.text);
+    if (EditCtrl.rating.text.isEmpty) {
+      MSG.errorSnackBar('Select a star to rate the user');
+    } else if (EditCtrl.messageErr.value.isNotEmpty) {
+      MSG.errorSnackBar(
+        'Message error',
+      );
+    } else {
+      Preloader.show();
+
+      var data = Property.map(
+        id: propertyId,
+        rating: EditCtrl.rating.text,
+        message: EditCtrl.messageReview.text,
+      );
+      var response =
+      await Provider().postData("user/review-property/$propertyId", data);
+      if (response != null) {
+        Preloader.hide();
+        //if (property.user!.settings!.inAppAlert.isTrue) {
+        await sendPushNotification(
+            property.user!.id.toString(),
+            "You just got a review on a property you uploaded",
+            EditCtrl.messageReview.text,
+            'Review_Notification');
+        EditCtrl.messageReview.text = '';
+        if (Utils.isMobileApp) Get.back();
+        MSG.snackBar('Review submitted successfully');
+        // } else {
+        //   EditCtrl.messageReview.text = '';
+        //   if (Utils.isMobileApp) Get.back();
+        //   MSG.snackBar('Review submitted successfully');
+        // }
+      }
+    }
+  }
+
+  Future submitPropertyReviewMobile(propertyId,single.Property prop) async {
     EditCtrl.messageErr.value = Val.name(EditCtrl.messageReview.text);
     if (EditCtrl.rating.text.isEmpty) {
       MSG.errorSnackBar('Select a star to rate the user');
@@ -527,7 +594,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         Preloader.hide();
         //if (property.user!.settings!.inAppAlert.isTrue) {
         await sendPushNotification(
-            property.user!.id.toString(),
+            prop.user!.id.toString(),
             "You just got a review on a property you uploaded",
             EditCtrl.messageReview.text,
             'Review_Notification');

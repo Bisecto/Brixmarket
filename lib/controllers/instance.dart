@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../models/user_model.dart';
 import '../view/screens/create_property/create_property_widges.dart';
 import 'property_controller.dart';
+import 'package:brixmarket/models/single_property_model.dart'as single;
 
 var homeCtrl = Get.find<PropCtrl>(tag: 'home');
 var propCtrl = Get.find<PropCtrl>(tag: 'home');
@@ -30,5 +31,14 @@ accountName({required User? user, home = false}) {
     return user?.agency?.name??'${user?.firstName}';
   }
 }
+accountName1({required single.User user, home = false}) {
+  if (user?.isUser == true) {
+    return home
+        ? "${user?.firstName}"
+        : '${user?.firstName} ${user?.surname}';
 
+  } else {
+    return '${user?.firstName}';
+  }
+}
 noInternetFunction({function}) {}

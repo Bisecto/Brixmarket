@@ -172,6 +172,7 @@ class Utils {
   static Future<List<Uint8List?>> filesPicker() async {
     List<Uint8List?> imageFiles = [];
     FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowCompression: true,
       allowMultiple: true,
       dialogTitle: 'Multiple selection is allowed',
       type: FileType.image,
@@ -189,6 +190,7 @@ class Utils {
   static Future<Uint8List> singleFilePicker() async {
     Uint8List? imageFiles;
     FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowCompression: true,
       allowMultiple: false,
       dialogTitle: 'Select an image',
       type: FileType.image,

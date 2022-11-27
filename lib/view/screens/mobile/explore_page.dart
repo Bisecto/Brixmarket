@@ -666,7 +666,7 @@ class _ExplorePageState extends State<ExplorePage> {
                       } else {
                         List<filter.Property> properties =
                             snapdata.data!.data.properties ?? [];
-                        print(snapdata.data!.data.pages);
+                        //print(snapdata.data!.data.pages);
                         return Container(
 
                             child:Column(

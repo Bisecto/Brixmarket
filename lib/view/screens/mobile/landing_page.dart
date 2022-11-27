@@ -45,7 +45,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property_id,)));
+                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -278,7 +278,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property_id,)));
+                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(

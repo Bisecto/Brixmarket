@@ -64,18 +64,18 @@ class Property {
   });
 
   Property.fromJson(json) {
-    id = json['id'];
+    id = json['id']??" ";
     views=json['views'];
     title = json['title'].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\'');
     description = json['description'].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\'');
     price = json['price'] != null ? int.parse(json['price'].toString()) : 0;
-    priceDuration = json['price_duration'];
-    reference = json['reference'];
-    category = json['category'];
-    type = json['type'];
-    status = json['status'];
+    priceDuration = json['price_duration']??" ";
+    reference = json['reference']??" ";
+    category = json['category']??" ";
+    type = json['type']??" ";
+    status = json['status']??" ";
     available = json['available'];
-    publishState = json['publish_state'];
+    publishState = json['publish_state']??" ";
     blocked = json['blocked'].toString() == '1';
     createdAt = Utils.formatDateTime(json['created_at']); //views = json['views'] != null ? int.parse(json['views'].toString()) : 0;
 

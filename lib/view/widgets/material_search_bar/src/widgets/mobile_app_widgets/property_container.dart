@@ -40,7 +40,7 @@ buildPremiumList({required bool showMore, borderColor, Property? property, bool 
         //Get.toNamed(RouteStr.mobileProperty);
         Navigator.of(context!).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property.id!,)));
+                Single_Property(property_id: property.id!,property_tiitle: property.title!,)));
       },
       child: Column(
         children: [
@@ -279,7 +279,7 @@ buildFilterList({required bool showMore, borderColor, filter.Property? property,
       onTap: () {
         Navigator.of(context!).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property.id!,)));
+                Single_Property(property_id: property.id!,property_tiitle: property.title,)));
       },
       child: Column(
         children: [
@@ -517,7 +517,7 @@ buildHomeList({required bool showMore, borderColor, latest.Latest? property, boo
         //homeCtrl.property = property;
         Navigator.of(context!).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property.id!,)));
+                Single_Property(property_id: property.id!,property_tiitle: property.title,)));
         //Get.toNamed(RouteStr.mobileProperty);
       },
       child: Column(

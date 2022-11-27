@@ -25,6 +25,7 @@ import 'mixin/auth_mixin.dart';
 import 'mixin/chat_mixin.dart';
 import 'mixin/reset_passwor_mixin.dart';
 import 'mobile_app_controllers/homepage_controller.dart';
+import 'package:brixmarket/models/single_property_model.dart' as single;
 
 class HomeController extends GetxController with Auth, Chat, ResetPassword {
   late PageController controller;
@@ -225,6 +226,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     await Share.share("https://brixmarket.com/", subject: 'Brixmarket');
     // MSG.snackBar("Successful", title: "Share");
   }
+
 
   Future sendFeedback() async {
     EditCtrl.nameErr.value = Val.name(EditCtrl.name.text);

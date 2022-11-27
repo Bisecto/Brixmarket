@@ -127,7 +127,7 @@ class _MyAppState extends State<MyApp> {
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property_id,)));
+                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
       } else {
         return;
       }
@@ -146,7 +146,7 @@ class _MyAppState extends State<MyApp> {
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                Single_Property(property_id: property_id,)));
+                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
       } else {
         return;
       }

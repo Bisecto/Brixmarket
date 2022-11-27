@@ -15,6 +15,7 @@ import '../../services/provider.dart';
 import '../../utils/utils.dart';
 import '../../view/screens/mobile/chat_details_page.dart';
 import '../instance.dart';
+import 'package:brixmarket/models/single_property_model.dart' as single;
 
 mixin Chat {
   ScrollController scrollController = ScrollController();
@@ -46,11 +47,25 @@ mixin Chat {
 
     chatKey = generateChatKey(thisUserId, otherUserId);
 
-    homeCtrl.property = property;
+    //homeCtrl.property = property;
 
     Get.toNamed(RouteStr.chat);
   }
+  chatWithSeller1(single.Property property) {
+    thisUserId = user.id ?? '';
+    thisUserName = accountName(user: user);
+    thisUserImage = user.image ?? '';
 
+    otherUserId = property.user?.id ?? '';
+    otherUserName = accountName1(user: property.user!);
+    otherUserImage = property.user?.image ?? '';
+
+    chatKey = generateChatKey(thisUserId, otherUserId);
+
+    //homeCtrl.property = property;
+
+    Get.toNamed(RouteStr.chat);
+  }
   chatFromUserList(ChatUser chatUser) {
     thisUserId = user.id ?? '';
     thisUserName = accountName(user: user);
