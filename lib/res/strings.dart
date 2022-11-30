@@ -187,7 +187,7 @@ class Str with RouteStr, ImgStr {
   static const String premiumRealtors = 'Premium Realtors';
 
   static const String downloadOurAppDescription =
-      'Customize your search so that you can find the property of your choice in no time. Download our mobile application to customize your experience and see properties best suited for you';
+      'Find and list properties on the go!';
 }
 
 const String SLIDER_HEADING_1_SUB = "All-in-one marketplace";

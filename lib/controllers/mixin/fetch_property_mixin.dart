@@ -51,8 +51,12 @@ mixin FetchProperty {
       'state': EditCtrl.filterState.value.text,
       'city': EditCtrl.filterCity.value.text,
       'landmark': EditCtrl.filterLandMark.value.text,
+
     };
     int i = 0;
+    // map['category'] = EditCtrl.category.value.text;
+    // map['type'] = EditCtrl.propertyType.value;
+    // map['status'] = EditCtrl.status.value.text;
     map['category[${i++}]'] = EditCtrl.filterCategoriesWeb.value.text;
     for (var element in EditCtrl.filterCategories) {
       map['category[${i++}]'] = element;
