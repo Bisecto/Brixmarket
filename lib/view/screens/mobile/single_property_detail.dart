@@ -65,11 +65,24 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
   PageController _controller = PageController();
   bool checkState = true;
   List detailsDescription = [];
+  double total_rating=0;
+  double average_rating=0;
 
   @override
   void initState() {
     EditCtrl.message.clear();
     super.initState();
+    if(widget.review.length>0){
+    for(int i=0; i<widget.review.length;i++){
+      setState(() {
+        total_rating=total_rating+widget.review[i].rating;
+      });
+    }
+
+    setState(() {
+      average_rating=total_rating/widget.review.length;
+    });
+    }
   }
 
   _onPageChanged(int index) {
@@ -125,7 +138,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
     }).toList();
     detailsDescription.add(details);
     detailsDescription.add(amenities);
-    detailsDescription.add(productReviews(widget.property));
+    detailsDescription.add(productReviews(widget.property,average_rating));
     return Scaffold(
         body: ListView(
           shrinkWrap: true,
@@ -270,7 +283,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
             ),
             const SizedBox(height: 20),
             GestureDetector(
-              onTap: () => Get.to(() => FullGalleryScreen(index: 1)),
+              onTap: () => Get.to(() => FullGalleryScreen(index: 1,images: widget.images,)),
               child: const Center(
                 child: CustomText(
                     color: Colors.black54,
@@ -318,13 +331,13 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                     ),
                     const SizedBox(width: 24),
                     RatingBarIndicator(
-                      rating: //widget.property.averageRating ??
-                          5,
+                      rating: average_rating ??
+                          0,
                       unratedColor: Pallet.grayColor,
                       itemBuilder: (context, index) => Icon(
                         Icons.star,
-                        color: //widget.property.averageRating == null
-                            //? Colors.black26 :
+                        color: average_rating == null
+                            ? Colors.black26 :
                             Colors.yellow[900],
                         size: 18,
                       ),
@@ -334,7 +347,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                     ),
                     CustomText(
                         text: (
-                                // widget.property.numberOfRatingUsers ??
+                                 widget.property.reviews.length ??
                                 '0')
                             .toString(),
                         weight: FontWeight.w200,
@@ -1055,7 +1068,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
   }
 }
 
-Widget productReviews(Property property) {
+Widget productReviews(Property property,double averageRating) {
   List<Review>? reviews = property.reviews;
   return (reviews == [])
       ? const Text(
@@ -1073,20 +1086,20 @@ Widget productReviews(Property property) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // RatingBarIndicator(
-                            //   rating: e.rating!.toDouble(),
-                            //   unratedColor: Pallet.grayColor,
-                            //   itemBuilder: (context, index) => Icon(
-                            //     Icons.star,
-                            //     color: property.averageRating == null
-                            //         ? Colors.black26
-                            //         : Colors.yellow[900],
-                            //     size: 18,
-                            //   ),
-                            //   itemCount: 5,
-                            //   itemSize: 18.0,
-                            //   direction: Axis.horizontal,
-                            // ),
+                            RatingBarIndicator(
+                              rating: e.rating!.toDouble(),
+                              unratedColor: Pallet.grayColor,
+                              itemBuilder: (context, index) => Icon(
+                                Icons.star,
+                                color: averageRating == null
+                                    ? Colors.black26
+                                    : Colors.yellow[900],
+                                size: 18,
+                              ),
+                              itemCount: 5,
+                              itemSize: 18.0,
+                              direction: Axis.horizontal,
+                            ),
                             Text(
                               e.createdAt.toString(),
                               style: const TextStyle(color: Colors.black54),

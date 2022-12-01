@@ -155,41 +155,36 @@ downloadOurApp(lWidth) {
     children: [
       SizedBox(
         width: isTabletDown() ? lWidth : lWidth * 0.5,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/p2.png',
-              width: isTabletDown() ? lWidth * 0.6 : lWidth * 0.25,
-            ),
-            Image.asset(
-              'assets/images/p1.png',
-              width: isTabletDown() ? lWidth * 0.4 : lWidth * 0.165,
-            ),
-          ],
+        child: Image.asset(
+          'assets/images/phone.jpeg',
+          width: isTabletDown() ? lWidth * 0.5 : lWidth * 0.25,
+          fit: BoxFit.cover,
         ),
       ),
-      SizedBox(
+      Container(
         width: isTabletDown() ? lWidth : lWidth * 0.5 - 32,
+        margin: const EdgeInsets.symmetric(vertical: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomText(
-              text: 'Download our App',
-              color: Pallet.secondaryColor,
-              weight: FontWeight.w700,
-              size: 18,
+              Padding(
+              padding:  EdgeInsets.only(top:(isMobile() || isTabletDown()) ? 0: 70),
+              child: const  CustomText(
+                text: 'Download the ',
+                color: Colors.black87,
+                weight: FontWeight.w700,
+                size: 18,
+              ),
             ),
             CustomText(
-              text: 'Find the best properties from our top listing',
+              text: 'BrixMarket App',
               weight: FontWeight.w600,
-              size: isMobile() ? 28 : 38,
-              color: Colors.black87,
+              size: isMobile() ? 18 :28,
+              color: Pallet.secondaryColor ,
               maxLines: 2,
             ),
             const Padding(
-              padding: EdgeInsets.only(top: 18.0, bottom: 32),
+              padding: EdgeInsets.only(top: 10.0, bottom: 25),
               child: Text(Str.downloadOurAppDescription,
                   style: TextStyle(
                     color: Pallet.blueGray,
@@ -205,12 +200,11 @@ downloadOurApp(lWidth) {
                     width: 180,
                     height: 72,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Pallet.secondaryColor, Color(0xFFFE6606)]),
+                     // gradient: const LinearGradient(colors: [Pallet.secondaryColor, Color(0xFFFE6606)]),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Image.asset(
-                      'assets/images/apple-store.png',
-                      color: Colors.white,
+                      'assets/images/apple_logo.png',
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -222,25 +216,24 @@ downloadOurApp(lWidth) {
                     width: 180,
                     height: 72,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Color(0xFF038D4B), Colors.greenAccent]),
+                     // gradient: const LinearGradient(colors: [Color(0xFF038D4B), Colors.greenAccent]),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Image.asset(
-                      'assets/images/play-store.png',
-                      color: Colors.white,
+                      'assets/images/playstore_logo.png',
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                SizedBox(width: isMobile() ? 16 : 32),
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Pallet.secondaryColor, Color(0xFFFE6606)]),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Image.asset('assets/images/qrcode.png', fit: BoxFit.contain, width: 108),
-                ),
+                // SizedBox(width: isMobile() ? 16 : 32),
+                // Container(
+                //   padding: const EdgeInsets.all(4),
+                //   decoration: BoxDecoration(
+                //     gradient: const LinearGradient(colors: [Pallet.secondaryColor, Color(0xFFFE6606)]),
+                //     borderRadius: BorderRadius.circular(4),
+                //   ),
+                //   child: Image.asset('assets/images/qrcode.png', fit: BoxFit.contain, width: 108),
+                // ),
               ]),
             ),
           ],

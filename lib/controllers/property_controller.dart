@@ -443,6 +443,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       value.refresh();
     });
     EditCtrl.priceMin.value.text = '';
+    EditCtrl.status.value.text = '';
+    EditCtrl.category.value.text = '';
     EditCtrl.priceMax.value.text = '';
     EditCtrl.priceMin.refresh();
     //EditCtrl.webSearchKeyword

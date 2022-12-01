@@ -78,6 +78,7 @@ class EditCtrl extends GetxController {
   static var minPriceErr=''.obs;
   static var title = TextEditingController();
   static var titleErr = ''.obs;
+  static var propertyType = 'Buy'.obs;
   static var description = TextEditingController();
   static var descriptionErr = ''.obs;
   static var reference = TextEditingController();
@@ -115,6 +116,7 @@ class EditCtrl extends GetxController {
   static var filterCity = TextEditingController().obs;
   static var filterLandMark = TextEditingController().obs;
   static var priceMin = TextEditingController().obs;
+
   static var priceMax = TextEditingController().obs;
   static var roomMin = TextEditingController().obs;
   static var roomMax = TextEditingController().obs;

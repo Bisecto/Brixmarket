@@ -6,6 +6,10 @@ class FormButton extends StatelessWidget {
   final String text;
   final Color? bgColor;
   final Function() onPressed;
+  final Color borderColor;
+  final Color textColor;
+  final double borderWidth;
+  final double borderRadius;
   final double width;
   final double height;
   final double textSize;
@@ -18,10 +22,11 @@ class FormButton extends StatelessWidget {
     this.textSize = 16,
     required this.onPressed,
     this.bgColor = Pallet.secondaryColor,
+    this.textColor = Colors.white,
     this.disableButton = false,
     this.width = double.infinity,
     this.height = 42,
-    this.weight = FontWeight.w300,
+    this.weight = FontWeight.w300,  this.borderColor = Colors.transparent, this.borderWidth = 0, this.borderRadius = 4,
   }) : super(key: key);
 
   @override
@@ -30,18 +35,23 @@ class FormButton extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(0, 24, 0, 0),
       width: width,
       height: height,
+      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(borderRadius),), border:
+      Border.all(color: borderColor, width: borderWidth)
+      ),
       child: ElevatedButton(
         onPressed: (disableButton) ? null : onPressed,
         child: Text(
           text,
-          style: TextStyle(fontSize: textSize, fontWeight: weight),
+          style: TextStyle(fontSize: textSize, fontWeight: weight,color: textColor),
         ),
         style: ElevatedButton.styleFrom(
-          primary: bgColor,
-          fixedSize: const Size(double.infinity, 48),
-          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+          backgroundColor: bgColor,
+            
+            fixedSize: const Size(double.infinity, 48),
+          textStyle:  TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: textColor),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(borderRadius),
+           
           ),
         ),
       ),

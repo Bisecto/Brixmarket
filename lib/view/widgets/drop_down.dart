@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class DropDown extends StatelessWidget {
   final controller;
   final String label;
+  final String hint;
   final double width;
   final double height;
   final String? initialValue;
@@ -21,6 +22,7 @@ class DropDown extends StatelessWidget {
       {Key? key,
       required this.controller,
       this.label = '',
+      this.hint = '',
       this.width = double.infinity,
       this.height = 44,
       required this.items,
@@ -46,7 +48,7 @@ class DropDown extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Text(
                   label,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: labelColor ?? color ?? Colors.black87),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: labelColor ?? color ?? Colors.black87),
                 ),
               )
             : const SizedBox.shrink(),
@@ -71,9 +73,12 @@ class DropDown extends StatelessWidget {
               width: width,
               child: Obx(() => DropdownButton<String>(
                     iconEnabledColor: dropIconColor ?? Colors.black54,
-                    icon: const Icon(
-                      Icons.arrow_drop_down_outlined,
-                      size: 32,
+                    icon:const Padding(
+                      padding:  EdgeInsets.only(right: 8.0),
+                      child:  Icon(
+                        Icons.expand_more,
+                        size: 22,
+                      ),
                     ),
                     isExpanded: true,
                     iconSize: 24,
@@ -87,10 +92,13 @@ class DropDown extends StatelessWidget {
                       controller.refresh();
                     },
                     hint: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        'Select ' + label,
-                        style: const TextStyle(color: Colors.grey, fontSize: 16),
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                         hint,
+                          style: const TextStyle(color: Colors.grey, fontSize: 14),
+                        ),
                       ),
                     ),
                     items: items.map((data) {

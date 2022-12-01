@@ -230,18 +230,18 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                   )),
                             ),
                             const SizedBox(width: 32),
-                            InkWell(
-                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.premiumRealtors),
-                              child: Obx(() => Text(
-                                    Str.premiumRealtors,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: homeCtrl.activeNavItem.value == NavItems.premiumRealtors ? Pallet.secondaryColor : Pallet.bottomBarColor,
-                                    ),
-                                  )),
-                            ),
-                            const SizedBox(width: 32),
+                            // InkWell(
+                            //   onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.premiumRealtors),
+                            //   child: Obx(() => Text(
+                            //         Str.premiumRealtors,
+                            //         style: TextStyle(
+                            //           fontSize: 16,
+                            //           fontWeight: FontWeight.w600,
+                            //           color: homeCtrl.activeNavItem.value == NavItems.premiumRealtors ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                            //         ),
+                            //       )),
+                            // ),
+                            // const SizedBox(width: 32),
                           ],
                         ),
                   Obx(() => Card(

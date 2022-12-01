@@ -105,7 +105,7 @@ class CreatePropertyCtrl extends GetxController {
   gotoNext({required int pageIndex}) {
     createPropScrollCtrl.jumpTo(0);
     if (saveToDraft == true) {
-      MSG.snackBar('Proper to my draft');
+      MSG.snackBar('Property saved to my draft');
       saveToDraft = false;
       createPropPageIndex.value = 1;
       sideNavIndex.value = 2;
@@ -190,6 +190,7 @@ class CreatePropertyCtrl extends GetxController {
   selectPropertyImages() async {
     var uInt8List = await Utils.filesPicker();
     for (var uInt in uInt8List) {
+
       EditCtrl.image8Lists.addIf(uInt != null, uInt!);
     }
     EditCtrl.image8Lists.refresh();
@@ -218,9 +219,11 @@ class CreatePropertyCtrl extends GetxController {
         gotoNext(pageIndex: 2);
       } else {
         gotoNext(pageIndex: 2);
+        //print('1234567890');
+        // print(response);
         //   Preloader.hide();
-        //   MSG.errorSnackBar('Something is wrong with the image',title: 'Message');
-        //   Preloader.hide();
+        //   MSG.errorSnackBar('Image was not Uploaded. Please check your connections or Start afresh uploading the property',title: 'Message');
+        //   //Preloader.hide();
       }
     }
   }
