@@ -469,6 +469,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.filterLandMark.refresh();
     EditCtrl.filterAmenities.value = ['Any'];
     EditCtrl.filterAmenities.refresh();
+    EditCtrl.category.value.text='';
+    EditCtrl.status.value.text='';
   }
 
   var exploreFilterProperties = <Property>[].obs;
@@ -731,21 +733,22 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   animateHomeHeroImage({bool stopTimer = false}) {
     if (!Utils.isMobileApp) {
       if (stopTimer) {
-        messageTimer.cancel();
+        //messageTimer.cancel();
       } else {
-        var images = [
-          'assets/images/home_bg1.jpg',
-          'assets/images/welcome3.jpg',
-          'assets/images/welcome2.jpg',
-          'assets/images/room4.jpg',
-          'assets/images/hero1.jpg',
-        ];
-        messageTimer =
-            Timer.periodic(const Duration(seconds: 6), (Timer timer) {
-          homeCtrl.heroImage.value = images[iM % 5];
-          iM++;
+        var images =
+          'assets/images/home_bg1.jpg';
+          // 'assets/images/welcome3.jpg',
+          // 'assets/images/welcome2.jpg',
+          // 'assets/images/room4.jpg',
+          // 'assets/images/hero1.jpg',
 
-        });
+        //messageTimer =
+            //Timer.periodic(const Duration(seconds: 6), (Timer timer) {
+          homeCtrl.heroImage.value = images;
+          //images[iM % 5];
+          //iM++;
+
+        //});
       }
     }
   }

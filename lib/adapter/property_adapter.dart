@@ -12,7 +12,7 @@ class PropertyApi {
     EditCtrl.filterState.value.text=location;}
     var Url = Uri.parse('https://api.brixmarket.com/property/filter-properties?page=$page');
     var body={
-      'search_term': searchValue,
+      'search_term': searchValue==''?EditCtrl.webSearchKeyWord.value.text:searchValue,
       'min_price': EditCtrl.priceMin.value.text,
       'max_price': EditCtrl.priceMax.value.text,
       'min_room': EditCtrl.roomMin.value.text,
@@ -40,4 +40,38 @@ class PropertyApi {
     FilterModel filterModel = FilterModel.fromJson(dataBody);
     getfilterProperty.add(filterModel);
   }
+  Future<void> getWebProperty(int page) async {
+    print(page);
+
+    var Url = Uri.parse('https://api.brixmarket.com/property/filter-properties?page=$page');
+    var body={
+      'search_term': EditCtrl.webSearchKeyWord.value.text,
+      'min_price': EditCtrl.priceMin.value.text,
+      'max_price': EditCtrl.priceMax.value.text,
+      'min_room': EditCtrl.roomMin.value.text,
+      'max_room': EditCtrl.roomMax.value.text,
+      'min_bath': EditCtrl.bathsMin.value.text,
+      'max_bath': EditCtrl.bathsMax.value.text,
+      'state': EditCtrl.filterState.value.text,
+      'city': EditCtrl.filterCity.value.text,
+      'landmark': EditCtrl.filterLandMark.value.text,
+      'category[0]': EditCtrl.category.value.text,
+      'type[0]': EditCtrl.propertyType.value,
+      'status[0]': EditCtrl.status.value.text,
+      'amenity[0]': EditCtrl.filterAmenities[0],
+      'nav_item': '0'
+    };
+    var headers = {
+      'Authorization': 'Bearer kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos',
+      'Cookie': 'PHPSESSID=efe427461bf8353458f882c0d7143ce3'
+    };
+    final res =
+    await http.post(Url,headers: headers,body: body);
+    print(res.body);
+    final dataBody = await jsonDecode(res.body);
+    print(res);
+    FilterModel filterModel = FilterModel.fromJson(dataBody);
+    getfilterProperty.add(filterModel);
+  }
+
 }

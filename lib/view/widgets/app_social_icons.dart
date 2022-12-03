@@ -18,10 +18,10 @@ class AppSocialIcons extends StatelessWidget {
         OpenUrl(
           url: Str.WhatsappLink,
           //phone: Str.contactPhone1.replaceAll(' ', ''),
-          widget: Icon(
-            Icons.whatsapp,
+          widget: Image.asset(
+            'assets/images/whatsapp.png',
             color: iconColor,
-            size: iconSize,
+            height: iconSize + 6,
           ),
         ),
         SizedBox(width: space),

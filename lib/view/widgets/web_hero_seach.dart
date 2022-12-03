@@ -11,6 +11,7 @@ import '../screens/mobile/explore_filter_page.dart';
 import 'custom_text.dart';
 import 'drop_down.dart';
 import 'form_inputs.dart';
+import 'package:brixmarket/view/screens/filter_web_page.dart';
 
 class WebHeroSearch extends StatefulWidget {
 
@@ -60,13 +61,17 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
                   controller: EditCtrl.webSearchKeyWord,
                   color: Colors.white,
                   hint: 'Search by type, size or location...',
+
                 ),
               ),
               Expanded(
                 flex: 1,
                 child: InkWell(
                   onTap: (){
-                    propCtrl.setAllPropertiesWeb(filter: true);
+                    Navigator.of(context!).push(MaterialPageRoute(
+                        builder: (context) =>
+                            Filter_web()));
+                    //propCtrl.setAllPropertiesWeb(filter: true);
                   },
                   child: Container(width: 80,
                       padding: const EdgeInsets.symmetric(vertical: 12),

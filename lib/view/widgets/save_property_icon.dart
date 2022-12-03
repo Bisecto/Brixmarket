@@ -72,6 +72,32 @@ class SavePropertyIcon extends StatelessWidget {
     );
   }
 }
+class SavePropert extends StatelessWidget {
+  final singleProperty.Property property;
+  final User user;
+  final double? size;
+  final Color? color;
+  final List state;
+  const SavePropert({Key? key,required this.property, required this.user, this.size, this.color, required this.state}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => homeCtrl.saveProperty1(property),
+      child: Container(
+        margin: const EdgeInsets.only(right: 25),
+        child: Row(
+          children: [
+            Utils.savedPropertyIcon(property.id, size: 18, user: user, state: state),
+            const SizedBox(width: 8),
+            Utils.savedPropertyText(property.id, size: 16),
+            const SizedBox(width: 8),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class SavePropertyIconText extends StatelessWidget {
   final Property property;

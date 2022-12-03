@@ -175,7 +175,11 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                             ),
                             const SizedBox(width: 32),
                             InkWell(
-                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.rent),
+                              onTap: () {
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.rent);
+
+                              },
+
                               child: Obx(() => Text(
                                     Str.rent,
                                     style: TextStyle(

@@ -32,6 +32,10 @@ mixin FetchProperty {
 
   void setAllPropertiesWeb({bool filter = false, NavItems navItem = NavItems.home, bool sideNav = false}) async {
     if (sideNav) Get.back();
+    // Navigator.of(context!).push(
+    //     MaterialPageRoute(
+    //         builder: (context) =>
+    //             Filter_web()));
     Get.toNamed(RouteStr.webProperties);
     activeNavItem.value = navItem;
     allPropertiesWeb.value = getPropertiesWeb(filter: filter);

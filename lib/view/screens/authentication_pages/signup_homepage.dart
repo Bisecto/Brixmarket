@@ -55,7 +55,7 @@ class SignUpHomePage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 48),
                         child: Column(
                           children: [
-                            GestureDetector(onTap: () => Get.toNamed(RouteStr.webHome), child: Image.asset(ImgStr.logoLight, width: 180)),
+                            GestureDetector(onTap: () => Get.toNamed(RouteStr.webHome), child: Image.asset(ImgStr.logo1, width: 180)),
                             SizedBox(height: 2.h),
                             CustomText(
                               text: 'Create an account for free',

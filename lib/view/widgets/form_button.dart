@@ -45,8 +45,8 @@ class FormButton extends StatelessWidget {
           style: TextStyle(fontSize: textSize, fontWeight: weight,color: textColor),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: bgColor,
-            
+          //backgroundColor: bgColor,
+          primary: bgColor,
             fixedSize: const Size(double.infinity, 48),
           textStyle:  TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: textColor),
           shape: RoundedRectangleBorder(
