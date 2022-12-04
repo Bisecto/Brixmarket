@@ -8,7 +8,7 @@ import '../../services/provider.dart';
 import '../../utils/utils.dart';
 import '../edit_controller.dart';
 import '../instance.dart';
-
+import 'package:brixmarket/view/screens/filter_web_page.dart';
 mixin FetchProperty {
   var activeNavItem = NavItems.home.obs;
 
@@ -32,6 +32,7 @@ mixin FetchProperty {
 
   void setAllPropertiesWeb({String val='',bool filter = false, NavItems navItem = NavItems.home, bool sideNav = false}) async {
     //if (sideNav) Get.back();
+    Get.to(()=> Filter_web());
     Get.toNamed(RouteStr.webfilter);
     activeNavItem.value = navItem;
     //allPropertiesWeb.value = getPropertiesWeb(filter: filter);
