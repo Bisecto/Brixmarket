@@ -719,7 +719,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                         child: ReadMoreText(
                                           '${widget.property.description}',
                                           trimLines: 4,
-                                          textAlign: TextAlign.justify,
+                                          textAlign: TextAlign.left,
                                           colorClickableText:
                                           Pallet.secondaryColor,
                                           style: TextStyle(

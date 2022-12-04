@@ -182,30 +182,42 @@ Widget pageFooter() {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           footerQuickLindTitle('SOLUTIONS'),
-                          footerQuickLind('Buy',
-                              onTap: () => propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.buy)),
-                          footerQuickLind('Rent',
-                              onTap: () => propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.rent)),
-                          footerQuickLind('New Home',
-                              onTap: () => propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.newHomes)),
-                          footerQuickLind('Short-stay', onTap: () {
-                            homeCtrl.activeNavItem.value = NavItems.shortStay;
-                            Navigator.of(context!).push(MaterialPageRoute(
-                                builder: (context) => Short_stay()));
-                          }),
-                          footerQuickLind('Commercial', onTap: () {
-
+                          footerQuickLind('House', onTap: () {
+                            EditCtrl.filterCategories.clear();
+                            EditCtrl.filterCategories.add('House');
                             propCtrl.setAllPropertiesWeb(
-                                navItem: NavItems.shortStay);
-                            homeCtrl.activeNavItem.value = NavItems.commercial;
-
+                                navItem: NavItems.house);
                           }),
-                          footerQuickLind('Premium Realtors',
-                              onTap: () => propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.premiumRealtors)),
+                          footerQuickLind('New Home', onTap: () {
+                            EditCtrl.filterCategories.clear();
+                            EditCtrl.filterCategories.add('New Home');
+                            propCtrl.setAllPropertiesWeb(
+                                navItem: NavItems.newHomes);
+                          }),
+                          footerQuickLind(
+                            'Commercial',
+                            onTap: () {
+                              EditCtrl.filterCategories.clear();
+                              EditCtrl.filterCategories.add('Commercial');
+                              propCtrl.setAllPropertiesWeb(
+                                  navItem: NavItems.commercial);
+                            },
+                          ),
+                          footerQuickLind('Land', onTap: () {
+                            EditCtrl.filterCategories.clear();
+                            EditCtrl.filterCategories.add('Land');
+                            homeCtrl.activeNavItem.value = NavItems.land;
+                          }),
+                          // footerQuickLind('Commercial', onTap: () {
+                          //
+                          //   propCtrl.setAllPropertiesWeb(
+                          //       navItem: NavItems.shortStay);
+                          //   homeCtrl.activeNavItem.value = NavItems.commercial;
+                          //
+                          // }),
+                          // footerQuickLind('Premium Realtors',
+                          //     onTap: () => propCtrl.setAllPropertiesWeb(
+                          //         navItem: NavItems.premiumRealtors)),
                         ]),
                     const Spacer(flex: 2),
                     Column(
@@ -380,24 +392,24 @@ Widget pageFooter() {
                     size: 14),
               ],
             ),
-            GestureDetector(
-              onTap: () {
-                launchUrl(Uri.parse('https://swizel.co/'));
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
-                  CustomText(
-                    text: 'Developed by',
-                    size: 14,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 6),
-                  CustomText(color: Colors.red, text: 'Swizel', size: 14),
-                ],
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     launchUrl(Uri.parse('https://swizel.co/'));
+            //   },
+            //   child: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     mainAxisAlignment: MainAxisAlignment.start,
+            //     children: const [
+            //       CustomText(
+            //         text: 'Developed by',
+            //         size: 14,
+            //         color: Colors.white,
+            //       ),
+            //       SizedBox(width: 6),
+            //       CustomText(color: Colors.red, text: 'Swizel', size: 14),
+            //     ],
+            //   ),
+            // ),
             const AppSocialIcons(),
           ],
         ),

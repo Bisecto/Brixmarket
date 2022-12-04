@@ -14,6 +14,7 @@ mixin RouteStr {
 
   //Web Routes
   static const String webHome = '/';
+  static const String webfilter='/web-filter';
   static const String webProperties = '/properties';
   static const String webProperty = '/property';
   static const String webDashboard = '/dashboard';
@@ -184,7 +185,9 @@ class Str with RouteStr, ImgStr {
   static const String newHome = 'New Homes';
   static const String shortStay = 'Short-stay';
   static const String commercial = 'Commercial';
+  static const String house = 'House';
   static const String premiumRealtors = 'Premium Realtors';
+
 
   static const String downloadOurAppDescription =
       'Find and list properties on the go!';

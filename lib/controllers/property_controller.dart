@@ -724,12 +724,11 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
   }
 
-  var heroImage = 'assets/images/hero1.jpg'.obs;
+  var heroImage = 'assets/images/home_bg1.jpg'.obs;
 
   late Timer messageTimer;
 
   int iM = 0;
-
   animateHomeHeroImage({bool stopTimer = false}) {
     if (!Utils.isMobileApp) {
       if (stopTimer) {

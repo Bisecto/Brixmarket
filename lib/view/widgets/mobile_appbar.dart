@@ -15,6 +15,7 @@ import 'app_social_icons.dart';
 import 'appbar_menus.dart';
 import 'appbar_notification.dart';
 import 'image_widgets.dart';
+import '../../controllers/edit_controller.dart';
 
 mobileAppBar(homeScaffoldKey) {
   return AppBar(
@@ -162,36 +163,47 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                       ? const SizedBox.shrink()
                       : Row(
                           children: [
-                            InkWell(
-                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.buy), // Get.to(() => () => PropertiesPage()),
-                              child: Obx(() => Text(
-                                    Str.buy,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: homeCtrl.activeNavItem.value == NavItems.buy ? Pallet.secondaryColor : Pallet.bottomBarColor,
-                                    ),
-                                  )),
-                            ),
-                            const SizedBox(width: 32),
+                            // InkWell(
+                            //   onTap: () {
+                            //
+                            //    // EditCtrl.filterTypes.clear();
+                            //     EditCtrl.filterTypes.add(Str.buy);
+                            //     propCtrl.setAllPropertiesWeb(navItem: NavItems.buy);
+                            //     }, // Get.to(() => () => PropertiesPage()),
+                            //   child: Obx(() => Text(
+                            //         Str.buy,
+                            //         style: TextStyle(
+                            //           fontSize: 16,
+                            //           fontWeight: FontWeight.w600,
+                            //           color: homeCtrl.activeNavItem.value == NavItems.buy ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                            //         ),
+                            //       )),
+                            // ),
+                            const SizedBox(width: 20),
                             InkWell(
                               onTap: () {
-                                propCtrl.setAllPropertiesWeb(navItem: NavItems.rent);
+                                EditCtrl.filterCategories.clear();
+                                EditCtrl.filterCategories.add('House');
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.house);
 
                               },
 
                               child: Obx(() => Text(
-                                    Str.rent,
+                                    Str.house,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: homeCtrl.activeNavItem.value == NavItems.rent ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                                      color: homeCtrl.activeNavItem.value == NavItems.house ? Pallet.secondaryColor : Pallet.bottomBarColor,
                                     ),
                                   )),
                             ),
-                            const SizedBox(width: 32),
+                            const SizedBox(width: 20),
                             InkWell(
-                              onTap: () => propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes),
+                              onTap: () {
+                                EditCtrl.filterCategories.clear();
+                                  EditCtrl.filterCategories.add('New Home');
+                                //EditCtrl.filterCategories.clear();
+                                  propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes);},
                               child: Obx(() => Text(
                                     Str.newHome,
                                     style: TextStyle(
@@ -201,26 +213,32 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                     ),
                                   )),
                             ),
-                            const SizedBox(width: 32),
-                            InkWell(
-                              onTap: ()  {
-                                //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
-                                homeCtrl.activeNavItem.value=NavItems.shortStay;
-                                Navigator.of(context!).push(MaterialPageRoute(builder: (context) => Short_stay()));
-                                //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
-                              },
-                              child: Obx(() => Text(
-                                Str.shortStay,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: homeCtrl.activeNavItem.value == NavItems.shortStay ? Pallet.secondaryColor : Pallet.bottomBarColor,
-                                ),
-                              )),
-                            ),
-                            const SizedBox(width: 32),
+                            // InkWell(
+                            //   onTap: ()  {
+                            //     //EditCtrl.filterTypes.clear();
+                            //     EditCtrl.filterTypes.value=['Short stay'];
+                            //     //EditCtrl.filterTypes.add('Short stay');
+                            //     print(EditCtrl.filterTypes.value);
+                            //     propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                            //     homeCtrl.activeNavItem.value=NavItems.shortStay;
+                            //     //Navigator.of(context!).push(MaterialPageRoute(builder: (context) => Short_stay()));
+                            //     //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                            //   },
+                            //   child: Obx(() => Text(
+                            //     Str.shortStay,
+                            //     style: TextStyle(
+                            //       fontSize: 16,
+                            //       fontWeight: FontWeight.w600,
+                            //       color: homeCtrl.activeNavItem.value == NavItems.shortStay ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                            //     ),
+                            //   )),
+                            // ),
+                            const SizedBox(width: 20),
                             InkWell(
                               onTap: () {
+                                //EditCtrl.filterCategories.clear();
+                                EditCtrl.filterCategories.clear();
+                                EditCtrl.filterCategories.add('Commercial');
                                 propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
                                 homeCtrl.activeNavItem.value=NavItems.commercial;
                               },
@@ -230,6 +248,23 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: homeCtrl.activeNavItem.value == NavItems.commercial ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(width: 20),
+                            InkWell(
+                              onTap: () {
+
+                                EditCtrl.filterCategories.clear();
+                                EditCtrl.filterCategories.add('Land');
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.land);
+                                }, // Get.to(() => () => PropertiesPage()),
+                              child: Obx(() => Text(
+                                    'Land',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: homeCtrl.activeNavItem.value == NavItems.land ? Pallet.secondaryColor : Pallet.bottomBarColor,
                                     ),
                                   )),
                             ),

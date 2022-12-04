@@ -30,16 +30,12 @@ mixin FetchProperty {
     return [];
   }
 
-  void setAllPropertiesWeb({bool filter = false, NavItems navItem = NavItems.home, bool sideNav = false}) async {
-    if (sideNav) Get.back();
-    // Navigator.of(context!).push(
-    //     MaterialPageRoute(
-    //         builder: (context) =>
-    //             Filter_web()));
-    Get.toNamed(RouteStr.webProperties);
+  void setAllPropertiesWeb({String val='',bool filter = false, NavItems navItem = NavItems.home, bool sideNav = false}) async {
+    //if (sideNav) Get.back();
+    Get.toNamed(RouteStr.webfilter);
     activeNavItem.value = navItem;
-    allPropertiesWeb.value = getPropertiesWeb(filter: filter);
-    allPropertiesWeb.refresh();
+    //allPropertiesWeb.value = getPropertiesWeb(filter: filter);
+    //allPropertiesWeb.refresh();
     refreshCount++;
   }
 

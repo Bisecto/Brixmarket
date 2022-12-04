@@ -184,49 +184,49 @@ class _Filter_webState extends State<Filter_web> {
                       ),
                     ),
                     const SizedBox(height: 48),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: mainPadding),
-                      child: Row(children: [
-                        isMobile()
-                            ? const SizedBox.shrink()
-                            : Obx(() {
-                                return Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        homeCtrl.toggleList();
-                                      },
-                                      child: Icon(
-                                        Icons.list_alt,
-                                        size: 36,
-                                        color: homeCtrl.isList.value
-                                            ? Pallet.secondaryColor
-                                            : Colors.grey,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        homeCtrl.toggleList();
-                                      },
-                                      child: Icon(
-                                        Icons.grid_view_outlined,
-                                        size: 32,
-                                        color: homeCtrl.isList.value
-                                            ? Colors.grey
-                                            : Pallet.secondaryColor,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }),
-                        isMobile()
-                            ? const SizedBox.shrink()
-                            : const SizedBox(width: 24),
-                      ]),
-                    ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(horizontal: mainPadding),
+                    //   child: Row(children: [
+                    //     isMobile()
+                    //         ? const SizedBox.shrink()
+                    //         : Obx(() {
+                    //             return Row(
+                    //               children: [
+                    //                 GestureDetector(
+                    //                   onTap: () {
+                    //                     homeCtrl.toggleList();
+                    //                   },
+                    //                   child: Icon(
+                    //                     Icons.list_alt,
+                    //                     size: 36,
+                    //                     color: homeCtrl.isList.value
+                    //                         ? Pallet.secondaryColor
+                    //                         : Colors.grey,
+                    //                   ),
+                    //                 ),
+                    //                 const SizedBox(
+                    //                   width: 5,
+                    //                 ),
+                    //                 GestureDetector(
+                    //                   onTap: () {
+                    //                     homeCtrl.toggleList();
+                    //                   },
+                    //                   child: Icon(
+                    //                     Icons.grid_view_outlined,
+                    //                     size: 32,
+                    //                     color: homeCtrl.isList.value
+                    //                         ? Colors.grey
+                    //                         : Pallet.secondaryColor,
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             );
+                    //           }),
+                    //     isMobile()
+                    //         ? const SizedBox.shrink()
+                    //         : const SizedBox(width: 24),
+                    //   ]),
+                    // ),
                     const SizedBox(height: 24),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: mainPadding),
@@ -259,8 +259,7 @@ class _Filter_webState extends State<Filter_web> {
                                           } else {
                                             List<filter.Property> properties =
                                                 snapdata.data!.data
-                                                        .properties ??
-                                                    [];
+                                                        .properties ?? [];
                                             //print(snapdata.data!.data.pages);
                                             return Container(
                                                 child: Column(children: [
@@ -281,6 +280,7 @@ class _Filter_webState extends State<Filter_web> {
                                                             weight:
                                                                 FontWeight.bold,
                                                             size: 16),
+                                                        if(isNotDeskTop())
                                                         GestureDetector(
                                                             onTap: () {
                                                               showMaterialModalBottomSheet(
@@ -342,10 +342,11 @@ class _Filter_webState extends State<Filter_web> {
                                                                                         child: DropDown(
                                                                                           width: maxWidth * 0.4,
                                                                                           color: Colors.white10,
-                                                                                          showLabel: false,
+                                                                                          showLabel: true,
                                                                                           labelColor: Colors.black54,
                                                                                           controller: EditCtrl.priceMin,
                                                                                           label: 'Min',
+                                                                                          hint: 'Any',
                                                                                           items: Lst.minFilterPrices,
                                                                                         ),
                                                                                       ),
@@ -355,9 +356,10 @@ class _Filter_webState extends State<Filter_web> {
                                                                                         child: DropDown(
                                                                                           width: maxWidth * 0.4,
                                                                                           color: Colors.white10,
-                                                                                          showLabel: false,
+                                                                                          showLabel: true,
                                                                                           controller: EditCtrl.priceMax,
                                                                                           label: 'Max',
+                                                                                          hint: 'Any',
                                                                                           items: Lst.maxFilterPrices,
                                                                                         ),
                                                                                       ),
@@ -370,9 +372,10 @@ class _Filter_webState extends State<Filter_web> {
                                                                                     child: DropDown(
                                                                                       width: maxWidth * 0.9,
                                                                                       color: Colors.white10,
-                                                                                      showLabel: false,
+                                                                                      showLabel: true,
                                                                                       labelColor: Colors.black54,
                                                                                       controller: EditCtrl.filterState,
+                                                                                      hint: 'Any',
                                                                                       label: 'State',
                                                                                       items: Lst.ngStates,
                                                                                     ),
@@ -382,10 +385,11 @@ class _Filter_webState extends State<Filter_web> {
                                                                                     child: Obx(() => DropDown(
                                                                                           width: maxWidth * 0.9,
                                                                                           color: Colors.white10,
-                                                                                          showLabel: false,
+                                                                                          showLabel: true,
                                                                                           labelColor: Colors.black54,
                                                                                           controller: EditCtrl.filterCity,
                                                                                           label: 'City/Town',
+                                                                                      hint: 'Any',
                                                                                           items: Lst.ngLGA[EditCtrl.filterState.value.text] ?? [],
                                                                                         )),
                                                                                   ),
@@ -702,15 +706,14 @@ class _Filter_webState extends State<Filter_web> {
                                               const SizedBox(height: 16),
                                               const Divider(
                                                   color: Colors.black12),
-                                              Obx(
-                                                () => homeCtrl.isList.value &&
-                                                        !isTabletDown()
-                                                    ? buildListContainer(
+
+                                                  !isTabletDown()
+                                                    ?
+                                                buildListContainer(
                                                         properties: properties)
                                                      :
                                                 PropertiesWebGrade(
                                                         properties: properties),
-                                              ),
                                               if (snapdata.data!.data.pages > 1)
                                                 Align(
                                                   alignment:
@@ -739,7 +742,7 @@ class _Filter_webState extends State<Filter_web> {
                                                               child: Icon(
                                                                 Icons
                                                                     .navigate_before,
-                                                                size: 40,
+                                                                size: 60,
                                                               )),
                                                           GestureDetector(
                                                               onTap: () {
@@ -762,7 +765,7 @@ class _Filter_webState extends State<Filter_web> {
                                                               child: Icon(
                                                                 Icons
                                                                     .navigate_next,
-                                                                size: 40,
+                                                                size: 60,
                                                               )),
                                                         ]),
                                                   ),
@@ -1356,6 +1359,7 @@ class _Filter_webState extends State<Filter_web> {
   Widget buildListContainer({required List<filter.Property> properties}) {
     return ListView.builder(
         shrinkWrap: true,
+        physics: ScrollPhysics(),
         itemCount: properties.length,
         itemBuilder: (_, i) {
           int iFeature = 0;
@@ -1367,12 +1371,11 @@ class _Filter_webState extends State<Filter_web> {
           if (EditCtrl.webSearchKeyWord.value.text.trim().isNotEmpty) {
             if (property.title!.trim().toLowerCase().contains(
                 EditCtrl.webSearchKeyWord.value.text.trim().toLowerCase())) {
-              return GestureDetector(
+              return InkWell(
                 onTap: () {
                   Navigator.of(context!).push(MaterialPageRoute(
                       builder: (context) =>
                           Single_page_web(property_id: property.id)));
-                  //homeCtrl.viewSingleProperty(property);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 24.0),
@@ -1382,12 +1385,11 @@ class _Filter_webState extends State<Filter_web> {
                     type: MaterialType.card,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4)),
-                    child: GestureDetector(
+                    child: InkWell(
                       onTap: () {
                         Navigator.of(context!).push(MaterialPageRoute(
                             builder: (context) =>
                                 Single_page_web(property_id: property.id)));
-                        //homeCtrl.viewSingleProperty(property);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1797,7 +1799,12 @@ class _Filter_webState extends State<Filter_web> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Container(
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context!).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        Single_page_web(property_id: property.id)));
+                              },child: Container(
                             margin: const EdgeInsets.fromLTRB(10, 10, 0, 3),
                             height: 268,
                             width: Get.width * 0.4,
@@ -1807,7 +1814,7 @@ class _Filter_webState extends State<Filter_web> {
                                   fit: BoxFit.cover,
                                   image: NetworkImage(propertyImgPath + image),
                                 )),
-                          ),
+                          )),
                           Container(
                             padding: const EdgeInsets.only(
                                 top: 0, left: 10, bottom: 10),
@@ -1898,7 +1905,12 @@ class _Filter_webState extends State<Filter_web> {
                     ),
                     Expanded(
                       flex: 8,
-                      child: Container(
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.of(context!).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    Single_page_web(property_id: property.id)));
+                          },child:Container(
                         padding: const EdgeInsets.only(
                             top: 10, left: 10, bottom: 10),
                         child: Column(
@@ -2014,7 +2026,7 @@ class _Filter_webState extends State<Filter_web> {
                               children: [
                                 ...property.features!.map((feature) {
                                   iFeature++;
-                                  return iFeature >= 4
+                                  return iFeature >= 3
                                       ? const SizedBox.shrink()
                                       : Row(
                                           children: [
@@ -2130,7 +2142,7 @@ class _Filter_webState extends State<Filter_web> {
                             ),
                           ],
                         ),
-                      ),
+                      )),
                     ),
                   ],
                 ),

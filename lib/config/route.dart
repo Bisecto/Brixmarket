@@ -38,7 +38,7 @@ import '../view/screens/reset_password_pages/forgot_password.dart';
 import '../view/screens/reset_password_pages/password_otp_page.dart';
 import '../view/screens/web_policy.dart';
 import '../view/screens/web_terms.dart';
-
+import 'package:brixmarket/view/screens/filter_web_page.dart';
 //Authentication Pages
 List<GetPage<dynamic>> authPages = [
   GetPage(name: RouteStr.login, page: () => LoginPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
@@ -56,6 +56,7 @@ List<GetPage<dynamic>> authPages = [
 List<GetPage<dynamic>> webPages = [
   GetPage(name: RouteStr.webHome, page: () => HomePageWeb(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.webProperties, page: () => PropertiesPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
+  GetPage(name: RouteStr.webfilter, page: () => Filter_web(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.webProperty, page: () => const PropertyPageWeb(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.webDashboard, page: () => DashboardPage(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),
   GetPage(name: RouteStr.webAboutUs, page: () => AboutUsWeb(), transition: Transition.fadeIn, transitionDuration: const Duration(milliseconds: 500)),

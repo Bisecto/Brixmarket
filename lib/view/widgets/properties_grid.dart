@@ -456,9 +456,9 @@ class PropertiesWebGrade extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4)),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Single_page_web(
-                            property_id: properties[index].id)));
+                    Navigator.of(context!).push(MaterialPageRoute(
+                        builder: (context) =>
+                            Single_page_web(property_id: property.id)));
                   },
                   // homeCtrl.viewSingleProperty(property),
                   child: Material(

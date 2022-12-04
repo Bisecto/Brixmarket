@@ -7,6 +7,7 @@ import '../../config/theme/color.dart';
 import '../../controllers/instance.dart';
 import '../../models/property_model.dart';
 import '../../res/strings.dart';
+import 'package:brixmarket/view/screens/single_property_web.dart';
 
 class PropertyCard1 extends StatelessWidget {
   final Property property;
@@ -20,8 +21,11 @@ class PropertyCard1 extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        homeCtrl.property = property;
-        Get.toNamed(RouteStr.webProperty);
+        // homeCtrl.property = property;
+        // Get.toNamed(RouteStr.webProperty);
+        Navigator.of(context!).push(MaterialPageRoute(
+            builder: (context) =>
+                Single_page_web(property_id: property.id!)));
       },
       child: Container(
           decoration: BoxDecoration(

@@ -217,15 +217,14 @@ class _HomePageWebState extends State<HomePageWeb> {
                                     child: GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            EditCtrl.filterTypes.clear();
-                                            //EditCtrl.filterCategories.clear();
+                                            EditCtrl.filterCategories.clear();
                                             index = 1;
-                                            EditCtrl.filterTypes.add('Rent');
+                                            EditCtrl.filterCategories.add('New Home');
 
                                           });
                                         },
                                         child: selectPropertyType(
-                                            bodyIndex: 1, title: 'Rent')),
+                                            bodyIndex: 1, title: 'New Home')),
                                   ),
                                   Expanded(
                                     child: GestureDetector(
