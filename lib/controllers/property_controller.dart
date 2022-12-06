@@ -412,8 +412,6 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           Property.fromJson(response['property']);
       }
       homeCtrl.property = Property.fromJson(response['property']);
-      print(response['property']);
-
     return Property.fromJson(response['property']);
   }
 

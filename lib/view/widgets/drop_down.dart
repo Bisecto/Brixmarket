@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 class DropDown extends StatelessWidget {
   final controller;
   final String label;
+
   final String hint;
   final double width;
+  final double? textSize;
   final double height;
   final String? initialValue;
   final List<String> items;
@@ -34,7 +36,7 @@ class DropDown extends StatelessWidget {
       this.controllerName,
       this.color,
       this.borderRadius = 4,
-      this.dropIconColor})
+      this.dropIconColor,  this.textSize = 16})
       : super(key: key);
 
   @override
@@ -48,7 +50,7 @@ class DropDown extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Text(
                   label,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: labelColor ?? color ?? Colors.black87),
+                  style: TextStyle(fontSize: textSize, fontWeight: FontWeight.w300, color: labelColor ?? color ?? Colors.black87),
                 ),
               )
             : const SizedBox.shrink(),
@@ -106,7 +108,7 @@ class DropDown extends StatelessWidget {
                         value: data.toString(),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12),
-                          child: Text(data, style: const TextStyle(color: Colors.black87, fontSize: 16)),
+                          child: Text(data, style:   TextStyle(color: Colors.black87, fontSize: textSize)),
                         ),
                       );
                     }).toList(),

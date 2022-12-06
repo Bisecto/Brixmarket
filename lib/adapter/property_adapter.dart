@@ -7,7 +7,6 @@ class PropertyApi {
 
   final StreamController<FilterModel> getfilterProperty = StreamController();
   Future<void> getProperty(int page,{String searchValue='',String location=''}) async {
-    print(page);
     if(location.length>0){
     EditCtrl.filterState.value.text=location;}
     var Url = Uri.parse('https://api.brixmarket.com/property/filter-properties?page=$page');
@@ -34,14 +33,11 @@ class PropertyApi {
     };
     final res =
     await http.post(Url,headers: headers,body: body);
-    print(res.body);
     final dataBody = await jsonDecode(res.body);
-    print(res);
     FilterModel filterModel = FilterModel.fromJson(dataBody);
     getfilterProperty.add(filterModel);
   }
   Future<void> getWebProperty(int page) async {
-    print(page);
 
     var Url = Uri.parse('https://api.brixmarket.com/property/filter-properties?page=$page');
     var body={
@@ -67,9 +63,7 @@ class PropertyApi {
     };
     final res =
     await http.post(Url,headers: headers,body: body);
-    print(res.body);
     final dataBody = await jsonDecode(res.body);
-    print(res);
     FilterModel filterModel = FilterModel.fromJson(dataBody);
     getfilterProperty.add(filterModel);
   }

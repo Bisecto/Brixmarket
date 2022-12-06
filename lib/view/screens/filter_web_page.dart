@@ -261,6 +261,7 @@ class _Filter_webState extends State<Filter_web> {
                                                 snapdata.data!.data
                                                         .properties ?? [];
                                             //print(snapdata.data!.data.pages);
+                                            if(properties.isNotEmpty){
                                             return Container(
                                                 child: Column(children: [
                                               Padding(
@@ -280,7 +281,7 @@ class _Filter_webState extends State<Filter_web> {
                                                             weight:
                                                                 FontWeight.bold,
                                                             size: 16),
-                                                        if(isNotDeskTop())
+                                                        if(isNotDeskTop()||isDesktopSmall())
                                                         GestureDetector(
                                                             onTap: () {
                                                               showMaterialModalBottomSheet(
@@ -770,7 +771,32 @@ class _Filter_webState extends State<Filter_web> {
                                                         ]),
                                                   ),
                                                 )
-                                            ]));
+                                            ]));}else{
+                                              return Column(
+                                                children: [
+                                                  Column(children: [
+                                                    SizedBox(
+                                                      height: Get.height * 0.2,
+                                                    ),
+                                                    const CustomText(
+                                                        color: Colors.blueGrey,
+                                                        text: 'No Results Found',
+                                                        weight: FontWeight.w400,
+                                                        size: 18),
+                                                    const SizedBox(height: 10),
+                                                    const Text(
+                                                      'Adjust your filter parameter to find a property',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.blueGrey,
+                                                          fontWeight: FontWeight.w400,
+                                                          fontSize: 16),
+                                                    )
+                                                  ])
+                                                ],
+                                              );
+
+                                            }
                                           }
                                         })
                                     // FutureBuilder(
@@ -877,7 +903,7 @@ class _Filter_webState extends State<Filter_web> {
                                                 child: DropDown(
                                                   width: maxWidth * 0.4,
                                                   color: Colors.white10,
-                                                  showLabel: false,
+                                                  showLabel: true,
                                                   labelColor: Colors.black,
                                                   controller:
                                                   EditCtrl.priceMin,
@@ -895,7 +921,7 @@ class _Filter_webState extends State<Filter_web> {
                                                 child: DropDown(
                                                   width: maxWidth * 0.4,
                                                   color: Colors.white10,
-                                                  showLabel: false,
+                                                  showLabel: true,
                                                   controller:
                                                   EditCtrl.priceMax,
                                                   label: 'Max',
@@ -917,7 +943,7 @@ class _Filter_webState extends State<Filter_web> {
                                             child: DropDown(
                                               width: maxWidth * 0.9,
                                               color: Colors.white10,
-                                              showLabel: false,
+                                              showLabel: true,
                                               labelColor: Colors.black,
                                               controller:
                                               EditCtrl.filterState,
@@ -933,7 +959,7 @@ class _Filter_webState extends State<Filter_web> {
                                             child: Obx(() => DropDown(
                                               width: maxWidth * 0.9,
                                               color: Colors.white10,
-                                              showLabel: false,
+                                              showLabel: true,
                                               labelColor: Colors.black54,
                                               controller:
                                               EditCtrl.filterCity,

@@ -11,7 +11,6 @@ import '../screens/mobile/explore_filter_page.dart';
 import 'custom_text.dart';
 import 'drop_down.dart';
 import 'form_inputs.dart';
-import 'package:brixmarket/view/screens/filter_web_page.dart';
 
 class WebHeroSearch extends StatefulWidget {
 
@@ -45,49 +44,49 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
 
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: layerLink,
-      child: SingleChildScrollView(
-        child: Container(
+    return LayoutBuilder(builder: (context, constraints) {
+        return CompositedTransformTarget(
+          link: layerLink,
+          child: SingleChildScrollView(
+            child: Container(
 
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 14,
-                child: FormInput(
-                  topSpace: false,
-                  width: double.infinity,
-                  controller: EditCtrl.webSearchKeyWord,
-                  color: Colors.white,
-                  hint: 'Search by type, size or location...',
-
-                ),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: (constraints.minWidth < 702) ? 12 :14,
+                    child: FormInput(
+                      borderColor: Colors.white,
+                      topSpace: false,
+                      width: double.infinity,
+                      controller: EditCtrl.webSearchKeyWord,
+                      color: Colors.white,
+                      hint: 'Search by type, size or location...',
+                    ),
+                  ),
+                  Expanded(
+                    flex: (constraints.minWidth < 702) ? 2 : 1,
+                    child: InkWell(
+                      onTap: (){
+                        propCtrl.setAllPropertiesWeb(filter: true);
+                      },
+                      child: Container(width: 80,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: const Icon(Icons.search, color: Colors.white,),
+                          decoration:
+                          const  BoxDecoration(color:  Color(0xFFF13054), borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(8),bottomRight: Radius.circular(8)))),
+                    ),
+                  )
+                ],
               ),
-              Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: (){
-                    Navigator.of(context!).push(MaterialPageRoute(
-                        builder: (context) =>
-                            Filter_web()));
-                    //propCtrl.setAllPropertiesWeb(filter: true);
-                  },
-                  child: Container(width: 80,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: const Icon(Icons.search, color: Colors.white,),
-                      decoration:
-                      const  BoxDecoration(color:  Color(0xFFF13054), borderRadius:
-                  BorderRadius.only(topRight: Radius.circular(8),bottomRight: Radius.circular(8)))),
+
+
+
                 ),
-              )
-            ],
-          ),
-
-
-
-            ),
-          ));
+              ));
+      }
+    );
 
   }
   double _lowerValue = 0;

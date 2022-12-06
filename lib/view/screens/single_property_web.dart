@@ -37,7 +37,7 @@ class _Single_page_webState extends State<Single_page_web> {
   @override
   void initState() {
     // TODO: implement initState
-    print(widget.property_id);
+   // print(widget.property_id);
     getSingleProperty(widget.property_id);
   }
 

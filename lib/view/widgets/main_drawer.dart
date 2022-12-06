@@ -90,28 +90,28 @@ Widget buildDrawer(BuildContext context) {
                   height: 20,
                 ),
                 sideBarItem(
-                  navItem: NavItems.house,
-                  icon: Icons.house,
-                  title: 'House',
+                  navItem: NavItems.buy,
+                  icon: Icons.list_alt_outlined,
+                  title: 'Buy',
                   onTap: () {
-                    EditCtrl.filterCategories.clear();
-                    EditCtrl.filterCategories.add('House');
-                    propCtrl.setAllPropertiesWeb(
-                        sideNav: true, navItem: NavItems.house);
-                  },
+                    EditCtrl.filterTypes.clear();
+                    EditCtrl.filterTypes.add('Sale');
+                    propCtrl
+                  .setAllPropertiesWeb(
+                      sideNav: true, navItem: NavItems.buy);},
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 sideBarItem(
-                  navItem: NavItems.land,
-                  icon: Icons.bedroom_parent_outlined,
-                  title: 'Land',
+                  navItem: NavItems.rent,
+                  icon: Icons.insights,
+                  title: 'Rent',
                   onTap: () {
-                    EditCtrl.filterCategories.clear();
-                    EditCtrl.filterCategories.add('Land');
+                    EditCtrl.filterTypes.clear();
+                    EditCtrl.filterTypes.add('Rent');
                     propCtrl.setAllPropertiesWeb(
-                        sideNav: true, navItem: NavItems.land);
+                        sideNav: true, navItem: NavItems.rent);
                   },
                 ),
                 const SizedBox(
@@ -119,7 +119,7 @@ Widget buildDrawer(BuildContext context) {
                 ),
                 sideBarItem(
                   navItem: NavItems.newHomes,
-                  icon: Icons.home,
+                  icon: Icons.ads_click,
                   title: 'New Homes',
                   onTap: () {
                     EditCtrl.filterCategories.clear();
@@ -142,9 +142,9 @@ Widget buildDrawer(BuildContext context) {
                         sideNav: true, navItem: NavItems.commercial);
                   },
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
+                // const SizedBox(
+                //   height: 12,
+                // ),
                 // sideBarItem(
                 //   navItem: NavItems.premiumRealtors,
                 //   icon: Icons.price_change,

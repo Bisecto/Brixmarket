@@ -163,47 +163,41 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                       ? const SizedBox.shrink()
                       : Row(
                           children: [
-                            // InkWell(
-                            //   onTap: () {
-                            //
-                            //    // EditCtrl.filterTypes.clear();
-                            //     EditCtrl.filterTypes.add(Str.buy);
-                            //     propCtrl.setAllPropertiesWeb(navItem: NavItems.buy);
-                            //     }, // Get.to(() => () => PropertiesPage()),
-                            //   child: Obx(() => Text(
-                            //         Str.buy,
-                            //         style: TextStyle(
-                            //           fontSize: 16,
-                            //           fontWeight: FontWeight.w600,
-                            //           color: homeCtrl.activeNavItem.value == NavItems.buy ? Pallet.secondaryColor : Pallet.bottomBarColor,
-                            //         ),
-                            //       )),
-                            // ),
-                            const SizedBox(width: 20),
                             InkWell(
                               onTap: () {
-                                EditCtrl.filterCategories.clear();
-                                EditCtrl.filterCategories.add('House');
-                                propCtrl.setAllPropertiesWeb(navItem: NavItems.house);
-
-                              },
-
+                                EditCtrl.filterTypes.clear();
+                                EditCtrl.filterTypes.add('Sale');
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.buy);}, // Get.to(() => () => PropertiesPage()),
                               child: Obx(() => Text(
-                                    Str.house,
+                                    Str.buy,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
-                                      color: homeCtrl.activeNavItem.value == NavItems.house ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                                      color: homeCtrl.activeNavItem.value == NavItems.buy ? Pallet.secondaryColor : Pallet.bottomBarColor,
                                     ),
                                   )),
                             ),
-                            const SizedBox(width: 20),
+                            const SizedBox(width: 32),
+                            InkWell(
+                              onTap: () {
+                                EditCtrl.filterTypes.clear();
+                                EditCtrl.filterTypes.add('Rent');
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.rent);},
+                              child: Obx(() => Text(
+                                    Str.rent,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: homeCtrl.activeNavItem.value == NavItems.rent ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(width: 32),
                             InkWell(
                               onTap: () {
                                 EditCtrl.filterCategories.clear();
-                                  EditCtrl.filterCategories.add('New Home');
-                                //EditCtrl.filterCategories.clear();
-                                  propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes);},
+                                EditCtrl.filterCategories.add('New Home');
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.newHomes);},
                               child: Obx(() => Text(
                                     Str.newHome,
                                     style: TextStyle(
@@ -213,33 +207,30 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                     ),
                                   )),
                             ),
-                            // InkWell(
-                            //   onTap: ()  {
-                            //     //EditCtrl.filterTypes.clear();
-                            //     EditCtrl.filterTypes.value=['Short stay'];
-                            //     //EditCtrl.filterTypes.add('Short stay');
-                            //     print(EditCtrl.filterTypes.value);
-                            //     propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
-                            //     homeCtrl.activeNavItem.value=NavItems.shortStay;
-                            //     //Navigator.of(context!).push(MaterialPageRoute(builder: (context) => Short_stay()));
-                            //     //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
-                            //   },
-                            //   child: Obx(() => Text(
-                            //     Str.shortStay,
-                            //     style: TextStyle(
-                            //       fontSize: 16,
-                            //       fontWeight: FontWeight.w600,
-                            //       color: homeCtrl.activeNavItem.value == NavItems.shortStay ? Pallet.secondaryColor : Pallet.bottomBarColor,
-                            //     ),
-                            //   )),
-                            // ),
-                            const SizedBox(width: 20),
+                            const SizedBox(width: 32),
+                            InkWell(
+                              onTap: ()  {
+                                EditCtrl.filterTypes.clear();
+                                EditCtrl.filterTypes.add('Short stay');
+                                //propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                                homeCtrl.activeNavItem.value=NavItems.shortStay;
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                              },
+                              child: Obx(() => Text(
+                                Str.shortStay,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: homeCtrl.activeNavItem.value == NavItems.shortStay ? Pallet.secondaryColor : Pallet.bottomBarColor,
+                                ),
+                              )),
+                            ),
+                            const SizedBox(width: 32),
                             InkWell(
                               onTap: () {
-                                //EditCtrl.filterCategories.clear();
                                 EditCtrl.filterCategories.clear();
                                 EditCtrl.filterCategories.add('Commercial');
-                                propCtrl.setAllPropertiesWeb(navItem: NavItems.shortStay);
+                                propCtrl.setAllPropertiesWeb(navItem: NavItems.commercial);
                                 homeCtrl.activeNavItem.value=NavItems.commercial;
                               },
                               child: Obx(() => Text(
@@ -248,23 +239,6 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: homeCtrl.activeNavItem.value == NavItems.commercial ? Pallet.secondaryColor : Pallet.bottomBarColor,
-                                    ),
-                                  )),
-                            ),
-                            const SizedBox(width: 20),
-                            InkWell(
-                              onTap: () {
-
-                                EditCtrl.filterCategories.clear();
-                                EditCtrl.filterCategories.add('Land');
-                                propCtrl.setAllPropertiesWeb(navItem: NavItems.land);
-                                }, // Get.to(() => () => PropertiesPage()),
-                              child: Obx(() => Text(
-                                    'Land',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: homeCtrl.activeNavItem.value == NavItems.land ? Pallet.secondaryColor : Pallet.bottomBarColor,
                                     ),
                                   )),
                             ),

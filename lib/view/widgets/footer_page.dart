@@ -108,7 +108,7 @@ Widget pageFooter() {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(ImgStr.logo1, height: isTablet() ? 32 : 48),
+                    Image.asset(ImgStr.logoLight, height: isTablet() ? 32 : 48),
                     SizedBox(height: isTablet() ? 12 : 24),
                     Text(
                       'No 9B Seguela Street, Wuse Zone 2, British Village,',
@@ -182,39 +182,37 @@ Widget pageFooter() {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           footerQuickLindTitle('SOLUTIONS'),
-                          footerQuickLind('House', onTap: () {
-                            EditCtrl.filterCategories.clear();
-                            EditCtrl.filterCategories.add('House');
+                          footerQuickLind('Buy', onTap: () {
+                            EditCtrl.filterTypes.clear();
+                            EditCtrl.filterTypes.add('Sale');
+                            propCtrl.setAllPropertiesWeb(navItem: NavItems.buy);
+                          }),
+                          footerQuickLind('Rent', onTap: () {
+                            EditCtrl.filterTypes.clear();
+                            EditCtrl.filterTypes.add('Rent');
                             propCtrl.setAllPropertiesWeb(
-                                navItem: NavItems.house);
+                                navItem: NavItems.rent);
                           }),
-                          footerQuickLind('New Home', onTap: () {
-                            EditCtrl.filterCategories.clear();
-                            EditCtrl.filterCategories.add('New Home');
+                          footerQuickLind('New Home',
+                              onTap: () {
+                                EditCtrl.filterCategories.clear();
+                                EditCtrl.filterCategories.add('New Home');
                             propCtrl.setAllPropertiesWeb(
-                                navItem: NavItems.newHomes);
+                                  navItem: NavItems.newHomes);}),
+                          footerQuickLind('Short-stay', onTap: () {
+                            EditCtrl.filterTypes.clear();
+                            EditCtrl.filterTypes.add('Short stay');
+                            homeCtrl.activeNavItem.value = NavItems.shortStay;
+                            // Navigator.of(context!).push(MaterialPageRoute(
+                            //     builder: (context) => Short_stay()));
                           }),
-                          footerQuickLind(
-                            'Commercial',
-                            onTap: () {
-                              EditCtrl.filterCategories.clear();
-                              EditCtrl.filterCategories.add('Commercial');
-                              propCtrl.setAllPropertiesWeb(
-                                  navItem: NavItems.commercial);
-                            },
-                          ),
-                          footerQuickLind('Land', onTap: () {
+                          footerQuickLind('Commercial', onTap: () {
                             EditCtrl.filterCategories.clear();
-                            EditCtrl.filterCategories.add('Land');
-                            homeCtrl.activeNavItem.value = NavItems.land;
+                            EditCtrl.filterCategories.add('Commercial');
+                            propCtrl.setAllPropertiesWeb(
+                                navItem: NavItems.shortStay);
+                            homeCtrl.activeNavItem.value = NavItems.commercial;
                           }),
-                          // footerQuickLind('Commercial', onTap: () {
-                          //
-                          //   propCtrl.setAllPropertiesWeb(
-                          //       navItem: NavItems.shortStay);
-                          //   homeCtrl.activeNavItem.value = NavItems.commercial;
-                          //
-                          // }),
                           // footerQuickLind('Premium Realtors',
                           //     onTap: () => propCtrl.setAllPropertiesWeb(
                           //         navItem: NavItems.premiumRealtors)),

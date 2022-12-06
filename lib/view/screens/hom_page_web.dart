@@ -5,9 +5,9 @@ import 'package:brixmarket/view/widgets/custom_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/preloader.dart';
+import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:brixmarket/models/home_property_model.dart';
+import 'package:brixmarket/models/home_property_model.dart' as home;
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';
 import '../../models/property_model.dart';
@@ -25,8 +25,6 @@ import '../widgets/web_hero_seach.dart';
 import 'about.dart';
 import 'mobile/explore_filter_page.dart';
 import 'package:brixmarket/view/screens/single_property_web.dart';
-import 'package:brixmarket/view/screens/filter_web_page.dart';
-import 'package:brixmarket/controllers/create_property_controller.dart';
 @immutable
 class HomePageWeb extends StatefulWidget {
   HomePageWeb({Key? key}) : super(key: key);
@@ -45,8 +43,6 @@ class _HomePageWebState extends State<HomePageWeb> {
   @override
   Widget build(BuildContext context) {
     double vw = MediaQuery.of(context).size.width;
-    double maxWidth =
-        MediaQuery.of(context).size.width;
     double vh = MediaQuery.of(context).size.height;
     double mainPadding = Get.width < 480 ? Get.width * 0.05 : Get.width * 0.06;
     double card1Width = isMobile()
@@ -106,7 +102,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                       width: Get.width,
                       height: heroHeight + 145,
                       color: Colors.black.withOpacity(0.7),
-                      padding: EdgeInsets.only(top: Get.width * 0.05),
+                      padding: EdgeInsets.only(top: Get.width * 0.1),
                       child: Column(
                         children: [
                           Wrap(
@@ -122,16 +118,16 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 color: Colors.white,
                                 weight: FontWeight.bold,
                               ),
-                              // CustomText(
-                              //   text: '',
-                              //   size: isMobile()
-                              //       ? 36
-                              //       : isTablet()
-                              //           ? 48
-                              //           : 48,
-                              //   color: Pallet.secondaryColor,
-                              //   weight: FontWeight.w700,
-                              // ),
+                              CustomText(
+                                text: '',
+                                size: isMobile()
+                                    ? 36
+                                    : isTablet()
+                                        ? 48
+                                        : 48,
+                                color: Pallet.secondaryColor,
+                                weight: FontWeight.w700,
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -163,7 +159,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                               width: 840,
                               color: Colors.transparent,
                               child: WebHeroSearch()),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 40),
                           Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal:
@@ -174,90 +170,74 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.white,
+                                  color: (constraints.minWidth < 702) ? Colors.transparent : Colors.white,
                                   width: 0.5,
                                 )),
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // Expanded(
-                                  //   child: GestureDetector(
-                                  //       onTap: () {
-                                  //         setState(() {
-                                  //           EditCtrl.filterTypes.clear();
-                                  //           index = 0;
-                                  //           EditCtrl.filterTypes.add('Buy');
-                                  //         });
-                                  //       },
-                                  //       child: selectPropertyType(
-                                  //           bodyIndex: 0, title: 'Sale')),
-                                  // ),
-                                  // Expanded(
-                                  //   child: GestureDetector(
-                                  //       onTap: () {
-                                  //         print(EditCtrl.filterTypes);
-                                  //       },
-                                  //       child: Text('Print')),
-                                  // ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                           // EditCtrl.filterTypes.clear();
-                                            EditCtrl.filterCategories.clear();
-                                            index =0;
-                                            EditCtrl.filterCategories.add('House');
-
-                                          });
-                                        },
-                                        child: selectPropertyType(
-                                            bodyIndex: 0, title: 'House')),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            EditCtrl.filterCategories.clear();
-                                            index = 1;
-                                            EditCtrl.filterCategories.add('New Home');
-
-                                          });
-                                        },
-                                        child: selectPropertyType(
-                                            bodyIndex: 1, title: 'New Home')),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            //EditCtrl.filterTypes.clear();
-                                            EditCtrl.filterCategories.clear();
-                                            index = 2;
-                                            EditCtrl.filterCategories.add('Commercial');
-
-                                          });
-                                        },
-                                        child: selectPropertyType(
-                                            bodyIndex: 2, title: 'Commercial')),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                           // EditCtrl.filterTypes.clear();
-                                            EditCtrl.filterCategories.clear();
-                                            index = 3;
-                                            EditCtrl.filterCategories.add('Land');
-
-                                          });
-                                        },
-                                        child: selectPropertyType(
-                                            bodyIndex: 3, title: 'Land')),
-                                  ),
-                                ],
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          index = 0;
+                                          EditCtrl.filterTypes.clear();
+                                          EditCtrl.filterTypes.add('Sale');
+                                          //EditCtrl.filterTypes.value = 'Buy';
+                                        });
+                                      },
+                                      child: selectPropertyType(
+                                          width: constraints.minWidth,
+                                          bodyIndex: 0, title: 'Buy')),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          index = 1;
+                                          EditCtrl.filterTypes.clear();
+                                          EditCtrl.filterTypes.add('Rent');
+                                          //EditCtrl.propertyType.value = 'Rent';
+                                        });
+                                      },
+                                      child: selectPropertyType(
+                                          width: constraints.minWidth,
+                                          bodyIndex: 1, title: 'Rent')),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          index = 2;
+                                          EditCtrl.filterCategories.clear();
+                                          EditCtrl.filterCategories.add('Commercial');
+                                          // EditCtrl.propertyType.value =
+                                          //     'Commercial';
+                                        });
+                                      },
+                                      child: selectPropertyType(
+                                          width: constraints.minWidth,
+                                          bodyIndex: 2, title: 'Commercial')),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          index = 3;
+                                          EditCtrl.filterTypes.clear();
+                                          EditCtrl.filterTypes.add('Short stay');
+                                          // EditCtrl.propertyType.value =
+                                          //     'ShortLet';
+                                        });
+                                      },
+                                      child: selectPropertyType(
+                                          width: constraints.minWidth,
+                                          bodyIndex: 3, title: 'ShortLet')),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(width: 20,),
+                          const SizedBox(height: 30),
                           Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal:
@@ -267,8 +247,72 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  Expanded(
+                                    child: DropDown(
+                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        showLabel: true,
+                                        controller: EditCtrl.priceMin,
+                                        label: 'Min Price',
+                                        dropIconColor: Colors.grey,
+                                        borderRadius: 12,
+                                        height: isTabletDown() ? 35 : 42,
+                                        color: Colors.white,
+                                        labelColor: Colors.white,
+                                        items: Lst.minFilterPrices,
+                                        hint: 'Min'),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: DropDown(
+                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        showLabel: true,
+                                        controller: EditCtrl.priceMax,
+                                        label: 'Max Price',
+                                        items: Lst.maxFilterPrices,
+                                        dropIconColor: Colors.grey,
+                                        borderRadius: 12,
+                                        height: isTabletDown() ? 35 : 42,
+                                        color: Colors.white,
+                                        labelColor: Colors.white,
+                                        hint: 'max'),
+                                  ),
+                                  const SizedBox(width: 20),
+
+                                  Expanded(
+                                    child: DropDown(
+                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        showLabel: true,
+                                        controller: EditCtrl.filterState,
+                                        label: 'State',
+                                        items: Lst.ngStates,
+                                        dropIconColor: Colors.grey,
+                                        borderRadius: 12,
+                                        height: isTabletDown() ? 35 : 42,
+                                        color: Colors.white,
+                                        labelColor: Colors.white,
+                                        hint: 'State'
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+
+                                  Expanded(
+                                    child: Obx(() => DropDown(
+                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        showLabel: true,
+                                        controller: EditCtrl.filterCity,
+                                        label: 'City/Town',
+                                        items: Lst.ngLGA[EditCtrl.filterState.value.text] ?? [],
+                                        dropIconColor: Colors.grey,
+                                        borderRadius: 12,
+                                        height: isTabletDown() ? 35 : 42,
+                                        color: Colors.white,
+                                        labelColor: Colors.white,
+                                        hint: 'City'
+                                    )),
+                                  ),
                                   // Expanded(
                                   //   child: DropDown(
+                                  //     textSize: (constraints.minWidth < 702) ? 13 : 16,
                                   //     borderRadius: 12,
                                   //     dropIconColor: Colors.grey,
                                   //     height: isTabletDown() ? 35 : 42,
@@ -282,68 +326,11 @@ class _HomePageWebState extends State<HomePageWeb> {
                                   //     items: Lst.propertyCategories,
                                   //   ),
                                   // ),
-                                  Expanded(
-                                    child: DropDown(
-                                        showLabel: true,
-                                        controller: EditCtrl.priceMin,
-                                        label: 'Min Price',
-                                        dropIconColor: Colors.grey,
-                                        borderRadius: 12,
-                                        height: isTabletDown() ? 35 : 42,
-                                        color: Colors.white,
-                                        labelColor: Colors.white,
-                                        items: Lst.minFilterPrices,
-                                        hint: 'Min'),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: DropDown(
-                                        showLabel: true,
-                                        controller: EditCtrl.priceMax,
-                                        label: 'Max Price',
-                                        items: Lst.maxFilterPrices,
-                                        dropIconColor: Colors.grey,
-                                        borderRadius: 12,
-                                        height: isTabletDown() ? 35 : 42,
-                                        color: Colors.white,
-                                        labelColor: Colors.white,
-                                        hint: 'max'),
-                                  ),
-                                  const SizedBox(width: 10),
-
-                                  Expanded(
-                                    child: DropDown(
-                                      showLabel: true,
-                                      controller: EditCtrl.filterState,
-                                      label: 'State',
-                                      items: Lst.ngStates,
-                                        dropIconColor: Colors.grey,
-                                        borderRadius: 12,
-                                        height: isTabletDown() ? 35 : 42,
-                                        color: Colors.white,
-                                        labelColor: Colors.white,
-                                        hint: 'State'
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-
-                                  Expanded(
-                                    child: Obx(() => DropDown(
-                                          showLabel: true,
-                                          controller: EditCtrl.filterCity,
-                                          label: 'City/Town',
-                                          items: Lst.ngLGA[EditCtrl.filterState.value.text] ?? [],
-                                        dropIconColor: Colors.grey,
-                                        borderRadius: 12,
-                                        height: isTabletDown() ? 35 : 42,
-                                        color: Colors.white,
-                                        labelColor: Colors.white,
-                                        hint: 'City'
-                                        )),
-                                  ),
-
+                                  // const SizedBox(width: 20),
                                   // Expanded(
                                   //   child: DropDown(
+                                  //     textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                  //
                                   //     borderRadius: 12,
                                   //     dropIconColor: Colors.grey,
                                   //     height: isTabletDown() ? 35 : 42,
@@ -351,15 +338,17 @@ class _HomePageWebState extends State<HomePageWeb> {
                                   //     borderColor: Colors.transparent,
                                   //     showLabel: true,
                                   //     labelColor: Colors.white,
-                                  //     controller: EditCtrl.status,
+                                  //     controller: EditCtrl.filterStatus,
                                   //     label: 'Status',
                                   //     hint: 'Any',
                                   //     items: Lst.propertyStatus,
                                   //   ),
                                   // ),
-
+                                  // const SizedBox(width: 20),
                                   // Expanded(
                                   //   child: DropDown(
+                                  //     textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                  //
                                   //     borderRadius: 12,
                                   //     dropIconColor: Colors.grey,
                                   //     height: isTabletDown() ? 35 : 42,
@@ -368,31 +357,32 @@ class _HomePageWebState extends State<HomePageWeb> {
                                   //     showLabel: true,
                                   //     labelColor: Colors.white,
                                   //     controller: EditCtrl.priceMax,
-                                  //     label: 'Maximum Price',
-                                  //     hint: 'Maximum ',
+                                  //     label: 'Maxi. Price',
+                                  //     hint: 'Price ',
                                   //     items: Lst.maxFilterPrices,
                                   //   ),
                                   // ),
-
+                                  // const SizedBox(width: 20),
                                   // Expanded(
                                   //   child: DropDown(
+                                  //     textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                  //
                                   //     borderRadius: 12,
                                   //     dropIconColor: Colors.grey,
                                   //     height: isTabletDown() ? 35 : 42,
                                   //     color: Colors.white,
-                                  //
                                   //     borderColor: Colors.transparent,
                                   //     showLabel: true,
                                   //     labelColor: Colors.white,
                                   //     controller: EditCtrl.priceMin,
-                                  //     label: 'Minimum Price',
-                                  //     hint: 'Minimum',
+                                  //     label: 'Min. Price',
+                                  //     hint: 'Price',
                                   //     items: Lst.minFilterPrices,
                                   //   ),
                                   // ),
                                 ],
                               )),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 30),
                           Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal:
@@ -403,27 +393,26 @@ class _HomePageWebState extends State<HomePageWeb> {
                                     const EdgeInsets.symmetric(horizontal: 0.0),
                                 child: Row(
                                   children: [
+
                                     Expanded(
                                       flex: 12,
                                       child: FormButton(
                                         onPressed: () {
-                                          Navigator.of(context!).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Filter_web()));
-                                          // propCtrl.setAllPropertiesWeb(filter: true);
+                                          propCtrl.setAllPropertiesWeb(
+                                              filter: true);
                                         },
                                         text: 'Search',
                                       ),
                                     ),
                                     const SizedBox(width: 20),
                                     Expanded(
-                                      flex: 4,
+                                      flex: (constraints.minWidth < 702) ? 6 : 4,
                                       child: FormButton(
                                         onPressed: () {
                                           propCtrl.clearFilter();
                                         },
                                         text: 'Clear Filter',
+                                        textSize: 14,
                                         bgColor: Colors.transparent,
                                         borderColor: Colors.white,
                                         borderWidth: 0.5,
@@ -438,381 +427,326 @@ class _HomePageWebState extends State<HomePageWeb> {
                   ],
                 ),
                 const SizedBox(height: 50),
-                (isMobile() || isTabletDown())
-                    ? const SizedBox.shrink()
-                    : SizedBox(
-                        height: 600,
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              width:
-                                  isTabletDown() ? Get.width : Get.width * 0.75,
-                              child: Image.asset(
-                                'assets/images/houses.png',
-                                width: isTabletDown() ? Get.width : Get.width,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              top: 150,
-                              child: SizedBox(
-                                width: isTabletDown()
-                                    ? Get.width
-                                    : Get.width * 0.75,
-                                child: Image.asset(
-                                  'assets/images/border.png',
-                                  width: isTabletDown() ? Get.width : Get.width,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                                top: 190,
-                                left: 30,
-                                right: 30,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Column(
-                                        children: [
-                                          const Text('Buy Properties',
-                                              style: TextStyle(
-                                                color: Color(0xFF242627),
-                                                height: 2,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              )),
-                                          const Text(
-                                              'Property all over the country is at\nyour fingertips. Brixmarket allows\nlisting of all types of real estate,\nfrom land, houses to commercial\nreal estate.',
-                                              style: TextStyle(
-                                                color: Color(0xFF242627),
-                                                height: 2,
-                                                fontSize: 14,
-                                              )),
-                                          FormButton(
-                                            onPressed: () {},
-                                            text: 'View Properties',
-                                            bgColor: Colors.white,
-                                            borderColor: Pallet.secondaryColor,
-                                            textColor: Pallet.secondaryColor,
-                                            textSize: 13,
-                                            borderWidth: 0.5,
-                                            width: 135,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Column(
-                                        children: [
-                                          const Text('Sell Properties',
-                                              style: TextStyle(
-                                                color: Color(0xFF242627),
-                                                height: 2,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              )),
-                                          const Text(
-                                              'Are you an agent, or looking to sell\nyour own property? Put your property\nin front of buyers and renters. For\nfree! list it!\n',
-                                              style: TextStyle(
-                                                color: Color(0xFF242627),
-                                                height: 2,
-                                                fontSize: 14,
-                                              )),
-                                          FormButton(
-                                            onPressed: () {},
-                                            text: 'List a property',
-                                            bgColor: Colors.white,
-                                            borderColor: Pallet.secondaryColor,
-                                            textColor: Pallet.secondaryColor,
-                                            textSize: 13,
-                                            borderWidth: 0.5,
-                                            width: 135,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Column(
-                                        children: [
-                                          const Text('Rent Properties',
-                                              style: TextStyle(
-                                                color: Color(0xFF242627),
-                                                height: 2,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              )),
-                                          const Text(
-                                              'House hunting just got easier. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with shortlets and yearly\n rentals.',
-                                              style: TextStyle(
-                                                color: Color(0xFF242627),
-                                                height: 2,
-                                                fontSize: 14,
-                                              )),
-                                          FormButton(
-                                            onPressed: () {},
-                                            text: 'View Properties',
-                                            bgColor: Colors.white,
-                                            borderColor: Pallet.secondaryColor,
-                                            textColor: Pallet.secondaryColor,
-                                            textSize: 13,
-                                            borderWidth: 0.5,
-                                            width: 135,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ))
-                          ],
-                        ),
-                      ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.only(left: Get.width * 0.068, bottom: 4),
-                    child: const CustomText(
-                      text: 'Featured Properties',
-                      color: Colors.black87,
-                      size: 24,
-                      weight: FontWeight.w700,
-                    ),
-                  ),
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  runSpacing: 20,
+
+                  children: [
+                    propertyMenu(
+                        prtyIcon: 'assets/images/buy-house.png',
+                        width: constraints.minWidth,
+                        title: 'Buy Properties',
+                        body:
+                        'Property all over the country is at\nyour fingertips. Brixmarket allows\nlisting of all types of real estate,\nfrom land, houses to commercial\nreal estate.',
+                        btnText: 'View Properties',
+                        onTap: () {
+                          EditCtrl.filterTypes.clear();
+                          EditCtrl.filterTypes.add('buy');
+                          propCtrl.setAllPropertiesWeb(
+                              filter: true);
+                        }),
+                    SizedBox(width: (constraints.minWidth < 1090) ?  0 : 40),
+
+
+                    propertyMenu(
+                        width: constraints.minWidth,
+                        prtyIcon: 'assets/images/sell-house.png',
+
+                        title: 'Sell Properties',
+                        body:
+                        'Are you an agent, or looking to sell\nyour own property? Put your property\nin front of buyers and renters. For\nfree! list it!\n',
+                        btnText: 'List a property',
+                        onTap: () {
+                          if (HomeController.isLogin.value) {
+                            homeCtrl.openDashboard(1);
+                          } else {
+                            homeCtrl.loginRequest();
+                          }
+                          //EditCtrl.filterTypes.clear();
+                         // EditCtrl.filterTypes.add('Sale');
+                        }),
+                    SizedBox(width: (constraints.minWidth < 1090) ?  0 : 40),
+
+
+                    propertyMenu(
+                        prtyIcon: 'assets/images/rent-house.png',
+                        width: constraints.minWidth,
+                        title: 'Rent Properties',
+                        body:
+                        'House hunting just got easier. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with shortlets and yearly\n rentals.',
+                        btnText: 'View Properties',
+                        onTap: () {
+                          EditCtrl.filterTypes.clear();
+                          EditCtrl.filterTypes.add('Rent');
+                          propCtrl.setAllPropertiesWeb(
+                              filter: true);
+                        }),
+                    SizedBox(width: (constraints.minWidth < 1090) ?  0 : 40),
+
+
+                    propertyMenu(
+                        prtyIcon: 'assets/images/new-house.png',
+
+                        width: constraints.minWidth,
+                        title: 'New Homes',
+                        body:
+                        'Looking For a new Home?. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with all forms of exclusive \n houses for all kinds of purpose.',
+                        btnText: 'Show More',
+                        onTap: () {
+                          EditCtrl.filterCategories.clear();
+                          EditCtrl.filterCategories.add('New Home');
+                          propCtrl.setAllPropertiesWeb(
+                              filter: true);
+                        }),
+                  ],
                 ),
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(
-                      children: [
-                        Container(
-                            width: 96,
-                            height: 8,
-                            margin: EdgeInsets.only(
-                                top: 4, left: Get.width * 0.068),
-                            decoration: BoxDecoration(
-                                color: Pallet.secondaryColor,
-                                borderRadius: BorderRadius.circular(8))),
-                        Container(
-                            width: 8,
-                            height: 8,
-                            margin: const EdgeInsets.only(left: 4, top: 4),
-                            decoration: BoxDecoration(
-                                color: Pallet.secondaryColor,
-                                borderRadius: BorderRadius.circular(8))),
-                        Container(
-                            width: 8,
-                            height: 8,
-                            margin: const EdgeInsets.only(left: 4, top: 4),
-                            decoration: BoxDecoration(
-                                color: Pallet.secondaryColor,
-                                borderRadius: BorderRadius.circular(8))),
-                      ],
-                    )),
-                const SizedBox(height: 30),
+
+                const SizedBox(height: 80),
                 FutureBuilder(
                     future: homeCtrl.getHomeproperty(),
-                    builder: (context, AsyncSnapshot<List<Latest>> snap) {
-                      if (snap.connectionState == ConnectionState.waiting) {
-                        return Preloader.loadingWidget();
-                      } else {
-                        List<Latest> properties = snap.data ?? [];
-                        return properties.isEmpty
-                            ? const SizedBox.shrink()
-                            : Stack(
-                                children: [
-                                  GridView.builder(
-                                      itemCount: 6,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              (isMobile() || isTabletDown())
-                                                  ? Get.width * 0.018
-                                                  : Get.width * 0.058),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            (isMobile() || isTabletDown())
-                                                ? 1
-                                                : 3,
-                                        mainAxisSpacing: 2,
-                                        crossAxisSpacing: 5,
-                                      ),
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        var image =
-                                            properties[index].media!.isNotEmpty
-                                                ? properties[index]
-                                                    .media![index]
-                                                    .media!
-                                                : '';
-                                        return InkWell(
-                                          onTap: () {
-                                            // homeCtrl
-                                            //     .viewSingleProperty(properties[index]),
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Single_page_web(
-                                                            property_id:
-                                                                properties[
-                                                                        index]
-                                                                    .id)));
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: 320,
-                                                height: 200,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(color: Colors.grey,width: 1),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            0),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                          propertyImgPath +
-                                                                  '${properties[index].media![index].media}' ??
-                                                              '',
-                                                        ))),
-                                              ),
-                                              SizedBox(
-                                                  width: 320,
-                                                  child: Container(
+                    builder: (context, AsyncSnapshot<List<home.Latest>> snap) {
+                      List<home.Latest> properties = snap.data ?? [];
 
-                                                    padding: const EdgeInsets
-                                                            .fromLTRB(
-                                                        8, 8, 8, 8),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(color: Colors.grey,width: 1),
-                                                    ),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            CustomText(
-                                                                color: Colors
-                                                                    .black,
-                                                                text: properties[
-                                                                            index]
-                                                                        .title ??
-                                                                    '',
-                                                                weight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                size: 16),
-                                                            const SizedBox(
-                                                                height: 8),
-                                                            Row(
-                                                              children: [
-                                                                const Icon(
-                                                                    Icons
-                                                                        .location_on,
-                                                                    color: Pallet
-                                                                        .secondaryColor,
-                                                                    size: 18),
-                                                                const SizedBox(
-                                                                    width: 12),
-                                                                Expanded(
-                                                                  child: CustomText(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      text:
-                                                                          '${properties[index].location!.address}, ${properties[index].location!.city}, ${properties[index].location!.state}',
-                                                                      weight: FontWeight
-                                                                          .w500,
-                                                                      maxLines:
-                                                                          1,
-                                                                      size: 14),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 16),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Wrap(
-                                                                  children: [
-                                                                    CustomText(
-                                                                        color: Pallet
-                                                                            .secondaryColor,
-                                                                        text: Utils.amount(
-                                                                            properties[index].price ??
-                                                                                0),
-                                                                        weight: FontWeight
-                                                                            .w600,
-                                                                        size:
-                                                                            18),
-                                                                    const SizedBox(
-                                                                      width: 3,
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .only(
-                                                                          top:
-                                                                              8.0),
-                                                                      child:
-                                                                          CustomText(
-                                                                        color: Colors
-                                                                            .white
-                                                                            .withOpacity(0.7),
-                                                                        text: properties[index].priceDuration!.substring(0, 3) ==
-                                                                                'Per'
-                                                                            ? properties[index].priceDuration!.toUpperCase()
-                                                                            : '',
-                                                                        weight:
-                                                                            FontWeight.w500,
-                                                                        size:
-                                                                            14,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Obx(() => SavehomeProperty(
-                                                                    property:
-                                                                        properties[
-                                                                            index],
-                                                                    user: homeCtrl
-                                                                        .user
-                                                                        .value,
-                                                                    state: homeCtrl
-                                                                        .savingProperty
-                                                                        .value)),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ))
-                                            ],
-                                          ),
-                                        );
-                                      }),
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return const SizedBox.shrink();
+                      } else {
+                        if (snap.error != null) {
+                          return const SizedBox.shrink();
+                        } else {
+                          return (snap.data!.isEmpty)
+                              ? const SizedBox.shrink()
+                              : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.068,
+                                          bottom: 4),
+                                      child: const CustomText(
+                                        text: 'Featured Properties',
+                                        color: Colors.black87,
+                                        size: 24,
+                                        weight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.068,
+                                          bottom: 4),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                              width: 96,
+                                              height: 8,
+                                              margin:
+                                              const EdgeInsets.only(
+                                                top: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  color: Pallet
+                                                      .secondaryColor,
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(8))),
+                                          Container(
+                                              width: 8,
+                                              height: 8,
+                                              margin:
+                                              const EdgeInsets.only(
+                                                  left: 4, top: 4),
+                                              decoration: BoxDecoration(
+                                                  color: Pallet
+                                                      .secondaryColor,
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(8))),
+                                          Container(
+                                              width: 8,
+                                              height: 8,
+                                              margin:
+                                              const EdgeInsets.only(
+                                                  left: 4, top: 4),
+                                              decoration: BoxDecoration(
+                                                  color: Pallet
+                                                      .secondaryColor,
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(8))),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
-                              );
+                              ),
+                              const SizedBox(height: 30),
+                              Wrap(
+                                runSpacing: 30,
+                                children: [
+                                  propertyListing(
+                                    prtyId: properties[0].id!,
+                                      prtyImage:
+                                      properties[0].media![0].media ??
+                                          '',
+                                      prtyTitle:
+                                      properties[0].title ?? '',
+                                      prtyLocation:
+                                      '${properties[0].location!.address}, ${properties[0].location!.city}, ${properties[0].location!.state}',
+                                      property: properties[0],
+                                      prtyPricing: Utils.amount(
+                                        properties[0].price ?? 0,
+                                      ),
+                                      prtyDuration: properties[0]
+                                          .priceDuration!
+                                          .substring(0, 2) ==
+                                          'Per'
+                                          ? properties[0]
+                                          .priceDuration!
+                                          .toUpperCase()
+                                          : ''),
+                                  ////
+                                  SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
+
+                                  propertyListing(
+                                    prtyId: properties[1].id!,
+                                      prtyImage:
+                                      properties[1].media![1].media ??
+                                          '',
+                                      prtyTitle:
+                                      properties[1].title ?? '',
+                                      prtyLocation:
+                                      '${properties[1].location!.address}, ${properties[1].location!.city}, ${properties[1].location!.state}',
+                                      property: properties[1],
+                                      prtyPricing: Utils.amount(
+                                        properties[1].price ?? 0,
+                                      ),
+                                      prtyDuration: properties[1]
+                                          .priceDuration!
+                                          .substring(0, 2) ==
+                                          'Per'
+                                          ? properties[1]
+                                          .priceDuration!
+                                          .toUpperCase()
+                                          : ''),
+                                  SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
+
+
+                                  propertyListing(
+                                    prtyId: properties[2].id!,
+                                      prtyImage:
+                                      properties[2].media![2].media ??
+                                          '',
+                                      prtyTitle:
+                                      properties[2].title ?? '',
+                                      prtyLocation:
+                                      '${properties[2].location!.address}, ${properties[2].location!.city}, ${properties[2].location!.state}',
+                                      property: properties[2],
+                                      prtyPricing: Utils.amount(
+                                        properties[2].price ?? 0,
+                                      ),
+                                      prtyDuration: properties[2]
+                                          .priceDuration!
+                                          .substring(0, 2) ==
+                                          'Per'
+                                          ? properties[2]
+                                          .priceDuration!
+                                          .toUpperCase()
+                                          : ''),
+                                ],
+                              ),
+                              SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
+                              const SizedBox(height: 30),
+                              Wrap(
+                                runSpacing: 30,
+
+                                children: [
+                                  propertyListing(
+                                    prtyId: properties[3].id!,
+                                      prtyImage:
+                                      properties[3].media![0].media ??
+                                          '',
+                                      prtyTitle:
+                                      properties[3].title ?? '',
+                                      prtyLocation:
+                                      '${properties[3].location!.address}, ${properties[3].location!.city}, ${properties[3].location!.state}',
+                                      property: properties[3],
+                                      prtyPricing: Utils.amount(
+                                        properties[3].price ?? 0,
+                                      ),
+                                      prtyDuration: properties[1]
+                                          .priceDuration!
+                                          .substring(0, 2) ==
+                                          'Per'
+                                          ? properties[3]
+                                          .priceDuration!
+                                          .toUpperCase()
+                                          : ''),
+                                  ////
+                                  SizedBox(width: (constraints.minWidth < 1090|| isMobile()) ?  0 : 50),
+                                  propertyListing(
+                                    prtyId: properties[4].id!,
+                                      prtyImage:
+                                      properties[4].media![2].media ??
+                                          '',
+                                      prtyTitle:
+                                      properties[4].title ?? '',
+                                      prtyLocation:
+                                      '${properties[4].location!.address}, ${properties[4].location!.city}, ${properties[4].location!.state}',
+                                      property: properties[4],
+                                      prtyPricing: Utils.amount(
+                                        properties[4].price ?? 0,
+                                      ),
+                                      prtyDuration: properties[4]
+                                          .priceDuration!
+                                          .substring(0, 2) ==
+                                          'Per'
+                                          ? properties[4]
+                                          .priceDuration!
+                                          .toUpperCase()
+                                          : ''),
+                                  SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0:  50),
+                                  propertyListing(
+                                    prtyId: properties[5].id!,
+                                      prtyImage:
+                                      properties[5].media![1].media ??
+                                          '',
+                                      prtyTitle:
+                                      properties[5].title ?? '',
+                                      prtyLocation:
+                                      '${properties[5].location!.address}, ${properties[5].location!.city}, ${properties[5].location!.state}',
+                                      property: properties[5],
+                                      prtyPricing: Utils.amount(
+                                        properties[5].price ?? 0,
+                                      ),
+                                      prtyDuration: properties[5]
+                                          .priceDuration!
+                                          .substring(0, 2) ==
+                                          'Per'
+                                          ? properties[5]
+                                          .priceDuration!
+                                          .toUpperCase()
+                                          : ''),
+                                ],
+                              )
+                            ],
+                          );
+                        }
                       }
+
+                      return const SizedBox.shrink();
                     }),
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: mainPadding),
@@ -830,8 +764,179 @@ class _HomePageWebState extends State<HomePageWeb> {
       ); //);
     });
   }
+  propertyMenu(
+      {required String title,
+        required String body,
+        required String btnText,
+        required double width,
+        required String prtyIcon,
+        required Function onTap}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal:12.0,vertical:  12),
+      child: AnimatedContainer(
+        duration:const Duration(microseconds: 200),
+        decoration: const  BoxDecoration(
+          border: Border(bottom: BorderSide(width: 5.0, color: Pallet.secondaryColor)),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height:50, width: 50,
+              child: Image.asset(prtyIcon),
+            ),
+            Text(title,
+                style: const TextStyle(
+                  color: Color(0xFF242627),
+                  height: 2,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                )),
+            Text(body,
+                style: const TextStyle(
+                  color: Color(0xFF242627),
+                  height: 2,
+                  fontSize: 14,
+                )),
 
-  selectPropertyType({required int bodyIndex, required String title}) {
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: (){
+                onTap();
+              },
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                //foregroundColor: Colors.white,
+              ),
+              child: Text(btnText,
+                  style: const TextStyle(
+                    color: Pallet.secondaryColor,
+                    height: 2,
+                    fontSize: 14,
+                  )),
+            ),
+            const SizedBox(height: 10),
+
+          ],
+        ),
+      ),
+    );
+  }
+
+  propertyListing(
+      {required String prtyImage,
+        required String prtyId,
+        required String prtyTitle,
+        required String prtyLocation,
+        prtyPricing,
+        required property,
+        required String prtyDuration}) {
+    return Material(
+      elevation: 6,
+      type: MaterialType.card,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: GestureDetector(
+        onTap: (){
+          Navigator.of(context!).push(MaterialPageRoute(
+              builder: (context) =>
+                  Single_page_web(property_id: prtyId)));
+
+        },
+          child:Column(
+        children: [
+          Container(
+            width: 335,
+            height: 215,
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(
+                      10,
+                    ),
+                    topRight: Radius.circular(
+                      10,
+                    )),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      propertyImgPath + prtyImage,
+                    ))),
+          ),
+          SizedBox(
+              width: 320,
+              child: Container(
+                color: Colors.white,
+                padding: const EdgeInsets.fromLTRB(16, 16, 6, 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                            color: Colors.black,
+                            text: prtyTitle,
+                            weight: FontWeight.w700,
+                            size: 16),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on,
+                                color: Pallet.secondaryColor, size: 18),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: CustomText(
+                                  color: Colors.black,
+                                  text: prtyLocation,
+                                  weight: FontWeight.w500,
+                                  maxLines: 1,
+                                  size: 14),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Wrap(
+                              children: [
+                                CustomText(
+                                    color: Pallet.secondaryColor,
+                                    text: prtyPricing,
+                                    weight: FontWeight.w600,
+                                    size: 18),
+                                const SizedBox(
+                                  width: 3,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: CustomText(
+                                    color: Colors.black.withOpacity(0.7),
+                                    text: prtyDuration,
+                                    weight: FontWeight.w500,
+                                    size: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Obx(() => SavehomeProperty(
+                                property: property,
+                                user: homeCtrl.user.value,
+                                state: homeCtrl.savingProperty.value)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ))
+        ],
+      )),
+    );
+  }
+
+
+  selectPropertyType({required int bodyIndex, required String title, required double width}) {
     return Container(
       child: Center(
           child: Text(title, style: const TextStyle(color: Colors.white))),
@@ -839,7 +944,7 @@ class _HomePageWebState extends State<HomePageWeb> {
           color: (index == bodyIndex)
               ? const Color(0xFFF13054)
               : Colors.transparent,
-          borderRadius: BorderRadius.only(
+          borderRadius: (width < 702) ? BorderRadius.circular(8) :BorderRadius.only(
               topLeft: (index == 0)
                   ? const Radius.circular(8)
                   : const Radius.circular(0),
