@@ -734,13 +734,6 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       } else {
         var images =
           'assets/images/home_bg1.jpg';
-          // 'assets/images/welcome3.jpg',
-          // 'assets/images/welcome2.jpg',
-          // 'assets/images/room4.jpg',
-          // 'assets/images/hero1.jpg',
-
-        //messageTimer =
-            //Timer.periodic(const Duration(seconds: 6), (Timer timer) {
           homeCtrl.heroImage.value = images;
           //images[iM % 5];
           //iM++;

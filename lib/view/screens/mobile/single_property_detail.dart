@@ -980,7 +980,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
         duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
 
     setState(() {
-      if (imageNum == imageList.length - 1) {
+      if (imageNum == widget.images.length - 1) {
       } else {
         imageNum = imageNum + 1;
       }

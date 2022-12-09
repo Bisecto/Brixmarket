@@ -167,9 +167,9 @@ class HomePage extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             const SizedBox(width: 30),
-                                            Image.asset('assets/images/playstore.png', height: 50),
+                                            Image.asset('assets/images/playstore_logo.png', height: 50),
                                             const SizedBox(width: 30),
-                                            Image.asset('assets/images/apple.png', height: 50),
+                                            Image.asset('assets/images/apple_logo.png', height: 50),
                                             const SizedBox(width: 30),
                                           ],
                                         ),
@@ -215,17 +215,17 @@ class HomePage extends StatelessWidget {
                   weight: FontWeight.w400,
                 ),
                 const SizedBox(height: 30),
-                SizedBox(
-                  width: Get.width,
-                  child: isTabletDown()
-                      ? Column(
-                          children: findProperties(),
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: findProperties(),
-                        ),
-                ),
+                // SizedBox(
+                //   width: Get.width,
+                //   child: isTabletDown()
+                //       ? Column(
+                //           children: findProperties(),
+                //         )
+                //       : Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: findProperties(),
+                //         ),
+                // ),
                 const SizedBox(height: 30),
                 const CustomText(
                   text: 'Check out for our recent',
@@ -760,70 +760,4 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  List<Widget> findProperties() {
-    return [
-      isTabletDown()
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                boxContainer(height: Get.width * 0.45, width: Get.width * 0.45, title: 'Buy', subtitle: '1,000 properties', image: 'assets/images/room3.jpg'),
-                const SizedBox(width: 5),
-                boxContainer(height: Get.width * 0.45, width: Get.width * 0.45, title: 'Rent', subtitle: '1,000 properties', image: 'assets/images/room2.jpg'),
-              ],
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                boxContainer(
-                    height: isNotDeskTop() ? 240 : 300, width: isNotDeskTop() ? 240 : 300, title: 'Buy', subtitle: '1,000 properties', image: 'assets/images/room3.jpg'),
-                const SizedBox(height: 5),
-                boxContainer(
-                    height: isNotDeskTop() ? 240 : 300, width: isNotDeskTop() ? 240 : 300, title: 'Rent', subtitle: '1,000 properties', image: 'assets/images/room2.jpg'),
-              ],
-            ),
-      const SizedBox(height: 5),
-      isTabletDown()
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: boxContainer(
-                  height: Get.width * 0.45, width: Get.width * 0.45 * 2 + 4, title: 'Premium Realtor', subtitle: '1,000 properties', image: 'assets/images/room5.jpg'),
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: boxContainer(
-                  height: isNotDeskTop() ? 485 : 605,
-                  width: isNotDeskTop() ? 240 : 300,
-                  title: 'Premium Realtor',
-                  subtitle: '1,000 properties',
-                  image: 'assets/images/room5.jpg'),
-            ),
-      const SizedBox(height: 5),
-      isTabletDown()
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                boxContainer(height: Get.width * 0.45, width: Get.width * 0.45, title: 'New Homes', subtitle: '1,000 properties', image: 'assets/images/room1.jpg'),
-                const SizedBox(width: 5),
-                boxContainer(height: Get.width * 0.45, width: Get.width * 0.45, title: 'Commercial', subtitle: '1,000 properties', image: 'assets/images/room6.jpg'),
-              ],
-            )
-          : Column(
-              children: [
-                boxContainer(
-                    height: isNotDeskTop() ? 240 : 300,
-                    width: isNotDeskTop() ? 240 : 300,
-                    title: 'New Homes',
-                    subtitle: '1,000 properties',
-                    image: 'assets/images/room1.jpg'),
-                const SizedBox(height: 5),
-                boxContainer(
-                    height: isNotDeskTop() ? 240 : 300,
-                    width: isNotDeskTop() ? 240 : 300,
-                    title: 'Commercial',
-                    subtitle: '1,000 properties',
-                    image: 'assets/images/room6.jpg'),
-              ],
-            ),
-    ];
-  }
 }

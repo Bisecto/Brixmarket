@@ -108,7 +108,7 @@ Widget pageFooter() {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(ImgStr.logoLight, height: isTablet() ? 32 : 48),
+                    Image.asset(ImgStr.logoLightLight, height: isTablet() ? 32 : 48),
                     SizedBox(height: isTablet() ? 12 : 24),
                     Text(
                       'No 9B Seguela Street, Wuse Zone 2, British Village,',

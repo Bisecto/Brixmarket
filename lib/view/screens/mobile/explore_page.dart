@@ -1416,14 +1416,7 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 }
 
-List<String> imageList = [
-  'assets/images/bedroom2.jpg',
-  'assets/images/bedroom.jpg',
-  'assets/images/bedroom3.jpg',
-  'assets/images/bedroom4.jpg',
-  'assets/images/room1.jpg',
-  'assets/images/home_bg1.jpg'
-];
+
 
 // class Pages extends StatefulWidget {
 //   final page;
@@ -2095,55 +2088,55 @@ List<String> imageList = [
 //   }
 // }
 
-class ExploreGallery extends StatelessWidget {
-   ExploreGallery({Key? key,required this.images}) : super(key: key);
-  late List<sing.Media> images;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Pallet.homeBackground,
-        appBar: AppBar(
-          backgroundColor: Pallet.secondaryColor,
-          automaticallyImplyLeading: true,
-          title: const CustomText(
-            color: Colors.white,
-            size: 18,
-            text: 'Gallery',
-          ),
-        ),
-        body: GridView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(12),
-            itemCount: imageList.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              mainAxisExtent: 180,
-            ),
-            itemBuilder: (_, index) => Hero(
-                  tag: '$index',
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => FullGalleryScreen(
-                          index: index,
-                          images: images,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              image: AssetImage(imageList[index]),
-                              fit: BoxFit.cover)),
-                    ),
-                  ),
-                )));
-  }
-}
+// class ExploreGallery extends StatelessWidget {
+//    ExploreGallery({Key? key,required this.images}) : super(key: key);
+//   late List<sing.Media> images;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         backgroundColor: Pallet.homeBackground,
+//         appBar: AppBar(
+//           backgroundColor: Pallet.secondaryColor,
+//           automaticallyImplyLeading: true,
+//           title: const CustomText(
+//             color: Colors.white,
+//             size: 18,
+//             text: 'Gallery',
+//           ),
+//         ),
+//         body: GridView.builder(
+//             shrinkWrap: true,
+//             padding: const EdgeInsets.all(12),
+//             itemCount: imageList.length,
+//             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//               crossAxisCount: 2,
+//               mainAxisSpacing: 10,
+//               crossAxisSpacing: 10,
+//               mainAxisExtent: 180,
+//             ),
+//             itemBuilder: (_, index) => Hero(
+//                   tag: '$index',
+//                   child: GestureDetector(
+//                     onTap: () {
+//                       Get.to(
+//                         () => FullGalleryScreen(
+//                           index: index,
+//                           images: images,
+//                         ),
+//                       );
+//                     },
+//                     child: Container(
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(12),
+//                           shape: BoxShape.rectangle,
+//                           image: DecorationImage(
+//                               image: AssetImage(imageList[index]),
+//                               fit: BoxFit.cover)),
+//                     ),
+//                   ),
+//                 )));
+//   }
+// }
 
 class FullGalleryScreen extends StatelessWidget {
   FullGalleryScreen({Key? key, required this.index,required this.images}) : super(key: key);

@@ -344,7 +344,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
               //channel.description,
               color: Colors.blueAccent,
               playSound: true,
-              icon: 'assets/images/brix-logo.ico',
+              icon: 'assets/images/brix-logo.png',
             )));
       } else if (notification != null && ios != null) {
         //print('...............................................' + message.data['categorySlug']);

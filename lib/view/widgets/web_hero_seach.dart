@@ -61,7 +61,7 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
                       width: double.infinity,
                       controller: EditCtrl.webSearchKeyWord,
                       color: Colors.white,
-                      hint: 'Search by type, size or location...',
+                      hint: 'Keyword search only...',
                     ),
                   ),
                   Expanded(

@@ -36,7 +36,7 @@ class AuthSide extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
-                  ImgStr.logoLight,
+                  ImgStr.logoLightLight,
                   height: 68,
                   fit: BoxFit.contain,
                 ),

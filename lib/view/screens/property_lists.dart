@@ -73,18 +73,6 @@ class PropertyListsPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(mainPad, 0, mainPad, 24),
-                      height: 140,
-                      width: Get.width,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.fitWidth,
-                              // scale: 2,
-                              image: AssetImage(
-                                'assets/images/ads.png',
-                              ))),
-                    ),
                     Stack(
                       children: [
                         Padding(

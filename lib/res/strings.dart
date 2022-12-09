@@ -14,7 +14,7 @@ mixin RouteStr {
 
   //Web Routes
   static const String webHome = '/';
-  static const String webfilter='/web-filter';
+  static const String webfilter='/filter';
   static const String webProperties = '/properties';
   static const String webProperty = '/property';
   static const String webDashboard = '/dashboard';
@@ -73,25 +73,17 @@ mixin RouteStr {
 mixin ImgStr {
 //Images
   static const String logo = 'assets/images/brix-logo.png';
-  static const String logoLight = 'assets/images/brix-logo-light.png';
   static const String logoDark = 'assets/images/brix-logo-dark.png';
   static const String logoLightLight = 'assets/images/brix-logo-light-light.png';
-  static const String logoDarkLight = 'assets/images/brix-logo-dark-light.png';
-  static const String logoDarkLight2 = 'assets/images/brix-logo-light2.png';
-  static const String logo1 = 'assets/images/brixmarketlogo.jpg';
-  static const String logo2 = "assets/images/brixlogo2.png";
+  static const String logo1 = 'assets/images/brix-logo-dark.png';
+  static const String logo2 = "assets/images/brix-logo.png";
   static const String avatarImg = "assets/images/avatar.jpg";
   static const String certImg = "assets/images/cert.png";
-  static const String idImg = "assets/images/id-image.png";
   static const String idImg2 = "assets/images/id-photo.png";
   static const String loadingImg = "assets/images/load.gif";
   static const String loadingLove1 = "assets/images/love1.gif";
-  static const String loadingLove2 = "assets/images/love2.gif";
-  static const String loadingLove3 = "assets/images/love3.gif";
   static const String chatBg = "assets/images/chat-bg.jpg";
-  static const String loadingRedBalls = "assets/images/loading-red.gif";
   static const String loadingBalls = "assets/images/loading.gif";
-  static const String notificationBell="assets/images/notification-bell.gif";
 }
 
 class Str with RouteStr, ImgStr {

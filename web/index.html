@@ -58,27 +58,78 @@
 
     <title>Brixmarket</title>
     <link rel="manifest" href="manifest.json">
+<!--    <style>-->
+<!--        body {-->
+<!--            height: 100%;-->
+<!--        }-->
+<!--        #container{-->
+<!--            height: 100%;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-content: center;-->
+<!--            padding-top: 45%;-->
+<!--        }-->
+<!--        .img {-->
+<!--          display: inline-block;-->
+<!--        }-->
+
+
+<!--    </style>-->
     <style>
-        body {
-            height: 100%;
-        }
-        #container{
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            padding-top: 45%;
-        }
-        .img {
-          display: inline-block;
-        }
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
 
+    .loader {
+      border: 14px solid #f3f3f3;
+      border-radius: 50%;
+      border: 13px solid ;
+      border-top: 14px solid red;
+      border-right: 13px solid white;
+      border-bottom: 14px solid red;
+      border-left: 14px solid white;
+      width: 50px;
+      height: 50px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
 
-    </style>
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 <body>
-<div id="container">
+<!--<div id="container">-->
+<!--    <div class="img"><img src="brix-logo-dark.png" width="200" height="64"></div>-->
+<div class="loading">
     <div class="img"><img src="brix-logo-dark.png" width="200" height="64"></div>
+    <div class="loader"></div>
+</div>
+<!--<div id="container">-->
+<!--    <div class="img"><img src="brix-logo-dark.png" width="200" height="64"></div>-->
 </div>
 <!-- This script installs service_worker.js to provide PWA functionality to
      application. For more information, see:
@@ -148,7 +199,7 @@
     }
 
 </script>
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<!--<script src="https://js.paystack.co/v1/inline.js"></script>-->
 <!--<script type="text/javascript">-->
 <!--  window.flutterWebRenderer = "html";-->
 <!--</script>-->

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:brixmarket/controllers/property_controller.dart';
-import 'package:brixmarket/view/screens/single_property_detail_web.dart';
+import 'package:brixmarket/view/screens/property.dart';
 import 'package:brixmarket/view/screens/mobile/single_property_detail.dart';
 import 'package:flutter/material.dart';
 
