@@ -358,6 +358,7 @@ class _Filter_webState extends State<Filter_web> {
                                                                                           color: Colors.white10,
                                                                                           showLabel: true,
                                                                                           controller: EditCtrl.priceMax,
+                                                                                          labelColor: Colors.black54,
                                                                                           label: 'Max',
                                                                                           hint: 'Any',
                                                                                           items: Lst.maxFilterPrices,
@@ -651,7 +652,6 @@ class _Filter_webState extends State<Filter_web> {
                                                                                         });
                                                                                         Get.back(result: 'hello');
                                                                                         getfilterProperty(1);
-                                                                                        //propCtrl.applyFilterParameters();
                                                                                       },
                                                                                       child: Container(
                                                                                         height: 48,
@@ -937,7 +937,7 @@ class _Filter_webState extends State<Filter_web> {
                                                     width: maxWidth * 0.4,
                                                     color: Colors.white10,
                                                     showLabel: true,
-                                                    labelColor: Colors.black,
+                                                    labelColor: Colors.black54,
                                                     controller:
                                                         EditCtrl.priceMin,
                                                     label: 'Min Price',
@@ -955,6 +955,7 @@ class _Filter_webState extends State<Filter_web> {
                                                   child: DropDown(
                                                     width: maxWidth * 0.4,
                                                     color: Colors.white10,
+                                                    labelColor: Colors.black54,
                                                     showLabel: true,
                                                     hint:'Any',
                                                     controller:
