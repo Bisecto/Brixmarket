@@ -113,13 +113,16 @@ class CreatePropertyCtrl extends GetxController {
       createPropPageIndex.refresh();
       EditCtrl.disposeControllers();
       if (!Utils.isMobileApp) {
-        //   onInit();
+           onInit();
+
         // }
         //DashboardPage
         // Navigator.pushReplacement(
         //   context!,
         //   MaterialPageRoute(builder: (context) =>  DashboardPage()),
         // );
+           Property.map(id: '');
+           EditCtrl.disposeControllers();
         Restart.restartApp();
       }
     } else {

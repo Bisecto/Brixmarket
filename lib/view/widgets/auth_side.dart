@@ -37,6 +37,7 @@ class AuthSide extends StatelessWidget {
               children: [
                 Image.asset(
                   ImgStr.logoLightLight,
+                  color: Colors.deepOrange,
                   height: 68,
                   fit: BoxFit.contain,
                 ),
