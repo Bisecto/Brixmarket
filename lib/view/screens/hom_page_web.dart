@@ -506,7 +506,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                     future: homeCtrl.getHomeproperty(),
                     builder: (context, AsyncSnapshot<List<home.Latest>> snap) {
                       List<home.Latest> properties = snap.data ?? [];
-
                       if (snap.connectionState == ConnectionState.waiting) {
                         return const SizedBox.shrink();
                       } else {
@@ -532,7 +531,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                                           left: Get.width * 0.068,
                                           bottom: 4),
                                       child: const CustomText(
-                                        text: 'Featured Properties',
+                                        text: 'Latest Properties',
                                         color: Colors.black87,
                                         size: 24,
                                         weight: FontWeight.w700,

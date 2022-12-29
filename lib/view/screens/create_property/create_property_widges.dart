@@ -765,6 +765,7 @@ Widget createPropertyDetails() {
               children: [
                 Flexible(
                   child: DropDown(
+                    //initialValue: EditCtrl.category.value.toString(),
                     controller: EditCtrl.category,
                     label: 'Property Category',
                     items: Lst.propertyCategories,
@@ -801,7 +802,8 @@ Widget createPropertyDetails() {
             child: Column(
               children: [
                 DropDown(
-                  controller: EditCtrl.category,
+                  //initialValue: EditCtrl.category.value.text,
+                controller: EditCtrl.category,
                   label: 'Property Category',
                   items: Lst.propertyCategories,
                 ),

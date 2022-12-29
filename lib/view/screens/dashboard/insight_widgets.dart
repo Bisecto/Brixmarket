@@ -77,8 +77,6 @@ class InsightWidget extends StatelessWidget {
                                         ),
                                       )),
                                 ),
-                                const SizedBox(height: 20),
-                                InkWell(onTap: () => cPropCtrl.sideNavIndex.value = 4, child: Image.asset('assets/images/proplan.png')),
                                 const SizedBox(height: 98),
                               ],
                             )

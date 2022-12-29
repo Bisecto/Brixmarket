@@ -127,8 +127,8 @@ class Location {
   String latitude;
   String landmarks;
   String id;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String createdAt;
+  String updatedAt;
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
     property: json["property"]??' ',
@@ -139,8 +139,8 @@ class Location {
     latitude: json["latitude"]??' ',
     landmarks: json["landmarks"]??' ',
     id: json["id"]??' ',
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    createdAt: json["created_at"].toString()??' ',
+    updatedAt: json["updated_at"].toString()??' ',
   );
 
   Map<String, dynamic> toJson() => {
@@ -152,8 +152,8 @@ class Location {
     "latitude": latitude,
     "landmarks": landmarks,
     "id": id,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt,
+    "updated_at": updatedAt,
   };
 }
 

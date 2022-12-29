@@ -165,7 +165,7 @@ class CreatePropertyCtrl extends GetxController {
       Preloader.show();
       Map<String, dynamic> data = Property.map(
         title: EditCtrl.title.text,
-        reference: EditCtrl.reference.text,
+        reference: DateTime.now().millisecondsSinceEpoch.toString(),
         description: EditCtrl.description.text,
         price: EditCtrl.price.text,
         priceDuration: EditCtrl.priceDuration.value.text,
@@ -183,6 +183,7 @@ class CreatePropertyCtrl extends GetxController {
         getAmenities();
         getFeatures();
       } else {
+        print(response);
         Preloader.hide();
         MSG.errorSnackBar('There was a problem uploading product details',
             title: 'Message');
@@ -479,20 +480,19 @@ class CreatePropertyCtrl extends GetxController {
     }
     return amenities ?? [];
   }
-
   completeDraftProperty(Property property) async {
     cPropCtrl.showMyPropertyMenu.value = false;
     cPropCtrl.createPropPageIndex.value = 0;
     Preloader.show(msg: 'Please wait while we get all saved data.');
     EditCtrl.title.text = property.title ?? '';
-    EditCtrl.reference.text = property.reference ?? '';
+    EditCtrl.reference.text = property.reference ?? DateTime.now().millisecondsSinceEpoch.toString();
     EditCtrl.description.text = property.description ?? '';
 
     EditCtrl.price.text = property.price.toString();
-    EditCtrl.priceDuration.value.text = property.priceDuration! ?? '';
-    EditCtrl.category.value.text = property.category! ?? '';
-    EditCtrl.type.value.text = property.type! ?? '';
-    EditCtrl.status.value.text = property.status! ?? '';
+    EditCtrl.priceDuration.value.text = property.priceDuration!;
+    EditCtrl.category.value.text = property.category!;
+    EditCtrl.type.value.text = property.type!;
+    EditCtrl.status.value.text = property.status!.toString();
 
     if (property.media != null) {
       // EditCtrl.imageFiles.value = [];
