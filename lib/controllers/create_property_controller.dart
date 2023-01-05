@@ -1,7 +1,11 @@
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:restart_app/restart_app.dart';
@@ -15,6 +19,7 @@ import '../services/provider.dart';
 import '../utils/utils.dart';
 import '../view/screens/create_property/create_property_widges.dart';
 import '../view/screens/dashboard_page.dart';
+import '../../../models/user_property_model.dart';
 import '../view/screens/mobile/my_ads_page.dart';
 import 'instance.dart';
 
@@ -103,6 +108,7 @@ class CreatePropertyCtrl extends GetxController {
   bool saveToDraft = false;
 
   gotoNext({required int pageIndex}) {
+    print(pageIndex);
     createPropScrollCtrl.jumpTo(0);
     if (saveToDraft == true) {
       MSG.snackBar('Property saved to my draft');
@@ -127,12 +133,24 @@ class CreatePropertyCtrl extends GetxController {
       }
     } else {
       createPropPageIndex.value = pageIndex;
-      cPPageController.animateToPage(cPPageController.page!.toInt() + 1,
-          duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+      cPPageController.nextPage(//cPPageController.page!.toInt() + 1,
+          duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
     }
   }
+  String generateRandomString(int lengthOfString){
+    final random = Random();
+    const allChars='AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL234567890';
 
+    final randomString = List.generate(lengthOfString,
+            (index) => allChars[random.nextInt(allChars.length)]).join();
+    return randomString;
+  }
   submitPropertyDescription() async {
+    if(EditCtrl.reference.text.isEmpty){
+      EditCtrl.reference.text= generateRandomString(5)+user.id!.substring(0,4)+generateRandomString(5);
+    }else{
+      EditCtrl.reference.text=EditCtrl.reference.text.toString();
+    }
     if (EditCtrl.title.text.isEmpty) {
       MSG.errorSnackBar(
         'Property title field is required',
@@ -163,9 +181,10 @@ class CreatePropertyCtrl extends GetxController {
       );
     } else {
       Preloader.show();
+      print(EditCtrl.reference.text);
       Map<String, dynamic> data = Property.map(
         title: EditCtrl.title.text,
-        reference: DateTime.now().millisecondsSinceEpoch.toString(),
+        reference: EditCtrl.reference.text,
         description: EditCtrl.description.text,
         price: EditCtrl.price.text,
         priceDuration: EditCtrl.priceDuration.value.text,
@@ -175,8 +194,9 @@ class CreatePropertyCtrl extends GetxController {
       );
 
       var response = await Provider().postData("property/store", data);
-
+      print(response);
       if (response != null) {
+        print(response);
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         gotoNext(pageIndex: 1);
@@ -222,12 +242,12 @@ class CreatePropertyCtrl extends GetxController {
         Preloader.hide();
         gotoNext(pageIndex: 2);
       } else {
-        gotoNext(pageIndex: 2);
-        //print('1234567890');
-        // print(response);
-        //   Preloader.hide();
-        //   MSG.errorSnackBar('Image was not Uploaded. Please check your connections or Start afresh uploading the property',title: 'Message');
-        //   //Preloader.hide();
+        //gotoNext(pageIndex: 2);
+        print('1234567890');
+        print(response);
+          Preloader.hide();
+          MSG.errorSnackBar('Image was not Uploaded. Please check your connections.',title: 'Message');
+          //Preloader.hide();
       }
     }
   }
@@ -404,12 +424,34 @@ class CreatePropertyCtrl extends GetxController {
   var myDraftProperties = <Property>[].obs;
   var mySuspendedProperties = <Property>[].obs;
   var myPublishedProperties = <Property>[].obs;
+   StreamController<UserProperty> My_property_streamController=StreamController();
+
+  Future<void> getUserProperty(int page,{required String property_state}) async {
+
+    var Url = Uri.parse('https://api.brixmarket.com/property/get-user-properties?page=$page');
+    var body={
+      'userId': user.id,
+      'property_state': property_state
+    };
+    var headers = {
+      'Authorization': 'Bearer kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos',
+      'Cookie': 'PHPSESSID=efe427461bf8353458f882c0d7143ce3'
+    };
+    final res =
+    await http.post(Url,headers: headers,body: body);
+    final dataBody = await jsonDecode(res.body);
+    UserProperty userProperty=UserProperty.fromJson(dataBody);
+    // FilterModel filterModel = FilterModel.fromJson(dataBody);
+    My_property_streamController.add(userProperty);
+  }
+
 
   Future getMyProperties() async {
     // if (myProperties.isEmpty) {
     var map = User.map();
     var response =
         await Provider().postData("property/get-user-properties", map);
+    print(response);
     if (response != null) {
       myProperties.value = [];
       mySoldProperties.value = [];
@@ -485,7 +527,7 @@ class CreatePropertyCtrl extends GetxController {
     cPropCtrl.createPropPageIndex.value = 0;
     Preloader.show(msg: 'Please wait while we get all saved data.');
     EditCtrl.title.text = property.title ?? '';
-    EditCtrl.reference.text = property.reference ?? DateTime.now().millisecondsSinceEpoch.toString();
+    EditCtrl.reference.text = property.reference!;
     EditCtrl.description.text = property.description ?? '';
 
     EditCtrl.price.text = property.price.toString();

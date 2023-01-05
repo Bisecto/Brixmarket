@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:brixmarket/config/theme/color.dart';
+import 'package:brixmarket/controllers/create_property_controller.dart';
 import 'package:brixmarket/core/preloader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,9 +25,41 @@ class MyAdsPage extends StatefulWidget {
 
 class _MyAdsPageState extends State<MyAdsPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool isLoading = false;
+  ScrollController scrollController = ScrollController();
+  bool showbtn = false;
+  StreamController<List<Property>> _controller=StreamController.broadcast();
+   // getUserProperty(int page) async {
+   //   CreatePropertyCtrl createPropertyCtrl = CreatePropertyCtrl();
+   //   await createPropertyCtrl.getUserProperty(page);
+   //  setState(() {
+   //    _controller = createPropertyCtrl.streamController;
+   //    isLoading = false;
+   //  });
+ // }
+  int page=1;
+
   @override
   void initState() {
     _tabController = TabController(length: 5, vsync: this);
+    //getUserProperty(page);
+    // scrollController.addListener(() {
+    //   //scroll listener
+    //   double showoffset =
+    //   10.0; //Back to top botton will show on scroll offset 10.0
+    //
+    //   if (scrollController.offset > showoffset) {
+    //     showbtn = true;
+    //     setState(() {
+    //       //update state
+    //     });
+    //   } else {
+    //     showbtn = false;
+    //     setState(() {
+    //       //update state
+    //     });
+    //   }
+    // });
     super.initState();
   }
 

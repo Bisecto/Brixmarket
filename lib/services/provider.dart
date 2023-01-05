@@ -100,9 +100,9 @@ class Provider extends GetConnect {
       var response = await http.Response.fromStream(httpResponse).timeout(timeOutDuration2, onTimeout: () => http.Response('Request time out', 408));
       return processResponse(response);
     } catch (e, t) {
-     // dnd('$e Trace: $t');
+      dnd('$e Trace: $t');
       Preloader.hide();
-      //dnd(e);
+      dnd(e);
     }
   }
 

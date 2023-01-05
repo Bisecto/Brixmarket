@@ -92,18 +92,18 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
             const SizedBox(
               height: 20,
             ),
-            if (widget.isEdt)
-              Obx(() => FormButton(
-                    bgColor: Pallet.secondaryColor,
-                    text: 'Skip this section',
-                    disableButton: cPropCtrl.createPropPageIndex.value == 5,
-                    onPressed: () {
-                      //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
-                      //MSG.errorSnackBar('End of page');
-                      //  }
-                      cPropCtrl.ToSpecifiedpage();
-                    },
-                  )),
+            // if (widget.isEdt)
+            //   Obx(() => FormButton(
+            //         bgColor: Pallet.secondaryColor,
+            //         text: 'Skip this section',
+            //         disableButton: cPropCtrl.createPropPageIndex.value == 5,
+            //         onPressed: () {
+            //           //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
+            //           //MSG.errorSnackBar('End of page');
+            //           //  }
+            //           cPropCtrl.ToSpecifiedpage();
+            //         },
+            //       )),
             // if (!widget.isEdt)
             // Obx(() {
             //   if(cPropCtrl.createPropPageIndex.value==3){
