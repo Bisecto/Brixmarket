@@ -107,7 +107,7 @@ class CreatePropertyCtrl extends GetxController {
 
   bool saveToDraft = false;
 
-  gotoNext({required int pageIndex}) {
+  gotoNext({required int pageIndex}) async {
     print(pageIndex);
     createPropScrollCtrl.jumpTo(0);
     if (saveToDraft == true) {
@@ -132,9 +132,9 @@ class CreatePropertyCtrl extends GetxController {
         Restart.restartApp();
       }
     } else {
-      createPropPageIndex.value = pageIndex;
-      cPPageController.nextPage(//cPPageController.page!.toInt() + 1,
+      await cPPageController.nextPage(//cPPageController.page!.toInt() + 1,
           duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+      createPropPageIndex.value = pageIndex;
     }
   }
   String generateRandomString(int lengthOfString){
@@ -237,6 +237,8 @@ class CreatePropertyCtrl extends GetxController {
           "property/store-media/${data['property']}",
           EditCtrl.image8Lists.value,
           data: data);
+      print('1234567890');
+      print(response);
       if (response != null) {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
@@ -407,9 +409,7 @@ class CreatePropertyCtrl extends GetxController {
       }
     }
   }
-
   Insight? insight;
-
   Future getInsight() async {
     // if (insight == null) {
     await Provider()
@@ -420,37 +420,175 @@ class CreatePropertyCtrl extends GetxController {
   }
 
   var myProperties = <Property>[].obs;
+  var allProperties = <Property>[].obs;
   var mySoldProperties = <Property>[].obs;
   var myDraftProperties = <Property>[].obs;
   var mySuspendedProperties = <Property>[].obs;
   var myPublishedProperties = <Property>[].obs;
-   StreamController<UserProperty> My_property_streamController=StreamController();
+  int allPropertiesPage=0;
+  int mySoldPropertiesPage=0;
+  int myDraftPropertiesPage=0;
+  int mySuspendedPropertiesPage=0;
+  int myPublishedPropertiesPage=0;
+   //StreamController<UserProperty> My_property_streamController=StreamController();
 
-  Future<void> getUserProperty(int page,{required String property_state}) async {
+  // Future getUserProperty(int page,{required String property_state}) async {
+  //
+  //   var Url = Uri.parse('https://api.brixmarket.com/property/get-user-properties?page=$page');
+  //   var body={
+  //     'userId': user.id,
+  //     'property_state': property_state
+  //   };
+  //   var headers = {
+  //     'Authorization': 'Bearer kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos',
+  //     'Cookie': 'PHPSESSID=efe427461bf8353458f882c0d7143ce3'
+  //   };
+  //   final res = await http.post(Url,headers: headers,body: body);
+  //   final dataBody = await jsonDecode(res.body);
+  //   for (var e in dataBody['properties']) {
+  //     myProperties.add(Property.fromJson(e));
+  //   }
+  //   // //UserProperty userProperty=UserProperty.fromJson(dataBody);
+  //   // print('1');
+  //   // print(dataBody['data']);
+  //   // //allProperties.add(dataBody['data']);
+  //   // print('1');
+  //   // // FilterModel filterModel = FilterModel.fromJson(dataBody);
+  //   // //myProperties.add(userProperty.data.property);
+  //   // //My_property_streamController.add(userProperty);
+  //   // return dataBody;
+  // }
 
-    var Url = Uri.parse('https://api.brixmarket.com/property/get-user-properties?page=$page');
-    var body={
+  Future getAllMyProperties(int page) async {
+
+    var map =
+    {
       'userId': user.id,
-      'property_state': property_state
+      'property_state': 'All'
     };
-    var headers = {
-      'Authorization': 'Bearer kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos',
-      'Cookie': 'PHPSESSID=efe427461bf8353458f882c0d7143ce3'
+    var response =
+    await Provider().postData("property/get-user-properties?page=$page", map);
+    print(response);
+    if (response != null) {
+      myProperties.value = [];
+
+      if (response != null && response.isNotEmpty) {
+        allPropertiesPage=response['pages'];
+        for (var e in response['properties']) {
+          myProperties.add(Property.fromJson(e));
+        }
+      }
+      // }
+    }
+    return myProperties;
+  }
+  Future getAllPublishedProperties(int page) async {
+
+    var map =
+    {
+      'userId': user.id,
+      'property_state': 'Published'
     };
-    final res =
-    await http.post(Url,headers: headers,body: body);
-    final dataBody = await jsonDecode(res.body);
-    UserProperty userProperty=UserProperty.fromJson(dataBody);
-    // FilterModel filterModel = FilterModel.fromJson(dataBody);
-    My_property_streamController.add(userProperty);
+    var response =
+    await Provider().postData("property/get-user-properties?page=$page", map);
+    print(response);
+    if (response != null) {
+      myPublishedProperties.value = [];
+
+      if (response != null && response.isNotEmpty) {
+        myPublishedPropertiesPage=response['pages'];
+
+        for (var e in response['properties']) {
+          myPublishedProperties.add(Property.fromJson(e));
+        }
+      }
+      // }
+    }
+    return myPublishedProperties;
+  }
+  Future getAllDraftProperties(int page) async {
+
+    var map =
+    {
+      'userId': user.id,
+      'property_state': 'Draft'
+    };
+    var response =
+    await Provider().postData("property/get-user-properties?page=$page", map);
+    print(response);
+    if (response != null) {
+      myDraftProperties.value = [];
+
+      if (response != null && response.isNotEmpty) {
+        myDraftPropertiesPage=response['pages'];
+
+        for (var e in response['properties']) {
+          myDraftProperties.add(Property.fromJson(e));
+        }
+      }
+      // }
+    }
+    return myDraftProperties;
+  }
+  Future getAllSoldProperties(int page) async {
+
+    var map =
+    {
+      'userId': user.id,
+      'property_state': 'Sold'
+    };
+    var response =
+    await Provider().postData("property/get-user-properties?page=$page", map);
+    print(response);
+    if (response != null) {
+      mySoldProperties.value = [];
+
+      if (response != null && response.isNotEmpty) {
+        mySoldPropertiesPage=response['pages'];
+        for (var e in response['properties']) {
+          mySoldProperties.add(Property.fromJson(e));
+        }
+      }
+      // }
+    }
+    return mySoldProperties;
+  }
+  Future getAllSuspendedProperties(int page) async {
+
+    var map =
+    {
+      'userId': user.id,
+      'property_state': 'Suspended'
+    };
+    var response =
+    await Provider().postData("property/get-user-properties?page=$page", map);
+    print(response);
+    if (response != null) {
+      mySuspendedProperties.value = [];
+
+      if (response != null && response.isNotEmpty) {
+        mySuspendedPropertiesPage=response['pages'];
+
+        for (var e in response['properties']) {
+          mySuspendedProperties.add(Property.fromJson(e));
+        }
+      }
+      // }
+    }
+    return mySuspendedProperties;
   }
 
 
-  Future getMyProperties() async {
-    // if (myProperties.isEmpty) {
-    var map = User.map();
+
+  Future getMyProperties(int page,{required String property_state}) async {
+
+    var map =
+    {
+      'userId': user.id,
+    'property_state': property_state
+    };
     var response =
-        await Provider().postData("property/get-user-properties", map);
+        await Provider().postData("property/get-user-properties?page=$page", map);
     print(response);
     if (response != null) {
       myProperties.value = [];
