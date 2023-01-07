@@ -155,8 +155,7 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                                           //MSG.snackBar('End of page',title: 'Message');
                                                                         } else {
                                                                           setState(() {
-                                                                            print(totalAllPropertypage);
-                                                                            print(allProperty_singlePage);
+
                                                                             allProperty_singlePage++;
                                                                             // cPropCtrl.getAllMyProperties(
                                                                             //     allPropertyPage);
