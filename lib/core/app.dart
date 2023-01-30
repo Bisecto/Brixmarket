@@ -11,6 +11,7 @@ const propertyImgPath = appBaseUrl + 'public/res/img/properties/';
 const userImgPath = appBaseUrl + 'public/res/img/users/';
 const cacImgPath = appBaseUrl + 'public/res/img/agency-cert/';
 const idImgPath = appBaseUrl + 'public/res/img/user-ids/';
+const defaultImage = 'assets/images/default_icon.jpeg';
 const requestHeader = {'Authorization': 'Bearer $authToken'};
 
 var context = Get.context;

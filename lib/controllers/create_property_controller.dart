@@ -468,7 +468,7 @@ class CreatePropertyCtrl extends GetxController {
     };
     var response =
     await Provider().postData("property/get-user-properties?page=$page", map);
-    print(response);
+    // print(response);
     if (response != null) {
       myProperties.value = [];
 
