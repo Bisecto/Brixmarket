@@ -727,16 +727,26 @@ class _MyAdsPageState extends State<MyAdsPage>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                                height: 75,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                          propertyImgPath + image,
-                                        )))),
+                        ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                  child: FadeInImage.assetNetwork(
+                    fit: BoxFit.cover,
+                    height: 55,
+                    width: 55,
+                    fadeInDuration:
+                    const Duration(seconds: 1),
+                    fadeInCurve: Curves.easeInCirc,
+                    placeholder: defaultImage,
+                    image: propertyImgPath + image,
+                    imageErrorBuilder:
+                        (context, error, stackTrace) =>
+                        Image.asset(
+                          defaultImage,
+                          height: 55,
+                          width: 55,
+                          fit: BoxFit.cover,
+                        ),
+                  )),
                             const SizedBox(
                               width: 10,
                             ),
@@ -763,7 +773,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                                       LimitedBox(
                                         maxWidth: Get.width * 0.6,
                                         child: Text(
-                                            '${property.location?.address}, ${property.location?.city}, ${property.location?.state}',
+                                            '${property.location?.address ?? property.description}, ${property.location?.city}, ${property.location?.state}',
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.normal,
