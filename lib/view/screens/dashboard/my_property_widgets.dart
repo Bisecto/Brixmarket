@@ -677,6 +677,8 @@ emptyPropertyList() {
 }
 
 Widget myPropertiesWidget(List<Property> myProperties) {
+  print(myProperties[0].price);
+  print("properties1234567890");
   return ListView.builder(
       itemCount: myProperties.length,
       padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02, vertical: 20),

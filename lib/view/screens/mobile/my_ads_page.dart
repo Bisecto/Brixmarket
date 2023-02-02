@@ -695,6 +695,9 @@ class _MyAdsPageState extends State<MyAdsPage>
   }
 
   myPropertiesWidget(List<Property> properties) {
+    print(properties);
+    print("properties1234567890");
+
     return GestureDetector(
       onTap: () {
         cPropCtrl.showMyPropertyMenu.value = false;

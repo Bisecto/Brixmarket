@@ -237,8 +237,6 @@ class CreatePropertyCtrl extends GetxController {
           "property/store-media/${data['property']}",
           EditCtrl.image8Lists.value,
           data: data);
-      print('1234567890');
-      print(response);
       if (response != null) {
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();

@@ -441,7 +441,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                         btnText: 'View Properties',
                         onTap: () {
                           EditCtrl.filterTypes.clear();
-                          EditCtrl.filterTypes.add('buy');
+                          EditCtrl.filterTypes.add('Sale');
                           propCtrl.setAllPropertiesWeb(
                               filter: true);
                         }),

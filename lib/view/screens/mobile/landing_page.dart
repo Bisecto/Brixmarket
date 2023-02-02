@@ -16,7 +16,6 @@ import '../../../controllers/instance.dart';
 import '../../../main.dart';
 import '../../../models/review_model.dart';
 import '../../../res/lists.dart';
-import '../../../testingPage.dart';
 import '../../../utils/utils.dart';
 import 'dart:io' show Platform;
 

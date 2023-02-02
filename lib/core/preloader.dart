@@ -137,7 +137,6 @@ class _PreloaderState extends State<Preloader> with SingleTickerProviderStateMix
                       height: isTabletDown() ? 16 : 48,
                       width: 16,
                     ),
-                    Image.asset(ImgStr.logoDark, height: isMobile() ? 48 : 64),
                     SizedBox(
                       height: 88,
                       width: 16,
