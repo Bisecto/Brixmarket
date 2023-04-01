@@ -1,6 +1,5 @@
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/core/app.dart';
-import 'package:brixmarket/libs/launch_urls.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +9,16 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:brixmarket/models/home_property_model.dart' as home;
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';
-import '../../models/property_model.dart';
 import '../../res/lists.dart';
-import '../../res/strings.dart';
 import '../../utils/utils.dart';
 import '../widgets/drop_down.dart';
 import '../widgets/footer_page.dart';
 import '../widgets/form_button.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/mobile_appbar.dart';
-import '../widgets/property_cards.dart';
 import '../widgets/save_property_icon.dart';
 import '../widgets/web_hero_seach.dart';
 import 'about.dart';
-import 'mobile/explore_filter_page.dart';
 import 'package:brixmarket/view/screens/single_property_web.dart';
 @immutable
 class HomePageWeb extends StatefulWidget {
@@ -594,72 +589,69 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 runSpacing: 30,
                                 children: [
                                   propertyListing(
-                                    prtyId: properties[0].id!,
+                                    prtyId: properties[0].id,
                                       prtyImage:
-                                      properties[0].media![0].media ??
-                                          '',
+                                      properties[0].media[0].media,
                                       prtyTitle:
-                                      properties[0].title ?? '',
+                                      properties[0].title,
                                       prtyLocation:
-                                      '${properties[0].location!.address}, ${properties[0].location!.city}, ${properties[0].location!.state}',
+                                      '${properties[0].location.address}, ${properties[0].location.city}, ${properties[0].location.state}',
                                       property: properties[0],
                                       prtyPricing: Utils.amount(
-                                        properties[0].price ?? 0,
+                                        properties[0].price,
                                       ),
                                       prtyDuration: properties[0]
-                                          .priceDuration!
+                                          .priceDuration
                                           .substring(0, 2) ==
                                           'Per'
                                           ? properties[0]
-                                          .priceDuration!
+                                          .priceDuration
                                           .toUpperCase()
                                           : ''),
                                   ////
                                   SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
 
                                   propertyListing(
-                                    prtyId: properties[1].id!,
+                                    prtyId: properties[1].id,
                                       prtyImage:
-                                      properties[1].media![1].media ??
-                                          '',
+                                      properties[1].media[1].media,
                                       prtyTitle:
-                                      properties[1].title ?? '',
+                                      properties[1].title,
                                       prtyLocation:
-                                      '${properties[1].location!.address}, ${properties[1].location!.city}, ${properties[1].location!.state}',
+                                      '${properties[1].location.address}, ${properties[1].location.city}, ${properties[1].location.state}',
                                       property: properties[1],
                                       prtyPricing: Utils.amount(
-                                        properties[1].price ?? 0,
+                                        properties[1].price,
                                       ),
                                       prtyDuration: properties[1]
-                                          .priceDuration!
+                                          .priceDuration
                                           .substring(0, 2) ==
                                           'Per'
                                           ? properties[1]
-                                          .priceDuration!
+                                          .priceDuration
                                           .toUpperCase()
                                           : ''),
                                   SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
 
 
                                   propertyListing(
-                                    prtyId: properties[2].id!,
+                                    prtyId: properties[2].id,
                                       prtyImage:
-                                      properties[2].media![2].media ??
-                                          '',
+                                      properties[2].media[2].media,
                                       prtyTitle:
-                                      properties[2].title ?? '',
+                                      properties[2].title,
                                       prtyLocation:
-                                      '${properties[2].location!.address}, ${properties[2].location!.city}, ${properties[2].location!.state}',
+                                      '${properties[2].location.address}, ${properties[2].location.city}, ${properties[2].location.state}',
                                       property: properties[2],
                                       prtyPricing: Utils.amount(
-                                        properties[2].price ?? 0,
+                                        properties[2].price,
                                       ),
                                       prtyDuration: properties[2]
-                                          .priceDuration!
+                                          .priceDuration
                                           .substring(0, 2) ==
                                           'Per'
                                           ? properties[2]
-                                          .priceDuration!
+                                          .priceDuration
                                           .toUpperCase()
                                           : ''),
                                 ],
@@ -671,69 +663,66 @@ class _HomePageWebState extends State<HomePageWeb> {
 
                                 children: [
                                   propertyListing(
-                                    prtyId: properties[3].id!,
+                                    prtyId: properties[3].id,
                                       prtyImage:
-                                      properties[3].media![0].media ??
-                                          '',
+                                      properties[3].media[0].media,
                                       prtyTitle:
-                                      properties[3].title ?? '',
+                                      properties[3].title,
                                       prtyLocation:
-                                      '${properties[3].location!.address}, ${properties[3].location!.city}, ${properties[3].location!.state}',
+                                      '${properties[3].location.address}, ${properties[3].location.city}, ${properties[3].location.state}',
                                       property: properties[3],
                                       prtyPricing: Utils.amount(
-                                        properties[3].price ?? 0,
+                                        properties[3].price,
                                       ),
                                       prtyDuration: properties[1]
-                                          .priceDuration!
+                                          .priceDuration
                                           .substring(0, 2) ==
                                           'Per'
                                           ? properties[3]
-                                          .priceDuration!
+                                          .priceDuration
                                           .toUpperCase()
                                           : ''),
                                   ////
                                   SizedBox(width: (constraints.minWidth < 1090|| isMobile()) ?  0 : 50),
                                   propertyListing(
-                                    prtyId: properties[4].id!,
+                                    prtyId: properties[4].id,
                                       prtyImage:
-                                      properties[4].media![2].media ??
-                                          '',
+                                      properties[4].media[2].media,
                                       prtyTitle:
-                                      properties[4].title ?? '',
+                                      properties[4].title,
                                       prtyLocation:
-                                      '${properties[4].location!.address}, ${properties[4].location!.city}, ${properties[4].location!.state}',
+                                      '${properties[4].location.address}, ${properties[4].location.city}, ${properties[4].location.state}',
                                       property: properties[4],
                                       prtyPricing: Utils.amount(
-                                        properties[4].price ?? 0,
+                                        properties[4].price,
                                       ),
                                       prtyDuration: properties[4]
-                                          .priceDuration!
+                                          .priceDuration
                                           .substring(0, 2) ==
                                           'Per'
                                           ? properties[4]
-                                          .priceDuration!
+                                          .priceDuration
                                           .toUpperCase()
                                           : ''),
                                   SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0:  50),
                                   propertyListing(
-                                    prtyId: properties[5].id!,
+                                    prtyId: properties[5].id,
                                       prtyImage:
-                                      properties[5].media![1].media ??
-                                          '',
+                                      properties[5].media[1].media,
                                       prtyTitle:
-                                      properties[5].title ?? '',
+                                      properties[5].title,
                                       prtyLocation:
-                                      '${properties[5].location!.address}, ${properties[5].location!.city}, ${properties[5].location!.state}',
+                                      '${properties[5].location.address}, ${properties[5].location.city}, ${properties[5].location.state}',
                                       property: properties[5],
                                       prtyPricing: Utils.amount(
-                                        properties[5].price ?? 0,
+                                        properties[5].price,
                                       ),
                                       prtyDuration: properties[5]
-                                          .priceDuration!
+                                          .priceDuration
                                           .substring(0, 2) ==
                                           'Per'
                                           ? properties[5]
-                                          .priceDuration!
+                                          .priceDuration
                                           .toUpperCase()
                                           : ''),
                                 ],

@@ -43,13 +43,14 @@ class Data {
   Property property;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    property: Property.fromJson(json["property"]),
-  );
+        property: Property.fromJson(json["property"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "property": property.toJson(),
-  };
+        "property": property.toJson(),
+      };
 }
+
 class Property {
   Property({
     required this.user,
@@ -72,7 +73,7 @@ class Property {
     required this.features,
     required this.amenities,
     required this.reviews,
-   // required this.contact,
+    // required this.contact,
   });
 
   User user;
@@ -98,28 +99,70 @@ class Property {
   //List<Contact> contact;
 
   factory Property.fromJson(Map<String, dynamic> json) => Property(
-    user: User.fromJson(json["user"]),
-    title: json["title"].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\'').toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),
-    description: json["description"].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),
-    price: json["price"]??0,
-    priceDuration: json["price_duration"]??' ',
-    reference: json["reference"]??' ',
-    category: json["category"]??' ',
-    type: json["type"]??' ',
-    status: json["status"]??' ',
-    publishState: json["publish_state"]??' ',
-    id: json["id"]??' ',
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    property: json["property"]??' ',
-    views: json["views"],
-    location: Location.fromJson(json["location"]),
-    media: List<Media>.from(json["media"].map((x) => Media.fromJson(x))),
-    features: List<Feature>.from(json["features"].map((x) => Feature.fromJson(x))),
-    amenities: List<Amenity>.from(json["amenities"].map((x) => Amenity.fromJson(x))),
-    reviews: List<Review>.from(json["reviews"].map((x) =>Review.fromJson(x)))??[],
-    //contact: List<Contact>.from(json["contact"].map((x) => Contact.fromJson(x))) ??[],
-  );
+        user: User.fromJson(json["user"]),
+        title: json["title"]
+            .toString()
+            .replaceAll('&#039;', '\'')
+            .replaceAll('&bull;', '.')
+            .replaceAll('&yen;', '¥')
+            .replaceAll('&pound;', '£')
+            .replaceAll('&euro;', '€')
+            .replaceAll('&lt;', '<')
+            .replaceAll('&gt;', '>')
+            .replaceAll('&amp;', '&')
+            .replaceAll('&ldquo;', '"')
+            .replaceAll('&rdquo;', '"')
+            .replaceAll('&lsquo;', '\'')
+            .replaceAll('&rsquo;', '\'')
+            .toString()
+            .replaceAll('&#039;', '\'')
+            .replaceAll('&bull;', '.')
+            .replaceAll('&yen;', '¥')
+            .replaceAll('&pound;', '£')
+            .replaceAll('&euro;', '€')
+            .replaceAll('&lt;', '<')
+            .replaceAll('&gt;', '>')
+            .replaceAll('&amp;', '&')
+            .replaceAll('&ldquo;', '"')
+            .replaceAll('&rdquo;', '"')
+            .replaceAll('&lsquo;', '\'')
+            .replaceAll('&rsquo;', '\''),
+        description: json["description"]
+            .toString()
+            .replaceAll('&#039;', '\'')
+            .replaceAll('&bull;', '.')
+            .replaceAll('&yen;', '¥')
+            .replaceAll('&pound;', '£')
+            .replaceAll('&euro;', '€')
+            .replaceAll('&lt;', '<')
+            .replaceAll('&gt;', '>')
+            .replaceAll('&amp;', '&')
+            .replaceAll('&ldquo;', '"')
+            .replaceAll('&rdquo;', '"')
+            .replaceAll('&lsquo;', '\'')
+            .replaceAll('&rsquo;', '\''),
+        price: json["price"] ?? 0,
+        priceDuration: json["price_duration"] ?? ' ',
+        reference: json["reference"] ?? ' ',
+        category: json["category"] ?? ' ',
+        type: json["type"] ?? ' ',
+        status: json["status"] ?? ' ',
+        publishState: json["publish_state"] ?? ' ',
+        id: json["id"] ?? ' ',
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        property: json["property"] ?? ' ',
+        views: json["views"],
+        location: Location.fromJson(json["location"]),
+        media: List<Media>.from(json["media"].map((x) => Media.fromJson(x))),
+        features: List<Feature>.from(
+            json["features"].map((x) => Feature.fromJson(x))),
+        amenities: List<Amenity>.from(
+            json["amenities"].map((x) => Amenity.fromJson(x))),
+        reviews:
+            List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
+        //contact: List<Contact>.from(json["contact"].map((x) => Contact.fromJson(x))) ??[],
+      );
   Map<String, dynamic> toJson() => {
         "user": user.toJson(),
         "title": title,
@@ -141,7 +184,7 @@ class Property {
         "features": List<Feature>.from(features.map((x) => x.toJson())),
         "amenities": List<Amenity>.from(amenities.map((x) => x.toJson())),
         "reviews": List<Review>.from(reviews.map((x) => x.toJson())),
-    //"contact": List<dynamic>.from(contact.map((x) => x.toJson()))??[],
+        //"contact": List<dynamic>.from(contact.map((x) => x.toJson()))??[],
       };
 }
 
@@ -194,12 +237,12 @@ class Contact {
   String address;
   String id;
   factory Contact.fromJson(Map<String, dynamic> json) => Contact(
-        property: json["property"]??" ",
-        emailAddress: json["email_address"]??" ",
-        phoneNumber: json["phone_number"]??" ",
-        whatsappNumber: json["whatsapp_number"]??" ",
-        address: json["address"]??" ",
-        id: json["id"]??" ",
+        property: json["property"] ?? " ",
+        emailAddress: json["email_address"] ?? " ",
+        phoneNumber: json["phone_number"] ?? " ",
+        whatsappNumber: json["whatsapp_number"] ?? " ",
+        address: json["address"] ?? " ",
+        id: json["id"] ?? " ",
       );
 
   Map<String, dynamic> toJson() => {
@@ -274,14 +317,14 @@ class Location {
   DateTime updatedAt;
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
-        property: json["property"]??' ',
-        address: json["address"]??' ',
-        city: json["city"]??' ',
-        state: json["state"]??' ',
-        longitude: json["longitude"]??' ',
-        latitude: json["latitude"]??' ',
-        landmarks: json["landmarks"]??' ',
-        id: json["id"]??' ',
+        property: json["property"] ?? ' ',
+        address: json["address"] ?? ' ',
+        city: json["city"] ?? ' ',
+        state: json["state"] ?? ' ',
+        longitude: json["longitude"] ?? ' ',
+        latitude: json["latitude"] ?? ' ',
+        landmarks: json["landmarks"] ?? ' ',
+        id: json["id"] ?? ' ',
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
@@ -358,10 +401,23 @@ class Review {
   DateTime updatedAt;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
-        user: json["user"]??' ',
-        property: json["property"]??' ',
-        rating: json["rating"]??0,
-        message: json["message"].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),
+        user: json["user"] ?? ' ',
+        property: json["property"] ?? ' ',
+        rating: json["rating"] ?? 0,
+        message: json["message"]
+            .toString()
+            .replaceAll('&#039;', '\'')
+            .replaceAll('&bull;', '.')
+            .replaceAll('&yen;', '¥')
+            .replaceAll('&pound;', '£')
+            .replaceAll('&euro;', '€')
+            .replaceAll('&lt;', '<')
+            .replaceAll('&gt;', '>')
+            .replaceAll('&amp;', '&')
+            .replaceAll('&ldquo;', '"')
+            .replaceAll('&rdquo;', '"')
+            .replaceAll('&lsquo;', '\'')
+            .replaceAll('&rsquo;', '\''),
         deleted: json["deleted"],
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -440,20 +496,20 @@ class User {
   //Agency agency;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        surname: json["surname"]??' ',
-        firstName: json["first_name"]??' ',
-        phoneNumber: json["phone_number"]??' ',
+        surname: json["surname"] ?? ' ',
+        firstName: json["first_name"] ?? ' ',
+        phoneNumber: json["phone_number"] ?? ' ',
         emailAddress: json["email_address"],
         refId: json["ref_id"],
-        image: json["image"] ??'',
-        location: json["location"]??' ',
-        longitude: json["longitude"]??' ',
-        latitude: json["latitude"]??' ',
-        city: json["city"]??' ',
-        state: json["state"]??' ',
-        country: json["country"]??' ',
-        address: json["address"]??' ',
-        password: json["password"]??' ',
+        image: json["image"] ?? '',
+        location: json["location"] ?? ' ',
+        longitude: json["longitude"] ?? ' ',
+        latitude: json["latitude"] ?? ' ',
+        city: json["city"] ?? ' ',
+        state: json["state"] ?? ' ',
+        country: json["country"] ?? ' ',
+        address: json["address"] ?? ' ',
+        password: json["password"] ?? ' ',
         isAdmin: json["is_admin"],
         isActive: json["is_active"],
         isAgency: json["is_agency"],
@@ -463,8 +519,8 @@ class User {
         verifiedAgent: json["verified_agent"],
         isPremium: json["is_premium"],
         isBlocked: json["is_blocked"],
-        otp: json["otp"]??' ',
-        id: json["id"]??' ',
+        otp: json["otp"] ?? ' ',
+        id: json["id"] ?? ' ',
         createdAt: DateTime.parse(json["created_at"]),
         //agency: json['agency'] != null ? Agency.fromJson(json['agency']) : Agency.fromJson(json["agency"]),
       );

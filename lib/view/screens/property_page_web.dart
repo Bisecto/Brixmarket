@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/libs/launch_urls.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';
@@ -15,7 +13,6 @@ import '../../core/app.dart';
 import '../../core/preloader.dart';
 import '../../models/media_model.dart';
 import '../../models/property_model.dart';
-import '../../redirect/dynamic_link.dart';
 import '../../res/strings.dart';
 import '../../utils/utils.dart';
 import '../widgets/custom_button.dart';
@@ -112,7 +109,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
     var reviews = productReviews(homeCtrl.property);
 
     return FutureBuilder(
-        future: propCtrl.fetchSingleProperty('MDM1MTIwODgzMzg3MTQ1' ?? '0'),
+        future: propCtrl.fetchSingleProperty('MDM1MTIwODgzMzg3MTQ1'),
         builder: (context, AsyncSnapshot snap) {
           if (snap.connectionState == ConnectionState.waiting) {
             return Preloader.loadingWidget();
@@ -265,7 +262,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                               Expanded(
                                 flex: 2,
                                 child: ListView.builder(
-                                    itemCount: images?.length,
+                                    itemCount: images.length,
                                     shrinkWrap: true,
                                     itemBuilder: ((context, index) {
                                       return (index == 2)
@@ -1084,7 +1081,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                                   CustomText(
                                                       color: Colors.black,
                                                       text: accountName(
-                                                          user: property?.user),
+                                                          user: property.user),
                                                       weight: FontWeight.w600,
                                                       size: 16),
                                                   const SizedBox(height: 8),

@@ -1,7 +1,5 @@
-import 'package:brixmarket/libs/whatsapp.dart';
 import 'package:brixmarket/res/lists.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -13,7 +11,6 @@ import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
-import '../../../libs/launch_urls.dart';
 import '../../../redirect/dynamic_link.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
@@ -65,23 +62,23 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
   PageController _controller = PageController();
   bool checkState = true;
   List detailsDescription = [];
-  double total_rating=0;
-  double average_rating=0;
+  double total_rating = 0;
+  double average_rating = 0;
 
   @override
   void initState() {
     EditCtrl.message.clear();
     super.initState();
-    if(widget.review.length>0){
-    for(int i=0; i<widget.review.length;i++){
-      setState(() {
-        total_rating=total_rating+widget.review[i].rating;
-      });
-    }
+    if (widget.review.isNotEmpty) {
+      for (int i = 0; i < widget.review.length; i++) {
+        setState(() {
+          total_rating = total_rating + widget.review[i].rating;
+        });
+      }
 
-    setState(() {
-      average_rating=total_rating/widget.review.length;
-    });
+      setState(() {
+        average_rating = total_rating / widget.review.length;
+      });
     }
   }
 
@@ -101,7 +98,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
     _controller = PageController(
       initialPage: 0,
     );
-    var details = widget.property.features?.map((feature) {
+    var details = widget.property.features.map((feature) {
       return Container(
         width: Get.width * 0.9,
         margin: const EdgeInsets.only(bottom: 8),
@@ -119,7 +116,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
         ),
       );
     }).toList();
-    var amenities = widget.property.amenities?.map((value) {
+    var amenities = widget.property.amenities.map((value) {
       return Container(
         width: Get.width * 0.9,
         margin: const EdgeInsets.only(bottom: 8),
@@ -138,7 +135,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
     }).toList();
     detailsDescription.add(details);
     detailsDescription.add(amenities);
-    detailsDescription.add(productReviews(widget.property,average_rating));
+    detailsDescription.add(productReviews(widget.property, average_rating));
     return Scaffold(
         body: ListView(
           shrinkWrap: true,
@@ -161,7 +158,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(propertyImgPath +
-                                        widget.images[index].media!))),
+                                        widget.images[index].media))),
                           ),
                         ],
                       );
@@ -233,10 +230,10 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                           ),
                         ),
                         Obx(() => SaveProperty(
-                        property: widget.property,
-                        user: propCtrl.user.value,
-                        state: homeCtrl.savingProperty.value,
-                        color: Colors.white)),
+                            property: widget.property,
+                            user: propCtrl.user.value,
+                            state: homeCtrl.savingProperty.value,
+                            color: Colors.white)),
                       ],
                     ),
                   ),
@@ -283,7 +280,10 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
             ),
             const SizedBox(height: 20),
             GestureDetector(
-              onTap: () => Get.to(() => FullGalleryScreen(index: 1,images: widget.images,)),
+              onTap: () => Get.to(() => FullGalleryScreen(
+                    index: 1,
+                    images: widget.images,
+                  )),
               child: const Center(
                 child: CustomText(
                     color: Colors.black54,
@@ -321,7 +321,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                           child: Center(
                             child: CustomText(
                                 color: Colors.white,
-                                text: widget.property.status!.toUpperCase(),
+                                text: widget.property.status.toUpperCase(),
                                 weight: FontWeight.w400,
                                 size: 13),
                           ),
@@ -331,14 +331,13 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                     ),
                     const SizedBox(width: 24),
                     RatingBarIndicator(
-                      rating: average_rating ??
-                          0,
+                      rating: average_rating,
                       unratedColor: Pallet.grayColor,
                       itemBuilder: (context, index) => Icon(
                         Icons.star,
                         color: average_rating == null
-                            ? Colors.black26 :
-                            Colors.yellow[900],
+                            ? Colors.black26
+                            : Colors.yellow[900],
                         size: 18,
                       ),
                       itemCount: 5,
@@ -346,10 +345,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                       direction: Axis.horizontal,
                     ),
                     CustomText(
-                        text: (
-                                 widget.property.reviews.length ??
-                                '0')
-                            .toString(),
+                        text: (widget.property.reviews.length).toString(),
                         weight: FontWeight.w200,
                         size: 14),
                   ],
@@ -386,7 +382,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                       SizedBox(
                         width: Get.width * 0.8,
                         child: Text(
-                          '${widget.property.location?.address}, ${widget.property.location?.city}, ${widget.property.location?.state}',
+                          '${widget.property.location.address}, ${widget.property.location.city}, ${widget.property.location.state}',
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -416,12 +412,12 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                         backgroundColor: Colors.blueGrey,
                         child: CircleAvatar(
                           radius: 45,
-                          backgroundImage:
-                          (user.image != null && user.image != '')
+                          backgroundImage: (user.image != null &&
+                                  user.image != '')
                               ? NetworkImage(
-                              '$userImgPath${widget.property.user?.image}')
-                          as ImageProvider
-                              : AssetImage(ImgStr.avatarImg),
+                                      '$userImgPath${widget.property.user.image}')
+                                  as ImageProvider
+                              : const AssetImage(ImgStr.avatarImg),
                         ),
                       ),
                       // Container(
@@ -438,34 +434,35 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                             children: [
                               Container(
                                   margin:
-                                  const EdgeInsets.only(top: 12, right: 24),
+                                      const EdgeInsets.only(top: 12, right: 24),
                                   child: CustomText(
                                       color: Colors.black,
-                                      text: accountName1(user: widget.property.user!),
+                                      text: accountName1(
+                                          user: widget.property.user),
                                       weight: FontWeight.bold,
                                       size: 16)),
-                              widget.property.user?.verifiedAgent == false
+                              widget.property.user.verifiedAgent == false
                                   ? const SizedBox.shrink()
                                   : const Positioned(
-                                  right: 2,
-                                  top: 2,
-                                  child: Icon(Icons.verified,
-                                      color: Colors.green)),
+                                      right: 2,
+                                      top: 2,
+                                      child: Icon(Icons.verified,
+                                          color: Colors.green)),
                             ],
                           ),
                           const SizedBox(height: 5),
                           CustomText(
-                              color: widget.property.user?.verifiedAgent == false
+                              color: widget.property.user.verifiedAgent == false
                                   ? Colors.deepOrangeAccent
                                   : Colors.green,
-                              text: (widget.property.user?.verifiedAgent == false
-                                  ? 'Not Verified '
-                                  : 'Verified ') +
-                                  (widget.property.user?.isUser == true
+                              text: (widget.property.user.verifiedAgent == false
+                                      ? 'Not Verified '
+                                      : 'Verified ') +
+                                  (widget.property.user.isUser == true
                                       ? 'Property Agent'
-                                      : widget.property.user?.isAgent == true
-                                      ? 'Realtor/Agent'
-                                      : 'Real Estate Agency'),
+                                      : widget.property.user.isAgent == true
+                                          ? 'Realtor/Agent'
+                                          : 'Real Estate Agency'),
                               weight: FontWeight.w400,
                               size: 14),
                           const SizedBox(height: 12),
@@ -480,10 +477,10 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
             const Divider(
               thickness: 1,
             ),
-            user.id == widget.property.user?.id
+            user.id == widget.property.user.id
                 ? const SizedBox.shrink()
                 : const SizedBox(height: 24),
-            user.id == widget.property.user?.id
+            user.id == widget.property.user.id
                 ? const SizedBox.shrink()
                 : Padding(
                     padding: const EdgeInsets.only(right: 0),
@@ -553,8 +550,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            _callNumber(
-                                widget.property.user!.phoneNumber ?? '');
+                            _callNumber(widget.property.user.phoneNumber);
                           },
                           child: Container(
                             height: 42,
@@ -666,7 +662,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
               child: CustomText(
                   maxLines: 2,
                   color: Colors.black,
-                  text: widget.property.location?.landmarks,
+                  text: widget.property.location.landmarks,
                   //weight: FontWeight.w400,
                   size: 18),
             ),
@@ -772,7 +768,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                                               ? Wrap(
                                                   alignment: WrapAlignment
                                                       .spaceBetween,
-                                                  children: detailsDescription?[
+                                                  children: detailsDescription[
                                                           index] ??
                                                       [],
                                                 )
@@ -809,7 +805,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                 ),
               ),
             const SizedBox(height: 30),
-            user.id == widget.property.user?.id
+            user.id == widget.property.user.id
                 ? const SizedBox.shrink()
                 : GestureDetector(
                     onTap: () {
@@ -892,18 +888,18 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                           children: [
                             CustomText(
                                 color: Pallet.secondaryColor,
-                                text: Utils.amount(widget.property.price!),
+                                text: Utils.amount(widget.property.price),
                                 weight: FontWeight.bold,
                                 size: 18),
                             const SizedBox(width: 5),
-                            widget.property.priceDuration!.substring(0, 3) ==
+                            widget.property.priceDuration.substring(0, 3) ==
                                     'Per'
                                 ? CustomText(
                                     color: Colors.blueGrey,
-                                    text: widget.property.priceDuration!
+                                    text: widget.property.priceDuration
                                                 .substring(0, 3) ==
                                             'Per'
-                                        ? widget.property.priceDuration!
+                                        ? widget.property.priceDuration
                                             .toUpperCase()
                                         : '',
                                     weight: FontWeight.bold,
@@ -915,7 +911,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                       ],
                     ),
                   ),
-                  user.id == widget.property.user?.id
+                  user.id == widget.property.user.id
                       ? FormButton(
                           onPressed: () async {
                             showDialog(
@@ -958,7 +954,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                           txtColor: Colors.white,
                         )
                       : const SizedBox(height: 24),
-                  user.id == widget.property.user?.id
+                  user.id == widget.property.user.id
                       ? const SizedBox.shrink()
                       : FormButton(
                           onPressed: () => requestATour(widget.property.id),
@@ -1068,7 +1064,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
   }
 }
 
-Widget productReviews(Property property,double averageRating) {
+Widget productReviews(Property property, double averageRating) {
   List<Review>? reviews = property.reviews;
   return (reviews == [])
       ? const Text(
@@ -1077,7 +1073,7 @@ Widget productReviews(Property property,double averageRating) {
         )
       : Column(
           children: [
-            ...?(reviews?.map((e) {
+            ...(reviews.map((e) {
               return e.message == ''
                   ? const SizedBox.shrink()
                   : Column(
@@ -1087,7 +1083,7 @@ Widget productReviews(Property property,double averageRating) {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             RatingBarIndicator(
-                              rating: e.rating!.toDouble(),
+                              rating: e.rating.toDouble(),
                               unratedColor: Pallet.grayColor,
                               itemBuilder: (context, index) => Icon(
                                 Icons.star,
@@ -1107,7 +1103,7 @@ Widget productReviews(Property property,double averageRating) {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        Text(e.message!),
+                        Text(e.message),
                         const SizedBox(height: 24),
                       ],
                     );

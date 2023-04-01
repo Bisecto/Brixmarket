@@ -1,42 +1,20 @@
-import 'package:brixmarket/libs/whatsapp.dart';
-import 'package:brixmarket/res/lists.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:readmore/readmore.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
 import '../../../libs/launch_urls.dart';
-import '../../../redirect/dynamic_link.dart';
-import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
-import '../../../utils/validations.dart';
 import 'package:brixmarket/models/single_property_model.dart';
-import 'dart:async';
 
-import 'package:brixmarket/config/theme/color.dart';
-import 'package:brixmarket/libs/launch_urls.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
-import 'package:readmore/readmore.dart';
-import 'package:share_plus/share_plus.dart';
 
-import '../../controllers/edit_controller.dart';
-import '../../controllers/instance.dart';
-import '../../core/app.dart';
-import '../../core/preloader.dart';
-import '../../redirect/dynamic_link.dart';
 import '../../res/strings.dart';
-import '../../utils/utils.dart';
+
 import '../widgets/custom_button.dart';
 import '../widgets/footer_page.dart';
 import '../widgets/form_inputs.dart';
@@ -59,24 +37,29 @@ class Single_Property_detail_web extends StatefulWidget {
   List<Feature> feature;
   List<Review> review;
   int price;
-   Single_Property_detail_web({Key? key,required this.images,
-    required this.property,
-    required this.contact,
-    required this.title,
-    required this.property_id,
-    required this.amenities,
-    required this.location,
-    required this.price,
-    required this.feature,
-    required this.landMark,
-    required this.review,
-    required this.userImage}) : super(key: key);
+  Single_Property_detail_web(
+      {Key? key,
+      required this.images,
+      required this.property,
+      required this.contact,
+      required this.title,
+      required this.property_id,
+      required this.amenities,
+      required this.location,
+      required this.price,
+      required this.feature,
+      required this.landMark,
+      required this.review,
+      required this.userImage})
+      : super(key: key);
 
   @override
-  State<Single_Property_detail_web> createState() => _Single_Property_detail_webState();
+  State<Single_Property_detail_web> createState() =>
+      _Single_Property_detail_webState();
 }
 
-class _Single_Property_detail_webState extends State<Single_Property_detail_web> {
+class _Single_Property_detail_webState
+    extends State<Single_Property_detail_web> {
   late PageController _controller;
   bool checkState = true;
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
@@ -94,55 +77,58 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     double mainPadding = Get.width < 480
         ? Get.width * 0.05
         : Get.width * 0.06 + Get.width * 0.009;
-    List<Media> images = widget.property.media ?? [];
+    List<Media> images = widget.property.media;
 
-    var details = widget.property.features == null || widget.property.features == []
-        ? [Container()]
-        : widget.property.features?.map((feature) {
-      return Container(
-        width: Get.width * 0.9,
-        margin: const EdgeInsets.only(bottom: 8),
-        child: Row(
-          children: [
-            const Icon(Icons.check, color: Colors.black54, size: 18),
-            const SizedBox(width: 16),
-            Expanded(
-                child: CustomText(
-                    color: Colors.black54,
-                    text: feature.featureValue,
-                    weight: FontWeight.w500,
-                    size: 16,
-                    maxLines: 3)),
-          ],
-        ),
-      );
-    }).toList();
-    var amenities = widget.property.amenities == null || widget.property.amenities == []
-        ? [Container()]
-        : widget.property.amenities?.map((value) {
-      return Container(
-        width: Get.width * 0.9,
-        margin: const EdgeInsets.only(bottom: 8),
-        child: Row(
-          children: [
-            const Icon(Icons.check, color: Colors.black54, size: 18),
-            const SizedBox(width: 16),
-            Expanded(
-                child: CustomText(
-                    color: Colors.black54,
-                    text: value.amenity,
-                    weight: FontWeight.w500,
-                    size: 16,
-                    maxLines: 3)),
-          ],
-        ),
-      );
-    }).toList();
+    var details =
+        widget.property.features == null || widget.property.features == []
+            ? [Container()]
+            : widget.property.features.map((feature) {
+                return Container(
+                  width: Get.width * 0.9,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.check, color: Colors.black54, size: 18),
+                      const SizedBox(width: 16),
+                      Expanded(
+                          child: CustomText(
+                              color: Colors.black54,
+                              text: feature.featureValue,
+                              weight: FontWeight.w500,
+                              size: 16,
+                              maxLines: 3)),
+                    ],
+                  ),
+                );
+              }).toList();
+    var amenities =
+        widget.property.amenities == null || widget.property.amenities == []
+            ? [Container()]
+            : widget.property.amenities.map((value) {
+                return Container(
+                  width: Get.width * 0.9,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.check, color: Colors.black54, size: 18),
+                      const SizedBox(width: 16),
+                      Expanded(
+                          child: CustomText(
+                              color: Colors.black54,
+                              text: value.amenity,
+                              weight: FontWeight.w500,
+                              size: 16,
+                              maxLines: 3)),
+                    ],
+                  ),
+                );
+              }).toList();
     var reviews = productReviews(homeCtrl.property);
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
@@ -163,8 +149,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                   decoration: const BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image:
-                          AssetImage('assets/images/hero1.jpg'))),
+                          image: AssetImage('assets/images/hero1.jpg'))),
                   child: Container(
                     width: Get.width,
                     height: isMobile() ? 200 : 300,
@@ -180,8 +165,8 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                               size: isMobile()
                                   ? 20
                                   : isTablet()
-                                  ? 28
-                                  : 48,
+                                      ? 28
+                                      : 48,
                               color: Colors.white,
                               weight: FontWeight.bold,
                             ),
@@ -191,9 +176,8 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                         SizedBox(height: isMobile() ? 0 : 20),
                         Container(
                             margin: EdgeInsets.symmetric(
-                                horizontal: isMobile()
-                                    ? 16
-                                    : (isTablet() ? 48 : 84)),
+                                horizontal:
+                                    isMobile() ? 16 : (isTablet() ? 48 : 84)),
                             width: 840,
                             color: Colors.transparent,
                             child: WebHeroSearch()),
@@ -228,13 +212,11 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(
                                                       propertyImgPath +
-                                                          media
-                                                              .media!))),
+                                                          media.media))),
                                         ),
                                         Container(
                                           width: Get.width,
-                                          color: Colors.black
-                                              .withOpacity(0.1),
+                                          color: Colors.black.withOpacity(0.1),
                                         ),
                                       ],
                                     );
@@ -250,14 +232,11 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                 child: Container(
                                   height: 30,
                                   width: 30,
-                                  child: const Icon(
-                                      Icons.arrow_back_ios_new,
+                                  child: const Icon(Icons.arrow_back_ios_new,
                                       size: 10),
                                   decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(40),
-                                      color: Colors.white
-                                          .withOpacity(0.6)),
+                                      borderRadius: BorderRadius.circular(40),
+                                      color: Colors.white.withOpacity(0.6)),
                                 ),
                               ),
                             ),
@@ -274,10 +253,8 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                     size: 10,
                                   ),
                                   decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(40),
-                                      color: Colors.white
-                                          .withOpacity(0.4)),
+                                      borderRadius: BorderRadius.circular(40),
+                                      color: Colors.white.withOpacity(0.4)),
                                 ),
                               ),
                             ),
@@ -295,79 +272,70 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                             itemBuilder: ((context, index) {
                               return (index == 2)
                                   ? Stack(
-                                children: [
-                                  Container(
-                                    height:
-                                    Get.width * 0.4 * 0.32,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                propertyImgPath +
-                                                    images[index]
-                                                        .media!))),
-                                  ),
-                                  Container(
-                                    height:
-                                    Get.width * 0.4 * 0.32,
-                                    color: Colors.black
-                                        .withOpacity(0.4),
-                                  ),
-                                  images.length > 3
-                                      ? SizedBox(
-                                    height: Get.width *
-                                        0.4 *
-                                        0.32,
-                                    child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .center,
-                                        children: [
-                                          CustomText(
-                                              text: (images.length >
-                                                  3
-                                                  ? (images.length - 3).toString() +
-                                                  ' images'
-                                                  : '')
-                                                  .toString(),
-                                              color: Colors
-                                                  .white70,
-                                              size:
-                                              isMobile()
-                                                  ? 11
-                                                  : 14),
-                                          const SizedBox(
-                                              width: 5),
-                                          const Icon(
-                                              Icons
-                                                  .arrow_forward_ios,
-                                              color: Colors
-                                                  .white,
-                                              size: 12)
-                                        ]),
-                                  )
-                                      : const SizedBox.shrink(),
-                                ],
-                              )
+                                      children: [
+                                        Container(
+                                          height: Get.width * 0.4 * 0.32,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(
+                                                      propertyImgPath +
+                                                          images[index]
+                                                              .media))),
+                                        ),
+                                        Container(
+                                          height: Get.width * 0.4 * 0.32,
+                                          color: Colors.black.withOpacity(0.4),
+                                        ),
+                                        images.length > 3
+                                            ? SizedBox(
+                                                height: Get.width * 0.4 * 0.32,
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      CustomText(
+                                                          text: (images.length >
+                                                                      3
+                                                                  ? (images.length -
+                                                                              3)
+                                                                          .toString() +
+                                                                      ' images'
+                                                                  : '')
+                                                              .toString(),
+                                                          color: Colors.white70,
+                                                          size: isMobile()
+                                                              ? 11
+                                                              : 14),
+                                                      const SizedBox(width: 5),
+                                                      const Icon(
+                                                          Icons
+                                                              .arrow_forward_ios,
+                                                          color: Colors.white,
+                                                          size: 12)
+                                                    ]),
+                                              )
+                                            : const SizedBox.shrink(),
+                                      ],
+                                    )
                                   : Stack(
-                                children: [
-                                  Container(
-                                    height:
-                                    Get.width * 0.4 * 0.32,
-                                    margin: EdgeInsets.only(
-                                      bottom:
-                                      Get.width * 0.4 * 0.02,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                propertyImgPath +
-                                                    images[index]
-                                                        .media!))),
-                                  ),
-                                ],
-                              );
+                                      children: [
+                                        Container(
+                                          height: Get.width * 0.4 * 0.32,
+                                          margin: EdgeInsets.only(
+                                            bottom: Get.width * 0.4 * 0.02,
+                                          ),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(
+                                                      propertyImgPath +
+                                                          images[index]
+                                                              .media))),
+                                        ),
+                                      ],
+                                    );
                             })),
                       ),
                     ],
@@ -398,8 +366,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                 child: Center(
                                   child: CustomText(
                                       color: const Color(0xFF308b85),
-                                      text:
-                                      widget.property.type!.toUpperCase(),
+                                      text: widget.property.type.toUpperCase(),
                                       weight: FontWeight.w500,
                                       size: isTabletDown() ? 12 : 14),
                                 ),
@@ -413,8 +380,8 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                 child: Center(
                                   child: CustomText(
                                       color: Colors.white,
-                                      text: widget.property.status!
-                                          .toUpperCase(),
+                                      text:
+                                          widget.property.status.toUpperCase(),
                                       weight: FontWeight.w500,
                                       size: isTabletDown() ? 12 : 14),
                                 ),
@@ -426,8 +393,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.calendar_month,
-                                  color: Pallet.secondaryColor,
-                                  size: 18),
+                                  color: Pallet.secondaryColor, size: 18),
                               const SizedBox(width: 5),
                               CustomText(
                                 text: widget.property.createdAt.toString(),
@@ -439,20 +405,18 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.visibility,
-                                  color: Pallet.secondaryColor,
-                                  size: 14),
+                                  color: Pallet.secondaryColor, size: 14),
                               const SizedBox(width: 5),
                               CustomText(
-                                text: '${widget.property.views ?? 0} views',
+                                text: '${widget.property.views} views',
                                 size: isTabletDown() ? 12 : 16,
                               )
                             ],
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment:
-                            CrossAxisAlignment.center,
-                            children: [
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
                               // RatingBarIndicator(
                               //   rating: widget.property.averageRating ?? 5,
                               //   unratedColor: Colors.black12,
@@ -467,7 +431,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                               //   itemSize: 18.0,
                               //   direction: Axis.horizontal,
                               // ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 4,
                               ),
                               // CustomText(
@@ -480,14 +444,13 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                           ),
                           Utils.isMobileApp
                               ? Obx(() => SaveProperty(
-                              property: widget.property,
-                              user: homeCtrl.user.value,
-                              state: homeCtrl.savingProperty.value))
+                                  property: widget.property,
+                                  user: homeCtrl.user.value,
+                                  state: homeCtrl.savingProperty.value))
                               : Obx(() => SavePropert(
-                              property: widget.property,
-                              user: homeCtrl.user.value,
-                              state:
-                              homeCtrl.savingProperty.value)),
+                                  property: widget.property,
+                                  user: homeCtrl.user.value,
+                                  state: homeCtrl.savingProperty.value)),
                         ],
                       ),
                       InkWell(
@@ -495,8 +458,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Image.asset('assets/images/megap.png',
-                                height: 22),
+                            Image.asset('assets/images/megap.png', height: 22),
                             const SizedBox(width: 8),
                             const CustomText(
                                 color: Colors.black,
@@ -516,12 +478,10 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                            width: isTabletDown()
-                                ? Get.width
-                                : Get.width * 0.58,
+                            width:
+                                isTabletDown() ? Get.width : Get.width * 0.58,
                             child: Container(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0, 24, 24, 24),
+                              padding: const EdgeInsets.fromLTRB(0, 24, 24, 24),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(4),
@@ -534,20 +494,18 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                 ],
                               ),
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Expanded(
                                         child: Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 24.0),
+                                              const EdgeInsets.only(left: 24.0),
                                           child: CustomText(
                                               color: Colors.black,
                                               text: widget.property.title,
@@ -559,71 +517,59 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                       isMobile()
                                           ? const SizedBox.shrink()
                                           : Padding(
-                                        padding:
-                                        const EdgeInsets.only(
-                                            left: 24.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment
-                                              .start,
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .center,
-                                          children: [
-                                            CustomText(
-                                                color: Pallet
-                                                    .secondaryColor,
-                                                text: Utils.amount(
-                                                    widget.property
-                                                        .price!),
-                                                weight: FontWeight
-                                                    .bold,
-                                                size: 20),
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets
-                                                  .only(
-                                                  top: 4.0),
-                                              child: CustomText(
-                                                  color: Colors
-                                                      .black
-                                                      .withOpacity(
-                                                      0.7),
-                                                  text: widget.property
-                                                      .priceDuration!
-                                                      .substring(0,
-                                                      3) ==
-                                                      'Per'
-                                                      ? widget.property
-                                                      .priceDuration!
-                                                      .toUpperCase()
-                                                      : '',
-                                                  weight:
-                                                  FontWeight
-                                                      .w500,
-                                                  size: 12),
+                                              padding: const EdgeInsets.only(
+                                                  left: 24.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  CustomText(
+                                                      color:
+                                                          Pallet.secondaryColor,
+                                                      text: Utils.amount(widget
+                                                          .property.price),
+                                                      weight: FontWeight.bold,
+                                                      size: 20),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 4.0),
+                                                    child: CustomText(
+                                                        color: Colors.black
+                                                            .withOpacity(0.7),
+                                                        text: widget.property
+                                                                    .priceDuration
+                                                                    .substring(
+                                                                        0, 3) ==
+                                                                'Per'
+                                                            ? widget.property
+                                                                .priceDuration
+                                                                .toUpperCase()
+                                                            : '',
+                                                        weight: FontWeight.w500,
+                                                        size: 12),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
                                     ],
                                   ),
                                   const SizedBox(height: 8),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 22.0),
+                                    padding: const EdgeInsets.only(left: 22.0),
                                     child: Row(
                                       children: [
                                         const Icon(Icons.location_on,
-                                            color:
-                                            Pallet.secondaryColor,
+                                            color: Pallet.secondaryColor,
                                             size: 18),
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: CustomText(
                                               color: Colors.black,
                                               text:
-                                              '${widget.property.location!.address}, ${widget.property.location!.city}, ${widget.property.location!.state}',
+                                                  '${widget.property.location.address}, ${widget.property.location.city}, ${widget.property.location.state}',
                                               weight: FontWeight.w500,
                                               maxLines: 4,
                                               size: 16),
@@ -636,57 +582,48 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                   ),
                                   isMobile()
                                       ? Padding(
-                                    padding:
-                                    const EdgeInsets.only(
-                                        left: 24.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment
-                                          .start,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        CustomText(
-                                            color: Pallet
-                                                .secondaryColor,
-                                            text: Utils.amount(
-                                                widget.property.price!),
-                                            weight:
-                                            FontWeight.bold,
-                                            size: 20),
-                                        Padding(
                                           padding:
-                                          const EdgeInsets
-                                              .only(top: 4.0),
-                                          child: CustomText(
-                                              color: Colors.black
-                                                  .withOpacity(
-                                                  0.7),
-                                              text: widget.property
-                                                  .priceDuration!
-                                                  .substring(
-                                                  0,
-                                                  3) ==
-                                                  'Per'
-                                                  ? widget.property
-                                                  .priceDuration!
-                                                  .toUpperCase()
-                                                  : '',
-                                              weight:
-                                              FontWeight.w500,
-                                              size: 12),
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                              const EdgeInsets.only(left: 24.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              CustomText(
+                                                  color: Pallet.secondaryColor,
+                                                  text: Utils.amount(
+                                                      widget.property.price),
+                                                  weight: FontWeight.bold,
+                                                  size: 20),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 4.0),
+                                                child: CustomText(
+                                                    color: Colors.black
+                                                        .withOpacity(0.7),
+                                                    text: widget.property
+                                                                .priceDuration
+                                                                .substring(
+                                                                    0, 3) ==
+                                                            'Per'
+                                                        ? widget.property
+                                                            .priceDuration
+                                                            .toUpperCase()
+                                                        : '',
+                                                    weight: FontWeight.w500,
+                                                    size: 12),
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       : const SizedBox.shrink(),
                                   const SizedBox(
                                     height: 16,
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -695,8 +632,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                               Container(
                                                 height: 20,
                                                 width: 3,
-                                                color: Pallet
-                                                    .secondaryColor,
+                                                color: Pallet.secondaryColor,
                                               ),
                                             ],
                                           ),
@@ -714,36 +650,29 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                         height: 12,
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 23.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 23.0),
                                         child: ReadMoreText(
-                                          '${widget.property.description}',
+                                          widget.property.description,
                                           trimLines: 4,
                                           textAlign: TextAlign.left,
                                           colorClickableText:
-                                          Pallet.secondaryColor,
+                                              Pallet.secondaryColor,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              fontWeight:
-                                              FontWeight.w500,
+                                              fontWeight: FontWeight.w500,
                                               color: Colors.grey[600]),
                                           trimMode: TrimMode.Line,
                                           lessStyle: const TextStyle(
                                               fontSize: 13,
-                                              fontWeight:
-                                              FontWeight.w200,
-                                              color: Pallet
-                                                  .secondaryColor),
-                                          trimCollapsedText:
-                                          '  Read more',
-                                          trimExpandedText:
-                                          '  Read less',
+                                              fontWeight: FontWeight.w200,
+                                              color: Pallet.secondaryColor),
+                                          trimCollapsedText: '  Read more',
+                                          trimExpandedText: '  Read less',
                                           moreStyle: const TextStyle(
                                               fontSize: 13,
-                                              fontWeight:
-                                              FontWeight.normal,
-                                              color: Pallet
-                                                  .secondaryColor),
+                                              fontWeight: FontWeight.normal,
+                                              color: Pallet.secondaryColor),
                                         ),
                                       ),
                                     ],
@@ -753,7 +682,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -762,8 +691,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                               Container(
                                                 height: 20,
                                                 width: 3,
-                                                color: Pallet
-                                                    .secondaryColor,
+                                                color: Pallet.secondaryColor,
                                               ),
                                             ],
                                           ),
@@ -772,8 +700,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                           ),
                                           const CustomText(
                                               color: Colors.black,
-                                              text:
-                                              'Property Details (Nearby)',
+                                              text: 'Property Details (Nearby)',
                                               weight: FontWeight.w800,
                                               size: 18),
                                         ],
@@ -783,26 +710,22 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                       ),
                                       Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 23.0),
+                                              const EdgeInsets.only(left: 23.0),
                                           child: SizedBox(
                                             width: Get.width,
                                             child: GridView.builder(
                                               physics:
-                                              const BouncingScrollPhysics(),
+                                                  const BouncingScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount:
-                                              details?.length,
+                                              itemCount: details.length,
                                               gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount:
-                                                isMobile() ? 2 : 4,
+                                                    isMobile() ? 2 : 4,
                                                 mainAxisExtent: 32,
                                               ),
                                               itemBuilder: (_, index) =>
-                                              details?[index] ??
-                                                  const SizedBox
-                                                      .shrink(), //amenities
+                                                  details[index], //amenities
                                             ),
                                           )),
                                     ],
@@ -812,7 +735,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -821,8 +744,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                               Container(
                                                 height: 20,
                                                 width: 3,
-                                                color: Pallet
-                                                    .secondaryColor,
+                                                color: Pallet.secondaryColor,
                                               ),
                                             ],
                                           ),
@@ -841,27 +763,23 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                       ),
                                       Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 23.0),
+                                              const EdgeInsets.only(left: 23.0),
                                           child: SizedBox(
                                             width: Get.width,
                                             child: GridView.builder(
-                                              physics:
-                                              const BouncingScrollPhysics(),
-                                              shrinkWrap: true,
-                                              itemCount:
-                                              amenities?.length,
-                                              gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount:
-                                                isMobile() ? 2 : 4,
-                                                mainAxisExtent: 32,
-                                              ),
-                                              itemBuilder: (_, index) =>
-                                              amenities?[index] ??
-                                                  const SizedBox
-                                                      .shrink(), //
-                                            ),
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                shrinkWrap: true,
+                                                itemCount: amenities.length,
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount:
+                                                      isMobile() ? 2 : 4,
+                                                  mainAxisExtent: 32,
+                                                ),
+                                                itemBuilder: (_, index) =>
+                                                    amenities[index] //
+                                                ),
                                           )),
                                       const SizedBox(
                                         height: 20,
@@ -873,8 +791,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                               Container(
                                                 height: 20,
                                                 width: 3,
-                                                color: Pallet
-                                                    .secondaryColor,
+                                                color: Pallet.secondaryColor,
                                               ),
                                             ],
                                           ),
@@ -896,8 +813,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                       ),
                                       Padding(
                                           padding:
-                                          const EdgeInsets.only(
-                                              left: 23.0),
+                                              const EdgeInsets.only(left: 23.0),
                                           child: reviews),
                                       const SizedBox(
                                         height: 48,
@@ -909,23 +825,20 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                               Container(
                                                 height: 20,
                                                 width: 3,
-                                                color: Pallet
-                                                    .secondaryColor,
+                                                color: Pallet.secondaryColor,
                                               ),
                                             ],
                                           ),
                                           const SizedBox(
                                             width: 20,
                                           ),
-                                          user.id == widget.property.user?.id
+                                          user.id == widget.property.user.id
                                               ? const SizedBox.shrink()
                                               : const CustomText(
-                                              color: Colors.black,
-                                              text:
-                                              'Review this Property',
-                                              weight:
-                                              FontWeight.w800,
-                                              size: 18),
+                                                  color: Colors.black,
+                                                  text: 'Review this Property',
+                                                  weight: FontWeight.w800,
+                                                  size: 18),
                                           const SizedBox(
                                             width: 20,
                                           ),
@@ -937,94 +850,74 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                       user.id == widget.property.user.id
                                           ? const SizedBox.shrink()
                                           : Container(
-                                        margin:
-                                        const EdgeInsets.only(
-                                            left: 20),
-                                        child: Column(children: [
-                                          const SizedBox(
-                                              height: 16),
-                                          RatingBar.builder(
-                                            minRating: 1,
-                                            itemCount: 5,
-                                            itemSize: 32,
-                                            itemPadding:
-                                            const EdgeInsets
-                                                .symmetric(
-                                                horizontal:
-                                                4.0),
-                                            itemBuilder: (context,
-                                                _) =>
-                                            const Icon(
-                                                Icons.star,
-                                                color: Colors
-                                                    .amber),
-                                            onRatingUpdate:
-                                                (rating) {
-                                              EditCtrl.rating
-                                                  .text =
-                                                  rating
-                                                      .toInt()
-                                                      .toString();
-                                            },
-                                          ),
-                                        ]),
-                                      ),
-                                      user.id == widget.property.user?.id
+                                              margin: const EdgeInsets.only(
+                                                  left: 20),
+                                              child: Column(children: [
+                                                const SizedBox(height: 16),
+                                                RatingBar.builder(
+                                                  minRating: 1,
+                                                  itemCount: 5,
+                                                  itemSize: 32,
+                                                  itemPadding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 4.0),
+                                                  itemBuilder: (context, _) =>
+                                                      const Icon(Icons.star,
+                                                          color: Colors.amber),
+                                                  onRatingUpdate: (rating) {
+                                                    EditCtrl.rating.text =
+                                                        rating
+                                                            .toInt()
+                                                            .toString();
+                                                  },
+                                                ),
+                                              ]),
+                                            ),
+                                      user.id == widget.property.user.id
                                           ? const SizedBox.shrink()
                                           : Container(
-                                        width: Get.width * 0.8,
-                                        margin:
-                                        const EdgeInsets.only(
-                                            left: 24,
-                                            top: 20),
-                                        color: const Color(
-                                            0xFFf9f9f9),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            SizedBox(
-                                              width: Get.width *
-                                                  0.4 +
-                                                  12,
-                                              child:
-                                              UnderlineFormInput(
-                                                controller: EditCtrl
-                                                    .messageReview,
-                                                hint:
-                                                'Type your comment here.',
+                                              width: Get.width * 0.8,
+                                              margin: const EdgeInsets.only(
+                                                  left: 24, top: 20),
+                                              color: const Color(0xFFf9f9f9),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: Get.width * 0.4 + 12,
+                                                    child: UnderlineFormInput(
+                                                      controller: EditCtrl
+                                                          .messageReview,
+                                                      hint:
+                                                          'Type your comment here.',
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  FormButton(
+                                                    onPressed: () => propCtrl
+                                                        .submitPropertyReview(
+                                                            widget.property.id),
+                                                    text: 'Submit Review',
+                                                    width: 160,
+                                                    height: 42,
+                                                    size: 16,
+                                                    txtColor: Colors.white,
+                                                    radius: 4,
+                                                  )
+                                                ],
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            FormButton(
-                                              onPressed: () => propCtrl
-                                                  .submitPropertyReview(
-                                                  widget.property
-                                                      .id),
-                                              text:
-                                              'Submit Review',
-                                              width: 160,
-                                              height: 42,
-                                              size: 16,
-                                              txtColor:
-                                              Colors.white,
-                                              radius: 4,
                                             )
-                                          ],
-                                        ),
-                                      )
                                     ],
                                   ),
                                 ],
                               ),
                             )),
                         SizedBox(
-                            width: isTabletDown()
-                                ? Get.width
-                                : Get.width * 0.28,
+                            width:
+                                isTabletDown() ? Get.width : Get.width * 0.28,
                             child: Container(
                               // height: 1600,
                               padding: EdgeInsets.only(
@@ -1032,17 +925,14 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                   top: isTabletDown() ? 24 : 0),
                               child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.all(0),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.circular(4),
+                                        borderRadius: BorderRadius.circular(4),
                                         boxShadow: const [
                                           BoxShadow(
                                               color: Colors.black12,
@@ -1053,29 +943,22 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                       ),
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             width: double.infinity,
                                             height: 42,
-                                            decoration:
-                                            const BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.only(
-                                                  topLeft: Radius
-                                                      .circular(3),
-                                                  topRight: Radius
-                                                      .circular(3)),
-                                              color:
-                                              Pallet.secondaryColor,
+                                            decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(3),
+                                                  topRight: Radius.circular(3)),
+                                              color: Pallet.secondaryColor,
                                             ),
                                             child: const Center(
                                               child: CustomText(
                                                   color: Colors.white,
-                                                  text:
-                                                  'AGENT INFORMATION',
-                                                  weight:
-                                                  FontWeight.w700,
+                                                  text: 'AGENT INFORMATION',
+                                                  weight: FontWeight.w700,
                                                   size: 12),
                                             ),
                                           ),
@@ -1083,23 +966,19 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                           Container(
                                             width: 54,
                                             height: 54,
-                                            margin:
-                                            const EdgeInsets.only(
+                                            margin: const EdgeInsets.only(
                                               right: 0,
                                             ),
                                             child: ClipRRect(
                                               borderRadius:
-                                              BorderRadius.circular(
-                                                  48),
+                                                  BorderRadius.circular(48),
                                               child: FadeInImage(
                                                 image: NetworkImage(
                                                   userImgPath +
-                                                      (widget.property.user
-                                                          ?.image ??
-                                                          ''),
+                                                      (widget
+                                                          .property.user.image),
                                                 ),
-                                                placeholder:
-                                                const AssetImage(
+                                                placeholder: const AssetImage(
                                                     ImgStr.logo1),
                                                 fit: BoxFit.cover,
                                               ),
@@ -1113,117 +992,100 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                               weight: FontWeight.w600,
                                               size: 16),
                                           const SizedBox(height: 8),
-                                          widget.property.user
-                                              .phoneNumber ==
-                                              null
+                                          widget.property.user.phoneNumber ==
+                                                  null
                                               ? const SizedBox.shrink()
                                               : Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .center,
-                                            children: [
-                                              const Icon(
-                                                Icons.phone,
-                                                color: Pallet
-                                                    .secondaryColor,
-                                                size: 12,
-                                              ),
-                                              const SizedBox(
-                                                  width: 8),
-                                              CustomText(
-                                                  underline: true,
-                                                  color: Pallet
-                                                      .secondaryColor,
-                                                  text:
-                                                  '${widget.property.user.phoneNumber}',
-                                                  weight:
-                                                  FontWeight
-                                                      .w700,
-                                                  size: 11),
-                                            ],
-                                          ),
-                                          widget.property.user
-                                              .phoneNumber ==
-                                              null
-                                              ? const SizedBox.shrink()
-                                              : const SizedBox(
-                                              height: 8),
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.phone,
+                                                      color:
+                                                          Pallet.secondaryColor,
+                                                      size: 12,
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    CustomText(
+                                                        underline: true,
+                                                        color: Pallet
+                                                            .secondaryColor,
+                                                        text: widget.property
+                                                            .user.phoneNumber,
+                                                        weight: FontWeight.w700,
+                                                        size: 11),
+                                                  ],
+                                                ),
                                           widget.property.user.phoneNumber ==
-                                              null
+                                                  null
+                                              ? const SizedBox.shrink()
+                                              : const SizedBox(height: 8),
+                                          widget.property.user.phoneNumber ==
+                                                  null
                                               ? const SizedBox.shrink()
                                               : OpenWhatsApp(
-                                            widget: Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .center,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/images/whatsapp.png',
-                                                  color: Pallet
-                                                      .secondaryColor,
-                                                  height: 12,
-                                                  width: 12,
+                                                  widget: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/images/whatsapp.png',
+                                                        color: Pallet
+                                                            .secondaryColor,
+                                                        height: 12,
+                                                        width: 12,
+                                                      ),
+                                                      const SizedBox(width: 8),
+                                                      CustomText(
+                                                          underline: true,
+                                                          color: Pallet
+                                                              .secondaryColor,
+                                                          text: widget.property
+                                                              .user.phoneNumber,
+                                                          weight:
+                                                              FontWeight.w700,
+                                                          size: 11),
+                                                    ],
+                                                  ),
+                                                  phone: widget.property.user
+                                                      .phoneNumber,
                                                 ),
-                                                const SizedBox(
-                                                    width: 8),
-                                                CustomText(
-                                                    underline:
-                                                    true,
-                                                    color: Pallet
-                                                        .secondaryColor,
-                                                    text:
-                                                    '${widget.property.user.phoneNumber}',
-                                                    weight:
-                                                    FontWeight
-                                                        .w700,
-                                                    size: 11),
-                                              ],
-                                            ),
-                                            phone:
-                                            '${widget.property.user.phoneNumber}',
-                                          ),
-                                          widget.property.user
-                                              ?.phoneNumber ==
-                                              null
+                                          widget.property.user.phoneNumber ==
+                                                  null
                                               ? const SizedBox.shrink()
-                                              : const SizedBox(
-                                              height: 8),
-                                          widget.property.user
-                                              .emailAddress ==
-                                              null
+                                              : const SizedBox(height: 8),
+                                          widget.property.user.emailAddress ==
+                                                  null
                                               ? const SizedBox.shrink()
                                               : Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .center,
-                                            children: [
-                                              const Flexible(
-                                                child: Icon(
-                                                  Icons.mail,
-                                                  color: Pallet
-                                                      .secondaryColor,
-                                                  size: 12,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Flexible(
+                                                      child: Icon(
+                                                        Icons.mail,
+                                                        color: Pallet
+                                                            .secondaryColor,
+                                                        size: 12,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Flexible(
+                                                      child: CustomText(
+                                                          underline: true,
+                                                          color: Pallet
+                                                              .secondaryColor,
+                                                          text: widget
+                                                              .property
+                                                              .user
+                                                              .emailAddress,
+                                                          weight:
+                                                              FontWeight.w700,
+                                                          size: 11),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                  width: 8),
-                                              Flexible(
-                                                child: CustomText(
-                                                    underline:
-                                                    true,
-                                                    color: Pallet
-                                                        .secondaryColor,
-                                                    text: widget.property
-                                                        .user
-                                                        ?.emailAddress ??
-                                                        '',
-                                                    weight:
-                                                    FontWeight
-                                                        .w700,
-                                                    size: 11),
-                                              ),
-                                            ],
-                                          ),
                                           const SizedBox(
                                             height: 40,
                                           ),
@@ -1309,145 +1171,112 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
                                     //   ),
                                     // ),
                                     const SizedBox(height: 24),
-                                    user.id == widget.property.user?.id
+                                    user.id == widget.property.user.id
                                         ? const SizedBox.shrink()
                                         : Container(
-                                      padding:
-                                      const EdgeInsets.all(0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                        BorderRadius.circular(
-                                            4),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color:
-                                              Colors.black12,
-                                              spreadRadius: 1,
-                                              blurRadius: 2,
-                                              offset:
-                                              Offset(0, 2))
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          Container(
-                                            width: double
-                                                .infinity,
-                                            height: 42,
-                                            decoration:
-                                            BoxDecoration(
-                                              borderRadius: const BorderRadius
-                                                  .only(
-                                                  topLeft: Radius
-                                                      .circular(
-                                                      3),
-                                                  topRight:
-                                                  Radius.circular(
-                                                      3)),
-                                              color: Colors
-                                                  .grey
-                                                  .shade300,
+                                            padding: const EdgeInsets.all(0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    color: Colors.black12,
+                                                    spreadRadius: 1,
+                                                    blurRadius: 2,
+                                                    offset: Offset(0, 2))
+                                              ],
                                             ),
-                                            child:
-                                            const Center(
-                                              child: CustomText(
-                                                  color: Colors
-                                                      .black,
-                                                  text:
-                                                  'REQUEST A TOUR',
-                                                  weight: FontWeight
-                                                      .w700,
-                                                  size: 12),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets
-                                                .symmetric(
-                                                horizontal:
-                                                16.0,
-                                                vertical:
-                                                10),
                                             child: Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                UnderlineFormInput(
-                                                  controller:
-                                                  EditCtrl
-                                                      .name,
-                                                  hint:
-                                                  'Name',
+                                                Container(
+                                                  width: double.infinity,
+                                                  height: 42,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    3),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    3)),
+                                                    color: Colors.grey.shade300,
+                                                  ),
+                                                  child: const Center(
+                                                    child: CustomText(
+                                                        color: Colors.black,
+                                                        text: 'REQUEST A TOUR',
+                                                        weight: FontWeight.w700,
+                                                        size: 12),
+                                                  ),
                                                 ),
                                                 const SizedBox(
-                                                  height:
-                                                  20,
+                                                  height: 10,
                                                 ),
-                                                UnderlineFormInput(
-                                                  controller:
-                                                  EditCtrl
-                                                      .phone,
-                                                  hint:
-                                                  'Phone',
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 16.0,
+                                                      vertical: 10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      UnderlineFormInput(
+                                                        controller:
+                                                            EditCtrl.name,
+                                                        hint: 'Name',
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      UnderlineFormInput(
+                                                        controller:
+                                                            EditCtrl.phone,
+                                                        hint: 'Phone',
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      UnderlineFormInput(
+                                                        controller:
+                                                            EditCtrl.email,
+                                                        hint: 'Email',
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      UnderlineFormInput(
+                                                        controller: EditCtrl
+                                                            .messageTour,
+                                                        hint: 'Message',
+                                                        maxLines: 3,
+                                                      ),
+                                                      const SizedBox(height: 8),
+                                                      FormButton(
+                                                        onPressed: () => propCtrl
+                                                            .submitRequestATour(
+                                                                widget.property
+                                                                    .id),
+                                                        text: 'Send Request',
+                                                        txtColor: Colors.white,
+                                                        // width: do,
+                                                        height: 42,
+                                                        size: 14,
+                                                        radius: 4,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 16),
+                                                    ],
+                                                  ),
                                                 ),
-                                                const SizedBox(
-                                                  height:
-                                                  20,
-                                                ),
-                                                UnderlineFormInput(
-                                                  controller:
-                                                  EditCtrl
-                                                      .email,
-                                                  hint:
-                                                  'Email',
-                                                ),
-                                                const SizedBox(
-                                                  height:
-                                                  20,
-                                                ),
-                                                UnderlineFormInput(
-                                                  controller:
-                                                  EditCtrl
-                                                      .messageTour,
-                                                  hint:
-                                                  'Message',
-                                                  maxLines:
-                                                  3,
-                                                ),
-                                                const SizedBox(
-                                                    height:
-                                                    8),
-                                                FormButton(
-                                                  onPressed:
-                                                      () =>
-                                                      propCtrl.submitRequestATour(widget.property.id),
-                                                  text:
-                                                  'Send Request',
-                                                  txtColor:
-                                                  Colors
-                                                      .white,
-                                                  // width: do,
-                                                  height:
-                                                  42,
-                                                  size: 14,
-                                                  radius: 4,
-                                                ),
-                                                const SizedBox(
-                                                    height:
-                                                    16),
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
                                   ]),
                             )),
                       ],
@@ -1460,6 +1289,7 @@ class _Single_Property_detail_webState extends State<Single_Property_detail_web>
       );
     });
   }
+
   void nextPage() {
     _controller.animateToPage(_controller.page!.toInt() + 1,
         duration: const Duration(milliseconds: 400), curve: Curves.easeIn);

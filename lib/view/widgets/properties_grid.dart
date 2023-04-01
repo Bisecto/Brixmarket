@@ -439,13 +439,13 @@ class PropertiesWebGrade extends StatelessWidget {
           filter.Property property = properties[index];
           String image;
           try {
-            image = property.media!.isNotEmpty ? property.media![0].media! : '';
+            image = property.media.isNotEmpty ? property.media[0].media : '';
           } catch (e) {
             dnd(e);
             image = '';
           }
           if (EditCtrl.webSearchKeyWord.value.text.trim().isNotEmpty) {
-            if (property.title!.trim().toLowerCase().contains(
+            if (property.title.trim().toLowerCase().contains(
                 EditCtrl.webSearchKeyWord.value.text.trim().toLowerCase())) {
               return Container(
                 // margin: const EdgeInsets.all(12),
@@ -456,7 +456,7 @@ class PropertiesWebGrade extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4)),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context!).push(MaterialPageRoute(
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                             Single_page_web(property_id: property.id)));
                   },
@@ -493,7 +493,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                           child: CustomText(
                                               color: const Color(0xFF308b85),
                                               text:
-                                                  property.type!.toUpperCase(),
+                                                  property.type.toUpperCase(),
                                               weight: FontWeight.w500,
                                               size: 9),
                                         ),
@@ -506,7 +506,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                         child: Center(
                                           child: CustomText(
                                               color: Colors.white,
-                                              text: property.status!
+                                              text: property.status
                                                   .toUpperCase(),
                                               weight: FontWeight.w500,
                                               size: 9),
@@ -568,7 +568,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                        '${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
+                                        '${property.location.address}, ${property.location.city}, ${property.location.state}',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
@@ -602,7 +602,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                     children: [
                                       CustomText(
                                           color: Pallet.secondaryColor,
-                                          text: Utils.amount(property.price!),
+                                          text: Utils.amount(property.price),
                                           weight: FontWeight.w700,
                                           size: 16),
                                       const SizedBox(
@@ -613,10 +613,10 @@ class PropertiesWebGrade extends StatelessWidget {
                                             const EdgeInsets.only(top: 8.0),
                                         child: CustomText(
                                           color: Colors.blueGrey[500],
-                                          text: property.priceDuration!
+                                          text: property.priceDuration
                                                       .substring(0, 3) ==
                                                   'Per'
-                                              ? property.priceDuration!
+                                              ? property.priceDuration
                                                   .toUpperCase()
                                               : '',
                                           weight: FontWeight.w500,
@@ -694,7 +694,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                       child: Center(
                                         child: CustomText(
                                             color: const Color(0xFF308b85),
-                                            text: property.type!.toUpperCase(),
+                                            text: property.type.toUpperCase(),
                                             weight: FontWeight.w500,
                                             size: 9),
                                       ),
@@ -708,7 +708,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                         child: CustomText(
                                             color: Colors.white,
                                             text:
-                                                property.status!.toUpperCase(),
+                                                property.status.toUpperCase(),
                                             weight: FontWeight.w500,
                                             size: 9),
                                       ),
@@ -768,7 +768,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                      '${property.location!.address}, ${property.location!.city}, ${property.location!.state}',
+                                      '${property.location.address}, ${property.location.city}, ${property.location.state}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -801,7 +801,7 @@ class PropertiesWebGrade extends StatelessWidget {
                                   children: [
                                     CustomText(
                                         color: Pallet.secondaryColor,
-                                        text: Utils.amount(property.price!),
+                                        text: Utils.amount(property.price),
                                         weight: FontWeight.w700,
                                         size: 16),
                                     const SizedBox(
@@ -811,10 +811,10 @@ class PropertiesWebGrade extends StatelessWidget {
                                       padding: const EdgeInsets.only(top: 8.0),
                                       child: CustomText(
                                         color: Colors.blueGrey[500],
-                                        text: property.priceDuration!
+                                        text: property.priceDuration
                                                     .substring(0, 3) ==
                                                 'Per'
-                                            ? property.priceDuration!
+                                            ? property.priceDuration
                                                 .toUpperCase()
                                             : '',
                                         weight: FontWeight.w500,

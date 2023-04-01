@@ -51,14 +51,15 @@ mixin Chat {
 
     Get.toNamed(RouteStr.chat);
   }
+
   chatWithSeller1(single.Property property) {
     thisUserId = user.id ?? '';
     thisUserName = accountName(user: user);
     thisUserImage = user.image ?? '';
 
-    otherUserId = property.user?.id ?? '';
-    otherUserName = accountName1(user: property.user!);
-    otherUserImage = property.user?.image ?? '';
+    otherUserId = property.user.id;
+    otherUserName = accountName1(user: property.user);
+    otherUserImage = property.user.image;
 
     chatKey = generateChatKey(thisUserId, otherUserId);
 
@@ -66,6 +67,7 @@ mixin Chat {
 
     Get.toNamed(RouteStr.chat);
   }
+
   chatFromUserList(ChatUser chatUser) {
     thisUserId = user.id ?? '';
     thisUserName = accountName(user: user);
@@ -133,8 +135,13 @@ mixin Chat {
         Provider().postData('chat/save-user', thisUserMap);
         Provider().postData('chat/save-user', otherUserMap);
 
-          await sendPushNotification(otherUserId, "You just got a message from $thisUserName", EditCtrl.chatMessage.text, 'Message_Notification');
-        EditCtrl.chatMessage.text = '';}
+        await sendPushNotification(
+            otherUserId,
+            "You just got a message from $thisUserName",
+            EditCtrl.chatMessage.text,
+            'Message_Notification');
+        EditCtrl.chatMessage.text = '';
+      }
     }
   }
 

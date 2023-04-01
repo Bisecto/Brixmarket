@@ -1,12 +1,9 @@
 import 'package:brixmarket/core/app.dart';
 import 'package:brixmarket/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../config/theme/color.dart';
-import '../../controllers/instance.dart';
 import '../../models/property_model.dart';
-import '../../res/strings.dart';
 import 'package:brixmarket/view/screens/single_property_web.dart';
 
 class PropertyCard1 extends StatelessWidget {
@@ -23,7 +20,7 @@ class PropertyCard1 extends StatelessWidget {
       onTap: () {
         // homeCtrl.property = property;
         // Get.toNamed(RouteStr.webProperty);
-        Navigator.of(context!).push(MaterialPageRoute(
+        Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 Single_page_web(property_id: property.id!)));
       },
