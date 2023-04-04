@@ -1,18 +1,13 @@
-import 'dart:async';
-
 import 'package:brixmarket/config/theme/color.dart';
-import 'package:brixmarket/controllers/create_property_controller.dart';
-import 'package:brixmarket/core/dialogs.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:brixmarket/core/preloader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/app.dart';
 import '../../../models/media_model.dart';
 import '../../../models/property_model.dart';
-import '../../../models/user_property_model.dart';
 import '../../../res/lists.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
@@ -31,26 +26,31 @@ class _MyAdsPageState extends State<MyAdsPage>
   bool isLoading = false;
   ScrollController scrollController = ScrollController();
   bool showbtn = false;
+  int index = 0;
 
   int totalAllPropertypage = 0;
   int allProperty_singlePage = 1;
 
-  int totalPublishedPropertypage= 0;
+  int totalPublishedPropertypage = 0;
   int publishedProperty_singlePage = 1;
 
   int totalDraftPropertypage = 0;
   int DraftProperty_singlePage = 1;
 
-  int totalSoldPropertypage=0;
-  int SoldProperty_singlePage=1;
+  int totalSoldPropertypage = 0;
+  int SoldProperty_singlePage = 1;
 
-  int totalSuspendedPropertypage=0;
-  int SuspendedProperty_singlePage=1;
-
+  int totalSuspendedPropertypage = 0;
+  int SuspendedProperty_singlePage = 1;
 
   @override
   void initState() {
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 5, vsync: this, initialIndex: 0)
+      ..addListener(() {
+        setState(() {
+          index = _tabController.index;
+        });
+      });
     //getUserProperty(page);
     // scrollController.addListener(() {
     //   //scroll listener
@@ -102,596 +102,626 @@ class _MyAdsPageState extends State<MyAdsPage>
         ),
         bottomOpacity: 1,
       ),
-      body: SizedBox(
-        height: Get.height * 0.85,
-        child: TabBarView(
-          controller: _tabController,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            FutureBuilder(
-                future: cPropCtrl.getAllMyProperties(allProperty_singlePage),
-                builder: (context, AsyncSnapshot snap) {
-                  //List<Property> allProperties =cPropCtrl.myProperties; //snap.data ?? [];
-                  // print(allProperties);
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                        height: 48, child: Preloader.loadingWidget());
-                  } else {
-                    if (cPropCtrl.myProperties.value.isEmpty) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/images/empty.PNG'),
-                          TextStyles.richTexts(
-                              decoration: TextDecoration.underline,
-                              onPress1: () =>
-                                  Get.offNamed(RouteStr.mobileCreateProperty),
-                              size: 14,
-                              text1: 'You don\'t have any property listed.\n',
-                              centerText: true,
-                              text2: 'Create a listing')
-                        ],
-                      );
-                    } else {
-                      totalAllPropertypage = cPropCtrl.allPropertiesPage;
-                      return Column(children: [
-                        Expanded(child:
-                        Obx(()=>myPropertiesWidget(cPropCtrl.myProperties))),
-                        if (totalAllPropertypage > 1)
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                  //  if (allPropertyPage > 1)
-                                    GestureDetector(
-                                        onTap: () {
-                                          //_list.removeAt(_curr);
-                                          if (allProperty_singlePage == 1) {
-                                          } else {
-                                            setState(() {
-                                              allProperty_singlePage--;
-                                              cPropCtrl.getAllMyProperties(
-                                                  allProperty_singlePage);
-                                            });
-                                          }
-                                        },
-                                        child:Icon(
-                                          Icons.arrow_back,
-                                          size: 40,
-                                          color: allProperty_singlePage==1 ? Colors.grey:Colors.black,
-                                        )),
-                                    // if(allPropertyPage==totalAllPropertypage)
-                                    // Container()
-                                    // else
-                                      GestureDetector(
-                                          onTap: () {
-                                            if (allProperty_singlePage==totalAllPropertypage
-                                            )
-                                            {
-                                              //return;
-                                              //MSG.snackBar('End of page',title: 'Message');
-                                            } else {
-                                              setState(() {
-                                                print(totalAllPropertypage);
-                                                print(allProperty_singlePage);
-                                                allProperty_singlePage++;
-                                                // cPropCtrl.getAllMyProperties(
-                                                //     allPropertyPage);
-                                              });
-                                            }
+      body: Stack(
+        children: [
+          SizedBox(
+            height: Get.height * 0.85,
+            child: TabBarView(
+              controller: _tabController,
+              physics: const BouncingScrollPhysics(),
+              children: [
+                FutureBuilder(
+                    future: cPropCtrl
+                        .getAllMyProperties(allProperty_singlePage)
+                        .then((value) => {
+                              totalAllPropertypage =
+                                  cPropCtrl.allPropertiesPage,
+                            }),
+                    builder: (context, AsyncSnapshot snap) {
+                      //List<Property> allProperties =cPropCtrl.myProperties; //snap.data ?? [];
+                      // print(allProperties);
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                            height: 48, child: Preloader.loadingWidget());
+                      } else {
+                        if (cPropCtrl.myProperties.isEmpty) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/empty.PNG'),
+                              TextStyles.richTexts(
+                                  decoration: TextDecoration.underline,
+                                  onPress1: () => Get.offNamed(
+                                      RouteStr.mobileCreateProperty),
+                                  size: 14,
+                                  text1:
+                                      'You don\'t have any property listed.\n',
+                                  centerText: true,
+                                  text2: 'Create a listing')
+                            ],
+                          );
+                        } else {
+                          totalAllPropertypage = cPropCtrl.allPropertiesPage;
+                          return Column(children: [
+                            Expanded(
+                                child:
+                                    myPropertiesWidget(cPropCtrl.myProperties)),
+                          ]);
+                        }
+                      }
+                    }),
+                // FutureBuilder(
+                //     future: cPropCtrl.getAllMyProperties(1),
+                //     builder: (context, AsyncSnapshot snap) {
+                //       List<Property> allProperties =cPropCtrl.myPublishedProperties; //snap.data ?? [];
+                //       print(allProperties);
+                //       return snap.connectionState == ConnectionState.waiting
+                //           ? SizedBox(height: 48, child: Preloader.loadingWidget())
+                //           : cPropCtrl.myPublishedProperties.value.isEmpty
+                //           ?  Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment:
+                //         CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset('assets/images/empty.PNG'),
+                //           TextStyles.richTexts(
+                //               decoration: TextDecoration.underline,
+                //               onPress1: () => Get.offNamed(
+                //                   RouteStr.mobileCreateProperty),
+                //               size: 14,
+                //               text1:
+                //               'You don\'t have any property listed.\n',
+                //               centerText: true,
+                //               text2: 'Create a listing')
+                //         ],
+                //       )
+                //           :  myPropertiesWidget(
+                //           cPropCtrl.myPublishedProperties);
+                //     }),
+                FutureBuilder(
+                    future: cPropCtrl.getAllPublishedProperties(
+                        publishedProperty_singlePage),
+                    builder: (context, AsyncSnapshot snap) {
+                      List<Property> allProperties =
+                          cPropCtrl.myPublishedProperties; //snap.data ?? [];
+                      print(allProperties);
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                            height: 48, child: Preloader.loadingWidget());
+                      } else {
+                        if (cPropCtrl.myPublishedProperties.value.isEmpty) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/empty.PNG'),
+                              TextStyles.richTexts(
+                                  decoration: TextDecoration.underline,
+                                  onPress1: () => Get.offNamed(
+                                      RouteStr.mobileCreateProperty),
+                                  size: 14,
+                                  text1:
+                                      'You don\'t have any property listed.\n',
+                                  centerText: true,
+                                  text2: 'Create a listing')
+                            ],
+                          );
+                        } else {
+                          totalPublishedPropertypage =
+                              cPropCtrl.myPublishedPropertiesPage;
+                          return Column(children: [
+                            Expanded(
+                                child: Obx(() => myPropertiesWidget(
+                                    cPropCtrl.myPublishedProperties))),
+                            if (totalPublishedPropertypage > 1)
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        //  if (allPropertyPage > 1)
+                                        GestureDetector(
+                                            onTap: () {
+                                              //_list.removeAt(_curr);
+                                              if (publishedProperty_singlePage ==
+                                                  1) {
+                                              } else {
+                                                setState(() {
+                                                  publishedProperty_singlePage--;
+                                                  cPropCtrl.getAllMyProperties(
+                                                      publishedProperty_singlePage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.arrow_back,
+                                              size: 40,
+                                              color:
+                                                  publishedProperty_singlePage ==
+                                                          1
+                                                      ? Colors.grey
+                                                      : Colors.black,
+                                            )),
+                                        // if(allPropertyPage==totalAllPropertypage)
+                                        // Container()
+                                        // else
+                                        GestureDetector(
+                                            onTap: () {
+                                              if (publishedProperty_singlePage ==
+                                                  totalPublishedPropertypage) {
+                                                //return;
+                                                //MSG.snackBar('End of page',title: 'Message');
+                                              } else {
+                                                setState(() {
+                                                  print(
+                                                      totalPublishedPropertypage);
+                                                  print(
+                                                      publishedProperty_singlePage);
+                                                  publishedProperty_singlePage++;
+                                                  // cPropCtrl.getAllMyProperties(
+                                                  //     allPropertyPage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(Icons.arrow_forward,
+                                                size: 40,
+                                                color: publishedProperty_singlePage ==
+                                                        totalPublishedPropertypage
+                                                    ? Colors.grey
+                                                    : Colors.black))
+                                      ]),
+                                ),
+                              )
+                          ]);
+                        }
+                      }
+                    }),
+                FutureBuilder(
+                    future: cPropCtrl
+                        .getAllDraftProperties(DraftProperty_singlePage),
+                    builder: (context, AsyncSnapshot snap) {
+                      List<Property> allProperties =
+                          cPropCtrl.myDraftProperties; //snap.data ?? [];
+                      print(allProperties);
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                            height: 48, child: Preloader.loadingWidget());
+                      } else {
+                        if (cPropCtrl.myDraftProperties.value.isEmpty) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/empty.PNG'),
+                              TextStyles.richTexts(
+                                  decoration: TextDecoration.underline,
+                                  onPress1: () => Get.offNamed(
+                                      RouteStr.mobileCreateProperty),
+                                  size: 14,
+                                  text1:
+                                      'You don\'t have any property listed.\n',
+                                  centerText: true,
+                                  text2: 'Create a listing')
+                            ],
+                          );
+                        } else {
+                          totalDraftPropertypage =
+                              cPropCtrl.myDraftPropertiesPage;
+                          return Column(children: [
+                            Expanded(
+                                child: Obx(() => myPropertiesWidget(
+                                    cPropCtrl.myDraftProperties))),
+                            if (totalDraftPropertypage > 1)
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        //  if (allPropertyPage > 1)
+                                        GestureDetector(
+                                            onTap: () {
+                                              //_list.removeAt(_curr);
+                                              if (DraftProperty_singlePage ==
+                                                  1) {
+                                              } else {
+                                                setState(() {
+                                                  DraftProperty_singlePage--;
+                                                  cPropCtrl.getAllMyProperties(
+                                                      DraftProperty_singlePage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.arrow_back,
+                                              size: 40,
+                                              color:
+                                                  DraftProperty_singlePage == 1
+                                                      ? Colors.grey
+                                                      : Colors.black,
+                                            )),
+                                        // if(allPropertyPage==totalAllPropertypage)
+                                        // Container()
+                                        // else
+                                        GestureDetector(
+                                            onTap: () {
+                                              if (DraftProperty_singlePage ==
+                                                  totalDraftPropertypage) {
+                                                //return;
+                                                //MSG.snackBar('End of page',title: 'Message');
+                                              } else {
+                                                setState(() {
+                                                  print(totalDraftPropertypage);
+                                                  print(
+                                                      DraftProperty_singlePage);
+                                                  DraftProperty_singlePage++;
+                                                  // cPropCtrl.getAllMyProperties(
+                                                  //     allPropertyPage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(Icons.arrow_forward,
+                                                size: 40,
+                                                color: DraftProperty_singlePage ==
+                                                        totalDraftPropertypage
+                                                    ? Colors.grey
+                                                    : Colors.black))
+                                      ]),
+                                ),
+                              )
+                          ]);
+                        }
+                      }
+                    }),
+                FutureBuilder(
+                    future:
+                        cPropCtrl.getAllSoldProperties(SoldProperty_singlePage),
+                    builder: (context, AsyncSnapshot snap) {
+                      List<Property> allProperties =
+                          cPropCtrl.mySoldProperties; //snap.data ?? [];
+                      print(allProperties);
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                            height: 48, child: Preloader.loadingWidget());
+                      } else {
+                        if (cPropCtrl.mySoldProperties.value.isEmpty) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/empty.PNG'),
+                              TextStyles.richTexts(
+                                  decoration: TextDecoration.underline,
+                                  onPress1: () => Get.offNamed(
+                                      RouteStr.mobileCreateProperty),
+                                  size: 14,
+                                  text1:
+                                      'You don\'t have any property listed.\n',
+                                  centerText: true,
+                                  text2: 'Create a listing')
+                            ],
+                          );
+                        } else {
+                          totalSoldPropertypage =
+                              cPropCtrl.mySoldPropertiesPage;
+                          return Column(children: [
+                            Expanded(
+                                child: Obx(() => myPropertiesWidget(
+                                    cPropCtrl.mySoldProperties))),
+                            if (totalSoldPropertypage > 1)
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        //  if (allPropertyPage > 1)
+                                        GestureDetector(
+                                            onTap: () {
+                                              //_list.removeAt(_curr);
+                                              if (SoldProperty_singlePage ==
+                                                  1) {
+                                              } else {
+                                                setState(() {
+                                                  SoldProperty_singlePage--;
+                                                  cPropCtrl.getAllMyProperties(
+                                                      SoldProperty_singlePage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.arrow_back,
+                                              size: 40,
+                                              color:
+                                                  SoldProperty_singlePage == 1
+                                                      ? Colors.grey
+                                                      : Colors.black,
+                                            )),
+                                        // if(allPropertyPage==totalAllPropertypage)
+                                        // Container()
+                                        // else
+                                        GestureDetector(
+                                            onTap: () {
+                                              if (SoldProperty_singlePage ==
+                                                  totalSoldPropertypage) {
+                                                //return;
+                                                //MSG.snackBar('End of page',title: 'Message');
+                                              } else {
+                                                setState(() {
+                                                  print(totalSoldPropertypage);
+                                                  print(
+                                                      SoldProperty_singlePage);
+                                                  SoldProperty_singlePage++;
+                                                  // cPropCtrl.getAllMyProperties(
+                                                  //     allPropertyPage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(Icons.arrow_forward,
+                                                size: 40,
+                                                color: SoldProperty_singlePage ==
+                                                        totalSoldPropertypage
+                                                    ? Colors.grey
+                                                    : Colors.black))
+                                      ]),
+                                ),
+                              )
+                          ]);
+                        }
+                      }
+                    }),
+                FutureBuilder(
+                    future: cPropCtrl.getAllSuspendedProperties(
+                        SuspendedProperty_singlePage),
+                    builder: (context, AsyncSnapshot snap) {
+                      List<Property> allProperties =
+                          cPropCtrl.mySuspendedProperties; //snap.data ?? [];
+                      print(allProperties);
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                            height: 48, child: Preloader.loadingWidget());
+                      } else {
+                        if (cPropCtrl.mySuspendedProperties.value.isEmpty) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/empty.PNG'),
+                              TextStyles.richTexts(
+                                  decoration: TextDecoration.underline,
+                                  onPress1: () => Get.offNamed(
+                                      RouteStr.mobileCreateProperty),
+                                  size: 14,
+                                  text1:
+                                      'You don\'t have any property listed.\n',
+                                  centerText: true,
+                                  text2: 'Create a listing')
+                            ],
+                          );
+                        } else {
+                          totalSuspendedPropertypage =
+                              cPropCtrl.mySuspendedPropertiesPage;
+                          return Column(children: [
+                            Expanded(
+                                child: Obx(() => myPropertiesWidget(
+                                    cPropCtrl.mySuspendedProperties))),
+                            if (totalSuspendedPropertypage > 1)
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 20.0),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        //  if (allPropertyPage > 1)
+                                        GestureDetector(
+                                            onTap: () {
+                                              //_list.removeAt(_curr);
+                                              if (SuspendedProperty_singlePage ==
+                                                  1) {
+                                              } else {
+                                                setState(() {
+                                                  SuspendedProperty_singlePage--;
+                                                  cPropCtrl.getAllMyProperties(
+                                                      SuspendedProperty_singlePage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.arrow_back,
+                                              size: 40,
+                                              color:
+                                                  SuspendedProperty_singlePage ==
+                                                          1
+                                                      ? Colors.grey
+                                                      : Colors.black,
+                                            )),
+                                        // if(allPropertyPage==totalAllPropertypage)
+                                        // Container()
+                                        // else
+                                        GestureDetector(
+                                            onTap: () {
+                                              if (SuspendedProperty_singlePage ==
+                                                  totalSuspendedPropertypage) {
+                                                //return;
+                                                //MSG.snackBar('End of page',title: 'Message');
+                                              } else {
+                                                setState(() {
+                                                  print(
+                                                      totalSuspendedPropertypage);
+                                                  print(
+                                                      SuspendedProperty_singlePage);
+                                                  SuspendedProperty_singlePage++;
+                                                  // cPropCtrl.getAllMyProperties(
+                                                  //     allPropertyPage);
+                                                });
+                                              }
+                                            },
+                                            child: Icon(Icons.arrow_forward,
+                                                size: 40,
+                                                color: SuspendedProperty_singlePage ==
+                                                        totalSuspendedPropertypage
+                                                    ? Colors.grey
+                                                    : Colors.black))
+                                      ]),
+                                ),
+                              )
+                          ]);
+                        }
+                      }
+                    }),
 
-                                          },
-                                          child: Icon(
-                                            Icons.arrow_forward,
-                                            size: 40,
-                                            color:allProperty_singlePage==totalAllPropertypage? Colors.grey:Colors.black
-                                          ))
-                                  ]),
-                            ),
-                          )
-                      ]);
-                    }
-                  }
-                }),
-            // FutureBuilder(
-            //     future: cPropCtrl.getAllMyProperties(1),
-            //     builder: (context, AsyncSnapshot snap) {
-            //       List<Property> allProperties =cPropCtrl.myPublishedProperties; //snap.data ?? [];
-            //       print(allProperties);
-            //       return snap.connectionState == ConnectionState.waiting
-            //           ? SizedBox(height: 48, child: Preloader.loadingWidget())
-            //           : cPropCtrl.myPublishedProperties.value.isEmpty
-            //           ?  Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment:
-            //         CrossAxisAlignment.center,
-            //         children: [
-            //           Image.asset('assets/images/empty.PNG'),
-            //           TextStyles.richTexts(
-            //               decoration: TextDecoration.underline,
-            //               onPress1: () => Get.offNamed(
-            //                   RouteStr.mobileCreateProperty),
-            //               size: 14,
-            //               text1:
-            //               'You don\'t have any property listed.\n',
-            //               centerText: true,
-            //               text2: 'Create a listing')
-            //         ],
-            //       )
-            //           :  myPropertiesWidget(
-            //           cPropCtrl.myPublishedProperties);
-            //     }),
-            FutureBuilder(
-                future: cPropCtrl.getAllPublishedProperties(publishedProperty_singlePage),
-                builder: (context, AsyncSnapshot snap) {
-                  List<Property> allProperties =
-                      cPropCtrl.myPublishedProperties; //snap.data ?? [];
-                  print(allProperties);
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                        height: 48, child: Preloader.loadingWidget());
-                  } else {
-                    if (cPropCtrl.myPublishedProperties.value.isEmpty) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/images/empty.PNG'),
-                          TextStyles.richTexts(
-                              decoration: TextDecoration.underline,
-                              onPress1: () =>
-                                  Get.offNamed(RouteStr.mobileCreateProperty),
-                              size: 14,
-                              text1: 'You don\'t have any property listed.\n',
-                              centerText: true,
-                              text2: 'Create a listing')
-                        ],
-                      );
-                    } else {
-                      totalPublishedPropertypage =
-                          cPropCtrl.myPublishedPropertiesPage;
-                      return Column(children: [
-                        Expanded(child:
-                        Obx(()=>myPropertiesWidget(cPropCtrl.myPublishedProperties))),
-                        if (totalPublishedPropertypage > 1)
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    //  if (allPropertyPage > 1)
-                                    GestureDetector(
-                                        onTap: () {
-                                          //_list.removeAt(_curr);
-                                          if (publishedProperty_singlePage == 1) {
-                                          } else {
-                                            setState(() {
-                                              publishedProperty_singlePage--;
-                                              cPropCtrl.getAllMyProperties(
-                                                  publishedProperty_singlePage);
-                                            });
-                                          }
-                                        },
-                                        child:Icon(
-                                          Icons.arrow_back,
-                                          size: 40,
-                                          color: publishedProperty_singlePage==1 ? Colors.grey:Colors.black,
-                                        )),
-                                    // if(allPropertyPage==totalAllPropertypage)
-                                    // Container()
-                                    // else
-                                    GestureDetector(
-                                        onTap: () {
-                                          if (publishedProperty_singlePage==totalPublishedPropertypage
-                                          )
-                                          {
-                                            //return;
-                                            //MSG.snackBar('End of page',title: 'Message');
-                                          } else {
-                                            setState(() {
-                                              print(totalPublishedPropertypage);
-                                              print(publishedProperty_singlePage);
-                                              publishedProperty_singlePage++;
-                                              // cPropCtrl.getAllMyProperties(
-                                              //     allPropertyPage);
-                                            });
-                                          }
-
-                                        },
-                                        child: Icon(
-                                            Icons.arrow_forward,
-                                            size: 40,
-                                            color:publishedProperty_singlePage==totalPublishedPropertypage? Colors.grey:Colors.black
-                                        ))
-                                  ]),
-                            ),
-                          )
-                      ]);
-                    }
-                  }
-                }),
-            FutureBuilder(
-                future: cPropCtrl.getAllDraftProperties(DraftProperty_singlePage),
-                builder: (context, AsyncSnapshot snap) {
-                  List<Property> allProperties =
-                      cPropCtrl.myDraftProperties; //snap.data ?? [];
-                  print(allProperties);
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return SizedBox(height: 48, child: Preloader.loadingWidget());
-                  } else {
-                    if (cPropCtrl.myDraftProperties.value.isEmpty) {
-                      return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/empty.PNG'),
-                                TextStyles.richTexts(
-                                    decoration: TextDecoration.underline,
-                                    onPress1: () => Get.offNamed(
-                                        RouteStr.mobileCreateProperty),
-                                    size: 14,
-                                    text1:
-                                        'You don\'t have any property listed.\n',
-                                    centerText: true,
-                                    text2: 'Create a listing')
-                              ],
-                            );
-                    } else {
-                      totalDraftPropertypage =
-                          cPropCtrl.myDraftPropertiesPage;
-                      return Column(children: [
-                        Expanded(child:
-                        Obx(()=>myPropertiesWidget(cPropCtrl.myDraftProperties))),
-                        if (totalDraftPropertypage > 1)
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    //  if (allPropertyPage > 1)
-                                    GestureDetector(
-                                        onTap: () {
-                                          //_list.removeAt(_curr);
-                                          if (DraftProperty_singlePage == 1) {
-                                          } else {
-                                            setState(() {
-                                              DraftProperty_singlePage--;
-                                              cPropCtrl.getAllMyProperties(
-                                                  DraftProperty_singlePage);
-                                            });
-                                          }
-                                        },
-                                        child:Icon(
-                                          Icons.arrow_back,
-                                          size: 40,
-                                          color: DraftProperty_singlePage==1 ? Colors.grey:Colors.black,
-                                        )),
-                                    // if(allPropertyPage==totalAllPropertypage)
-                                    // Container()
-                                    // else
-                                    GestureDetector(
-                                        onTap: () {
-                                          if (DraftProperty_singlePage==totalDraftPropertypage
-                                          )
-                                          {
-                                            //return;
-                                            //MSG.snackBar('End of page',title: 'Message');
-                                          } else {
-                                            setState(() {
-                                              print(totalDraftPropertypage);
-                                              print(DraftProperty_singlePage);
-                                              DraftProperty_singlePage++;
-                                              // cPropCtrl.getAllMyProperties(
-                                              //     allPropertyPage);
-                                            });
-                                          }
-
-                                        },
-                                        child: Icon(
-                                            Icons.arrow_forward,
-                                            size: 40,
-                                            color:DraftProperty_singlePage==totalDraftPropertypage? Colors.grey:Colors.black
-                                        ))
-                                  ]),
-                            ),
-                          )
-                      ]);
-                    }
-                  }
-                }),
-            FutureBuilder(
-                future: cPropCtrl.getAllSoldProperties(SoldProperty_singlePage),
-                builder: (context, AsyncSnapshot snap) {
-                  List<Property> allProperties =
-                      cPropCtrl.mySoldProperties; //snap.data ?? [];
-                  print(allProperties);
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return SizedBox(height: 48, child: Preloader.loadingWidget());
-                  } else {
-                    if (cPropCtrl.mySoldProperties.value.isEmpty) {
-                      return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/empty.PNG'),
-                                TextStyles.richTexts(
-                                    decoration: TextDecoration.underline,
-                                    onPress1: () => Get.offNamed(
-                                        RouteStr.mobileCreateProperty),
-                                    size: 14,
-                                    text1:
-                                        'You don\'t have any property listed.\n',
-                                    centerText: true,
-                                    text2: 'Create a listing')
-                              ],
-                            );
-                    } else {
-                      totalSoldPropertypage =
-                          cPropCtrl.mySoldPropertiesPage;
-                      return Column(children: [
-                        Expanded(child:
-                        Obx(()=>myPropertiesWidget(cPropCtrl.mySoldProperties))),
-                        if (totalSoldPropertypage > 1)
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    //  if (allPropertyPage > 1)
-                                    GestureDetector(
-                                        onTap: () {
-                                          //_list.removeAt(_curr);
-                                          if (SoldProperty_singlePage == 1) {
-                                          } else {
-                                            setState(() {
-                                              SoldProperty_singlePage--;
-                                              cPropCtrl.getAllMyProperties(
-                                                  SoldProperty_singlePage);
-                                            });
-                                          }
-                                        },
-                                        child:Icon(
-                                          Icons.arrow_back,
-                                          size: 40,
-                                          color: SoldProperty_singlePage==1 ? Colors.grey:Colors.black,
-                                        )),
-                                    // if(allPropertyPage==totalAllPropertypage)
-                                    // Container()
-                                    // else
-                                    GestureDetector(
-                                        onTap: () {
-                                          if (SoldProperty_singlePage==totalSoldPropertypage
-                                          )
-                                          {
-                                            //return;
-                                            //MSG.snackBar('End of page',title: 'Message');
-                                          } else {
-                                            setState(() {
-                                              print(totalSoldPropertypage);
-                                              print(SoldProperty_singlePage);
-                                              SoldProperty_singlePage++;
-                                              // cPropCtrl.getAllMyProperties(
-                                              //     allPropertyPage);
-                                            });
-                                          }
-
-                                        },
-                                        child: Icon(
-                                            Icons.arrow_forward,
-                                            size: 40,
-                                            color:SoldProperty_singlePage==totalSoldPropertypage? Colors.grey:Colors.black
-                                        ))
-                                  ]),
-                            ),
-                          )
-                      ]);
-                    }
-                  }
-                }),
-            FutureBuilder(
-                future: cPropCtrl.getAllSuspendedProperties(SuspendedProperty_singlePage),
-                builder: (context, AsyncSnapshot snap) {
-                  List<Property> allProperties =
-                      cPropCtrl.mySuspendedProperties; //snap.data ?? [];
-                  print(allProperties);
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return SizedBox(height: 48, child: Preloader.loadingWidget());
-                  } else {
-                    if (cPropCtrl.mySuspendedProperties.value.isEmpty) {
-                      return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/empty.PNG'),
-                                TextStyles.richTexts(
-                                    decoration: TextDecoration.underline,
-                                    onPress1: () => Get.offNamed(
-                                        RouteStr.mobileCreateProperty),
-                                    size: 14,
-                                    text1:
-                                        'You don\'t have any property listed.\n',
-                                    centerText: true,
-                                    text2: 'Create a listing')
-                              ],
-                            );
-                    } else {
-                      totalSuspendedPropertypage =
-                          cPropCtrl.mySuspendedPropertiesPage;
-                      return Column(children: [
-                        Expanded(child:
-                        Obx(()=>myPropertiesWidget(cPropCtrl.mySuspendedProperties))),
-                        if (totalSuspendedPropertypage > 1)
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    //  if (allPropertyPage > 1)
-                                    GestureDetector(
-                                        onTap: () {
-                                          //_list.removeAt(_curr);
-                                          if (SuspendedProperty_singlePage == 1) {
-                                          } else {
-                                            setState(() {
-                                              SuspendedProperty_singlePage--;
-                                              cPropCtrl.getAllMyProperties(
-                                                  SuspendedProperty_singlePage);
-                                            });
-                                          }
-                                        },
-                                        child:Icon(
-                                          Icons.arrow_back,
-                                          size: 40,
-                                          color: SuspendedProperty_singlePage==1 ? Colors.grey:Colors.black,
-                                        )),
-                                    // if(allPropertyPage==totalAllPropertypage)
-                                    // Container()
-                                    // else
-                                    GestureDetector(
-                                        onTap: () {
-                                          if (SuspendedProperty_singlePage==totalSuspendedPropertypage
-                                          )
-                                          {
-                                            //return;
-                                            //MSG.snackBar('End of page',title: 'Message');
-                                          } else {
-                                            setState(() {
-                                              print(totalSuspendedPropertypage);
-                                              print(SuspendedProperty_singlePage);
-                                              SuspendedProperty_singlePage++;
-                                              // cPropCtrl.getAllMyProperties(
-                                              //     allPropertyPage);
-                                            });
-                                          }
-
-                                        },
-                                        child: Icon(
-                                            Icons.arrow_forward,
-                                            size: 40,
-                                            color:SuspendedProperty_singlePage==totalSuspendedPropertypage? Colors.grey:Colors.black
-                                        ))
-                                  ]),
-                            ),
-                          )
-                      ]);
-                    }
-                  }
-                }),
-
-            ///hghjh
-            // cPropCtrl.myProperties.value.isEmpty
-            //     ? Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Image.asset('assets/images/empty.PNG'),
-            //           TextStyles.richTexts(
-            //               decoration: TextDecoration.underline,
-            //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
-            //               size: 14,
-            //               text1: 'You don\'t have any property listed.\n',
-            //               centerText: true,
-            //               text2: 'Create a listing')
-            //         ],
-            //       )
-            //     : myPropertiesWidget(cPropCtrl.myProperties.value),
-            ///ghjhg
-            // cPropCtrl.myPublishedProperties.value.isEmpty
-            //     ? Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Image.asset('assets/images/empty.PNG'),
-            //           TextStyles.richTexts(
-            //               decoration: TextDecoration.underline,
-            //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
-            //               size: 14,
-            //               text1: 'You don\'t have any property listed.\n',
-            //               text2: 'Create a listing',
-            //               centerText: true,
-            //               text3: '',
-            //               text4: '')
-            //         ],
-            //       )
-            //     : myPropertiesWidget(cPropCtrl.myPublishedProperties.value),
-            ///ghjhg
-            // cPropCtrl.myDraftProperties.value.isEmpty
-            //     ? Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Image.asset('assets/images/empty.PNG'),
-            //           TextStyles.richTexts(
-            //               decoration: TextDecoration.underline,
-            //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
-            //               size: 14,
-            //               text1: 'You don\'t have any property listed. \n',
-            //               centerText: true,
-            //               text2: 'Create a listing',
-            //               text3: '',
-            //               text4: '')
-            //         ],
-            //       )
-            //     : myPropertiesWidget(cPropCtrl.myDraftProperties.value),
-            ///ghjhg
-            // cPropCtrl.mySoldProperties.value.isEmpty
-            //     ? Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Image.asset('assets/images/empty.PNG'),
-            //           TextStyles.richTexts(
-            //             decoration: TextDecoration.underline,
-            //             onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
-            //             size: 14,
-            //             centerText: true,
-            //             text1: 'You don\'t have any property listed.\n',
-            //             text2: 'Create a listing',
-            //           )
-            //         ],
-            //       )
-            //     : myPropertiesWidget(cPropCtrl.mySoldProperties.value),
-            ///ghjhg
-            // cPropCtrl.mySuspendedProperties.value.isEmpty
-            //     ? Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Image.asset('assets/images/empty.PNG'),
-            //           TextStyles.richTexts(
-            //               decoration: TextDecoration.underline,
-            //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
-            //               size: 14,
-            //               centerText: true,
-            //               text1: 'You don\'t have any property listed.\n',
-            //               text2: 'Create a listing',
-            //               text3: '',
-            //               text4: '')
-            //         ],
-            //       )
-            //     : myPropertiesWidget(cPropCtrl.mySuspendedProperties.value),
-            ///ghjhg
-          ],
-        ),
+                ///hghjh
+                // cPropCtrl.myProperties.value.isEmpty
+                //     ? Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset('assets/images/empty.PNG'),
+                //           TextStyles.richTexts(
+                //               decoration: TextDecoration.underline,
+                //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
+                //               size: 14,
+                //               text1: 'You don\'t have any property listed.\n',
+                //               centerText: true,
+                //               text2: 'Create a listing')
+                //         ],
+                //       )
+                //     : myPropertiesWidget(cPropCtrl.myProperties.value),
+                ///ghjhg
+                // cPropCtrl.myPublishedProperties.value.isEmpty
+                //     ? Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset('assets/images/empty.PNG'),
+                //           TextStyles.richTexts(
+                //               decoration: TextDecoration.underline,
+                //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
+                //               size: 14,
+                //               text1: 'You don\'t have any property listed.\n',
+                //               text2: 'Create a listing',
+                //               centerText: true,
+                //               text3: '',
+                //               text4: '')
+                //         ],
+                //       )
+                //     : myPropertiesWidget(cPropCtrl.myPublishedProperties.value),
+                ///ghjhg
+                // cPropCtrl.myDraftProperties.value.isEmpty
+                //     ? Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset('assets/images/empty.PNG'),
+                //           TextStyles.richTexts(
+                //               decoration: TextDecoration.underline,
+                //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
+                //               size: 14,
+                //               text1: 'You don\'t have any property listed. \n',
+                //               centerText: true,
+                //               text2: 'Create a listing',
+                //               text3: '',
+                //               text4: '')
+                //         ],
+                //       )
+                //     : myPropertiesWidget(cPropCtrl.myDraftProperties.value),
+                ///ghjhg
+                // cPropCtrl.mySoldProperties.value.isEmpty
+                //     ? Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset('assets/images/empty.PNG'),
+                //           TextStyles.richTexts(
+                //             decoration: TextDecoration.underline,
+                //             onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
+                //             size: 14,
+                //             centerText: true,
+                //             text1: 'You don\'t have any property listed.\n',
+                //             text2: 'Create a listing',
+                //           )
+                //         ],
+                //       )
+                //     : myPropertiesWidget(cPropCtrl.mySoldProperties.value),
+                ///ghjhg
+                // cPropCtrl.mySuspendedProperties.value.isEmpty
+                //     ? Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset('assets/images/empty.PNG'),
+                //           TextStyles.richTexts(
+                //               decoration: TextDecoration.underline,
+                //               onPress1: () => Get.offNamed(RouteStr.mobileCreateProperty),
+                //               size: 14,
+                //               centerText: true,
+                //               text1: 'You don\'t have any property listed.\n',
+                //               text2: 'Create a listing',
+                //               text3: '',
+                //               text4: '')
+                //         ],
+                //       )
+                //     : myPropertiesWidget(cPropCtrl.mySuspendedProperties.value),
+                ///ghjhg
+              ],
+            ),
+          ),
+          Obx(() {
+            return (cPropCtrl.myProperties.isNotEmpty)
+                ? Positioned(
+                    bottom: 0, left: 0, right: 0, child: paginationController())
+                : const SizedBox.shrink();
+          })
+        ],
       ),
     );
+  }
+
+  Widget paginationController() {
+    switch (index) {
+      case 0:
+        return (totalAllPropertypage > 1)
+            ? Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(top: 20),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: NumberPaginator(
+                        numberPages: totalAllPropertypage,
+                        onPageChange: (int index) {
+                          setState(() {
+                            allProperty_singlePage = index;
+
+                            cPropCtrl
+                                .getAllMyProperties(allProperty_singlePage);
+                          });
+                        },
+                        config: NumberPaginatorUIConfig(
+                          buttonSelectedForegroundColor: Colors.white,
+                          buttonUnselectedForegroundColor: Colors.pink,
+                          buttonUnselectedBackgroundColor:
+                              Colors.grey.withOpacity(0.1),
+                          buttonSelectedBackgroundColor: Colors.pink,
+                        ),
+                      )),
+                ),
+              )
+            : const SizedBox.shrink();
+    }
+
+    return const SizedBox.shrink();
   }
 
   myPropertiesWidget(List<Property> properties) {
@@ -709,15 +739,16 @@ class _MyAdsPageState extends State<MyAdsPage>
           itemBuilder: ((context, index) {
             Property property = properties[index];
             int iFeature = 0;
-            String image; //= property.media!.isNotEmpty ? property.media![0].media! : '';
+            String
+                image; //= property.media!.isNotEmpty ? property.media![0].media! : '';
             List<Media> images = property.media ?? [];
-            if(images.isEmpty){
-              image='';
+            if (images.isEmpty) {
+              image = '';
               print('Image is empty');
-            }else{
-              image=property.media![0].media!;
+            } else {
+              image = property.media![0].media!;
             }
-            print(image+'12345');
+            print(image + '12345');
             return Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Material(
@@ -730,26 +761,25 @@ class _MyAdsPageState extends State<MyAdsPage>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                        ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                  child: FadeInImage.assetNetwork(
-                    fit: BoxFit.cover,
-                    height: 55,
-                    width: 55,
-                    fadeInDuration:
-                    const Duration(seconds: 1),
-                    fadeInCurve: Curves.easeInCirc,
-                    placeholder: defaultImage,
-                    image: propertyImgPath + image,
-                    imageErrorBuilder:
-                        (context, error, stackTrace) =>
-                        Image.asset(
-                          defaultImage,
-                          height: 55,
-                          width: 55,
-                          fit: BoxFit.cover,
-                        ),
-                  )),
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: FadeInImage.assetNetwork(
+                                  fit: BoxFit.cover,
+                                  height: 55,
+                                  width: 55,
+                                  fadeInDuration: const Duration(seconds: 1),
+                                  fadeInCurve: Curves.easeInCirc,
+                                  placeholder: defaultImage,
+                                  image: propertyImgPath + image,
+                                  imageErrorBuilder:
+                                      (context, error, stackTrace) =>
+                                          Image.asset(
+                                    defaultImage,
+                                    height: 55,
+                                    width: 55,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )),
                             const SizedBox(
                               width: 10,
                             ),
