@@ -214,68 +214,6 @@ class _MyAdsPageState extends State<MyAdsPage>
                             Expanded(
                                 child: Obx(() => myPropertiesWidget(
                                     cPropCtrl.myPublishedProperties))),
-                            if (totalPublishedPropertypage > 1)
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 20.0),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        //  if (allPropertyPage > 1)
-                                        GestureDetector(
-                                            onTap: () {
-                                              //_list.removeAt(_curr);
-                                              if (publishedProperty_singlePage ==
-                                                  1) {
-                                              } else {
-                                                setState(() {
-                                                  publishedProperty_singlePage--;
-                                                  cPropCtrl.getAllMyProperties(
-                                                      publishedProperty_singlePage);
-                                                });
-                                              }
-                                            },
-                                            child: Icon(
-                                              Icons.arrow_back,
-                                              size: 40,
-                                              color:
-                                                  publishedProperty_singlePage ==
-                                                          1
-                                                      ? Colors.grey
-                                                      : Colors.black,
-                                            )),
-                                        // if(allPropertyPage==totalAllPropertypage)
-                                        // Container()
-                                        // else
-                                        GestureDetector(
-                                            onTap: () {
-                                              if (publishedProperty_singlePage ==
-                                                  totalPublishedPropertypage) {
-                                                //return;
-                                                //MSG.snackBar('End of page',title: 'Message');
-                                              } else {
-                                                setState(() {
-                                                  print(
-                                                      totalPublishedPropertypage);
-                                                  print(
-                                                      publishedProperty_singlePage);
-                                                  publishedProperty_singlePage++;
-                                                  // cPropCtrl.getAllMyProperties(
-                                                  //     allPropertyPage);
-                                                });
-                                              }
-                                            },
-                                            child: Icon(Icons.arrow_forward,
-                                                size: 40,
-                                                color: publishedProperty_singlePage ==
-                                                        totalPublishedPropertypage
-                                                    ? Colors.grey
-                                                    : Colors.black))
-                                      ]),
-                                ),
-                              )
                           ]);
                         }
                       }
@@ -716,6 +654,69 @@ class _MyAdsPageState extends State<MyAdsPage>
                           buttonSelectedBackgroundColor: Colors.pink,
                         ),
                       )),
+                ),
+              )
+            : const SizedBox.shrink();
+
+      case 1:
+        (totalPublishedPropertypage > 1)
+            ? Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(top: 20),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          //  if (allPropertyPage > 1)
+                          GestureDetector(
+                              onTap: () {
+                                //_list.removeAt(_curr);
+                                if (publishedProperty_singlePage == 1) {
+                                } else {
+                                  setState(() {
+                                    publishedProperty_singlePage--;
+                                    cPropCtrl.getAllMyProperties(
+                                        publishedProperty_singlePage);
+                                  });
+                                }
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 40,
+                                color: publishedProperty_singlePage == 1
+                                    ? Colors.grey
+                                    : Colors.black,
+                              )),
+                          // if(allPropertyPage==totalAllPropertypage)
+                          // Container()
+                          // else
+                          GestureDetector(
+                              onTap: () {
+                                if (publishedProperty_singlePage ==
+                                    totalPublishedPropertypage) {
+                                  //return;
+                                  //MSG.snackBar('End of page',title: 'Message');
+                                } else {
+                                  setState(() {
+                                    print(totalPublishedPropertypage);
+                                    print(publishedProperty_singlePage);
+                                    publishedProperty_singlePage++;
+                                    // cPropCtrl.getAllMyProperties(
+                                    //     allPropertyPage);
+                                  });
+                                }
+                              },
+                              child: Icon(Icons.arrow_forward,
+                                  size: 40,
+                                  color: publishedProperty_singlePage ==
+                                          totalPublishedPropertypage
+                                      ? Colors.grey
+                                      : Colors.black))
+                        ]),
+                  ),
                 ),
               )
             : const SizedBox.shrink();

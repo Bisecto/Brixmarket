@@ -20,6 +20,7 @@ import '../widgets/save_property_icon.dart';
 import '../widgets/web_hero_seach.dart';
 import 'about.dart';
 import 'package:brixmarket/view/screens/single_property_web.dart';
+
 @immutable
 class HomePageWeb extends StatefulWidget {
   HomePageWeb({Key? key}) : super(key: key);
@@ -165,7 +166,9 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: (constraints.minWidth < 702) ? Colors.transparent : Colors.white,
+                                  color: (constraints.minWidth < 702)
+                                      ? Colors.transparent
+                                      : Colors.white,
                                   width: 0.5,
                                 )),
                             child: Row(
@@ -183,7 +186,8 @@ class _HomePageWebState extends State<HomePageWeb> {
                                       },
                                       child: selectPropertyType(
                                           width: constraints.minWidth,
-                                          bodyIndex: 0, title: 'Buy')),
+                                          bodyIndex: 0,
+                                          title: 'Buy')),
                                 ),
                                 Expanded(
                                   child: GestureDetector(
@@ -197,7 +201,8 @@ class _HomePageWebState extends State<HomePageWeb> {
                                       },
                                       child: selectPropertyType(
                                           width: constraints.minWidth,
-                                          bodyIndex: 1, title: 'Rent')),
+                                          bodyIndex: 1,
+                                          title: 'Rent')),
                                 ),
                                 Expanded(
                                   child: GestureDetector(
@@ -205,14 +210,16 @@ class _HomePageWebState extends State<HomePageWeb> {
                                         setState(() {
                                           index = 2;
                                           EditCtrl.filterCategories.clear();
-                                          EditCtrl.filterCategories.add('Commercial');
+                                          EditCtrl.filterCategories
+                                              .add('Commercial');
                                           // EditCtrl.propertyType.value =
                                           //     'Commercial';
                                         });
                                       },
                                       child: selectPropertyType(
                                           width: constraints.minWidth,
-                                          bodyIndex: 2, title: 'Commercial')),
+                                          bodyIndex: 2,
+                                          title: 'Commercial')),
                                 ),
                                 Expanded(
                                   child: GestureDetector(
@@ -220,14 +227,16 @@ class _HomePageWebState extends State<HomePageWeb> {
                                         setState(() {
                                           index = 3;
                                           EditCtrl.filterTypes.clear();
-                                          EditCtrl.filterTypes.add('Short stay');
+                                          EditCtrl.filterTypes
+                                              .add('Short stay');
                                           // EditCtrl.propertyType.value =
                                           //     'ShortLet';
                                         });
                                       },
                                       child: selectPropertyType(
                                           width: constraints.minWidth,
-                                          bodyIndex: 3, title: 'ShortLet')),
+                                          bodyIndex: 3,
+                                          title: 'ShortLet')),
                                 ),
                               ],
                             ),
@@ -244,7 +253,9 @@ class _HomePageWebState extends State<HomePageWeb> {
                                 children: [
                                   Expanded(
                                     child: DropDown(
-                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        textSize: (constraints.minWidth < 702)
+                                            ? 13
+                                            : 16,
                                         showLabel: true,
                                         controller: EditCtrl.priceMin,
                                         label: 'Min Price',
@@ -259,7 +270,9 @@ class _HomePageWebState extends State<HomePageWeb> {
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: DropDown(
-                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        textSize: (constraints.minWidth < 702)
+                                            ? 13
+                                            : 16,
                                         showLabel: true,
                                         controller: EditCtrl.priceMax,
                                         label: 'Max Price',
@@ -275,7 +288,9 @@ class _HomePageWebState extends State<HomePageWeb> {
 
                                   Expanded(
                                     child: DropDown(
-                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        textSize: (constraints.minWidth < 702)
+                                            ? 13
+                                            : 16,
                                         showLabel: true,
                                         controller: EditCtrl.filterState,
                                         label: 'State',
@@ -285,25 +300,27 @@ class _HomePageWebState extends State<HomePageWeb> {
                                         height: isTabletDown() ? 35 : 42,
                                         color: Colors.white,
                                         labelColor: Colors.white,
-                                        hint: 'State'
-                                    ),
+                                        hint: 'State'),
                                   ),
                                   const SizedBox(width: 20),
 
                                   Expanded(
                                     child: Obx(() => DropDown(
-                                        textSize: (constraints.minWidth < 702) ? 13 : 16,
+                                        textSize: (constraints.minWidth < 702)
+                                            ? 13
+                                            : 16,
                                         showLabel: true,
                                         controller: EditCtrl.filterCity,
                                         label: 'City/Town',
-                                        items: Lst.ngLGA[EditCtrl.filterState.value.text] ?? [],
+                                        items: Lst.ngLGA[EditCtrl
+                                                .filterState.value.text] ??
+                                            [],
                                         dropIconColor: Colors.grey,
                                         borderRadius: 12,
                                         height: isTabletDown() ? 35 : 42,
                                         color: Colors.white,
                                         labelColor: Colors.white,
-                                        hint: 'City'
-                                    )),
+                                        hint: 'City')),
                                   ),
                                   // Expanded(
                                   //   child: DropDown(
@@ -388,7 +405,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                                     const EdgeInsets.symmetric(horizontal: 0.0),
                                 child: Row(
                                   children: [
-
                                     Expanded(
                                       flex: 12,
                                       child: FormButton(
@@ -401,7 +417,8 @@ class _HomePageWebState extends State<HomePageWeb> {
                                     ),
                                     const SizedBox(width: 20),
                                     Expanded(
-                                      flex: (constraints.minWidth < 702) ? 6 : 4,
+                                      flex:
+                                          (constraints.minWidth < 702) ? 6 : 4,
                                       child: FormButton(
                                         onPressed: () {
                                           propCtrl.clearFilter();
@@ -425,31 +442,26 @@ class _HomePageWebState extends State<HomePageWeb> {
                 Wrap(
                   alignment: WrapAlignment.start,
                   runSpacing: 20,
-
                   children: [
                     propertyMenu(
                         prtyIcon: 'assets/images/buy-house.png',
                         width: constraints.minWidth,
                         title: 'Buy Properties',
                         body:
-                        'Property all over the country is at\nyour fingertips. Brixmarket allows\nlisting of all types of real estate,\nfrom land, houses to commercial\nreal estate.',
+                            'Property all over the country is at\nyour fingertips. Brixmarket allows\nlisting of all types of real estate,\nfrom land, houses to commercial\nreal estate.',
                         btnText: 'View Properties',
                         onTap: () {
                           EditCtrl.filterTypes.clear();
                           EditCtrl.filterTypes.add('Sale');
-                          propCtrl.setAllPropertiesWeb(
-                              filter: true);
+                          propCtrl.setAllPropertiesWeb(filter: true);
                         }),
-                    SizedBox(width: (constraints.minWidth < 1090) ?  0 : 40),
-
-
+                    SizedBox(width: (constraints.minWidth < 1090) ? 0 : 40),
                     propertyMenu(
                         width: constraints.minWidth,
                         prtyIcon: 'assets/images/sell-house.png',
-
                         title: 'Sell Properties',
                         body:
-                        'Are you an agent, or looking to sell\nyour own property? Put your property\nin front of buyers and renters. For\nfree! list it!\n',
+                            'Are you an agent, or looking to sell\nyour own property? Put your property\nin front of buyers and renters. For\nfree! list it!\n',
                         btnText: 'List a property',
                         onTap: () {
                           if (HomeController.isLogin.value) {
@@ -458,44 +470,36 @@ class _HomePageWebState extends State<HomePageWeb> {
                             homeCtrl.loginRequest();
                           }
                           //EditCtrl.filterTypes.clear();
-                         // EditCtrl.filterTypes.add('Sale');
+                          // EditCtrl.filterTypes.add('Sale');
                         }),
-                    SizedBox(width: (constraints.minWidth < 1090) ?  0 : 40),
-
-
+                    SizedBox(width: (constraints.minWidth < 1090) ? 0 : 40),
                     propertyMenu(
                         prtyIcon: 'assets/images/rent-house.png',
                         width: constraints.minWidth,
                         title: 'Rent Properties',
                         body:
-                        'House hunting just got easier. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with shortlets and yearly\n rentals.',
+                            'House hunting just got easier. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with shortlets and yearly\n rentals.',
                         btnText: 'View Properties',
                         onTap: () {
                           EditCtrl.filterTypes.clear();
                           EditCtrl.filterTypes.add('Rent');
-                          propCtrl.setAllPropertiesWeb(
-                              filter: true);
+                          propCtrl.setAllPropertiesWeb(filter: true);
                         }),
-                    SizedBox(width: (constraints.minWidth < 1090) ?  0 : 40),
-
-
+                    SizedBox(width: (constraints.minWidth < 1090) ? 0 : 40),
                     propertyMenu(
                         prtyIcon: 'assets/images/new-house.png',
-
                         width: constraints.minWidth,
                         title: 'New Homes',
                         body:
-                        'Looking For a new Home?. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with all forms of exclusive \n houses for all kinds of purpose.',
+                            'Looking For a new Home?. Find\n your next home without a hassle\n on Brixmarket. We have got you\n covered with all forms of exclusive \n houses for all kinds of purpose.',
                         btnText: 'Show More',
                         onTap: () {
                           EditCtrl.filterCategories.clear();
                           EditCtrl.filterCategories.add('New Home');
-                          propCtrl.setAllPropertiesWeb(
-                              filter: true);
+                          propCtrl.setAllPropertiesWeb(filter: true);
                         }),
                   ],
                 ),
-
                 const SizedBox(height: 80),
                 FutureBuilder(
                     future: homeCtrl.getHomeproperty(),
@@ -510,229 +514,243 @@ class _HomePageWebState extends State<HomePageWeb> {
                           return (snap.data!.isEmpty)
                               ? const SizedBox.shrink()
                               : Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: Get.width * 0.068,
-                                          bottom: 4),
-                                      child: const CustomText(
-                                        text: 'Latest Properties',
-                                        color: Colors.black87,
-                                        size: 24,
-                                        weight: FontWeight.w700,
-                                      ),
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: Get.width * 0.068,
+                                                bottom: 4),
+                                            child: const CustomText(
+                                              text: 'Latest Properties',
+                                              color: Colors.black87,
+                                              size: 24,
+                                              weight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: Get.width * 0.068,
+                                                bottom: 4),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    width: 96,
+                                                    height: 8,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                      top: 4,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        color: Pallet
+                                                            .secondaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8))),
+                                                Container(
+                                                    width: 8,
+                                                    height: 8,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 4, top: 4),
+                                                    decoration: BoxDecoration(
+                                                        color: Pallet
+                                                            .secondaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8))),
+                                                Container(
+                                                    width: 8,
+                                                    height: 8,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 4, top: 4),
+                                                    decoration: BoxDecoration(
+                                                        color: Pallet
+                                                            .secondaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8))),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: Get.width * 0.068,
-                                          bottom: 4),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                              width: 96,
-                                              height: 8,
-                                              margin:
-                                              const EdgeInsets.only(
-                                                top: 4,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  color: Pallet
-                                                      .secondaryColor,
-                                                  borderRadius:
-                                                  BorderRadius
-                                                      .circular(8))),
-                                          Container(
-                                              width: 8,
-                                              height: 8,
-                                              margin:
-                                              const EdgeInsets.only(
-                                                  left: 4, top: 4),
-                                              decoration: BoxDecoration(
-                                                  color: Pallet
-                                                      .secondaryColor,
-                                                  borderRadius:
-                                                  BorderRadius
-                                                      .circular(8))),
-                                          Container(
-                                              width: 8,
-                                              height: 8,
-                                              margin:
-                                              const EdgeInsets.only(
-                                                  left: 4, top: 4),
-                                              decoration: BoxDecoration(
-                                                  color: Pallet
-                                                      .secondaryColor,
-                                                  borderRadius:
-                                                  BorderRadius
-                                                      .circular(8))),
-                                        ],
-                                      ),
+                                    const SizedBox(height: 30),
+                                    Wrap(
+                                      runSpacing: 30,
+                                      children: [
+                                        propertyListing(
+                                            prtyId: properties[0].id,
+                                            prtyImage:
+                                                properties[0].media[0].media,
+                                            prtyTitle: properties[0].title,
+                                            prtyLocation:
+                                                '${properties[0].location.address}, ${properties[0].location.city}, ${properties[0].location.state}',
+                                            property: properties[0],
+                                            prtyPricing: Utils.amount(
+                                              properties[0].price,
+                                            ),
+                                            prtyDuration: properties[0]
+                                                        .priceDuration
+                                                        .substring(0, 2) ==
+                                                    'Per'
+                                                ? properties[0]
+                                                    .priceDuration
+                                                    .toUpperCase()
+                                                : ''),
+                                        ////
+                                        SizedBox(
+                                            width:
+                                                (constraints.minWidth < 1090 ||
+                                                        isMobile())
+                                                    ? 0
+                                                    : 50),
+
+                                        propertyListing(
+                                            prtyId: properties[1].id,
+                                            prtyImage:
+                                                properties[1].media[1].media,
+                                            prtyTitle: properties[1].title,
+                                            prtyLocation:
+                                                '${properties[1].location.address}, ${properties[1].location.city}, ${properties[1].location.state}',
+                                            property: properties[1],
+                                            prtyPricing: Utils.amount(
+                                              properties[1].price,
+                                            ),
+                                            prtyDuration: properties[1]
+                                                        .priceDuration
+                                                        .substring(0, 2) ==
+                                                    'Per'
+                                                ? properties[1]
+                                                    .priceDuration
+                                                    .toUpperCase()
+                                                : ''),
+                                        SizedBox(
+                                            width:
+                                                (constraints.minWidth < 1090 ||
+                                                        isMobile())
+                                                    ? 0
+                                                    : 50),
+
+                                        propertyListing(
+                                            prtyId: properties[2].id,
+                                            prtyImage:
+                                                properties[2].media[2].media,
+                                            prtyTitle: properties[2].title,
+                                            prtyLocation:
+                                                '${properties[2].location.address}, ${properties[2].location.city}, ${properties[2].location.state}',
+                                            property: properties[2],
+                                            prtyPricing: Utils.amount(
+                                              properties[2].price,
+                                            ),
+                                            prtyDuration: properties[2]
+                                                        .priceDuration
+                                                        .substring(0, 2) ==
+                                                    'Per'
+                                                ? properties[2]
+                                                    .priceDuration
+                                                    .toUpperCase()
+                                                : ''),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 30),
-                              Wrap(
-                                runSpacing: 30,
-                                children: [
-                                  propertyListing(
-                                    prtyId: properties[0].id,
-                                      prtyImage:
-                                      properties[0].media[0].media,
-                                      prtyTitle:
-                                      properties[0].title,
-                                      prtyLocation:
-                                      '${properties[0].location.address}, ${properties[0].location.city}, ${properties[0].location.state}',
-                                      property: properties[0],
-                                      prtyPricing: Utils.amount(
-                                        properties[0].price,
-                                      ),
-                                      prtyDuration: properties[0]
-                                          .priceDuration
-                                          .substring(0, 2) ==
-                                          'Per'
-                                          ? properties[0]
-                                          .priceDuration
-                                          .toUpperCase()
-                                          : ''),
-                                  ////
-                                  SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
-
-                                  propertyListing(
-                                    prtyId: properties[1].id,
-                                      prtyImage:
-                                      properties[1].media[1].media,
-                                      prtyTitle:
-                                      properties[1].title,
-                                      prtyLocation:
-                                      '${properties[1].location.address}, ${properties[1].location.city}, ${properties[1].location.state}',
-                                      property: properties[1],
-                                      prtyPricing: Utils.amount(
-                                        properties[1].price,
-                                      ),
-                                      prtyDuration: properties[1]
-                                          .priceDuration
-                                          .substring(0, 2) ==
-                                          'Per'
-                                          ? properties[1]
-                                          .priceDuration
-                                          .toUpperCase()
-                                          : ''),
-                                  SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
-
-
-                                  propertyListing(
-                                    prtyId: properties[2].id,
-                                      prtyImage:
-                                      properties[2].media[2].media,
-                                      prtyTitle:
-                                      properties[2].title,
-                                      prtyLocation:
-                                      '${properties[2].location.address}, ${properties[2].location.city}, ${properties[2].location.state}',
-                                      property: properties[2],
-                                      prtyPricing: Utils.amount(
-                                        properties[2].price,
-                                      ),
-                                      prtyDuration: properties[2]
-                                          .priceDuration
-                                          .substring(0, 2) ==
-                                          'Per'
-                                          ? properties[2]
-                                          .priceDuration
-                                          .toUpperCase()
-                                          : ''),
-                                ],
-                              ),
-                              SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0 : 50),
-                              const SizedBox(height: 30),
-                              Wrap(
-                                runSpacing: 30,
-
-                                children: [
-                                  propertyListing(
-                                    prtyId: properties[3].id,
-                                      prtyImage:
-                                      properties[3].media[0].media,
-                                      prtyTitle:
-                                      properties[3].title,
-                                      prtyLocation:
-                                      '${properties[3].location.address}, ${properties[3].location.city}, ${properties[3].location.state}',
-                                      property: properties[3],
-                                      prtyPricing: Utils.amount(
-                                        properties[3].price,
-                                      ),
-                                      prtyDuration: properties[1]
-                                          .priceDuration
-                                          .substring(0, 2) ==
-                                          'Per'
-                                          ? properties[3]
-                                          .priceDuration
-                                          .toUpperCase()
-                                          : ''),
-                                  ////
-                                  SizedBox(width: (constraints.minWidth < 1090|| isMobile()) ?  0 : 50),
-                                  propertyListing(
-                                    prtyId: properties[4].id,
-                                      prtyImage:
-                                      properties[4].media[2].media,
-                                      prtyTitle:
-                                      properties[4].title,
-                                      prtyLocation:
-                                      '${properties[4].location.address}, ${properties[4].location.city}, ${properties[4].location.state}',
-                                      property: properties[4],
-                                      prtyPricing: Utils.amount(
-                                        properties[4].price,
-                                      ),
-                                      prtyDuration: properties[4]
-                                          .priceDuration
-                                          .substring(0, 2) ==
-                                          'Per'
-                                          ? properties[4]
-                                          .priceDuration
-                                          .toUpperCase()
-                                          : ''),
-                                  SizedBox(width: (constraints.minWidth < 1090 || isMobile()) ?  0:  50),
-                                  propertyListing(
-                                    prtyId: properties[5].id,
-                                      prtyImage:
-                                      properties[5].media[1].media,
-                                      prtyTitle:
-                                      properties[5].title,
-                                      prtyLocation:
-                                      '${properties[5].location.address}, ${properties[5].location.city}, ${properties[5].location.state}',
-                                      property: properties[5],
-                                      prtyPricing: Utils.amount(
-                                        properties[5].price,
-                                      ),
-                                      prtyDuration: properties[5]
-                                          .priceDuration
-                                          .substring(0, 2) ==
-                                          'Per'
-                                          ? properties[5]
-                                          .priceDuration
-                                          .toUpperCase()
-                                          : ''),
-                                ],
-                              )
-                            ],
-                          );
+                                    SizedBox(
+                                        width: (constraints.minWidth < 1090 ||
+                                                isMobile())
+                                            ? 0
+                                            : 50),
+                                    const SizedBox(height: 30),
+                                    Wrap(
+                                      runSpacing: 30,
+                                      children: [
+                                        propertyListing(
+                                            prtyId: properties[3].id,
+                                            prtyImage:
+                                                properties[3].media[0].media,
+                                            prtyTitle: properties[3].title,
+                                            prtyLocation:
+                                                '${properties[3].location.address}, ${properties[3].location.city}, ${properties[3].location.state}',
+                                            property: properties[3],
+                                            prtyPricing: Utils.amount(
+                                              properties[3].price,
+                                            ),
+                                            prtyDuration: properties[1]
+                                                        .priceDuration
+                                                        .substring(0, 2) ==
+                                                    'Per'
+                                                ? properties[3]
+                                                    .priceDuration
+                                                    .toUpperCase()
+                                                : ''),
+                                        ////
+                                        SizedBox(
+                                            width:
+                                                (constraints.minWidth < 1090 ||
+                                                        isMobile())
+                                                    ? 0
+                                                    : 50),
+                                        propertyListing(
+                                            prtyId: properties[4].id,
+                                            prtyImage:
+                                                properties[4].media[2].media,
+                                            prtyTitle: properties[4].title,
+                                            prtyLocation:
+                                                '${properties[4].location.address}, ${properties[4].location.city}, ${properties[4].location.state}',
+                                            property: properties[4],
+                                            prtyPricing: Utils.amount(
+                                              properties[4].price,
+                                            ),
+                                            prtyDuration: properties[4]
+                                                        .priceDuration
+                                                        .substring(0, 2) ==
+                                                    'Per'
+                                                ? properties[4]
+                                                    .priceDuration
+                                                    .toUpperCase()
+                                                : ''),
+                                        SizedBox(
+                                            width:
+                                                (constraints.minWidth < 1090 ||
+                                                        isMobile())
+                                                    ? 0
+                                                    : 50),
+                                        propertyListing(
+                                            prtyId: properties[5].id,
+                                            prtyImage:
+                                                properties[5].media[1].media,
+                                            prtyTitle: properties[5].title,
+                                            prtyLocation:
+                                                '${properties[5].location.address}, ${properties[5].location.city}, ${properties[5].location.state}',
+                                            property: properties[5],
+                                            prtyPricing: Utils.amount(
+                                              properties[5].price,
+                                            ),
+                                            prtyDuration: properties[5]
+                                                        .priceDuration
+                                                        .substring(0, 2) ==
+                                                    'Per'
+                                                ? properties[5]
+                                                    .priceDuration
+                                                    .toUpperCase()
+                                                : ''),
+                                      ],
+                                    )
+                                  ],
+                                );
                         }
                       }
-
-                      return const SizedBox.shrink();
                     }),
                 const SizedBox(height: 50),
                 Padding(
@@ -752,23 +770,27 @@ class _HomePageWebState extends State<HomePageWeb> {
       ); //);
     });
   }
+
   propertyMenu(
       {required String title,
-        required String body,
-        required String btnText,
-        required double width,
-        required String prtyIcon,
-        required Function onTap}) {
+      required String body,
+      required String btnText,
+      required double width,
+      required String prtyIcon,
+      required Function onTap}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:12.0,vertical:  12),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
       child: AnimatedContainer(
-        duration:const Duration(microseconds: 200),
-        decoration: const  BoxDecoration(
-          border: Border(bottom: BorderSide(width: 5.0, color: Pallet.secondaryColor)),
+        duration: const Duration(microseconds: 200),
+        decoration: const BoxDecoration(
+          border: Border(
+              bottom: BorderSide(width: 5.0, color: Pallet.secondaryColor)),
         ),
         child: Column(
           children: [
-            SizedBox(height:50, width: 50,
+            SizedBox(
+              height: 50,
+              width: 50,
               child: Image.asset(prtyIcon),
             ),
             Text(title,
@@ -785,10 +807,9 @@ class _HomePageWebState extends State<HomePageWeb> {
                   height: 2,
                   fontSize: 14,
                 )),
-
             const SizedBox(height: 10),
             TextButton(
-              onPressed: (){
+              onPressed: () {
                 onTap();
               },
               style: TextButton.styleFrom(
@@ -803,7 +824,6 @@ class _HomePageWebState extends State<HomePageWeb> {
                   )),
             ),
             const SizedBox(height: 10),
-
           ],
         ),
       ),
@@ -812,12 +832,12 @@ class _HomePageWebState extends State<HomePageWeb> {
 
   propertyListing(
       {required String prtyImage,
-        required String prtyId,
-        required String prtyTitle,
-        required String prtyLocation,
-        prtyPricing,
-        required property,
-        required String prtyDuration}) {
+      required String prtyId,
+      required String prtyTitle,
+      required String prtyLocation,
+      prtyPricing,
+      required property,
+      required String prtyDuration}) {
     return Material(
       elevation: 6,
       type: MaterialType.card,
@@ -825,107 +845,105 @@ class _HomePageWebState extends State<HomePageWeb> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: GestureDetector(
-        onTap: (){
-          Navigator.of(context!).push(MaterialPageRoute(
-              builder: (context) =>
-                  Single_page_web(property_id: prtyId)));
-
-        },
-          child:Column(
-        children: [
-          Container(
-            width: 335,
-            height: 215,
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(
-                      10,
-                    ),
-                    topRight: Radius.circular(
-                      10,
-                    )),
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      propertyImgPath + prtyImage,
-                    ))),
-          ),
-          SizedBox(
-              width: 320,
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(16, 16, 6, 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                            color: Colors.black,
-                            text: prtyTitle,
-                            weight: FontWeight.w700,
-                            size: 16),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on,
-                                color: Pallet.secondaryColor, size: 18),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: CustomText(
-                                  color: Colors.black,
-                                  text: prtyLocation,
-                                  weight: FontWeight.w500,
-                                  maxLines: 1,
-                                  size: 14),
-                            ),
-                          ],
+          onTap: () {
+            Navigator.of(context!).push(MaterialPageRoute(
+                builder: (context) => Single_page_web(property_id: prtyId)));
+          },
+          child: Column(
+            children: [
+              Container(
+                width: 335,
+                height: 215,
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(
+                          10,
                         ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        topRight: Radius.circular(
+                          10,
+                        )),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          propertyImgPath + prtyImage,
+                        ))),
+              ),
+              SizedBox(
+                  width: 320,
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(16, 16, 6, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Wrap(
+                            CustomText(
+                                color: Colors.black,
+                                text: prtyTitle,
+                                weight: FontWeight.w700,
+                                size: 16),
+                            const SizedBox(height: 8),
+                            Row(
                               children: [
-                                CustomText(
-                                    color: Pallet.secondaryColor,
-                                    text: prtyPricing,
-                                    weight: FontWeight.w600,
-                                    size: 18),
-                                const SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
+                                const Icon(Icons.location_on,
+                                    color: Pallet.secondaryColor, size: 18),
+                                const SizedBox(width: 12),
+                                Expanded(
                                   child: CustomText(
-                                    color: Colors.black.withOpacity(0.7),
-                                    text: prtyDuration,
-                                    weight: FontWeight.w500,
-                                    size: 14,
-                                  ),
+                                      color: Colors.black,
+                                      text: prtyLocation,
+                                      weight: FontWeight.w500,
+                                      maxLines: 1,
+                                      size: 14),
                                 ),
                               ],
                             ),
-                            Obx(() => SavehomeProperty(
-                                property: property,
-                                user: homeCtrl.user.value,
-                                state: homeCtrl.savingProperty.value)),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Wrap(
+                                  children: [
+                                    CustomText(
+                                        color: Pallet.secondaryColor,
+                                        text: prtyPricing,
+                                        weight: FontWeight.w600,
+                                        size: 18),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: CustomText(
+                                        color: Colors.black.withOpacity(0.7),
+                                        text: prtyDuration,
+                                        weight: FontWeight.w500,
+                                        size: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Obx(() => SavehomeProperty(
+                                    property: property,
+                                    user: homeCtrl.user.value,
+                                    state: homeCtrl.savingProperty.value)),
+                              ],
+                            ),
                           ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ))
-        ],
-      )),
+                  ))
+            ],
+          )),
     );
   }
 
-
-  selectPropertyType({required int bodyIndex, required String title, required double width}) {
+  selectPropertyType(
+      {required int bodyIndex, required String title, required double width}) {
     return Container(
       child: Center(
           child: Text(title, style: const TextStyle(color: Colors.white))),
@@ -933,19 +951,21 @@ class _HomePageWebState extends State<HomePageWeb> {
           color: (index == bodyIndex)
               ? const Color(0xFFF13054)
               : Colors.transparent,
-          borderRadius: (width < 702) ? BorderRadius.circular(8) :BorderRadius.only(
-              topLeft: (index == 0)
-                  ? const Radius.circular(8)
-                  : const Radius.circular(0),
-              bottomLeft: (index == 0)
-                  ? const Radius.circular(8)
-                  : const Radius.circular(0),
-              topRight: (index == 3)
-                  ? const Radius.circular(8)
-                  : const Radius.circular(0),
-              bottomRight: (index == 3)
-                  ? const Radius.circular(8)
-                  : const Radius.circular(0))),
+          borderRadius: (width < 702)
+              ? BorderRadius.circular(8)
+              : BorderRadius.only(
+                  topLeft: (index == 0)
+                      ? const Radius.circular(8)
+                      : const Radius.circular(0),
+                  bottomLeft: (index == 0)
+                      ? const Radius.circular(8)
+                      : const Radius.circular(0),
+                  topRight: (index == 3)
+                      ? const Radius.circular(8)
+                      : const Radius.circular(0),
+                  bottomRight: (index == 3)
+                      ? const Radius.circular(8)
+                      : const Radius.circular(0))),
     );
   }
 
@@ -1186,7 +1206,6 @@ class _HomePageWebState extends State<HomePageWeb> {
       },
     );
   }
-
 }
 
 class FaceOutlinePainter extends CustomPainter {
