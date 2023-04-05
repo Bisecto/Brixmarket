@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchInput extends StatelessWidget {
@@ -35,7 +34,10 @@ class SearchInput extends StatelessWidget {
                 color: Colors.white,
                 child: Text(
                   label,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87),
                 ),
               ),
         const SizedBox(
@@ -60,17 +62,24 @@ class SearchInput extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    child: TextField(
-                        controller: controller,
-                        keyboardType: inputType,
-                        maxLines: maxLines,
-                        enabled: isEnabled,
-                        decoration: InputDecoration(border: InputBorder.none, hintText: hint, hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14)),
-                        onChanged: (text) {}),
+                    margin: const EdgeInsets.only(bottom: 4),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: TextField(
+                          controller: controller,
+                          keyboardType: inputType,
+                          maxLines: maxLines,
+                          enabled: isEnabled,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: hint,
+                              hintStyle: TextStyle(
+                                  color: Colors.grey.shade400, fontSize: 14)),
+                          onChanged: (text) {}),
+                    ),
                   ),
                 ),
-                Icon(Icons.search)
+                const Icon(Icons.search)
               ],
             ),
           ),

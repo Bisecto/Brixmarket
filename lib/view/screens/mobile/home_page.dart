@@ -608,7 +608,6 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     propCtrl.clearFilter();
     scrollController.addListener(() {
@@ -703,91 +702,91 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                       snapdata.data!.data.properties;
                   return Column(children: [
                     const Padding(
-                  padding: EdgeInsets.fromLTRB(14.0, 14, 0, 14),
-                  child: CustomText(
-                      color: Colors.blueGrey,
-                      text: 'Searched Results',
-                      weight: FontWeight.bold,
-                      size: 16),
+                      padding: EdgeInsets.fromLTRB(14.0, 14, 0, 14),
+                      child: CustomText(
+                          color: Colors.blueGrey,
+                          text: 'Searched Results',
+                          weight: FontWeight.bold,
+                          size: 16),
                     ),
                     const SizedBox(height: 16),
                     const Divider(color: Colors.black12),
                     ListView.builder(
-                    //controller: scrollController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: properties.length,
-                    padding: const EdgeInsets.only(
-                        left: 12.0, right: 12.0, bottom: 20),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      filter.Property property = properties[index];
-                      if (snapdata.data!.data.properties.length < 1) {
-                        return Column(
-                          children: [
-                            Column(children: [
-                              SizedBox(
-                                height: Get.height * 0.2,
-                              ),
-                              const CustomText(
-                                  color: Colors.blueGrey,
-                                  text: 'No Results Found',
-                                  weight: FontWeight.w400,
-                                  size: 18),
-                              const SizedBox(height: 10),
-                            ])
-                          ],
-                        );
-                      } else {
-                        return buildFilterList(
-                            showMore: true, property: property);
-                      }
-                    }),
+                        //controller: scrollController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: properties.length,
+                        padding: const EdgeInsets.only(
+                            left: 12.0, right: 12.0, bottom: 20),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          filter.Property property = properties[index];
+                          if (snapdata.data!.data.properties.length < 1) {
+                            return Column(
+                              children: [
+                                Column(children: [
+                                  SizedBox(
+                                    height: Get.height * 0.2,
+                                  ),
+                                  const CustomText(
+                                      color: Colors.blueGrey,
+                                      text: 'No Results Found',
+                                      weight: FontWeight.w400,
+                                      size: 18),
+                                  const SizedBox(height: 10),
+                                ])
+                              ],
+                            );
+                          } else {
+                            return buildFilterList(
+                                showMore: true, property: property);
+                          }
+                        }),
                     if (snapdata.data!.data.pages > 1)
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            GestureDetector(
-                                onTap: () {
-                                  //_list.removeAt(_curr);
-                                  if (page == 1) {
-                                  } else {
-                                    setState(() {
-                                      isLoading = true;
-                                      page--;
-                                      getSearchedResult(page, SearchValue);
-                                    });
-                                  }
-                                },
-                                child: const Icon(
-                                  Icons.navigate_before,
-                                  size: 40,
-                                )),
-                            if (isLoading)
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Preloader.loadingWidget()),
-                            GestureDetector(
-                                onTap: () {
-                                  if (snapdata.data!.data.pages == page) {
-                                  } else {}
-                                  setState(() {
-                                    page++;
-                                    isLoading = true;
-                                    getSearchedResult(page, SearchValue);
-                                  });
-                                },
-                                child: const Icon(
-                                  Icons.navigate_next,
-                                  size: 40,
-                                )),
-                          ]),
-                    ),
-                  )
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 50.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                GestureDetector(
+                                    onTap: () {
+                                      //_list.removeAt(_curr);
+                                      if (page == 1) {
+                                      } else {
+                                        setState(() {
+                                          isLoading = true;
+                                          page--;
+                                          getSearchedResult(page, SearchValue);
+                                        });
+                                      }
+                                    },
+                                    child: const Icon(
+                                      Icons.navigate_before,
+                                      size: 40,
+                                    )),
+                                if (isLoading)
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Preloader.loadingWidget()),
+                                GestureDetector(
+                                    onTap: () {
+                                      if (snapdata.data!.data.pages == page) {
+                                      } else {}
+                                      setState(() {
+                                        page++;
+                                        isLoading = true;
+                                        getSearchedResult(page, SearchValue);
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.navigate_next,
+                                      size: 40,
+                                    )),
+                              ]),
+                        ),
+                      )
                   ]);
                 }
               })),
@@ -990,11 +989,11 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                             },
                             child: Row(
                               children: const [
-                                 Icon(
+                                Icon(
                                   Icons.house,
                                   color: Colors.red,
                                 ),
-                                  CustomText(
+                                CustomText(
                                     color: Pallet.secondaryColor,
                                     text: '   Search using property name',
                                     weight: FontWeight.normal,
@@ -1028,101 +1027,101 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                                     snapdata.data!.data.properties;
                                 return Column(children: [
                                   const Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: CustomText(
-                                    color: Colors.blueGrey,
-                                    text: 'Searched Results',
-                                    weight: FontWeight.bold,
-                                    size: 16),
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: CustomText(
+                                        color: Colors.blueGrey,
+                                        text: 'Searched Results',
+                                        weight: FontWeight.bold,
+                                        size: 16),
                                   ),
                                   const SizedBox(height: 16),
                                   const Divider(color: Colors.black12),
                                   ListView.builder(
-                                  //controller: scrollController,
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
-                                  itemCount: properties.length,
-                                  padding: const EdgeInsets.only(
-                                      left: 12.0, right: 12.0, bottom: 20),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    filter.Property property =
-                                        properties[index];
-                                    if (snapdata
-                                            .data!.data.properties.length <
-                                        1) {
-                                      return Column(
-                                        children: [
-                                          Column(children: [
-                                            SizedBox(
-                                              height: Get.height * 0.2,
-                                            ),
-                                            const CustomText(
-                                                color: Colors.blueGrey,
-                                                text: 'No Results Found',
-                                                weight: FontWeight.w400,
-                                                size: 18),
-                                            const SizedBox(height: 10),
-                                          ])
-                                        ],
-                                      );
-                                    } else {
-                                      return buildFilterList(
-                                          showMore: true,
-                                          property: property);
-                                    }
-                                  }),
+                                      //controller: scrollController,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: properties.length,
+                                      padding: const EdgeInsets.only(
+                                          left: 12.0, right: 12.0, bottom: 20),
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        filter.Property property =
+                                            properties[index];
+                                        if (snapdata
+                                                .data!.data.properties.length <
+                                            1) {
+                                          return Column(
+                                            children: [
+                                              Column(children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.2,
+                                                ),
+                                                const CustomText(
+                                                    color: Colors.blueGrey,
+                                                    text: 'No Results Found',
+                                                    weight: FontWeight.w400,
+                                                    size: 18),
+                                                const SizedBox(height: 10),
+                                              ])
+                                            ],
+                                          );
+                                        } else {
+                                          return buildFilterList(
+                                              showMore: true,
+                                              property: property);
+                                        }
+                                      }),
                                   if (snapdata.data!.data.pages > 1)
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 50.0),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          GestureDetector(
-                                              onTap: () {
-                                                //_list.removeAt(_curr);
-                                                if (page == 1) {
-                                                } else {
-                                                  setState(() {
-                                                    page--;
-                                                    getSearchedResult(
-                                                        page, SearchValue);
-                                                  });
-                                                }
-                                              },
-                                              child: const Icon(
-                                                Icons.navigate_before,
-                                                size: 40,
-                                              )),
-                                          if (isLoading)
-                                            Align(
-                                                alignment: Alignment.center,
-                                                child: Preloader
-                                                    .loadingWidget()),
-                                          GestureDetector(
-                                              onTap: () {
-                                                if (snapdata
-                                                        .data!.data.pages ==
-                                                    page) {
-                                                } else {}
-                                                setState(() {
-                                                  page++;
-                                                  getSearchedResult(
-                                                      page, SearchValue);
-                                                });
-                                              },
-                                              child: const Icon(
-                                                Icons.navigate_next,
-                                                size: 40,
-                                              )),
-                                        ]),
-                                  ),
-                                )
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 50.0),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    //_list.removeAt(_curr);
+                                                    if (page == 1) {
+                                                    } else {
+                                                      setState(() {
+                                                        page--;
+                                                        getSearchedResult(
+                                                            page, SearchValue);
+                                                      });
+                                                    }
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.navigate_before,
+                                                    size: 40,
+                                                  )),
+                                              if (isLoading)
+                                                Align(
+                                                    alignment: Alignment.center,
+                                                    child: Preloader
+                                                        .loadingWidget()),
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    if (snapdata
+                                                            .data!.data.pages ==
+                                                        page) {
+                                                    } else {}
+                                                    setState(() {
+                                                      page++;
+                                                      getSearchedResult(
+                                                          page, SearchValue);
+                                                    });
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.navigate_next,
+                                                    size: 40,
+                                                  )),
+                                            ]),
+                                      ),
+                                    )
                                 ]);
                               }
                             }),
