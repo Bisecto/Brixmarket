@@ -1,13 +1,9 @@
 import 'dart:async';
 
-import 'package:brixmarket/core/dialogs.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../../config/theme/color.dart';
-import '../../../controllers/create_property_controller.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../models/property_model.dart';
@@ -32,21 +28,12 @@ class CreatePropertyWidget extends StatefulWidget {
 class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
   bool isExpanded = false;
 
-  checkFeture() {
-    setState(() {
-      getFeatures();
-      getAmenities();
-      // isExpanded=true;
-    });
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     cPropCtrl.Toinitial();
     setState(() {
-      cPropCtrl.createPropPageIndex.value ==0;
+      cPropCtrl.createPropPageIndex.value == 0;
     });
     checkFeture();
     //if()
@@ -57,451 +44,502 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
     //});
   }
 
+  checkFeture() {
+    setState(() {
+      getFeatures();
+      getAmenities();
+      // isExpanded=true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double dashPadding = Get.width * 0.05;
-    return Container(
-      height: Get.height,
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 0),
-      color: Colors.white,
-      child: Scrollbar(
-        controller: cPropCtrl.createPropScrollCtrl,
-        isAlwaysShown: true,
-        interactive: true,
-        child: ListView(
-          shrinkWrap: true,
-          controller: cPropCtrl.createPropScrollCtrl,
-          padding: EdgeInsets.fromLTRB(dashPadding, 0, dashPadding, 0),
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: CustomText(
-                text: 'Create List',
-                color: Colors.black,
-                weight: FontWeight.bold,
-                size: 18,
-              ),
-            ),
-            const Divider(color: Colors.black26),
-            const SizedBox(height: 10),
-            //if(!widget.isEdt)
-            buildStepNumber(),
-            // if(widget.isEdt)
-            //   buildStepNumberEdit(),
-            const SizedBox(
-              height: 20,
-            ),
-            // if (widget.isEdt)
-            //   Obx(() => FormButton(
-            //         bgColor: Pallet.secondaryColor,
-            //         text: 'Skip this section',
-            //         disableButton: cPropCtrl.createPropPageIndex.value == 5,
-            //         onPressed: () {
-            //           //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
-            //           //MSG.errorSnackBar('End of page');
-            //           //  }
-            //           cPropCtrl.ToSpecifiedpage();
-            //         },
-            //       )),
-            // if (!widget.isEdt)
-            // Obx(() {
-            //   if(cPropCtrl.createPropPageIndex.value==3){
-            //   return FormButton(
-            //     bgColor: Pallet.secondaryColor,
-            //     text: 'Skip this section',
-            //     disableButton: cPropCtrl.createPropPageIndex.value == 5,
-            //     onPressed: () {
-            //       //if(CreatePropertyCtrl.createPropPageIndex.value ==5){
-            //       //MSG.errorSnackBar('End of page');
-            //       //  }
-            //       cPropCtrl.ToSpecifiedpage();
-            //     },
-            //   );}else{
-            //   return Container();
-            // }}),
-            SizedBox(
-              height: 1150,
-              child: PageView(
-                controller: cPropCtrl.cPPageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  createPropertyDetails(),
-                  createPropertyMedia(),
-                  Container(
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const CustomText(
-                          text: 'Details',
-                          color: Colors.black,
-                          size: 16,
-                          weight: FontWeight.bold,
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: FormInput(
-                                  width: double.infinity,
-                                  controller: EditCtrl.address,
-                                  validate: Val.name,
-                                  error: EditCtrl.addressErr,
-                                  label: 'Address',
-                                  hint: 'Enter address',
-                                ),
-                              ),
-                              SizedBox(width: Get.width * 0.02),
-                              Flexible(
-                                child: DropDown(
-                                  controller: EditCtrl.state,
-                                  label: 'State',
-                                  items: Lst.ngStates,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: Obx(
-                                  () => DropDown(
-                                    controller: EditCtrl.city,
-                                    label: 'City/Town',
-                                    items:
-                                        Lst.ngLGA[EditCtrl.state.value.text] ??
-                                            [],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: Get.width * 0.02),
-                              Flexible(
-                                child: FormInput(
-                                  width: double.infinity,
-                                  controller: EditCtrl.landmarks.value,
-                                  validate: Val.name,
-                                  error: EditCtrl.landmarksErr,
-                                  label: 'Landmarks',
-                                  hint: 'Enter the closest bustop',
-                                ),
-                                // DropDown(
-                                //   controller: EditCtrl.landmarks,
-                                //   label: 'Landmarks',
-                                //   items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
-                                // ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        // const CustomText(
-                        //   text: 'Google Map (Optional)',
-                        //   color: Colors.black,
-                        //   size: 16,
-                        //   weight: FontWeight.bold,
-                        // ),
-                        // const SizedBox(
-                        //   height: 20,
-                        // ),
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   child: Row(
-                        //     children: [
-                        //       Flexible(
-                        //         child: FormInput(
-                        //           width: double.infinity,
-                        //           controller: EditCtrl.latitude,
-                        //           label: 'Latitude',
-                        //           hint: 'Enter location Latitude',
-                        //         ),
-                        //       ),
-                        //       SizedBox(width: Get.width * 0.02),
-                        //       Flexible(
-                        //         child: FormInput(
-                        //           width: double.infinity,
-                        //           controller: EditCtrl.longitude,
-                        //           label: 'Longitude',
-                        //           hint: 'Enter location Longitude',
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // const SizedBox(
-                        //   height: 32,
-                        // ),
-                        // Image.asset('assets/images/map.jpeg'),
-                        const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 3.0,
-                            right: 0,
-                            bottom: 3,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Obx(() => Flexible(
-                                    child: FormButton(
-                                      width: 100,
-                                      bgColor: Pallet.secondaryColor,
-                                      disableButton:
-                                          cPropCtrl.createPropPageIndex.value <
-                                              1,
-                                      text: 'Previous',
-                                      onPressed: cPropCtrl.backToPrevious,
-                                    ),
-                                  )),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                child: FormBorderButton(
-                                  width: 120,
-                                  bgColor: Colors.white,
-                                  txtColor: Colors.black,
-                                  text: 'Save as draft',
-                                  onPressed: () {
-                                    cPropCtrl.saveToDraft = true;
-                                    cPropCtrl.submitPropertyLocation();
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Obx(() => Flexible(
-                                    child: FormButton(
-                                      width: 100,
-                                      text: (cPropCtrl
-                                                  .createPropPageIndex.value ==
-                                              5)
-                                          ? 'Finish'
-                                          : 'Next',
-                                      onPressed: () {
-                                        checkFeture();
-                                        cPropCtrl.submitPropertyLocation();
-                                      },
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        )
-                        //buttonRow(cPropCtrl.submitPropertyLocation),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const CustomText(
-                              text: 'More Details(Nearby location)',
-                              color: Colors.black,
-                              size: 16,
-                              weight: FontWeight.bold),
-                          // Row(
-                          //   children: [
-                          //     if (!isExpanded)
-                          //       RaisedButton(
-                          //         color: Colors.red,
-                          //         onPressed: () {
-                          //           checkFeture();
-                          //
-                          //           //callFeature();
-                          //         },
-                          //         child: const Text('Expand To fill'),
-                          //       ),
-                          //   ],
-                          // ),
-                          const SizedBox(height: 10),
-                          SizedBox(
-                            width: double.infinity,
-                            child: FutureBuilder(
-                                future: getFeatures(),
-                                builder: (context, AsyncSnapshot snap) {
-                                  var featureData = snap.data ?? [];
-
-                                  return GridView.builder(
-                                      shrinkWrap: true,
-                                      padding: const EdgeInsets.only(right: 0),
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: featureData.length,
-                                      gridDelegate:
-                                      const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        mainAxisExtent: 53,
-                                        maxCrossAxisExtent: 200,
-                                      ),
-                                      itemBuilder: (_, i) {
-                                        var feature = featureData[i]['feature_value'];
-
-                                        return Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Transform.scale(
-                                                scale: 0.7,
-                                                child: Obx(
-                                                      () => Checkbox(
-                                                    activeColor: Pallet.secondaryColor,
-                                                    checkColor: Colors.white,
-                                                    side: const BorderSide(
-                                                        color: Colors.black54),
-                                                    value:
-                                                    EditCtrl.features.contains(feature),
-                                                    onChanged: (state) {
-                                                      if (EditCtrl.features
-                                                          .contains(feature)) {
-                                                        EditCtrl.features.remove(feature);
-                                                      } else {
-                                                        EditCtrl.features.add(feature);
-                                                        EditCtrl.features.refresh();
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                  child: Text(feature,
-                                                      style: const TextStyle(fontSize: 16))),
-                                            ]);
-                                      });
-                                }),
-
-                            // child: FutureBuilder(
-                            //     future: getFeatures(),
-                            //     builder: (context, AsyncSnapshot snap) {
-                            //       var featuresData = snap.data ?? [];
-                            //       var features = {};
-                            //       featuresData.forEach((e) {
-                            //         if (features[e['feature']] == null) {
-                            //           features[e['feature']] = [
-                            //             e['feature_value'].toString()
-                            //           ];
-                            //         } else {
-                            //           features[e['feature']]
-                            //               .add(e['feature_value'].toString());
-                            //         }
-                            //       });
-                            //       var initialList = [];
-                            //       if (featuresData.isNotEmpty) {
-                            //         initialList = EditCtrl.ctrlList;
-                            //         EditCtrl.ctrlList = [];
-                            //       }
-                            //       int i = -1;
-                            //       if (snap.connectionState ==
-                            //           ConnectionState.done) {
-                            //         // If we got an error
-                            //         if (snap.hasError) {
-                            //           return Center(
-                            //             child: Text(
-                            //               '${snap.error} occurred',
-                            //               style: TextStyle(fontSize: 18),
-                            //             ),
-                            //           );
-                            //
-                            //           // if we got our data
-                            //         } else if (snap.hasData) {
-                            //           // Extracting data from snapshot object
-                            //           return Wrap(
-                            //             children: [
-                            //               ...features.entries.map((feature) {
-                            //                 EditCtrl.ctrlList.add(
-                            //                     TextEditingController().obs);
-                            //                 EditCtrl.ctrlListKeys.add(
-                            //                     TextEditingController(
-                            //                         text: feature.key));
-                            //                 i++;
-                            //                 if ((feature.value[0] ?? '')
-                            //                     .isEmpty) {
-                            //                   return Container(
-                            //                     padding: EdgeInsets.only(
-                            //                         right: Get.width * 0.01,
-                            //                         bottom: 10),
-                            //                     width: Get.width < 480
-                            //                         ? double.infinity
-                            //                         : Get.width * 0.31,
-                            //                     child: FormInput(
-                            //                       width: double.infinity,
-                            //                       controller: EditCtrl
-                            //                           .ctrlList[i].value,
-                            //                       label: feature.key,
-                            //                       hint:
-                            //                           'Enter ${feature.key} Nearby',
-                            //                       value: initialList.isEmpty
-                            //                           ? ''
-                            //                           : initialList[i]
-                            //                               .value
-                            //                               .text,
-                            //                     ),
-                            //                   );
-                            //                 } else {
-                            //                   return Container(
-                            //                     padding: EdgeInsets.only(
-                            //                         right: Get.width * 0.01,
-                            //                         bottom: 10),
-                            //                     width: Get.width < 480
-                            //                         ? double.infinity
-                            //                         : Get.width * 0.31,
-                            //                     child: SizedBox(
-                            //                       child: DropDown(
-                            //                         initialValue:
-                            //                             initialList.isEmpty
-                            //                                 ? ''
-                            //                                 : feature.value[i],
-                            //                         controller:
-                            //                             EditCtrl.ctrlList[i],
-                            //                         label:
-                            //                             feature.key + ' Nrby',
-                            //                         items: feature.value
-                            //                             as List<String>,
-                            //                       ),
-                            //                     ),
-                            //                   );
-                            //                 }
-                            //               }).toList(),
-                            //             ],
-                            //           );
-                            //         }
-                            //       }
-                            //
-                            //       // Displaying LoadingSpinner to indicate waiting state
-                            //       return Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     }),
-                          ),
-                          buttonRow(cPropCtrl.submitPropertyMoreDetails),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        ],
+    return Stack(
+      children: [
+        Container(
+          height: Get.height,
+          width: double.infinity,
+          margin: const EdgeInsets.only(top: 0),
+          color: Colors.white,
+          child: Scrollbar(
+            controller: cPropCtrl.createPropScrollCtrl,
+            thumbVisibility: true,
+            interactive: true,
+            child: ListView(
+              shrinkWrap: true,
+              controller: cPropCtrl.createPropScrollCtrl,
+              padding: EdgeInsets.fromLTRB(dashPadding, 0, dashPadding, 0),
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: CustomText(
+                        text: 'Create List',
+                        color: Colors.black,
+                        weight: FontWeight.bold,
+                        size: 18,
                       ),
                     ),
+                    if (widget.isEdt)
+                      Obx(() {
+                        if (cPropCtrl.createPropPageIndex.value != 0) {
+                          return SizedBox(
+                            width: 100,
+                            child: FormButton(
+                              bgColor: Pallet.secondaryColor,
+                              text: 'Skip',
+                              disableButton:
+                                  cPropCtrl.createPropPageIndex.value == 5,
+                              onPressed: () {
+                                cPropCtrl.ToSpecifiedpage();
+                              },
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }),
+                  ],
+                ),
+                const Divider(color: Colors.black26),
+                const SizedBox(height: 10),
+                //if(!widget.isEdt)
+                buildStepNumber(),
+                // if(widget.isEdt)
+                //   buildStepNumberEdit(),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                SizedBox(
+                  height: 1150,
+                  child: PageView(
+                    controller: cPropCtrl.cPPageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      createPropertyDetails(),
+                      createPropertyMedia(),
+                      Container(
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const CustomText(
+                              text: 'Details',
+                              color: Colors.black,
+                              size: 16,
+                              weight: FontWeight.bold,
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: FormInput(
+                                      width: double.infinity,
+                                      controller: EditCtrl.address,
+                                      validate: Val.name,
+                                      error: EditCtrl.addressErr,
+                                      label: 'Address',
+                                      hint: 'Enter address',
+                                    ),
+                                  ),
+                                  SizedBox(width: Get.width * 0.02),
+                                  Flexible(
+                                    child: DropDown(
+                                      controller: EditCtrl.state,
+                                      label: 'State',
+                                      items: Lst.ngStates,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Obx(
+                                      () => DropDown(
+                                        controller: EditCtrl.city,
+                                        label: 'City/Town',
+                                        items: Lst.ngLGA[
+                                                EditCtrl.state.value.text] ??
+                                            [],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: Get.width * 0.02),
+                                  Flexible(
+                                    child: FormInput(
+                                      width: double.infinity,
+                                      controller: EditCtrl.landmarks.value,
+                                      validate: Val.name,
+                                      error: EditCtrl.landmarksErr,
+                                      label: 'Landmarks',
+                                      hint: 'Enter the closest bustop',
+                                    ),
+                                    // DropDown(
+                                    //   controller: EditCtrl.landmarks,
+                                    //   label: 'Landmarks',
+                                    //   items: Lst.ngLGA[Lst.ngStates[0]] ?? [],
+                                    // ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            // const CustomText(
+                            //   text: 'Google Map (Optional)',
+                            //   color: Colors.black,
+                            //   size: 16,
+                            //   weight: FontWeight.bold,
+                            // ),
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            // SizedBox(
+                            //   width: double.infinity,
+                            //   child: Row(
+                            //     children: [
+                            //       Flexible(
+                            //         child: FormInput(
+                            //           width: double.infinity,
+                            //           controller: EditCtrl.latitude,
+                            //           label: 'Latitude',
+                            //           hint: 'Enter location Latitude',
+                            //         ),
+                            //       ),
+                            //       SizedBox(width: Get.width * 0.02),
+                            //       Flexible(
+                            //         child: FormInput(
+                            //           width: double.infinity,
+                            //           controller: EditCtrl.longitude,
+                            //           label: 'Longitude',
+                            //           hint: 'Enter location Longitude',
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            // const SizedBox(
+                            //   height: 32,
+                            // ),
+                            // Image.asset('assets/images/map.jpeg'),
+                            const SizedBox(height: 16),
+
+                            //buttonRow(cPropCtrl.submitPropertyLocation),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        color: Colors.white,
+                        child: SingleChildScrollView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const CustomText(
+                                  text: 'More Details(Nearby location)',
+                                  color: Colors.black,
+                                  size: 16,
+                                  weight: FontWeight.bold),
+                              // Row(
+                              //   children: [
+                              //     if (!isExpanded)
+                              //       RaisedButton(
+                              //         color: Colors.red,
+                              //         onPressed: () {
+                              //           checkFeture();
+                              //
+                              //           //callFeature();
+                              //         },
+                              //         child: const Text('Expand To fill'),
+                              //       ),
+                              //   ],
+                              // ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                width: double.infinity,
+                                child: FutureBuilder(
+                                    future: getFeatures(),
+                                    builder: (context, AsyncSnapshot snap) {
+                                      var featureData = snap.data ?? [];
+
+                                      return GridView.builder(
+                                          shrinkWrap: true,
+                                          padding:
+                                              const EdgeInsets.only(right: 0),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: featureData.length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            mainAxisExtent: 53,
+                                            maxCrossAxisExtent: 200,
+                                          ),
+                                          itemBuilder: (_, i) {
+                                            var feature =
+                                                featureData[i]['feature_value'];
+
+                                            return Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Transform.scale(
+                                                    scale: 0.7,
+                                                    child: Obx(
+                                                      () => Checkbox(
+                                                        activeColor: Pallet
+                                                            .secondaryColor,
+                                                        checkColor:
+                                                            Colors.white,
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.black54),
+                                                        value: EditCtrl.features
+                                                            .contains(feature),
+                                                        onChanged: (state) {
+                                                          if (EditCtrl.features
+                                                              .contains(
+                                                                  feature)) {
+                                                            EditCtrl.features
+                                                                .remove(
+                                                                    feature);
+                                                          } else {
+                                                            EditCtrl.features
+                                                                .add(feature);
+                                                            EditCtrl.features
+                                                                .refresh();
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                      child: Text(feature,
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      16))),
+                                                ]);
+                                          });
+                                    }),
+
+                                // child: FutureBuilder(
+                                //     future: getFeatures(),
+                                //     builder: (context, AsyncSnapshot snap) {
+                                //       var featuresData = snap.data ?? [];
+                                //       var features = {};
+                                //       featuresData.forEach((e) {
+                                //         if (features[e['feature']] == null) {
+                                //           features[e['feature']] = [
+                                //             e['feature_value'].toString()
+                                //           ];
+                                //         } else {
+                                //           features[e['feature']]
+                                //               .add(e['feature_value'].toString());
+                                //         }
+                                //       });
+                                //       var initialList = [];
+                                //       if (featuresData.isNotEmpty) {
+                                //         initialList = EditCtrl.ctrlList;
+                                //         EditCtrl.ctrlList = [];
+                                //       }
+                                //       int i = -1;
+                                //       if (snap.connectionState ==
+                                //           ConnectionState.done) {
+                                //         // If we got an error
+                                //         if (snap.hasError) {
+                                //           return Center(
+                                //             child: Text(
+                                //               '${snap.error} occurred',
+                                //               style: TextStyle(fontSize: 18),
+                                //             ),
+                                //           );
+                                //
+                                //           // if we got our data
+                                //         } else if (snap.hasData) {
+                                //           // Extracting data from snapshot object
+                                //           return Wrap(
+                                //             children: [
+                                //               ...features.entries.map((feature) {
+                                //                 EditCtrl.ctrlList.add(
+                                //                     TextEditingController().obs);
+                                //                 EditCtrl.ctrlListKeys.add(
+                                //                     TextEditingController(
+                                //                         text: feature.key));
+                                //                 i++;
+                                //                 if ((feature.value[0] ?? '')
+                                //                     .isEmpty) {
+                                //                   return Container(
+                                //                     padding: EdgeInsets.only(
+                                //                         right: Get.width * 0.01,
+                                //                         bottom: 10),
+                                //                     width: Get.width < 480
+                                //                         ? double.infinity
+                                //                         : Get.width * 0.31,
+                                //                     child: FormInput(
+                                //                       width: double.infinity,
+                                //                       controller: EditCtrl
+                                //                           .ctrlList[i].value,
+                                //                       label: feature.key,
+                                //                       hint:
+                                //                           'Enter ${feature.key} Nearby',
+                                //                       value: initialList.isEmpty
+                                //                           ? ''
+                                //                           : initialList[i]
+                                //                               .value
+                                //                               .text,
+                                //                     ),
+                                //                   );
+                                //                 } else {
+                                //                   return Container(
+                                //                     padding: EdgeInsets.only(
+                                //                         right: Get.width * 0.01,
+                                //                         bottom: 10),
+                                //                     width: Get.width < 480
+                                //                         ? double.infinity
+                                //                         : Get.width * 0.31,
+                                //                     child: SizedBox(
+                                //                       child: DropDown(
+                                //                         initialValue:
+                                //                             initialList.isEmpty
+                                //                                 ? ''
+                                //                                 : feature.value[i],
+                                //                         controller:
+                                //                             EditCtrl.ctrlList[i],
+                                //                         label:
+                                //                             feature.key + ' Nrby',
+                                //                         items: feature.value
+                                //                             as List<String>,
+                                //                       ),
+                                //                     ),
+                                //                   );
+                                //                 }
+                                //               }).toList(),
+                                //             ],
+                                //           );
+                                //         }
+                                //       }
+                                //
+                                //       // Displaying LoadingSpinner to indicate waiting state
+                                //       return Center(
+                                //         child: CircularProgressIndicator(),
+                                //       );
+                                //     }),
+                              ),
+
+                              const SizedBox(
+                                height: 40,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      createPropertyAmenities(),
+                      createPropertyContact(),
+                    ],
                   ),
-                  createPropertyAmenities(),
-                  createPropertyContact(),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        Obx(() {
+          return Positioned(
+              bottom: 20,
+              left: 0,
+              right: 0,
+              child: buttonRowContainer(cPropCtrl.createPropPageIndex.value));
+        }),
+      ],
     );
+  }
+
+  Widget buttonRowContainer(int buttonIndex) {
+    switch (buttonIndex) {
+      case 0:
+        return buttonRow(cPropCtrl.submitPropertyDescription);
+
+      case 1:
+        return buttonRow(cPropCtrl.submitPropertyMedia);
+
+      case 2:
+        return Padding(
+          padding: const EdgeInsets.only(
+            top: 3.0,
+            right: 0,
+            bottom: 3,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(() => Flexible(
+                    child: FormButton(
+                      width: 100,
+                      bgColor: Pallet.secondaryColor,
+                      disableButton: cPropCtrl.createPropPageIndex.value < 1,
+                      text: 'Previous',
+                      onPressed: cPropCtrl.backToPrevious,
+                    ),
+                  )),
+              const SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                child: FormBorderButton(
+                  width: 120,
+                  bgColor: Colors.white,
+                  txtColor: Colors.black,
+                  text: 'Save as draft',
+                  onPressed: () {
+                    cPropCtrl.saveToDraft = true;
+                    cPropCtrl.submitPropertyLocation();
+                  },
+                ),
+              ),
+              const SizedBox(width: 10),
+              Obx(() => Flexible(
+                    child: FormButton(
+                      width: 100,
+                      text: (cPropCtrl.createPropPageIndex.value == 5)
+                          ? 'Finish'
+                          : 'Next',
+                      onPressed: () {
+                        checkFeture();
+                        cPropCtrl.submitPropertyLocation();
+                      },
+                    ),
+                  )),
+            ],
+          ),
+        );
+
+      case 3:
+        return buttonRow(cPropCtrl.submitPropertyMoreDetails);
+      case 4:
+        return buttonRow(cPropCtrl.submitPropertyAmenities);
+      case 5:
+        return buttonRow(cPropCtrl.submitPropertyContact);
+
+      default:
+        return const SizedBox.shrink();
+    }
   }
 }
 
@@ -641,53 +679,58 @@ Widget buildStepNumber() {
 // }
 
 Widget buttonRow(Function() nextFunction) {
-  return Padding(
-    padding: const EdgeInsets.only(
-      top: 3.0,
-      right: 0,
-      bottom: 3,
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Obx(() => Flexible(
-              child: FormButton(
-                width: 100,
-                bgColor: Pallet.secondaryColor,
-                disableButton: cPropCtrl.createPropPageIndex.value < 1,
-                text: 'Previous',
-                onPressed: cPropCtrl.backToPrevious,
-              ),
-            )),
-        const SizedBox(
-          width: 10,
-        ),
-        Flexible(
-          child: FormBorderButton(
-            width: 120,
-            bgColor: Colors.white,
-            txtColor: Colors.black,
-            text: 'Save as draft',
-            onPressed: () {
-              cPropCtrl.saveToDraft = true;
-              nextFunction();
-            },
+  return Container(
+    color: Colors.white,
+    child: Padding(
+      padding: const EdgeInsets.only(
+        top: 3.0,
+        right: 14,
+        left: 14,
+        bottom: 3,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Obx(() => Flexible(
+                child: FormButton(
+                  width: 100,
+                  textSize: 14,
+                  bgColor: Pallet.secondaryColor,
+                  disableButton: cPropCtrl.createPropPageIndex.value < 1,
+                  text: 'Previous',
+                  onPressed: cPropCtrl.backToPrevious,
+                ),
+              )),
+          const SizedBox(
+            width: 10,
           ),
-        ),
-        const SizedBox(width: 10),
-        Obx(() => Flexible(
-              child: FormButton(
-                width: 100,
-                text: (cPropCtrl.createPropPageIndex.value == 5)
-                    ? 'Publish'
-                    : 'Next',
-                onPressed: (){
-                  nextFunction();
-                },
-              ),
-            )),
-      ],
+          Flexible(
+            child: FormBorderButton(
+              width: 120,
+              bgColor: Colors.white,
+              txtColor: Colors.black,
+              text: 'Save as draft',
+              onPressed: () {
+                cPropCtrl.saveToDraft = true;
+                nextFunction();
+              },
+            ),
+          ),
+          const SizedBox(width: 10),
+          Obx(() => Flexible(
+                child: FormButton(
+                  width: 100,
+                  text: (cPropCtrl.createPropPageIndex.value == 5)
+                      ? 'Publish'
+                      : 'Next',
+                  onPressed: () {
+                    nextFunction();
+                  },
+                ),
+              )),
+        ],
+      ),
     ),
   );
 }
@@ -803,7 +846,7 @@ Widget createPropertyDetails() {
               children: [
                 DropDown(
                   //initialValue: EditCtrl.category.value.text,
-                controller: EditCtrl.category,
+                  controller: EditCtrl.category,
                   label: 'Property Category',
                   items: Lst.propertyCategories,
                 ),
@@ -872,7 +915,6 @@ Widget createPropertyDetails() {
           ),
         ),
         const SizedBox(height: 16),
-        buttonRow(cPropCtrl.submitPropertyDescription),
       ],
     ),
   );
@@ -1016,9 +1058,7 @@ Widget createPropertyMedia() {
           size: 14,
           weight: FontWeight.w300,
         ),
-        const SizedBox(height: 15),
         const SizedBox(height: 16),
-        buttonRow(cPropCtrl.submitPropertyMedia),
       ],
     ),
   );
@@ -1043,14 +1083,14 @@ Future getAmenities({all = false}) async {
 
 List? features;
 
-Future getFeatures({all=false}) async {
+Future getFeatures({all = false}) async {
   features = [];
   if (features!.isEmpty && EditCtrl.category.value.text.isNotEmpty) {
     await Provider()
         .postData("property/get-features/House", Property.map())
         .then((value) => features = value);
   }
-  return features?? [];
+  return features ?? [];
 }
 //
 // Widget createPropertyMorDetails(BuildContext context) {
@@ -1126,7 +1166,6 @@ Widget createPropertyAmenities() {
                         });
                   }),
             ),
-            buttonRow(cPropCtrl.submitPropertyAmenities),
           ],
         )),
   );
@@ -1210,7 +1249,6 @@ Widget createPropertyContact() {
                     : ''),
           ),
         ),
-        buttonRow(cPropCtrl.submitPropertyContact),
       ],
     ),
   );
