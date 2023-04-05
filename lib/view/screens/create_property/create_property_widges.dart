@@ -461,7 +461,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
         ),
         Obx(() {
           return Positioned(
-              bottom: 20,
+              bottom: 0,
               left: 0,
               right: 0,
               child: buttonRowContainer(cPropCtrl.createPropPageIndex.value));
@@ -484,7 +484,8 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
           child: Padding(
             padding: const EdgeInsets.only(
               top: 3.0,
-              right: 0,
+              right: 14,
+              left: 14,
               bottom: 3,
             ),
             child: Row(
@@ -494,6 +495,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                 Obx(() => Flexible(
                       child: FormButton(
                         width: 100,
+                        textSize: 14,
                         bgColor: Pallet.secondaryColor,
                         disableButton: cPropCtrl.createPropPageIndex.value < 1,
                         text: 'Previous',
@@ -519,6 +521,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                 Obx(() => Flexible(
                       child: FormButton(
                         width: 100,
+                        textSize: 14,
                         text: (cPropCtrl.createPropPageIndex.value == 5)
                             ? 'Finish'
                             : 'Next',
@@ -689,7 +692,7 @@ Widget buttonRow(Function() nextFunction) {
         top: 3.0,
         right: 14,
         left: 14,
-        bottom: 3,
+        bottom: 20,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
