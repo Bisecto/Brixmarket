@@ -582,8 +582,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                           buttonSelectedBackgroundColor: Colors.pink,
                         ),
                       )),
-                ),
-              )
+                ))
             : const SizedBox.shrink();
     }
 
@@ -591,31 +590,31 @@ class _MyAdsPageState extends State<MyAdsPage>
   }
 
   myPropertiesWidget(List<Property> properties) {
-    print(properties);
-    print("properties1234567890");
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: properties.length,
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
+        itemBuilder: ((context, index) {
+          Property property = properties[index];
 
-    return GestureDetector(
-      onTap: () {
-        cPropCtrl.showMyPropertyMenu.value = false;
-      },
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: properties.length,
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
-          itemBuilder: ((context, index) {
-            Property property = properties[index];
-            int iFeature = 0;
-            String
-                image; //= property.media!.isNotEmpty ? property.media![0].media! : '';
-            List<Media> images = property.media ?? [];
-            if (images.isEmpty) {
-              image = '';
-              print('Image is empty');
-            } else {
-              image = property.media![0].media!;
-            }
-            print(image + '12345');
-            return Padding(
+          String image;
+          List<Media> images = property.media ?? [];
+          if (images.isEmpty) {
+            image = '';
+          } else {
+            image = property.media![0].media!;
+          }
+
+          return GestureDetector(
+            onTap: () {
+              cPropCtrl.showMyPropertyMenu.value = false;
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => Single_Property(
+              //           property_id: property.id ?? 'OTQ1NTgwMzY3NDU1ODAw',
+              //           property_tiitle: property.title ?? '',
+              //         )));
+            },
+            child: Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Material(
                   elevation: 3,
@@ -807,9 +806,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                       ),
                     ],
                   )),
-            );
-          })),
-    );
+            ),
+          );
+        }));
   }
 
   propertyAction(

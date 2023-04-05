@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +16,6 @@ import '../res/strings.dart';
 import '../services/provider.dart';
 import '../utils/utils.dart';
 import '../view/screens/create_property/create_property_widges.dart';
-import '../view/screens/dashboard_page.dart';
-import '../../../models/user_property_model.dart';
 import '../view/screens/mobile/my_ads_page.dart';
 import 'instance.dart';
 
@@ -119,7 +115,7 @@ class CreatePropertyCtrl extends GetxController {
       createPropPageIndex.refresh();
       EditCtrl.disposeControllers();
       if (!Utils.isMobileApp) {
-           onInit();
+        onInit();
 
         // }
         //DashboardPage
@@ -127,29 +123,36 @@ class CreatePropertyCtrl extends GetxController {
         //   context!,
         //   MaterialPageRoute(builder: (context) =>  DashboardPage()),
         // );
-           Property.map(id: '');
-           EditCtrl.disposeControllers();
+        Property.map(id: '');
+        EditCtrl.disposeControllers();
         Restart.restartApp();
       }
     } else {
-      await cPPageController.nextPage(//cPPageController.page!.toInt() + 1,
-          duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+      await cPPageController.nextPage(
+          //cPPageController.page!.toInt() + 1,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeIn);
       createPropPageIndex.value = pageIndex;
     }
   }
-  String generateRandomString(int lengthOfString){
+
+  String generateRandomString(int lengthOfString) {
     final random = Random();
-    const allChars='AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL234567890';
+    const allChars =
+        'AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL234567890';
 
     final randomString = List.generate(lengthOfString,
-            (index) => allChars[random.nextInt(allChars.length)]).join();
+        (index) => allChars[random.nextInt(allChars.length)]).join();
     return randomString;
   }
+
   submitPropertyDescription() async {
-    if(EditCtrl.reference.text.isEmpty){
-      EditCtrl.reference.text= generateRandomString(5)+user.id!.substring(0,4)+generateRandomString(5);
-    }else{
-      EditCtrl.reference.text=EditCtrl.reference.text.toString();
+    if (EditCtrl.reference.text.isEmpty) {
+      EditCtrl.reference.text = generateRandomString(5) +
+          user.id!.substring(0, 4) +
+          generateRandomString(5);
+    } else {
+      EditCtrl.reference.text = EditCtrl.reference.text.toString();
     }
     if (EditCtrl.title.text.isEmpty) {
       MSG.errorSnackBar(
@@ -214,7 +217,6 @@ class CreatePropertyCtrl extends GetxController {
   selectPropertyImages() async {
     var uInt8List = await Utils.filesPicker();
     for (var uInt in uInt8List) {
-
       EditCtrl.image8Lists.addIf(uInt != null, uInt!);
     }
     EditCtrl.image8Lists.refresh();
@@ -245,9 +247,11 @@ class CreatePropertyCtrl extends GetxController {
         //gotoNext(pageIndex: 2);
         print('1234567890');
         print(response);
-          Preloader.hide();
-          MSG.errorSnackBar('Image was not Uploaded. Please check your connections.',title: 'Message');
-          //Preloader.hide();
+        Preloader.hide();
+        MSG.errorSnackBar(
+            'Image was not Uploaded. Please check your connections.',
+            title: 'Message');
+        //Preloader.hide();
       }
     }
   }
@@ -401,12 +405,13 @@ class CreatePropertyCtrl extends GetxController {
           sideNavIndex.value = 2;
           sideNavIndex.refresh();
           //onInit();
-           EditCtrl.disposeControllers();
+          EditCtrl.disposeControllers();
           Restart.restartApp();
         }
       }
     }
   }
+
   Insight? insight;
   Future getInsight() async {
     // if (insight == null) {
@@ -423,12 +428,12 @@ class CreatePropertyCtrl extends GetxController {
   var myDraftProperties = <Property>[].obs;
   var mySuspendedProperties = <Property>[].obs;
   var myPublishedProperties = <Property>[].obs;
-  int allPropertiesPage=0;
-  int mySoldPropertiesPage=0;
-  int myDraftPropertiesPage=0;
-  int mySuspendedPropertiesPage=0;
-  int myPublishedPropertiesPage=0;
-   //StreamController<UserProperty> My_property_streamController=StreamController();
+  int allPropertiesPage = 0;
+  int mySoldPropertiesPage = 0;
+  int myDraftPropertiesPage = 0;
+  int mySuspendedPropertiesPage = 0;
+  int myPublishedPropertiesPage = 0;
+  //StreamController<UserProperty> My_property_streamController=StreamController();
 
   // Future getUserProperty(int page,{required String property_state}) async {
   //
@@ -458,20 +463,15 @@ class CreatePropertyCtrl extends GetxController {
   // }
 
   Future getAllMyProperties(int page) async {
-
-    var map =
-    {
-      'userId': user.id,
-      'property_state': 'All'
-    };
-    var response =
-    await Provider().postData("property/get-user-properties?page=$page", map);
+    var map = {'userId': user.id, 'property_state': 'All'};
+    var response = await Provider()
+        .postData("property/get-user-properties?page=$page", map);
     // print(response);
     if (response != null) {
       myProperties.value = [];
 
       if (response != null && response.isNotEmpty) {
-        allPropertiesPage=response['pages'];
+        allPropertiesPage = response['pages'];
         for (var e in response['properties']) {
           myProperties.add(Property.fromJson(e));
         }
@@ -480,21 +480,17 @@ class CreatePropertyCtrl extends GetxController {
     }
     return myProperties;
   }
-  Future getAllPublishedProperties(int page) async {
 
-    var map =
-    {
-      'userId': user.id,
-      'property_state': 'Published'
-    };
-    var response =
-    await Provider().postData("property/get-user-properties?page=$page", map);
+  Future getAllPublishedProperties(int page) async {
+    var map = {'userId': user.id, 'property_state': 'Published'};
+    var response = await Provider()
+        .postData("property/get-user-properties?page=$page", map);
     print(response);
     if (response != null) {
       myPublishedProperties.value = [];
 
       if (response != null && response.isNotEmpty) {
-        myPublishedPropertiesPage=response['pages'];
+        myPublishedPropertiesPage = response['pages'];
 
         for (var e in response['properties']) {
           myPublishedProperties.add(Property.fromJson(e));
@@ -504,21 +500,17 @@ class CreatePropertyCtrl extends GetxController {
     }
     return myPublishedProperties;
   }
-  Future getAllDraftProperties(int page) async {
 
-    var map =
-    {
-      'userId': user.id,
-      'property_state': 'Draft'
-    };
-    var response =
-    await Provider().postData("property/get-user-properties?page=$page", map);
+  Future getAllDraftProperties(int page) async {
+    var map = {'userId': user.id, 'property_state': 'Draft'};
+    var response = await Provider()
+        .postData("property/get-user-properties?page=$page", map);
     print(response);
     if (response != null) {
       myDraftProperties.value = [];
 
       if (response != null && response.isNotEmpty) {
-        myDraftPropertiesPage=response['pages'];
+        myDraftPropertiesPage = response['pages'];
 
         for (var e in response['properties']) {
           myDraftProperties.add(Property.fromJson(e));
@@ -528,21 +520,17 @@ class CreatePropertyCtrl extends GetxController {
     }
     return myDraftProperties;
   }
-  Future getAllSoldProperties(int page) async {
 
-    var map =
-    {
-      'userId': user.id,
-      'property_state': 'Sold'
-    };
-    var response =
-    await Provider().postData("property/get-user-properties?page=$page", map);
+  Future getAllSoldProperties(int page) async {
+    var map = {'userId': user.id, 'property_state': 'Sold'};
+    var response = await Provider()
+        .postData("property/get-user-properties?page=$page", map);
     print(response);
     if (response != null) {
       mySoldProperties.value = [];
 
       if (response != null && response.isNotEmpty) {
-        mySoldPropertiesPage=response['pages'];
+        mySoldPropertiesPage = response['pages'];
         for (var e in response['properties']) {
           mySoldProperties.add(Property.fromJson(e));
         }
@@ -551,21 +539,17 @@ class CreatePropertyCtrl extends GetxController {
     }
     return mySoldProperties;
   }
-  Future getAllSuspendedProperties(int page) async {
 
-    var map =
-    {
-      'userId': user.id,
-      'property_state': 'Suspended'
-    };
-    var response =
-    await Provider().postData("property/get-user-properties?page=$page", map);
+  Future getAllSuspendedProperties(int page) async {
+    var map = {'userId': user.id, 'property_state': 'Suspended'};
+    var response = await Provider()
+        .postData("property/get-user-properties?page=$page", map);
     print(response);
     if (response != null) {
       mySuspendedProperties.value = [];
 
       if (response != null && response.isNotEmpty) {
-        mySuspendedPropertiesPage=response['pages'];
+        mySuspendedPropertiesPage = response['pages'];
 
         for (var e in response['properties']) {
           mySuspendedProperties.add(Property.fromJson(e));
@@ -576,17 +560,10 @@ class CreatePropertyCtrl extends GetxController {
     return mySuspendedProperties;
   }
 
-
-
-  Future getMyProperties(int page,{required String property_state}) async {
-
-    var map =
-    {
-      'userId': user.id,
-    'property_state': property_state
-    };
-    var response =
-        await Provider().postData("property/get-user-properties?page=$page", map);
+  Future getMyProperties(int page, {required String property_state}) async {
+    var map = {'userId': user.id, 'property_state': property_state};
+    var response = await Provider()
+        .postData("property/get-user-properties?page=$page", map);
     print(response);
     if (response != null) {
       myProperties.value = [];
@@ -658,6 +635,7 @@ class CreatePropertyCtrl extends GetxController {
     }
     return amenities ?? [];
   }
+
   completeDraftProperty(Property property) async {
     cPropCtrl.showMyPropertyMenu.value = false;
     cPropCtrl.createPropPageIndex.value = 0;

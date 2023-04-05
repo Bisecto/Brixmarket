@@ -8,49 +8,56 @@ import '../create_property/create_property_widges.dart';
 
 class AddPropertyPage extends StatelessWidget {
   bool isEdit;
-   AddPropertyPage({Key? key,required this.isEdit}) : super(key: key);
+  AddPropertyPage({Key? key, required this.isEdit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         return (await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-          title: const Text('Do you want to Leave this page?'),
-          content: const Text('You will leave this page with some data not saved'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('No'),
-            ),
-            TextButton(
-              onPressed: () {
-                EditCtrl.disposeControllers();
-                Navigator.of(context).pop(true);
-              },
-              child: const Text('Yes'),
-            ),
-          ],
-        ),
-        )) ??
-        false;
-
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Do you want to Leave this page?'),
+                content: const Text(
+                    'You will leave this page with some data not saved'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('No'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      EditCtrl.disposeControllers();
+                      Navigator.of(context).pop(true);
+                    },
+                    child: const Text('Yes'),
+                  ),
+                ],
+              ),
+            )) ??
+            false;
       },
       child: Scaffold(
           backgroundColor: Pallet.homeBackground,
           appBar: AppBar(
             backgroundColor: Pallet.secondaryColor,
             automaticallyImplyLeading: true,
-            title: const CustomText(
+            title: CustomText(
               color: Colors.white,
               size: 18,
-              text: 'Add Property',
+              text: (!isEdit) ? 'Add Property' : 'Edit Property',
             ),
-            actions: const [AppBarMenu(logout: true, saveDraft: true, propertyIDS: [],)],
+            actions: const [
+              AppBarMenu(
+                logout: true,
+                saveDraft: true,
+                propertyIDS: [],
+              )
+            ],
           ),
-          body:  CreatePropertyWidget(isEdt: isEdit,)),
-
+          body: CreatePropertyWidget(
+            isEdt: isEdit,
+          )),
     );
   }
   //

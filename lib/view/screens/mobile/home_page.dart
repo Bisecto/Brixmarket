@@ -989,12 +989,12 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                                       const SearchByNameOfProperty()));
                             },
                             child: Row(
-                              children: [
-                                const Icon(
+                              children: const [
+                                 Icon(
                                   Icons.house,
                                   color: Colors.red,
                                 ),
-                                const CustomText(
+                                  CustomText(
                                     color: Pallet.secondaryColor,
                                     text: '   Search using property name',
                                     weight: FontWeight.normal,

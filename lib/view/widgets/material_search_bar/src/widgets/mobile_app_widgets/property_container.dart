@@ -631,7 +631,7 @@ buildHomeList(
             color: home ? Colors.black26 : Pallet.secondaryColor, width: 1.2)),
     child: InkWell(
       onTap: () {
-        //homeCtrl.property = property;
+        print(property.id);
         Navigator.of(context!).push(MaterialPageRoute(
             builder: (context) => Single_Property(
                   property_id: property.id,

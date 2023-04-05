@@ -1,25 +1,13 @@
-import 'package:brixmarket/libs/whatsapp.dart';
-import 'package:brixmarket/res/lists.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:readmore/readmore.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
-import '../../../core/app.dart';
-import '../../../libs/launch_urls.dart';
-import '../../../models/media_model.dart';
 import '../../../models/property_model.dart';
 import '../../../models/review_model.dart';
-import '../../../redirect/dynamic_link.dart';
-import '../../../res/strings.dart';
-import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text.dart';
