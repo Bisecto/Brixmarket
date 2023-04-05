@@ -158,9 +158,6 @@ class _MyAdsPageState extends State<MyAdsPage>
                                   cPropCtrl.myPublishedPropertiesPage,
                             }),
                     builder: (context, AsyncSnapshot snap) {
-                      List<Property> allProperties =
-                          cPropCtrl.myPublishedProperties; //snap.data ?? [];
-                      print(allProperties);
                       if (snap.connectionState == ConnectionState.waiting) {
                         return SizedBox(
                             height: 48, child: Preloader.loadingWidget());
@@ -203,7 +200,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                     builder: (context, AsyncSnapshot snap) {
                       List<Property> allProperties =
                           cPropCtrl.myDraftProperties; //snap.data ?? [];
-                      print(allProperties);
+
                       if (snap.connectionState == ConnectionState.waiting) {
                         return SizedBox(
                             height: 48, child: Preloader.loadingWidget());
@@ -246,7 +243,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                     builder: (context, AsyncSnapshot snap) {
                       List<Property> allProperties =
                           cPropCtrl.mySoldProperties; //snap.data ?? [];
-                      print(allProperties);
+
                       if (snap.connectionState == ConnectionState.waiting) {
                         return SizedBox(
                             height: 48, child: Preloader.loadingWidget());
@@ -289,7 +286,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                     builder: (context, AsyncSnapshot snap) {
                       List<Property> allProperties =
                           cPropCtrl.mySuspendedProperties; //snap.data ?? [];
-                      print(allProperties);
+
                       if (snap.connectionState == ConnectionState.waiting) {
                         return SizedBox(
                             height: 48, child: Preloader.loadingWidget());
