@@ -479,54 +479,57 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
         return buttonRow(cPropCtrl.submitPropertyMedia);
 
       case 2:
-        return Padding(
-          padding: const EdgeInsets.only(
-            top: 3.0,
-            right: 0,
-            bottom: 3,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Obx(() => Flexible(
-                    child: FormButton(
-                      width: 100,
-                      bgColor: Pallet.secondaryColor,
-                      disableButton: cPropCtrl.createPropPageIndex.value < 1,
-                      text: 'Previous',
-                      onPressed: cPropCtrl.backToPrevious,
-                    ),
-                  )),
-              const SizedBox(
-                width: 10,
-              ),
-              Flexible(
-                child: FormBorderButton(
-                  width: 120,
-                  bgColor: Colors.white,
-                  txtColor: Colors.black,
-                  text: 'Save as draft',
-                  onPressed: () {
-                    cPropCtrl.saveToDraft = true;
-                    cPropCtrl.submitPropertyLocation();
-                  },
+        return Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 3.0,
+              right: 0,
+              bottom: 3,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(() => Flexible(
+                      child: FormButton(
+                        width: 100,
+                        bgColor: Pallet.secondaryColor,
+                        disableButton: cPropCtrl.createPropPageIndex.value < 1,
+                        text: 'Previous',
+                        onPressed: cPropCtrl.backToPrevious,
+                      ),
+                    )),
+                const SizedBox(
+                  width: 10,
                 ),
-              ),
-              const SizedBox(width: 10),
-              Obx(() => Flexible(
-                    child: FormButton(
-                      width: 100,
-                      text: (cPropCtrl.createPropPageIndex.value == 5)
-                          ? 'Finish'
-                          : 'Next',
-                      onPressed: () {
-                        checkFeture();
-                        cPropCtrl.submitPropertyLocation();
-                      },
-                    ),
-                  )),
-            ],
+                Flexible(
+                  child: FormBorderButton(
+                    width: 120,
+                    bgColor: Colors.white,
+                    txtColor: Colors.black,
+                    text: 'Save as draft',
+                    onPressed: () {
+                      cPropCtrl.saveToDraft = true;
+                      cPropCtrl.submitPropertyLocation();
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Obx(() => Flexible(
+                      child: FormButton(
+                        width: 100,
+                        text: (cPropCtrl.createPropPageIndex.value == 5)
+                            ? 'Finish'
+                            : 'Next',
+                        onPressed: () {
+                          checkFeture();
+                          cPropCtrl.submitPropertyLocation();
+                        },
+                      ),
+                    )),
+              ],
+            ),
           ),
         );
 
@@ -1105,7 +1108,7 @@ Widget createPropertyAmenities() {
         height: double.infinity,
         child: ListView(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomText(
