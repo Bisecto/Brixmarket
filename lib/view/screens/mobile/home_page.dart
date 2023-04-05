@@ -25,8 +25,6 @@ import 'dart:async';
 
 import 'package:brixmarket/models/filter_property_model.dart' as filter;
 
-import 'explore_page.dart';
-
 class MobileHomePage extends StatefulWidget {
   const MobileHomePage({Key? key}) : super(key: key);
 
@@ -330,7 +328,7 @@ class _MobileHomePageState extends State<MobileHomePage> {
                             },
                           );
                   }),
-              const SizedBox(height: 36),
+              const SizedBox(height: 10),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -359,36 +357,36 @@ class _MobileHomePageState extends State<MobileHomePage> {
                       ),
                     ]),
               ),
-              const SizedBox(height: 24),
-              Container(
-                color: Colors.black12,
-                height: 174,
-                child: FutureBuilder(
-                  future: propCtrl.getFeaturedproperty1(),
-                  builder: (context, AsyncSnapshot snap) {
-                    List<Latest> properties = snap.data ?? [];
-                    return snap.connectionState == ConnectionState.waiting
-                        ? Preloader.loadingWidget()
-                        : ListView.builder(
-                            itemCount: properties.length,
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 16),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              if (index == properties.length) {
-                                return _buildProgressIndicator();
-                              } else {
-                                return buildFeaturedListing(
-                                    homeProperty: properties[index]);
-                              }
-                            },
-                          );
-                  },
-                ),
-              ),
-              const SizedBox(height: 36),
+              const SizedBox(height: 18),
               // Container(
+              //   color: Colors.black12,
+              //   height: 174,
+              //   child: FutureBuilder(
+              //     future: propCtrl.getFeaturedproperty1(),
+              //     builder: (context, AsyncSnapshot snap) {
+              //       List<Latest> properties = snap.data ?? [];
+              //       return snap.connectionState == ConnectionState.waiting
+              //           ? Preloader.loadingWidget()
+              //           : ListView.builder(
+              //               itemCount: properties.length,
+              //               scrollDirection: Axis.horizontal,
+              //               padding: const EdgeInsets.symmetric(
+              //                   horizontal: 16, vertical: 16),
+              //               shrinkWrap: true,
+              //               itemBuilder: (context, index) {
+              //                 if (index == properties.length) {
+              //                   return _buildProgressIndicator();
+              //                 } else {
+              //                   return buildFeaturedListing(
+              //                       homeProperty: properties[index]);
+              //                 }
+              //               },
+              //             );
+              //     },
+              //   ),
+              // ),
+              // const SizedBox(height: 36),
+              // // Container(
               //   padding: const EdgeInsets.symmetric(horizontal: 16),
               //   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const [
               //     CustomText(
@@ -498,11 +496,14 @@ class _MobileHomePageState extends State<MobileHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(
-                text: homeProperty.title,
-                color: Colors.white,
-                size: 16,
-                weight: FontWeight.w400,
+              Flexible(
+                child: CustomText(
+                  text: homeProperty.title,
+                  color: Colors.white,
+                  maxLines: 2,
+                  size: 14,
+                  weight: FontWeight.w400,
+                ),
               ),
               const SizedBox(
                 height: 10,
