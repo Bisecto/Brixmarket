@@ -783,7 +783,8 @@ buildHomeList(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: CustomText(
                               color: Colors.black,
-                              text: property.title,
+                              text: property.title.replaceAll(
+                                  RegExp('[!~`@#\$%^&*()+|/?><{}]'), ' '),
                               weight: FontWeight.w500,
                               size: 16),
                         ),
@@ -803,7 +804,7 @@ buildHomeList(
                                     : Get.width * 0.6
                                 : 164,
                             child: Text(
-                                '${property.location.address}, ${property.location.city}, ${property.location.state}',
+                                '${property.location.address.replaceAll(RegExp('[!~`@#\$%^&*()+|/?><{}]'), ' ')}, ${property.location.city.replaceAll(RegExp('[!~`@#\$%^&*()+|/?><{}]'), ' ')}, ${property.location.state.replaceAll(RegExp('[!~`@#\$%^&*()+|[]/?><{}]'), ' ')}',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: Colors.black,

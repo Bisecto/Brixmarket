@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
@@ -9,6 +10,8 @@ import '../../utils/utils.dart';
 class FormInput extends StatelessWidget {
   final bool isobscure;
   final TextEditingController controller;
+  final ValueChanged<String>? onChanged;
+  final FocusNode? focusNode;
   final String label;
   final String hint;
   final String? value;
@@ -28,10 +31,12 @@ class FormInput extends StatelessWidget {
 
   FormInput({
     Key? key,
+    this.onChanged,
+    this.focusNode,
     required this.controller,
     this.label = '',
     this.topSpace = true,
-    this.isobscure=false,
+    this.isobscure = false,
     this.hint = '',
     this.value,
     this.width = 200,
@@ -61,7 +66,10 @@ class FormInput extends StatelessWidget {
             ? const SizedBox.shrink()
             : Text(
                 label,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87),
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87),
               ),
         !topSpace ? const SizedBox.shrink() : const SizedBox(height: 8),
         Material(
@@ -75,30 +83,45 @@ class FormInput extends StatelessWidget {
                 height: height,
                 width: width,
                 decoration: BoxDecoration(
-                  border: Border.all(color: error?.value == '' || error == null ? borderColor ?? Colors.black26 : Pallet.red, width: 0.5),
+                  border: Border.all(
+                      color: error?.value == '' || error == null
+                          ? borderColor ?? Colors.black26
+                          : Pallet.red,
+                      width: 0.5),
                   borderRadius: const BorderRadius.all(Radius.circular(6)),
                 ),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: TextField(
-                    obscureText: isobscure,
+                      obscureText: isobscure,
                       controller: controller,
                       keyboardType: inputType,
                       maxLines: maxLines,
                       enabled: isEnabled,
+                      focusNode: focusNode,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[0-9a-zA-Z]")),
+                      ],
                       style: TextStyle(color: txColor ?? Colors.black87),
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.fromLTRB(8, height >= 48 ? 8 : 2, 8, 8),
+                        contentPadding:
+                            EdgeInsets.fromLTRB(8, height >= 48 ? 8 : 2, 8, 8),
                         hintText: hint,
-                        hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16, overflow: TextOverflow.visible),
+                        hintStyle: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 16,
+                            overflow: TextOverflow.visible),
                       ),
                       onChanged: (text) {
+                        onChanged!(text);
                         if (validate != null) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             error!.value = validate!(text);
                             try {
-                              TextSelection previousSelection = controller.selection;
+                              TextSelection previousSelection =
+                                  controller.selection;
                               //controller.text = text;
                               controller.selection = previousSelection;
                               //controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
@@ -155,7 +178,10 @@ class FormSelectInput extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Text(
             label,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Colors.black87),
+            style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87),
           ),
         ),
         const SizedBox(
@@ -188,7 +214,8 @@ class FormSelectInput extends StatelessWidget {
                       ),
                     ),
                     hintText: hint,
-                    hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 11)),
+                    hintStyle:
+                        TextStyle(color: Colors.grey.shade400, fontSize: 11)),
                 onChanged: (text) {}),
           ),
         ),
@@ -208,7 +235,14 @@ class SelectFormInput extends StatelessWidget {
   final int maxLines;
 
   const SelectFormInput(
-      {Key? key, required this.controller, this.label = '', this.hint = '', this.inputType = TextInputType.text, this.maxLines = 1, this.height = 35, this.width = 200})
+      {Key? key,
+      required this.controller,
+      this.label = '',
+      this.hint = '',
+      this.inputType = TextInputType.text,
+      this.maxLines = 1,
+      this.height = 35,
+      this.width = 200})
       : super(key: key);
 
   @override
@@ -249,7 +283,13 @@ class SelectBorderFormInput extends StatelessWidget {
   final int maxLines;
 
   const SelectBorderFormInput(
-      {Key? key, required this.controller, this.label = '', this.hint = '', this.width = 120, this.inputType = TextInputType.text, this.maxLines = 1})
+      {Key? key,
+      required this.controller,
+      this.label = '',
+      this.hint = '',
+      this.width = 120,
+      this.inputType = TextInputType.text,
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -267,7 +307,8 @@ class SelectBorderFormInput extends StatelessWidget {
           keyboardType: inputType,
           maxLines: maxLines,
           textAlign: TextAlign.justify,
-          style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w200),
+          style: const TextStyle(
+              color: Colors.white, fontSize: 14, fontWeight: FontWeight.w200),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 6, top: 4),
             enabled: false,
@@ -312,7 +353,8 @@ class SelectUnderlineFormInput extends StatelessWidget {
           keyboardType: inputType,
           maxLines: maxLines,
           textAlign: TextAlign.justify,
-          style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w200),
+          style: const TextStyle(
+              color: Colors.white, fontSize: 10, fontWeight: FontWeight.w200),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 6, top: 0, bottom: 8),
             enabled: false,
@@ -327,7 +369,8 @@ class SelectUnderlineFormInput extends StatelessWidget {
               Icons.arrow_drop_down_outlined,
               color: iconColor,
             ),
-            hintStyle: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w200),
+            hintStyle: const TextStyle(
+                color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w200),
           ),
           onChanged: (text) {}),
     );
@@ -342,7 +385,14 @@ class BorderFormInput extends StatelessWidget {
   final TextInputType inputType;
   final int maxLines;
 
-  const BorderFormInput({Key? key, required this.controller, this.label = '', this.hint = '', this.width = 120, this.inputType = TextInputType.text, this.maxLines = 1})
+  const BorderFormInput(
+      {Key? key,
+      required this.controller,
+      this.label = '',
+      this.hint = '',
+      this.width = 120,
+      this.inputType = TextInputType.text,
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -360,13 +410,15 @@ class BorderFormInput extends StatelessWidget {
           keyboardType: inputType,
           maxLines: maxLines,
           textAlign: TextAlign.justify,
-          style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w200),
+          style: const TextStyle(
+              color: Colors.white, fontSize: 14, fontWeight: FontWeight.w200),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 6, top: 0, bottom: 16),
             enabled: false,
             border: InputBorder.none,
             hintText: hint,
-            hintStyle: const TextStyle(color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w200),
+            hintStyle: const TextStyle(
+                color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w200),
           ),
           onChanged: (text) {}),
     );
@@ -381,7 +433,14 @@ class UnderlineFormInput extends StatelessWidget {
   final TextInputType inputType;
   final int maxLines;
 
-  const UnderlineFormInput({Key? key, required this.controller, this.label = '', this.hint = '', this.width = 0, this.inputType = TextInputType.text, this.maxLines = 1})
+  const UnderlineFormInput(
+      {Key? key,
+      required this.controller,
+      this.label = '',
+      this.hint = '',
+      this.width = 0,
+      this.inputType = TextInputType.text,
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -393,7 +452,8 @@ class UnderlineFormInput extends StatelessWidget {
           keyboardType: inputType,
           maxLines: maxLines,
           textAlign: TextAlign.justify,
-          style: const TextStyle(color: Colors.black87, fontSize: 14, fontWeight: FontWeight.w500),
+          style: const TextStyle(
+              color: Colors.black87, fontSize: 14, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 6, top: 0, bottom: 4),
             enabled: true,
@@ -405,7 +465,10 @@ class UnderlineFormInput extends StatelessWidget {
             ),
             hintText: hint,
             labelText: hint,
-            hintStyle: const TextStyle(color: Colors.black54, fontSize: 13, fontWeight: FontWeight.w500),
+            hintStyle: const TextStyle(
+                color: Colors.black54,
+                fontSize: 13,
+                fontWeight: FontWeight.w500),
           ),
           onChanged: (text) {}),
     );
@@ -453,7 +516,8 @@ class _PasswordInputState extends State<PasswordInput> {
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Text(
           widget.label,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87),
+          style: const TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87),
         ),
       ),
       const SizedBox(
@@ -470,7 +534,11 @@ class _PasswordInputState extends State<PasswordInput> {
           width: widget.width,
           padding: const EdgeInsets.only(right: 0, left: 0, bottom: 3),
           decoration: BoxDecoration(
-            border: Border.all(color: widget.error?.value == '' || widget.error == null ? Colors.black26 : Pallet.red, width: 0.5),
+            border: Border.all(
+                color: widget.error?.value == '' || widget.error == null
+                    ? Colors.black26
+                    : Pallet.red,
+                width: 0.5),
             borderRadius: const BorderRadius.all(Radius.circular(6)),
           ),
           child: Center(
@@ -493,7 +561,9 @@ class _PasswordInputState extends State<PasswordInput> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
-                      _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                      _obscureText
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
                       size: 18.0,
                       color: Colors.black26,
                     ),

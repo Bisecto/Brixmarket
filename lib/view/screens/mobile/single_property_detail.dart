@@ -362,7 +362,8 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                     padding: const EdgeInsets.only(left: 12.0),
                     child: CustomText(
                         color: Colors.black,
-                        text: widget.property.title,
+                        text: widget.property.title
+                            .replaceAll(RegExp('!~`@#\$%^&*()+|[]/?><{}'), ''),
                         weight: FontWeight.w500,
                         size: 18),
                   ),
@@ -382,7 +383,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                       SizedBox(
                         width: Get.width * 0.8,
                         child: Text(
-                          '${widget.property.location.address}, ${widget.property.location.city}, ${widget.property.location.state}',
+                          '${widget.property.location.address.replaceAll(RegExp('[!~`@#\$%^&*()+|/?><{}]'), ' ')}, ${widget.property.location.city.replaceAll(RegExp('[!~`@#\$%^&*()+|/?><{}]'), ' ')}, ${widget.property.location.state.replaceAll(RegExp('[!~`@#\$%^&*()+|/?><{}]'), ' ')}',
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,

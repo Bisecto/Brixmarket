@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
@@ -28,6 +29,10 @@ class CreatePropertyWidget extends StatefulWidget {
 class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
   bool isExpanded = false;
 
+  String formattedPrice = '0.00';
+
+  FocusNode focusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -36,12 +41,13 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
       cPropCtrl.createPropPageIndex.value == 0;
     });
     checkFeture();
-    //if()
-    //Timer.periodic(const Duration(m: 2), (timer) {
-    //   setState(() {
-    //
-    //   });
-    //});
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        setState(() {
+          formattedPrice = convertPrice(EditCtrl.price.text);
+        });
+      }
+    });
   }
 
   checkFeture() {
@@ -547,6 +553,198 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
         return const SizedBox.shrink();
     }
   }
+
+  Widget createPropertyDetails() {
+    EditCtrl.reference.text = EditCtrl.reference.text == ''
+        ? Utils.generateId()
+        : EditCtrl.reference.text;
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomText(
+            text: 'Property Description',
+            color: Colors.black,
+            size: 18,
+            weight: FontWeight.bold,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Row(
+              children: [
+                Flexible(
+                  child: FormInput(
+                    width: double.infinity,
+                    controller: EditCtrl.title,
+                    validate: Val.name,
+                    error: EditCtrl.titleErr,
+                    label: 'Title',
+                    hint: 'Enter title of the List',
+                  ),
+                ),
+                // SizedBox(width: Get.width * 0.02),
+                // Flexible(
+                //   child: FormInput(
+                //     width: double.infinity,
+                //     controller: EditCtrl.reference,
+                //     label: 'Property Id',
+                //     isEnabled: true,
+                //     hint: 'Enter property ID',
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          FormInput(
+            height: 100,
+            maxLines: 8,
+            width: double.infinity,
+            controller: EditCtrl.description,
+            validate: Val.name,
+            error: EditCtrl.descriptionErr,
+            label: 'Property Description',
+            hint: 'Enter Description',
+          ),
+          const CustomText(
+            text: 'Category',
+            color: Colors.black,
+            size: 16,
+            weight: FontWeight.bold,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Visibility(
+            visible: Get.width > 640 ? true : false,
+            child: SizedBox(
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Flexible(
+                    child: DropDown(
+                      //initialValue: EditCtrl.category.value.toString(),
+                      controller: EditCtrl.category,
+                      label: 'Property Category',
+                      items: Lst.propertyCategories,
+                    ),
+                  ),
+                  SizedBox(
+                    width: Get.width * 0.02,
+                  ),
+                  Flexible(
+                    child: DropDown(
+                      controller: EditCtrl.type,
+                      label: 'Type',
+                      items: Lst.propertyTypes,
+                    ),
+                  ),
+                  SizedBox(
+                    width: Get.width * 0.02,
+                  ),
+                  Flexible(
+                    child: DropDown(
+                      controller: EditCtrl.status,
+                      label: 'New or Existing',
+                      items: Lst.propertyStatus,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Visibility(
+            visible: Get.width <= 640 ? true : false,
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  DropDown(
+                    //initialValue: EditCtrl.category.value.text,
+                    controller: EditCtrl.category,
+                    label: 'Property Category',
+                    items: Lst.propertyCategories,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: DropDown(
+                          controller: EditCtrl.type,
+                          label: 'Type',
+                          items: Lst.propertyTypes,
+                        ),
+                      ),
+                      SizedBox(
+                        width: Get.width * 0.02,
+                      ),
+                      Flexible(
+                        child: DropDown(
+                          controller: EditCtrl.status,
+                          label: 'New or Existing',
+                          items: Lst.propertyStatus,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          const CustomText(
+            text: 'Price',
+            color: Colors.black,
+            size: 16,
+            weight: FontWeight.bold,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Row(
+              children: [
+                Flexible(
+                  child: FormInput(
+                    inputType: TextInputType.number,
+                    width: double.infinity,
+                    controller: EditCtrl.price,
+                    validate: Val.number,
+                    error: EditCtrl.priceErr,
+                    focusNode: focusNode,
+                    label: 'Property Price',
+                    hint: 'Enter price',
+                  ),
+                ),
+                SizedBox(
+                  width: Get.width * 0.02,
+                ),
+                Flexible(
+                  child: DropDown(
+                    label: 'Price Duration',
+                    items: Lst.priceDurations,
+                    controller: EditCtrl.priceDuration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          CustomText(
+            text: 'NGN$formattedPrice',
+            color: Colors.pink,
+            size: 16,
+            weight: FontWeight.bold,
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
 }
 
 Widget stepWidget(int i) {
@@ -741,189 +939,10 @@ Widget buttonRow(Function() nextFunction) {
   );
 }
 
-Widget createPropertyDetails() {
-  EditCtrl.reference.text = EditCtrl.reference.text == ''
-      ? Utils.generateId()
-      : EditCtrl.reference.text;
-  return Container(
-    color: Colors.white,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText(
-          text: 'Property Description',
-          color: Colors.black,
-          size: 18,
-          weight: FontWeight.bold,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            children: [
-              Flexible(
-                child: FormInput(
-                  width: double.infinity,
-                  controller: EditCtrl.title,
-                  validate: Val.name,
-                  error: EditCtrl.titleErr,
-                  label: 'Title',
-                  hint: 'Enter title of the List',
-                ),
-              ),
-              // SizedBox(width: Get.width * 0.02),
-              // Flexible(
-              //   child: FormInput(
-              //     width: double.infinity,
-              //     controller: EditCtrl.reference,
-              //     label: 'Property Id',
-              //     isEnabled: true,
-              //     hint: 'Enter property ID',
-              //   ),
-              // ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        FormInput(
-          height: 100,
-          maxLines: 8,
-          width: double.infinity,
-          controller: EditCtrl.description,
-          validate: Val.name,
-          error: EditCtrl.descriptionErr,
-          label: 'Property Description',
-          hint: 'Enter Description',
-        ),
-        const CustomText(
-          text: 'Category',
-          color: Colors.black,
-          size: 16,
-          weight: FontWeight.bold,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Visibility(
-          visible: Get.width > 640 ? true : false,
-          child: SizedBox(
-            width: double.infinity,
-            child: Row(
-              children: [
-                Flexible(
-                  child: DropDown(
-                    //initialValue: EditCtrl.category.value.toString(),
-                    controller: EditCtrl.category,
-                    label: 'Property Category',
-                    items: Lst.propertyCategories,
-                  ),
-                ),
-                SizedBox(
-                  width: Get.width * 0.02,
-                ),
-                Flexible(
-                  child: DropDown(
-                    controller: EditCtrl.type,
-                    label: 'Type',
-                    items: Lst.propertyTypes,
-                  ),
-                ),
-                SizedBox(
-                  width: Get.width * 0.02,
-                ),
-                Flexible(
-                  child: DropDown(
-                    controller: EditCtrl.status,
-                    label: 'New or Existing',
-                    items: Lst.propertyStatus,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Visibility(
-          visible: Get.width <= 640 ? true : false,
-          child: SizedBox(
-            width: double.infinity,
-            child: Column(
-              children: [
-                DropDown(
-                  //initialValue: EditCtrl.category.value.text,
-                  controller: EditCtrl.category,
-                  label: 'Property Category',
-                  items: Lst.propertyCategories,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Flexible(
-                      child: DropDown(
-                        controller: EditCtrl.type,
-                        label: 'Type',
-                        items: Lst.propertyTypes,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.02,
-                    ),
-                    Flexible(
-                      child: DropDown(
-                        controller: EditCtrl.status,
-                        label: 'New or Existing',
-                        items: Lst.propertyStatus,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 24),
-        const CustomText(
-          text: 'Price',
-          color: Colors.black,
-          size: 16,
-          weight: FontWeight.bold,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            children: [
-              Flexible(
-                child: FormInput(
-                  inputType: TextInputType.number,
-                  width: double.infinity,
-                  controller: EditCtrl.price,
-                  validate: Val.number,
-                  error: EditCtrl.priceErr,
-                  label: 'Property Price',
-                  hint: 'Enter price',
-                ),
-              ),
-              SizedBox(
-                width: Get.width * 0.02,
-              ),
-              Flexible(
-                child: DropDown(
-                  label: 'Price Duration',
-                  items: Lst.priceDurations,
-                  controller: EditCtrl.priceDuration,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-      ],
-    ),
-  );
+String convertPrice(dynamic price, {bool showCurrency = false}) {
+  double amount = price is String ? double.parse(price) : price;
+  final formatCurrency = NumberFormat("#,##0.00", "en_US");
+  return '${showCurrency ? 'NGN' : ''} ${formatCurrency.format(amount)}';
 }
 
 Widget createPropertyMedia() {
