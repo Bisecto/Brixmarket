@@ -47,7 +47,8 @@ class _ExplorePageState extends State<ExplorePage> {
     super.dispose();
     //_filterStreamController.di
   }
-  int page=1;
+
+  int page = 1;
   @override
   void initState() {
     getfilterProperty(page);
@@ -628,137 +629,165 @@ class _ExplorePageState extends State<ExplorePage> {
                     controller: scrollController,
                     scrollDirection: Axis.vertical,
                     physics: const ScrollPhysics(),
-                    child:StreamBuilder<filter.FilterModel>(
-                    stream: _filterStreamController.stream,
-                    builder: (context, snapdata) {
-                      if (snapdata.connectionState == ConnectionState.waiting) {
-                        return Align(alignment:Alignment.center,child:Preloader.loadingWidget());
-                      } else if (isLoading) {
-                        return Align(alignment:Alignment.center,child:Preloader.loadingWidget());
-                      } else {
-                        List<filter.Property> properties =
-                            snapdata.data!.data.properties;
-                        //print(snapdata.data!.data.pages);
-                        return Column(
-                            children: [
+                    child: StreamBuilder<filter.FilterModel>(
+                        stream: _filterStreamController.stream,
+                        builder: (context, snapdata) {
+                          if (snapdata.connectionState ==
+                              ConnectionState.waiting) {
+                            return Align(
+                                alignment: Alignment.center,
+                                child: Preloader.loadingWidget());
+                          } else if (isLoading) {
+                            return Align(
+                                alignment: Alignment.center,
+                                child: Preloader.loadingWidget());
+                          } else {
+                            List<filter.Property> properties =
+                                snapdata.data!.data.properties;
+                            //print(snapdata.data!.data.pages);
+                            return Column(children: [
                               Padding(
-                                  padding: const EdgeInsets.fromLTRB(14.0, 14, 0, 14),
-                                  child:Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const CustomText(
-                                        color: Colors.blueGrey,
-                                        text: 'Filter Results',
-                                        weight: FontWeight.bold,
-                                        size: 16),
-                                    GestureDetector(
-                                        onTap: () {
-                                          showMaterialModalBottomSheet(
-                                            context: Get.context!,
-                                            builder: (context) =>
-                                                SingleChildScrollView(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      14.0, 14, 0, 14),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const CustomText(
+                                            color: Colors.blueGrey,
+                                            text: 'Filter Results',
+                                            weight: FontWeight.bold,
+                                            size: 16),
+                                        GestureDetector(
+                                            onTap: () {
+                                              showMaterialModalBottomSheet(
+                                                context: Get.context!,
+                                                builder: (context) =>
+                                                    SingleChildScrollView(
                                                   controller:
-                                                  ModalScrollController.of(
-                                                      context),
+                                                      ModalScrollController.of(
+                                                          context),
                                                   child: SizedBox(
-                                                    height: MediaQuery.of(context)
-                                                        .size
-                                                        .height -
-                                                        100,
-                                                    child: LayoutBuilder(builder:
-                                                        (context, constraints) {
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height -
+                                                            100,
+                                                    child: LayoutBuilder(
+                                                        builder: (context,
+                                                            constraints) {
                                                       double maxWidth =
                                                           constraints.maxWidth;
                                                       return SizedBox(
                                                         width: maxWidth,
-                                                        height:
-                                                        constraints.maxHeight,
+                                                        height: constraints
+                                                            .maxHeight,
                                                         child: Stack(children: [
                                                           ListView(
                                                             shrinkWrap: true,
                                                             padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 12,
-                                                                vertical: 24),
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        12,
+                                                                    vertical:
+                                                                        24),
                                                             children: [
                                                               GestureDetector(
-                                                                onTap: propCtrl.clearFilter,
-                                                                child: Container(
+                                                                onTap: propCtrl
+                                                                    .clearFilter,
+                                                                child:
+                                                                    Container(
                                                                   height: 40,
-                                                                  width: double.infinity,
-                                                                  decoration: BoxDecoration(
-                                                                    color: Colors.red,
-                                                                    borderRadius: BorderRadius.circular(10),
+                                                                  width: double
+                                                                      .infinity,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .red,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
                                                                   ),
-                                                                  child: const Center(child:Text('Clear filter',style: TextStyle(
-                                                                      fontSize: 20,
-                                                                    color: Colors.white
-                                                                  ),)),
+                                                                  child:
+                                                                      const Center(
+                                                                          child:
+                                                                              Text(
+                                                                    'Clear filter',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            20,
+                                                                        color: Colors
+                                                                            .white),
+                                                                  )),
                                                                 ),
                                                               ),
-                                                              const Text('Price',
+                                                              const Text(
+                                                                  'Price',
                                                                   style: TextStyle(
                                                                       fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
+                                                                          FontWeight
+                                                                              .w600,
                                                                       fontSize:
-                                                                      14)),
+                                                                          14)),
                                                               Row(
                                                                 mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
                                                                 crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                 children: [
                                                                   Padding(
                                                                     padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                            .symmetric(
                                                                         vertical:
-                                                                        8.0),
-                                                                    child: DropDown(
+                                                                            8.0),
+                                                                    child:
+                                                                        DropDown(
                                                                       width:
-                                                                      maxWidth *
-                                                                          0.4,
+                                                                          maxWidth *
+                                                                              0.4,
                                                                       color: Colors
                                                                           .white10,
                                                                       showLabel:
-                                                                      false,
+                                                                          false,
                                                                       labelColor:
-                                                                      Colors
-                                                                          .black54,
+                                                                          Colors
+                                                                              .black54,
                                                                       controller:
-                                                                      EditCtrl
-                                                                          .priceMin,
-                                                                      label: 'Min',
+                                                                          EditCtrl
+                                                                              .priceMin,
+                                                                      label:
+                                                                          'Min',
                                                                       items: Lst
                                                                           .minFilterPrices,
                                                                     ),
                                                                   ),
-                                                                  const Text('to',
+                                                                  const Text(
+                                                                      'to',
                                                                       style: TextStyle(
                                                                           fontWeight:
-                                                                          FontWeight
-                                                                              .w600)),
+                                                                              FontWeight.w600)),
                                                                   Padding(
                                                                     padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                            .symmetric(
                                                                         vertical:
-                                                                        8.0),
-                                                                    child: DropDown(
+                                                                            8.0),
+                                                                    child:
+                                                                        DropDown(
                                                                       width:
-                                                                      maxWidth *
-                                                                          0.4,
+                                                                          maxWidth *
+                                                                              0.4,
                                                                       color: Colors
                                                                           .white10,
                                                                       showLabel:
-                                                                      false,
+                                                                          false,
                                                                       controller:
-                                                                      EditCtrl
-                                                                          .priceMax,
-                                                                      label: 'Max',
+                                                                          EditCtrl
+                                                                              .priceMax,
+                                                                      label:
+                                                                          'Max',
                                                                       items: Lst
                                                                           .maxFilterPrices,
                                                                     ),
@@ -767,65 +796,69 @@ class _ExplorePageState extends State<ExplorePage> {
                                                               ),
                                                               const SizedBox(
                                                                   height: 16),
-                                                              const Text('Location',
+                                                              const Text(
+                                                                  'Location',
                                                                   style: TextStyle(
                                                                       fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
+                                                                          FontWeight
+                                                                              .w600,
                                                                       fontSize:
-                                                                      14)),
+                                                                          14)),
                                                               Padding(
-                                                                padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
                                                                     vertical:
-                                                                    8.0,
+                                                                        8.0,
                                                                     horizontal:
-                                                                    8),
+                                                                        8),
                                                                 child: DropDown(
-                                                                  width: maxWidth *
-                                                                      0.9,
+                                                                  width:
+                                                                      maxWidth *
+                                                                          0.9,
                                                                   color: Colors
                                                                       .white10,
-                                                                  showLabel: false,
-                                                                  labelColor: Colors
-                                                                      .black54,
-                                                                  controller: EditCtrl
-                                                                      .filterState,
-                                                                  label: 'State',
-                                                                  items:
-                                                                  Lst.ngStates,
+                                                                  showLabel:
+                                                                      false,
+                                                                  labelColor:
+                                                                      Colors
+                                                                          .black54,
+                                                                  controller:
+                                                                      EditCtrl
+                                                                          .filterState,
+                                                                  label:
+                                                                      'State',
+                                                                  items: Lst
+                                                                      .ngStates,
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
                                                                     vertical:
-                                                                    8.0,
+                                                                        8.0,
                                                                     horizontal:
-                                                                    8),
-                                                                child: Obx(
-                                                                        () => DropDown(
+                                                                        8),
+                                                                child: Obx(() =>
+                                                                    DropDown(
                                                                       width:
-                                                                      maxWidth *
-                                                                          0.9,
+                                                                          maxWidth *
+                                                                              0.9,
                                                                       color: Colors
                                                                           .white10,
                                                                       showLabel:
-                                                                      false,
+                                                                          false,
                                                                       labelColor:
-                                                                      Colors
-                                                                          .black54,
+                                                                          Colors
+                                                                              .black54,
                                                                       controller:
-                                                                      EditCtrl
-                                                                          .filterCity,
+                                                                          EditCtrl
+                                                                              .filterCity,
                                                                       label:
-                                                                      'City/Town',
+                                                                          'City/Town',
                                                                       items: Lst.ngLGA[EditCtrl
-                                                                          .filterState
-                                                                          .value
-                                                                          .text] ??
+                                                                              .filterState
+                                                                              .value
+                                                                              .text] ??
                                                                           [],
                                                                     )),
                                                               ),
@@ -842,319 +875,293 @@ class _ExplorePageState extends State<ExplorePage> {
                                                               //   ),
                                                               // ),
                                                               Obx(() => propCtrl
-                                                                  .showMoreFilter
-                                                                  .value
+                                                                      .showMoreFilter
+                                                                      .value
                                                                   ? Column(
-                                                                crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .stretch,
-                                                                children: [
-                                                                  const SizedBox(
-                                                                      height:
-                                                                      16),
-                                                                  const Text(
-                                                                      'Category',
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 14)),
-                                                                  Wrap(
-                                                                    alignment:
-                                                                    WrapAlignment
-                                                                        .spaceAround,
-                                                                    crossAxisAlignment:
-                                                                    WrapCrossAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      Obx(() =>
-                                                                          filterBox(
-                                                                            text: 'Any',
-                                                                            width: maxWidth * 0.4,
-                                                                            selected: EditCtrl.filterCategories.contains('Any'),
-                                                                            onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'category', item: 'Any'),
-                                                                          )),
-                                                                      ...Lst
-                                                                          .propertyCategories
-                                                                          .map((e) => Obx(() =>
-                                                                          filterBox(
-                                                                            text: e,
-                                                                            width: maxWidth * 0.4,
-                                                                            selected: EditCtrl.filterCategories.contains(e),
-                                                                            onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'category', item: e),
-                                                                          )))
-                                                                          .toList(),
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                      16),
-                                                                  const Text(
-                                                                      'Type',
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 14)),
-                                                                  Wrap(
-                                                                    alignment:
-                                                                    WrapAlignment
-                                                                        .spaceAround,
-                                                                    crossAxisAlignment:
-                                                                    WrapCrossAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      Obx(() =>
-                                                                          filterBox(
-                                                                            text: 'Any',
-                                                                            width: maxWidth * 0.4,
-                                                                            selected: EditCtrl.filterTypes.contains('Any'),
-                                                                            onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'type', item: 'Any'),
-                                                                          )),
-                                                                      ...Lst
-                                                                          .propertyTypes
-                                                                          .map((e) => Obx(() =>
-                                                                          filterBox(
-                                                                            text: e,
-                                                                            width: maxWidth * 0.4,
-                                                                            selected: EditCtrl.filterTypes.contains(e),
-                                                                            onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'type', item: e),
-                                                                          )))
-                                                                          .toList(),
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                      16),
-                                                                  const Text(
-                                                                      'Status',
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 14)),
-                                                                  Wrap(
-                                                                    alignment:
-                                                                    WrapAlignment
-                                                                        .spaceAround,
-                                                                    crossAxisAlignment:
-                                                                    WrapCrossAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      Obx(() =>
-                                                                          filterBox(
-                                                                            text: 'Any',
-                                                                            width: maxWidth * 0.4,
-                                                                            selected: EditCtrl.filterStatus.contains('Any'),
-                                                                            onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'status', item: 'Any'),
-                                                                          )),
-                                                                      ...Lst
-                                                                          .propertyStatus
-                                                                          .map((e) => Obx(() =>
-                                                                          filterBox(
-                                                                            text: e,
-                                                                            width: maxWidth * 0.4,
-                                                                            selected: EditCtrl.filterStatus.contains(e),
-                                                                            onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'status', item: e),
-                                                                          )))
-                                                                          .toList(),
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                      16),
-                                                                  const Text(
-                                                                      'Amenities',
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                          fontSize: 14)),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                      8),
-                                                                  FutureBuilder(
-                                                                      future: Get.find<CreatePropertyCtrl>().getAmenities(
-                                                                          all:
-                                                                          true),
-                                                                      builder:
-                                                                          (context,
-                                                                          AsyncSnapshot snap) {
-                                                                        var amenities =
-                                                                            snap.data ?? [];
-                                                                        return Wrap(
-                                                                            alignment: WrapAlignment.spaceAround,
-                                                                            children: [
-                                                                              SizedBox(
-                                                                                width: maxWidth * 0.4,
-                                                                                child: Row(
-                                                                                  children: [
-                                                                                    Obx(
-                                                                                          () => Checkbox(
-                                                                                        activeColor: Pallet.secondaryColor,
-                                                                                        checkColor: Colors.white,
-                                                                                        side: const BorderSide(color: Colors.black54),
-                                                                                        value: EditCtrl.filterAmenities.contains('Any'),
-                                                                                        onChanged: (state) {
-                                                                                          if (EditCtrl.filterAmenities.contains('Any') && EditCtrl.filterAmenities.isNotEmpty) {
-                                                                                            EditCtrl.filterAmenities.remove('Any');
-                                                                                          } else {
-                                                                                            if (EditCtrl.filterAmenities.isNotEmpty) {
-                                                                                              EditCtrl.filterAmenities.removeRange(0, EditCtrl.filterAmenities.length);
-                                                                                            }
-                                                                                            EditCtrl.filterAmenities.add('Any');
-                                                                                          }
-                                                                                          EditCtrl.filterAmenities.refresh();
-                                                                                        },
-                                                                                      ),
-                                                                                    ),
-                                                                                    const SizedBox(width: 10),
-                                                                                    const Expanded(child: Text('Any', style: TextStyle(fontSize: 16))),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                              ...(amenities as List)
-                                                                                  .map((e) => Container(
-                                                                                width: maxWidth * 0.4,
-                                                                                margin: const EdgeInsets.only(bottom: 8),
-                                                                                child: Row(
-                                                                                  mainAxisSize: MainAxisSize.min,
-                                                                                  children: [
-                                                                                    Obx(
-                                                                                          () => Checkbox(
-                                                                                        activeColor: Pallet.secondaryColor,
-                                                                                        checkColor: Colors.white,
-                                                                                        side: const BorderSide(color: Colors.black54),
-                                                                                        value: EditCtrl.filterAmenities.contains(e['amenity']),
-                                                                                        onChanged: (state) {
-                                                                                          if (EditCtrl.filterAmenities.contains(e['amenity'])) {
-                                                                                            EditCtrl.filterAmenities.remove(e['amenity']);
-                                                                                            if (EditCtrl.filterAmenities.isEmpty) {
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .stretch,
+                                                                      children: [
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                16),
+                                                                        const Text(
+                                                                            'Category',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                                                                        Wrap(
+                                                                          alignment:
+                                                                              WrapAlignment.spaceAround,
+                                                                          crossAxisAlignment:
+                                                                              WrapCrossAlignment.center,
+                                                                          children: [
+                                                                            Obx(() =>
+                                                                                filterBox(
+                                                                                  text: 'Any',
+                                                                                  width: maxWidth * 0.4,
+                                                                                  selected: EditCtrl.filterCategories.contains('Any'),
+                                                                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'category', item: 'Any'),
+                                                                                )),
+                                                                            ...Lst.propertyCategories
+                                                                                .map((e) => Obx(() => filterBox(
+                                                                                      text: e,
+                                                                                      width: maxWidth * 0.4,
+                                                                                      selected: EditCtrl.filterCategories.contains(e),
+                                                                                      onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'category', item: e),
+                                                                                    )))
+                                                                                .toList(),
+                                                                          ],
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                16),
+                                                                        const Text(
+                                                                            'Type',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                                                                        Wrap(
+                                                                          alignment:
+                                                                              WrapAlignment.spaceAround,
+                                                                          crossAxisAlignment:
+                                                                              WrapCrossAlignment.center,
+                                                                          children: [
+                                                                            Obx(() =>
+                                                                                filterBox(
+                                                                                  text: 'Any',
+                                                                                  width: maxWidth * 0.4,
+                                                                                  selected: EditCtrl.filterTypes.contains('Any'),
+                                                                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'type', item: 'Any'),
+                                                                                )),
+                                                                            ...Lst.propertyTypes
+                                                                                .map((e) => Obx(() => filterBox(
+                                                                                      text: e,
+                                                                                      width: maxWidth * 0.4,
+                                                                                      selected: EditCtrl.filterTypes.contains(e),
+                                                                                      onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'type', item: e),
+                                                                                    )))
+                                                                                .toList(),
+                                                                          ],
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                16),
+                                                                        const Text(
+                                                                            'Status',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                                                                        Wrap(
+                                                                          alignment:
+                                                                              WrapAlignment.spaceAround,
+                                                                          crossAxisAlignment:
+                                                                              WrapCrossAlignment.center,
+                                                                          children: [
+                                                                            Obx(() =>
+                                                                                filterBox(
+                                                                                  text: 'Any',
+                                                                                  width: maxWidth * 0.4,
+                                                                                  selected: EditCtrl.filterStatus.contains('Any'),
+                                                                                  onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'status', item: 'Any'),
+                                                                                )),
+                                                                            ...Lst.propertyStatus
+                                                                                .map((e) => Obx(() => filterBox(
+                                                                                      text: e,
+                                                                                      width: maxWidth * 0.4,
+                                                                                      selected: EditCtrl.filterStatus.contains(e),
+                                                                                      onTap: () => propCtrl.toggleSelectedFilterBox(filter: 'status', item: e),
+                                                                                    )))
+                                                                                .toList(),
+                                                                          ],
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                16),
+                                                                        const Text(
+                                                                            'Amenities',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                8),
+                                                                        FutureBuilder(
+                                                                            future:
+                                                                                Get.find<CreatePropertyCtrl>().getAmenities(all: true),
+                                                                            builder: (context, AsyncSnapshot snap) {
+                                                                              var amenities = snap.data ?? [];
+                                                                              return Wrap(alignment: WrapAlignment.spaceAround, children: [
+                                                                                SizedBox(
+                                                                                  width: maxWidth * 0.4,
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      Obx(
+                                                                                        () => Checkbox(
+                                                                                          activeColor: Pallet.secondaryColor,
+                                                                                          checkColor: Colors.white,
+                                                                                          side: const BorderSide(color: Colors.black54),
+                                                                                          value: EditCtrl.filterAmenities.contains('Any'),
+                                                                                          onChanged: (state) {
+                                                                                            if (EditCtrl.filterAmenities.contains('Any') && EditCtrl.filterAmenities.isNotEmpty) {
+                                                                                              EditCtrl.filterAmenities.remove('Any');
+                                                                                            } else {
+                                                                                              if (EditCtrl.filterAmenities.isNotEmpty) {
+                                                                                                EditCtrl.filterAmenities.removeRange(0, EditCtrl.filterAmenities.length);
+                                                                                              }
                                                                                               EditCtrl.filterAmenities.add('Any');
                                                                                             }
-                                                                                          } else {
-                                                                                            if (EditCtrl.filterAmenities.contains('Any')) {
-                                                                                              EditCtrl.filterAmenities.remove('Any');
-                                                                                            }
-                                                                                            EditCtrl.filterAmenities.add(e['amenity']);
-                                                                                          }
-                                                                                          EditCtrl.filterAmenities.refresh();
-                                                                                        },
+                                                                                            EditCtrl.filterAmenities.refresh();
+                                                                                          },
+                                                                                        ),
                                                                                       ),
-                                                                                    ),
-                                                                                    const SizedBox(width: 10),
-                                                                                    Expanded(child: Text(e['amenity'], style: const TextStyle(fontSize: 16))),
-                                                                                  ],
+                                                                                      const SizedBox(width: 10),
+                                                                                      const Expanded(child: Text('Any', style: TextStyle(fontSize: 16))),
+                                                                                    ],
+                                                                                  ),
                                                                                 ),
-                                                                              ))
-                                                                                  .toList(),
-                                                                            ]);
-                                                                      }),
-                                                                  const SizedBox(
-                                                                      height:
-                                                                      16),
-                                                                  //const Text('Rooms', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-                                                                  // Row(
-                                                                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  //   children: [
-                                                                  //     Padding(
-                                                                  //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                                  //       child: DropDown(
-                                                                  //         width: maxWidth * 0.4,
-                                                                  //         color: Colors.white10,
-                                                                  //         showLabel: false,
-                                                                  //         labelColor: Colors.black54,
-                                                                  //         controller: EditCtrl.roomMin,
-                                                                  //         label: 'Min',
-                                                                  //         items: const ['1', '2', '3'],
-                                                                  //       ),
-                                                                  //     ),
-                                                                  //     const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
-                                                                  //     Padding(
-                                                                  //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                                  //       child: DropDown(
-                                                                  //         width: maxWidth * 0.4,
-                                                                  //         color: Colors.white10,
-                                                                  //         showLabel: false,
-                                                                  //         controller: EditCtrl.roomMax,
-                                                                  //         label: 'Max',
-                                                                  //         items: const ['1', '2', '3'],
-                                                                  //       ),
-                                                                  //     ),
-                                                                  //   ],
-                                                                  // ),
-                                                                  //const SizedBox(height: 16),
-                                                                  //const Text('Baths', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-                                                                  // Row(
-                                                                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  //   children: [
-                                                                  //     Padding(
-                                                                  //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                                  //       child: DropDown(
-                                                                  //         width: maxWidth * 0.4,
-                                                                  //         color: Colors.white10,
-                                                                  //         showLabel: false,
-                                                                  //         labelColor: Colors.black54,
-                                                                  //         controller: EditCtrl.bathsMin,
-                                                                  //         label: 'Min',
-                                                                  //         items: const ['1', '2', '3'],
-                                                                  //       ),
-                                                                  //     ),
-                                                                  //     const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
-                                                                  //     Padding(
-                                                                  //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                                  //       child: DropDown(
-                                                                  //         width: maxWidth * 0.4,
-                                                                  //         color: Colors.white10,
-                                                                  //         showLabel: false,
-                                                                  //         controller: EditCtrl.bathsMax,
-                                                                  //         label: 'Max',
-                                                                  //         items: const ['1', '2', '3'],
-                                                                  //       ),
-                                                                  //     ),
-                                                                  //   ],
-                                                                  // ),
-                                                                ],
-                                                              )
+                                                                                ...(amenities as List)
+                                                                                    .map((e) => Container(
+                                                                                          width: maxWidth * 0.4,
+                                                                                          margin: const EdgeInsets.only(bottom: 8),
+                                                                                          child: Row(
+                                                                                            mainAxisSize: MainAxisSize.min,
+                                                                                            children: [
+                                                                                              Obx(
+                                                                                                () => Checkbox(
+                                                                                                  activeColor: Pallet.secondaryColor,
+                                                                                                  checkColor: Colors.white,
+                                                                                                  side: const BorderSide(color: Colors.black54),
+                                                                                                  value: EditCtrl.filterAmenities.contains(e['amenity']),
+                                                                                                  onChanged: (state) {
+                                                                                                    if (EditCtrl.filterAmenities.contains(e['amenity'])) {
+                                                                                                      EditCtrl.filterAmenities.remove(e['amenity']);
+                                                                                                      if (EditCtrl.filterAmenities.isEmpty) {
+                                                                                                        EditCtrl.filterAmenities.add('Any');
+                                                                                                      }
+                                                                                                    } else {
+                                                                                                      if (EditCtrl.filterAmenities.contains('Any')) {
+                                                                                                        EditCtrl.filterAmenities.remove('Any');
+                                                                                                      }
+                                                                                                      EditCtrl.filterAmenities.add(e['amenity']);
+                                                                                                    }
+                                                                                                    EditCtrl.filterAmenities.refresh();
+                                                                                                  },
+                                                                                                ),
+                                                                                              ),
+                                                                                              const SizedBox(width: 10),
+                                                                                              Expanded(child: Text(e['amenity'], style: const TextStyle(fontSize: 16))),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ))
+                                                                                    .toList(),
+                                                                              ]);
+                                                                            }),
+                                                                        const SizedBox(
+                                                                            height:
+                                                                                16),
+                                                                        //const Text('Rooms', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                                                                        // Row(
+                                                                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                                                                        //   children: [
+                                                                        //     Padding(
+                                                                        //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                                                        //       child: DropDown(
+                                                                        //         width: maxWidth * 0.4,
+                                                                        //         color: Colors.white10,
+                                                                        //         showLabel: false,
+                                                                        //         labelColor: Colors.black54,
+                                                                        //         controller: EditCtrl.roomMin,
+                                                                        //         label: 'Min',
+                                                                        //         items: const ['1', '2', '3'],
+                                                                        //       ),
+                                                                        //     ),
+                                                                        //     const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
+                                                                        //     Padding(
+                                                                        //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                                                        //       child: DropDown(
+                                                                        //         width: maxWidth * 0.4,
+                                                                        //         color: Colors.white10,
+                                                                        //         showLabel: false,
+                                                                        //         controller: EditCtrl.roomMax,
+                                                                        //         label: 'Max',
+                                                                        //         items: const ['1', '2', '3'],
+                                                                        //       ),
+                                                                        //     ),
+                                                                        //   ],
+                                                                        // ),
+                                                                        //const SizedBox(height: 16),
+                                                                        //const Text('Baths', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                                                                        // Row(
+                                                                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                                                                        //   children: [
+                                                                        //     Padding(
+                                                                        //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                                                        //       child: DropDown(
+                                                                        //         width: maxWidth * 0.4,
+                                                                        //         color: Colors.white10,
+                                                                        //         showLabel: false,
+                                                                        //         labelColor: Colors.black54,
+                                                                        //         controller: EditCtrl.bathsMin,
+                                                                        //         label: 'Min',
+                                                                        //         items: const ['1', '2', '3'],
+                                                                        //       ),
+                                                                        //     ),
+                                                                        //     const Text('to', style: TextStyle(fontWeight: FontWeight.w600)),
+                                                                        //     Padding(
+                                                                        //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                                                        //       child: DropDown(
+                                                                        //         width: maxWidth * 0.4,
+                                                                        //         color: Colors.white10,
+                                                                        //         showLabel: false,
+                                                                        //         controller: EditCtrl.bathsMax,
+                                                                        //         label: 'Max',
+                                                                        //         items: const ['1', '2', '3'],
+                                                                        //       ),
+                                                                        //     ),
+                                                                        //   ],
+                                                                        // ),
+                                                                      ],
+                                                                    )
                                                                   : const SizedBox
-                                                                  .shrink()),
+                                                                      .shrink()),
                                                               const SizedBox(
                                                                   height: 24),
                                                               InkWell(
                                                                 onTap: () => propCtrl
                                                                     .showMoreFilter
                                                                     .value = propCtrl
-                                                                    .showMoreFilter
-                                                                    .value ==
-                                                                    true
+                                                                            .showMoreFilter
+                                                                            .value ==
+                                                                        true
                                                                     ? false
                                                                     : true,
                                                                 child: Row(
                                                                   mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
+                                                                      MainAxisAlignment
+                                                                          .center,
                                                                   children: [
                                                                     Obx(() =>
                                                                         CustomText(
-                                                                          color: Pallet
-                                                                              .secondaryColor,
-                                                                          size: 16,
-                                                                          text: propCtrl
-                                                                              .showMoreFilter
-                                                                              .value
+                                                                          color:
+                                                                              Pallet.secondaryColor,
+                                                                          size:
+                                                                              16,
+                                                                          text: propCtrl.showMoreFilter.value
                                                                               ? 'Less filter'
                                                                               : 'More filters',
                                                                         )),
                                                                     const SizedBox(
-                                                                        width: 12),
-                                                                    Obx(() => Icon(
-                                                                      propCtrl.showMoreFilter.value
-                                                                          ? Icons
-                                                                          .expand_less
-                                                                          : Icons
-                                                                          .expand_more,
-                                                                      color: Pallet
-                                                                          .secondaryColor,
-                                                                      size: 24,
-                                                                    ))
+                                                                        width:
+                                                                            12),
+                                                                    Obx(() =>
+                                                                        Icon(
+                                                                          propCtrl.showMoreFilter.value
+                                                                              ? Icons.expand_less
+                                                                              : Icons.expand_more,
+                                                                          color:
+                                                                              Pallet.secondaryColor,
+                                                                          size:
+                                                                              24,
+                                                                        ))
                                                                   ],
                                                                 ),
                                                               ),
@@ -1162,43 +1169,45 @@ class _ExplorePageState extends State<ExplorePage> {
                                                                   height: 62),
                                                             ],
                                                           ),
-
-
                                                           Positioned(
                                                               bottom: 0,
                                                               child: Container(
                                                                 width: maxWidth,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    top: 8),
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top: 8),
                                                                 child: InkWell(
                                                                   onTap: () {
-                                                                    setState(() {
+                                                                    setState(
+                                                                        () {
                                                                       isLoading =
-                                                                      true;
+                                                                          true;
                                                                     });
                                                                     Get.back(
                                                                         result:
-                                                                        'hello');
+                                                                            'hello');
                                                                     getfilterProperty(
                                                                         1);
                                                                     //propCtrl.applyFilterParameters();
                                                                   },
-                                                                  child: Container(
+                                                                  child:
+                                                                      Container(
                                                                     height: 48,
                                                                     color: Pallet
                                                                         .secondaryColor,
                                                                     child:
-                                                                    const Center(
+                                                                        const Center(
                                                                       child:
-                                                                      CustomText(
+                                                                          CustomText(
                                                                         color: Colors
                                                                             .white,
-                                                                        size: 16,
+                                                                        size:
+                                                                            16,
                                                                         text:
-                                                                        'APPLY FILTER',
+                                                                            'APPLY FILTER',
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1209,45 +1218,47 @@ class _ExplorePageState extends State<ExplorePage> {
                                                     }),
                                                   ),
                                                 ),
-                                          );
+                                              );
 
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //       builder: (context) => const FilterExplorePage()),
-                                          // );
-                                          //Get.to(RouteStr.mobileExploreFilter);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 12.0),
-                                          child: Container(
-                                              height: 40,
-                                              decoration: const BoxDecoration(
-                                                color: Colors.red,
-                                              ),
-                                              child: Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(
-                                                      right: 12.0),
-                                                  child: Image.asset(
-                                                      'assets/images/filter.png'))),
-                                        ))
-                                  ])),
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) => const FilterExplorePage()),
+                                              // );
+                                              //Get.to(RouteStr.mobileExploreFilter);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 12.0),
+                                              child: Container(
+                                                  height: 40,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.red,
+                                                  ),
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 12.0),
+                                                      child: Image.asset(
+                                                          'assets/images/filter.png'))),
+                                            ))
+                                      ])),
                               const SizedBox(height: 16),
                               const Divider(color: Colors.black12),
                               ListView.builder(
                                   //controller: scrollController,
                                   physics: const NeverScrollableScrollPhysics(),
-
                                   itemCount: properties.length,
                                   padding: const EdgeInsets.only(
                                       left: 12.0, right: 12.0, bottom: 20),
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    filter.Property property = properties[index];
-                                    if(snapdata.data!.data.properties.length<1){
+                                    filter.Property property =
+                                        properties[index];
+                                    if (snapdata
+                                        .data!.data.properties.isEmpty) {
                                       return Column(
                                         children: [
                                           Column(children: [
@@ -1271,50 +1282,56 @@ class _ExplorePageState extends State<ExplorePage> {
                                           ])
                                         ],
                                       );
-                                    }else{
-                                   return buildFilterList(showMore: true, property: property);}
+                                    } else {
+                                      return buildFilterList(
+                                          showMore: true, property: property);
+                                    }
                                   }),
-                              if(snapdata.data!.data.pages>1)
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 50.0),
-                                  child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        GestureDetector(
-                                            onTap: () {
-                                              //_list.removeAt(_curr);
-                                              if(page==1){
-
-                                              }else{
+                              if (snapdata.data!.data.pages > 1)
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 50.0),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          GestureDetector(
+                                              onTap: () {
+                                                //_list.removeAt(_curr);
+                                                if (page == 1) {
+                                                } else {
+                                                  setState(() {
+                                                    page--;
+                                                    getfilterProperty(page);
+                                                  });
+                                                }
+                                              },
+                                              child: const Icon(
+                                                Icons.navigate_before,
+                                                size: 40,
+                                              )),
+                                          GestureDetector(
+                                              onTap: () {
+                                                if (snapdata.data!.data.pages ==
+                                                    page) {
+                                                } else {}
                                                 setState(() {
-                                                  page--;
+                                                  page++;
                                                   getfilterProperty(page);
-
                                                 });
-                                              }
-                                            },
-                                            child: const Icon(Icons.navigate_before,size: 40,)),
-                                        GestureDetector(
-                                            onTap: () {
-                                              if(snapdata.data!.data.pages==page){
-
-                                              }else{
-
-                                              }
-                                              setState(() {
-                                                page++;
-                                                getfilterProperty(page);
-                                              });
-                                            },
-                                            child: const Icon(Icons.navigate_next,size: 40,)),
-                                      ]),
-                                ),
-                              )
+                                              },
+                                              child: const Icon(
+                                                Icons.navigate_next,
+                                                size: 40,
+                                              )),
+                                        ]),
+                                  ),
+                                )
                             ]);
-                      }
-                    })),
+                          }
+                        })),
 
                 // child: FutureBuilder(
                 //     future: _future,
@@ -1361,7 +1378,6 @@ class _ExplorePageState extends State<ExplorePage> {
                 //     }),
               ),
             ),
-
           ],
         ),
         floatingActionButton: AnimatedOpacity(
@@ -1373,7 +1389,8 @@ class _ExplorePageState extends State<ExplorePage> {
               scrollController.animateTo(
                   //go to top of scroll
                   0, //scroll offset to go
-                  duration: const Duration(milliseconds: 500), //duration of scroll
+                  duration:
+                      const Duration(milliseconds: 500), //duration of scroll
                   curve: Curves.fastOutSlowIn //scroll type
                   );
             },
@@ -1385,8 +1402,6 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 }
-
-
 
 // class Pages extends StatefulWidget {
 //   final page;
@@ -2109,7 +2124,8 @@ class _ExplorePageState extends State<ExplorePage> {
 // }
 
 class FullGalleryScreen extends StatelessWidget {
-  FullGalleryScreen({Key? key, required this.index,required this.images}) : super(key: key);
+  FullGalleryScreen({Key? key, required this.index, required this.images})
+      : super(key: key);
 
   int i = 0;
   final int index;
@@ -2119,9 +2135,9 @@ class FullGalleryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Property property = propCtrl.property;
-   // images = property.media ?? [];
+    // images = property.media ?? [];
     _controller = PageController(initialPage: 0);
-   //propCtrl.currentIndex.value = images?[0].media ?? '';
+    //propCtrl.currentIndex.value = images?[0].media ?? '';
     return Stack(
       children: [
         Column(
@@ -2242,15 +2258,13 @@ class FullGalleryScreen extends StatelessWidget {
   }
 
   void nextPage() {
-    propCtrl.currentIndex.value =
-        images[_controller.page!.toInt() + 1].media;
+    propCtrl.currentIndex.value = images[_controller.page!.toInt() + 1].media;
     _controller.animateToPage(_controller.page!.toInt() + 1,
         duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
 
   void previousPage() {
-    propCtrl.currentIndex.value =
-        images[_controller.page!.toInt() - 1].media ;
+    propCtrl.currentIndex.value = images[_controller.page!.toInt() - 1].media;
     _controller.animateToPage(_controller.page!.toInt() - 1,
         duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
   }
