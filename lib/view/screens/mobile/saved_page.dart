@@ -18,13 +18,13 @@ class SavedPages extends StatefulWidget {
 }
 
 class _SavedPagesState extends State<SavedPages> {
-  List<String> propertyID=[];
+  List<String> propertyID = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -38,7 +38,8 @@ class _SavedPagesState extends State<SavedPages> {
           backgroundColor: Pallet.secondaryColor,
           automaticallyImplyLeading: false,
           leading: InkWell(
-            onTap: () => Get.find<MobileHomeController>().bottomNavIndex.value = 0,
+            onTap: () =>
+                Get.find<MobileHomeController>().bottomNavIndex.value = 0,
             child: const Padding(
               padding: EdgeInsets.fromLTRB(8.0, 14, 0, 14),
               child: Icon(Icons.arrow_back),
@@ -49,12 +50,12 @@ class _SavedPagesState extends State<SavedPages> {
             size: 18,
             text: 'Favourites',
           ),
-          actions:  [
+          actions: [
             AppBarMenu(
               logout: true,
               myAccount: true,
               //clearSave: true,
-              propertyIDS:homeCtrl.user.value.savedProperties!,
+              propertyIDS: homeCtrl.user.value.savedProperties!,
             ),
           ],
         ),
@@ -62,24 +63,33 @@ class _SavedPagesState extends State<SavedPages> {
             future: propCtrl.getSavedProperties(),
             builder: (context, AsyncSnapshot snap) {
               List<Property> properties = snap.data ?? [];
-              return Obx(() => propCtrl.mySavedProperties.value.isEmpty && snap.connectionState == ConnectionState.waiting
-                  ? Center(
-                      child: Preloader.loadingWidget(),
+              return Obx(() => propCtrl.mySavedProperties.value.isEmpty &&
+                      snap.connectionState == ConnectionState.waiting
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Preloader.loadingWidget()),
                     )
                   : propCtrl.mySavedProperties.value.isEmpty
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Center(child: Image.asset('assets/images/favourite.PNG')),
+                            Center(
+                                child:
+                                    Image.asset('assets/images/favourite.PNG')),
                             TextStyles.richTexts(
                               centerText: true,
                               color: Colors.blueGrey,
                               decoration: TextDecoration.underline,
-                              onPress1: () => Get.find<MobileHomeController>().bottomNavIndex.value = 1,
+                              onPress1: () => Get.find<MobileHomeController>()
+                                  .bottomNavIndex
+                                  .value = 1,
                               onPress2: () {},
                               size: 16,
-                              text1: 'You don\'t have any saved property listed.\n',
+                              text1:
+                                  'You don\'t have any saved property listed.\n',
                               text2: 'Browse list',
                             )
                           ],
@@ -88,12 +98,18 @@ class _SavedPagesState extends State<SavedPages> {
                           height: Get.height,
                           child: SizedBox(
                             child: ListView.builder(
-                                itemCount: propCtrl.mySavedProperties.value.length,
-                                padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 20),
+                                itemCount:
+                                    propCtrl.mySavedProperties.value.length,
+                                padding: const EdgeInsets.only(
+                                    left: 12.0, right: 12.0, bottom: 20),
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
-                                  return buildPremiumList(showMore: true, property: propCtrl.mySavedProperties.value[index], borderColor: Colors.grey);
+                                  return buildPremiumList(
+                                      showMore: true,
+                                      property: propCtrl
+                                          .mySavedProperties.value[index],
+                                      borderColor: Colors.grey);
                                 }),
                           ),
                         ));

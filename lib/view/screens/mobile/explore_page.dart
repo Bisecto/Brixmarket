@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:brixmarket/view/widgets/drop_down.dart';
+import 'package:number_paginator/number_paginator.dart';
 import '../../../config/theme/color.dart';
 import '../../../controllers/instance.dart';
 import '../../../controllers/mobile_app_controllers/homepage_controller.dart';
@@ -634,17 +635,23 @@ class _ExplorePageState extends State<ExplorePage> {
                         builder: (context, snapdata) {
                           if (snapdata.connectionState ==
                               ConnectionState.waiting) {
-                            return Align(
-                                alignment: Alignment.center,
-                                child: Preloader.loadingWidget());
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Preloader.loadingWidget()),
+                            );
                           } else if (isLoading) {
-                            return Align(
-                                alignment: Alignment.center,
-                                child: Preloader.loadingWidget());
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Preloader.loadingWidget()),
+                            );
                           } else {
                             List<filter.Property> properties =
                                 snapdata.data!.data.properties;
-                            //print(snapdata.data!.data.pages);
+                            page = snapdata.data!.data.pages;
                             return Column(children: [
                               Padding(
                                   padding: const EdgeInsets.fromLTRB(
@@ -1257,6 +1264,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   itemBuilder: (context, index) {
                                     filter.Property property =
                                         properties[index];
+                                    //  page = snapdata.data!.data.pages;
                                     if (snapdata
                                         .data!.data.properties.isEmpty) {
                                       return Column(
@@ -1287,48 +1295,6 @@ class _ExplorePageState extends State<ExplorePage> {
                                           showMore: true, property: property);
                                     }
                                   }),
-                              if (snapdata.data!.data.pages > 1)
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 50.0),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          GestureDetector(
-                                              onTap: () {
-                                                //_list.removeAt(_curr);
-                                                if (page == 1) {
-                                                } else {
-                                                  setState(() {
-                                                    page--;
-                                                    getfilterProperty(page);
-                                                  });
-                                                }
-                                              },
-                                              child: const Icon(
-                                                Icons.navigate_before,
-                                                size: 40,
-                                              )),
-                                          GestureDetector(
-                                              onTap: () {
-                                                if (snapdata.data!.data.pages ==
-                                                    page) {
-                                                } else {}
-                                                setState(() {
-                                                  page++;
-                                                  getfilterProperty(page);
-                                                });
-                                              },
-                                              child: const Icon(
-                                                Icons.navigate_next,
-                                                size: 40,
-                                              )),
-                                        ]),
-                                  ),
-                                )
                             ]);
                           }
                         })),
@@ -1378,26 +1344,57 @@ class _ExplorePageState extends State<ExplorePage> {
                 //     }),
               ),
             ),
+            if (page > 1)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: NumberPaginator(
+                          numberPages: page,
+                          onPageChange: (int index) {
+                            setState(() {
+                              isLoading = true;
+                              getfilterProperty(index);
+                            });
+                          },
+                          config: NumberPaginatorUIConfig(
+                            buttonSelectedForegroundColor: Colors.white,
+                            buttonUnselectedForegroundColor: Colors.pink,
+                            buttonUnselectedBackgroundColor:
+                                Colors.grey.withOpacity(0.1),
+                            buttonSelectedBackgroundColor: Colors.pink,
+                          ),
+                        )),
+                  ),
+                ),
+              )
           ],
         ),
-        floatingActionButton: AnimatedOpacity(
-          duration: const Duration(milliseconds: 1000), //show/hide animation
-          opacity: showbtn ? 1.0 : 0.0, //set obacity to 1 on visible, or hide
-          child: FloatingActionButton(
-            onPressed: () {
-              ExplorePage explorePage = const ExplorePage();
-              scrollController.animateTo(
-                  //go to top of scroll
-                  0, //scroll offset to go
-                  duration:
-                      const Duration(milliseconds: 500), //duration of scroll
-                  curve: Curves.fastOutSlowIn //scroll type
-                  );
-            },
-            child: const Icon(Icons.arrow_upward),
-            backgroundColor: Colors.redAccent,
-          ),
-        ),
+        // floatingActionButton: AnimatedOpacity(
+        //   duration: const Duration(milliseconds: 1000), //show/hide animation
+        //   opacity: showbtn ? 1.0 : 0.0, //set obacity to 1 on visible, or hide
+        //   child: FloatingActionButton(
+        //     onPressed: () {
+        //       ExplorePage explorePage = const ExplorePage();
+        //       scrollController.animateTo(
+        //           //go to top of scroll
+        //           0, //scroll offset to go
+        //           duration:
+        //               const Duration(milliseconds: 500), //duration of scroll
+        //           curve: Curves.fastOutSlowIn //scroll type
+        //           );
+        //     },
+        //     child: const Icon(Icons.arrow_upward),
+        //     backgroundColor: Colors.redAccent,
+        //   ),
+        // ),
       ),
     );
   }

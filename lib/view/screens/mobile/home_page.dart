@@ -636,147 +636,144 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
               ),
             ),
           )),
-      body: (isLoading)
-          ? SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
-              child: Align(
-                  alignment: Alignment.center,
-                  child: Preloader.loadingWidget()),
-            )
-          : Stack(
-              children: [
-                SingleChildScrollView(
-                    controller: scrollController,
-                    scrollDirection: Axis.vertical,
-                    physics: const ScrollPhysics(),
-                    child: StreamBuilder<filter.FilterModel>(
-                        stream: _filterStreamController.stream,
-                        builder: (context, snapdata) {
-                          if (snapdata.connectionState ==
-                              ConnectionState.waiting) {
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.8,
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Preloader.loadingWidget()),
-                            );
-                          } else {
-                            List<filter.Property> properties =
-                                snapdata.data!.data.properties;
+      body: Stack(
+        children: [
+          (isLoading)
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Preloader.loadingWidget()),
+                )
+              : SingleChildScrollView(
+                  controller: scrollController,
+                  scrollDirection: Axis.vertical,
+                  physics: const ScrollPhysics(),
+                  child: StreamBuilder<filter.FilterModel>(
+                      stream: _filterStreamController.stream,
+                      builder: (context, snapdata) {
+                        if (snapdata.connectionState ==
+                            ConnectionState.waiting) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Preloader.loadingWidget()),
+                          );
+                        } else {
+                          List<filter.Property> properties =
+                              snapdata.data!.data.properties;
 
-                            page = snapdata.data!.data.pages;
-                            return properties.isEmpty
-                                ? SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.6,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                            height: 120,
-                                            width: 120,
-                                            child: Image.asset(
-                                                'assets/images/list.png')),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        const CustomText(
-                                            color: Pallet.secondaryColor,
-                                            text: 'Nothing for this location',
-                                            weight: FontWeight.normal,
-                                            size: 16),
-                                      ],
-                                    ),
-                                  )
-                                : Column(children: [
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(14.0, 14, 0, 14),
-                                      child: CustomText(
-                                          color: Colors.blueGrey,
-                                          text: 'Searched Results',
-                                          weight: FontWeight.bold,
+                          page = snapdata.data!.data.pages;
+                          return properties.isEmpty
+                              ? SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.6,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                          height: 120,
+                                          width: 120,
+                                          child: Image.asset(
+                                              'assets/images/list.png')),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const CustomText(
+                                          color: Pallet.secondaryColor,
+                                          text: 'Nothing for this location',
+                                          weight: FontWeight.normal,
                                           size: 16),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    const Divider(color: Colors.black12),
-                                    ListView.builder(
-                                        //controller: scrollController,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: properties.length,
-                                        padding: const EdgeInsets.only(
-                                            left: 12.0,
-                                            right: 12.0,
-                                            bottom: 20),
-                                        scrollDirection: Axis.vertical,
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) {
-                                          filter.Property property =
-                                              properties[index];
-                                          if (snapdata
-                                              .data!.data.properties.isEmpty) {
-                                            return Column(
-                                              children: [
-                                                Column(children: [
-                                                  SizedBox(
-                                                    height: Get.height * 0.2,
-                                                  ),
-                                                  const CustomText(
-                                                      color: Colors.blueGrey,
-                                                      text: 'No Results Found',
-                                                      weight: FontWeight.w400,
-                                                      size: 18),
-                                                  const SizedBox(height: 10),
-                                                ])
-                                              ],
-                                            );
-                                          } else {
-                                            return buildFilterList(
-                                                showMore: true,
-                                                property: property);
-                                          }
-                                        }),
-                                  ]);
-                          }
-                        })),
-                if (page > 1)
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: NumberPaginator(
-                              numberPages: page,
-                              onPageChange: (int index) {
-                                setState(() {
-                                  isLoading = true;
-                                  getSearchedResult(index, searchValue);
-                                });
-                              },
-                              config: NumberPaginatorUIConfig(
-                                buttonSelectedForegroundColor: Colors.white,
-                                buttonUnselectedForegroundColor: Colors.pink,
-                                buttonUnselectedBackgroundColor:
-                                    Colors.grey.withOpacity(0.1),
-                                buttonSelectedBackgroundColor: Colors.pink,
-                              ),
-                            )),
-                      ),
-                    ),
-                  )
-              ],
-            ),
+                                    ],
+                                  ),
+                                )
+                              : Column(children: [
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.fromLTRB(14.0, 14, 0, 14),
+                                    child: CustomText(
+                                        color: Colors.blueGrey,
+                                        text: 'Searched Results',
+                                        weight: FontWeight.bold,
+                                        size: 16),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Divider(color: Colors.black12),
+                                  ListView.builder(
+                                      //controller: scrollController,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: properties.length,
+                                      padding: const EdgeInsets.only(
+                                          left: 12.0, right: 12.0, bottom: 20),
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        filter.Property property =
+                                            properties[index];
+                                        if (snapdata
+                                            .data!.data.properties.isEmpty) {
+                                          return Column(
+                                            children: [
+                                              Column(children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.2,
+                                                ),
+                                                const CustomText(
+                                                    color: Colors.blueGrey,
+                                                    text: 'No Results Found',
+                                                    weight: FontWeight.w400,
+                                                    size: 18),
+                                                const SizedBox(height: 10),
+                                              ])
+                                            ],
+                                          );
+                                        } else {
+                                          return buildFilterList(
+                                              showMore: true,
+                                              property: property);
+                                        }
+                                      }),
+                                ]);
+                        }
+                      })),
+          if (page > 1)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(top: 20),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: NumberPaginator(
+                        numberPages: page,
+                        onPageChange: (int index) {
+                          setState(() {
+                            isLoading = true;
+                            getSearchedResult(index, searchValue);
+                          });
+                        },
+                        config: NumberPaginatorUIConfig(
+                          buttonSelectedForegroundColor: Colors.white,
+                          buttonUnselectedForegroundColor: Colors.pink,
+                          buttonUnselectedBackgroundColor:
+                              Colors.grey.withOpacity(0.1),
+                          buttonSelectedBackgroundColor: Colors.pink,
+                        ),
+                      )),
+                ),
+              ),
+            )
+        ],
+      ),
     );
   }
 }
