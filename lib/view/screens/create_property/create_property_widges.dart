@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -584,6 +585,9 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                     error: EditCtrl.titleErr,
                     label: 'Title',
                     hint: 'Enter title of the List',
+                    textInputFormatter: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z@]")),
+                    ],
                   ),
                 ),
                 // SizedBox(width: Get.width * 0.02),
@@ -609,6 +613,9 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
             error: EditCtrl.descriptionErr,
             label: 'Property Description',
             hint: 'Enter Description',
+            textInputFormatter: [
+              FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z@]")),
+            ],
           ),
           const CustomText(
             text: 'Category',

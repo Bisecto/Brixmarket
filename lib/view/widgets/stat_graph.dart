@@ -12,17 +12,29 @@ class ViewStatGraph extends StatelessWidget {
       data: views,
       variables: {
         'Day': Variable(
-          accessor: (ViewData viewData) => viewData.createdAt,
+          accessor: (SByDay4Month viewData) => viewData.counts,
         ),
         'Views': Variable(
-          accessor: (ViewData viewData) => viewData.views as num,
+          accessor: (SByDay4Month viewData) => viewData.day as int,
         ),
       },
-      elements: [IntervalElement(color: ColorAttr(value: Colors.blueGrey))],
+      marks: [
+        IntervalMark(
+          elevation: ElevationEncode(value: 0, updaters: {
+            'tap': {true: (_) => 5}
+          }),
+          color: ColorEncode(value: Colors.blue[300], updaters: {
+            'tap': {false: (color) => color.withAlpha(100)}
+          }),
+        )
+      ],
       axes: [
         Defaults.horizontalAxis,
         Defaults.verticalAxis,
       ],
+      selections: {'tap': PointSelection(dim: Dim.x)},
+      tooltip: TooltipGuide(),
+      crosshair: CrosshairGuide(),
     ));
   }
 }

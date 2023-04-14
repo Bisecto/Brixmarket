@@ -416,7 +416,8 @@ class CreatePropertyCtrl extends GetxController {
   Future getInsight() async {
     // if (insight == null) {
     await Provider()
-        .postData("property/get-insight", User.map())
+        .postData("property/get-insight", {},
+            baseUrl: 'https://api.brixmarket.site/')
         .then((value) => insight = Insight.fromJson(value));
     // }
     return insight;

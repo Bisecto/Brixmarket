@@ -27,7 +27,8 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> with TickerProviderStateMixin {
+class _DashboardPageState extends State<DashboardPage>
+    with TickerProviderStateMixin {
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -44,16 +45,19 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     }
     return LayoutBuilder(builder: (context, constraints) {
       var dashboardWidgets = [
-        const InsightWidget(),
-         CreatePropertyWidget(isEdt: false),//EditCtrl.isEdits.value,),
+        // const InsightWidget(),
+        CreatePropertyWidget(isEdt: false), //EditCtrl.isEdits.value,),
         MyPropertiesWidget(provider: this),
         SavedPropertiesWidget(constraints: constraints.maxWidth),
         UpgradePricingWidget(constraints: constraints.maxWidth),
         AccountWidget(constraints: constraints.maxWidth),
-        const Align(alignment: Alignment.center, child: Text('You are currently Logged Out')),
+        const Align(
+            alignment: Alignment.center,
+            child: Text('You are currently Logged Out')),
       ];
       return Scaffold(
-        backgroundColor: Pallet.primaryBackgroundLight, // (cPropCtrl.sideNavIndex.value == 1) ? const Color(0xFFf9f9f9) : Colors.white,
+        backgroundColor: Pallet
+            .primaryBackgroundLight, // (cPropCtrl.sideNavIndex.value == 1) ? const Color(0xFFf9f9f9) : Colors.white,
         key: homeScaffoldKey,
         drawer: const DashBoardSideBar(),
         appBar: appBarWeb(homeScaffoldKey),
@@ -66,7 +70,9 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               SizedBox(
                   child: Row(
                 children: [
-                  isNotDeskTop() ? const SizedBox.shrink() : const DashBoardSideBar(),
+                  isNotDeskTop()
+                      ? const SizedBox.shrink()
+                      : const DashBoardSideBar(),
                   Expanded(
                     child: Obx(() => IndexedStack(
                           index: cPropCtrl.sideNavIndex.value,
@@ -107,7 +113,9 @@ class DashBoardSideBar extends StatelessWidget {
                         child: Container(
                             height: 25,
                             width: 25,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: Pallet.secondaryColor),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Pallet.secondaryColor),
                             child: const Icon(
                               Icons.close,
                               color: Colors.white,
@@ -136,31 +144,36 @@ class DashBoardSideBar extends StatelessWidget {
             height: 20,
           ),
           GestureDetector(
-
-            onTap: (){
-              EditCtrl.disposeControllers();
-              cPropCtrl.Toinitial();
-              cPropCtrl.gotoNext(pageIndex: 0);
-            },
-              child: sideBarItem(index: 1, icon: Icons.list_alt_outlined, title: 'Create listing')),
+              onTap: () {
+                EditCtrl.disposeControllers();
+                cPropCtrl.Toinitial();
+                cPropCtrl.gotoNext(pageIndex: 0);
+              },
+              child: sideBarItem(
+                  index: 1,
+                  icon: Icons.list_alt_outlined,
+                  title: 'Create listing')),
           const SizedBox(
             height: 20,
           ),
           GestureDetector(
-            onTap: (){
-              EditCtrl.disposeControllers();
-              cPropCtrl.Toinitial();
-              cPropCtrl.gotoNext(pageIndex: 0);
-            },
-              child: sideBarItem(index: 2, icon: Icons.ads_click, title: 'My Ads')),
+              onTap: () {
+                EditCtrl.disposeControllers();
+                cPropCtrl.Toinitial();
+                cPropCtrl.gotoNext(pageIndex: 0);
+              },
+              child: sideBarItem(
+                  index: 2, icon: Icons.ads_click, title: 'My Ads')),
           const SizedBox(
             height: 20,
           ),
-          sideBarItem(index: 3, icon: Icons.label_important, title: 'Saved Property'),
+          sideBarItem(
+              index: 3, icon: Icons.label_important, title: 'Saved Property'),
           const SizedBox(
             height: 20,
           ),
-          sideBarItem(index: 4, icon: Icons.price_change, title: 'Premium upgrade'),
+          sideBarItem(
+              index: 4, icon: Icons.price_change, title: 'Premium upgrade'),
           const SizedBox(
             height: 20,
           ),
@@ -176,7 +189,10 @@ class DashBoardSideBar extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          sideBarItem(index: 5, icon: Icons.person_pin_circle_rounded, title: 'Account Settings'),
+          sideBarItem(
+              index: 5,
+              icon: Icons.person_pin_circle_rounded,
+              title: 'Account Settings'),
           const SizedBox(
             height: 20,
           ),
@@ -195,7 +211,8 @@ class DashBoardSideBar extends StatelessWidget {
       onTap: title == 'Logout'
           ? homeCtrl.logout
           : index == 4
-              ? () => MSG.snackBar('This feature is in active development', title: 'Coming Soon!')
+              ? () => MSG.snackBar('This feature is in active development',
+                  title: 'Coming Soon!')
               : (() {
                   if (isNotDeskTop()) {
                     Get.back();
@@ -207,8 +224,15 @@ class DashBoardSideBar extends StatelessWidget {
           height: 44,
           padding: const EdgeInsets.only(left: 40),
           decoration: BoxDecoration(
-              color: cPropCtrl.sideNavIndex.value == index ? Colors.white.withOpacity(0.2) : Colors.transparent,
-              border: Border(left: BorderSide(color: cPropCtrl.sideNavIndex.value == index ? Pallet.secondaryColor : Colors.transparent, width: 3))),
+              color: cPropCtrl.sideNavIndex.value == index
+                  ? Colors.white.withOpacity(0.2)
+                  : Colors.transparent,
+              border: Border(
+                  left: BorderSide(
+                      color: cPropCtrl.sideNavIndex.value == index
+                          ? Pallet.secondaryColor
+                          : Colors.transparent,
+                      width: 3))),
           child: Row(
             children: [
               Icon(

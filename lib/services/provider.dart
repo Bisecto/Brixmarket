@@ -17,14 +17,17 @@ var timeOutDuration = const Duration(seconds: 30);
 var timeOutDuration2 = const Duration(seconds: 45);
 
 class Provider extends GetConnect {
-  Future<dynamic> getData(String url, {Map<String, dynamic>? params, thirdPartyRequest = false}) async {
+  Future<dynamic> getData(String url,
+      {Map<String, dynamic>? params, thirdPartyRequest = false}) async {
     // await Connectivity().checkConnection().then((connected) async => connected ? true : Get.toNamed(noInternet));
     url = thirdPartyRequest ? url : appBaseUrl + url;
     // dnd(url);
     try {
       var response = await http
-          .post(Uri.parse(url), body: params, headers: thirdPartyRequest ? null : requestHeader)
-          .timeout(timeOutDuration, onTimeout: () => http.Response('Request time out', 408));
+          .post(Uri.parse(url),
+              body: params, headers: thirdPartyRequest ? null : requestHeader)
+          .timeout(timeOutDuration,
+              onTimeout: () => http.Response('Request time out', 408));
       return thirdPartyRequest ? response : processResponse(response);
     } catch (e, t) {
       // dnd('$e Trace: $t');
@@ -34,28 +37,32 @@ class Provider extends GetConnect {
     }
   }
 
-  Future<dynamic> postData(String url, Map<String, dynamic> data) async {
-     //await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
-    url = appBaseUrl + url;
-     // dnd(data);
-     // dnd(url);
+  Future<dynamic> postData(String url, Map<String, dynamic> data,
+      {String? baseUrl}) async {
+    //await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
+    url = (baseUrl == null) ? appBaseUrl + url : baseUrl + url;
+    // dnd(data);
+    // dnd(url);
     try {
-      var response =
-          await http.post(Uri.parse(url), body: data, headers: requestHeader).timeout(timeOutDuration, onTimeout: () => http.Response('Request time out', 408));
+      var response = await http
+          .post(Uri.parse(url), body: data, headers: requestHeader)
+          .timeout(timeOutDuration,
+              onTimeout: () => http.Response('Request time out', 408));
 
       // dnd(response.body);
 
       return processResponse(response);
     } catch (e, t) {
-     // dnd('$e Trace: $t');
+      // dnd('$e Trace: $t');
       Preloader.hide();
-     // dnd('Request error: ' + e.toString());
+      // dnd('Request error: ' + e.toString());
       return null;
     }
   }
 
   Future postFileIO(url, File? imagePath, {Map<String, dynamic>? data}) async {
-    await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
+    await Connectivity().checkConnection().then((connected) async =>
+        connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;
     // dnd(data);
     // dnd(url);
@@ -66,7 +73,8 @@ class Provider extends GetConnect {
           request.fields[key] = value;
         });
         request.headers.addAll(requestHeader);
-        request.files.add(await http.MultipartFile.fromPath('profile_pic', imagePath!.path));
+        request.files.add(
+            await http.MultipartFile.fromPath('profile_pic', imagePath!.path));
       }
 
       var httpResponse = await request.send();
@@ -74,14 +82,16 @@ class Provider extends GetConnect {
 
       return processResponse(response);
     } catch (e, t) {
-     // dnd('$e Trace: $t');
+      // dnd('$e Trace: $t');
       Preloader.hide();
-    //  dnd(e);
+      //  dnd(e);
     }
   }
 
-  Future postFiles(url, List<Uint8List> imagePaths, {Map<String, dynamic>? data}) async {
-    await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
+  Future postFiles(url, List<Uint8List> imagePaths,
+      {Map<String, dynamic>? data}) async {
+    await Connectivity().checkConnection().then((connected) async =>
+        connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;
     // dnd(data);
     // dnd(url);
@@ -94,10 +104,13 @@ class Provider extends GetConnect {
       }
       request.headers.addAll(requestHeader);
       for (var imagePath in imagePaths) {
-        request.files.add(http.MultipartFile.fromBytes('images[]', imagePath, filename: 'profileImage.jpg'));
+        request.files.add(http.MultipartFile.fromBytes('images[]', imagePath,
+            filename: 'profileImage.jpg'));
       }
       var httpResponse = await request.send();
-      var response = await http.Response.fromStream(httpResponse).timeout(timeOutDuration2, onTimeout: () => http.Response('Request time out', 408));
+      var response = await http.Response.fromStream(httpResponse).timeout(
+          timeOutDuration2,
+          onTimeout: () => http.Response('Request time out', 408));
       return processResponse(response);
     } catch (e, t) {
       dnd('$e Trace: $t');
@@ -106,8 +119,10 @@ class Provider extends GetConnect {
     }
   }
 
-  Future postFile(url, List<Uint8List> imagePaths, {Map<String, dynamic>? data}) async {
-    await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
+  Future postFile(url, List<Uint8List> imagePaths,
+      {Map<String, dynamic>? data}) async {
+    await Connectivity().checkConnection().then((connected) async =>
+        connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;
     // dnd(data);
     // dnd(url);
@@ -121,26 +136,30 @@ class Provider extends GetConnect {
       request.headers.addAll(requestHeader);
 
       for (var imagePath in imagePaths) {
-        request.files.add(http.MultipartFile.fromBytes('images', imagePath, filename: 'image.jpg'));
+        request.files.add(http.MultipartFile.fromBytes('images', imagePath,
+            filename: 'image.jpg'));
       }
 
       var httpResponse = await request.send();
-      var response = await http.Response.fromStream(httpResponse).timeout(timeOutDuration2, onTimeout: () => http.Response('Request time out', 408));
+      var response = await http.Response.fromStream(httpResponse).timeout(
+          timeOutDuration2,
+          onTimeout: () => http.Response('Request time out', 408));
       return processResponse(response);
     } catch (e, t) {
-     // dnd('$e Trace: $t');
+      // dnd('$e Trace: $t');
       Preloader.hide();
-    //  dnd(e);
+      //  dnd(e);
     }
   }
 
   processResponse(http.Response response) {
-   // dnd(response.body);
+    // dnd(response.body);
     try {
       if (response.statusCode == 200) {
         // print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // print(response.body);
-        ApiResponse apiResponse = ApiResponse.fromJson(jsonDecode(response.body));
+        ApiResponse apiResponse =
+            ApiResponse.fromJson(jsonDecode(response.body));
         if (!apiResponse.status) {
           try {
             if (apiResponse.causes.isNotEmpty) {
@@ -154,14 +173,11 @@ class Provider extends GetConnect {
               MSG.errorSnackBar(apiResponse.message.toString());
             }
           } catch (e, t) {
-           // dnd('$e Trace: $t');
+            // dnd('$e Trace: $t');
             Preloader.hide();
             MSG.errorSnackBar(apiResponse.message.toString());
 
-
-
-
-           // dnd(e);
+            // dnd(e);
           }
         } else {
           return apiResponse.data ?? true;
@@ -175,9 +191,9 @@ class Provider extends GetConnect {
       }
     } catch (e, t) {
       Preloader.hide();
-     // dnd('$e Trace: $t');
+      // dnd('$e Trace: $t');
       // MSG.errorSnackBar('Connection error, try again');
-     // dnd(e);
+      // dnd(e);
       return null;
     }
     return null;

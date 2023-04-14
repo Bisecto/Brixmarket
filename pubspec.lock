@@ -624,7 +624,7 @@ packages:
       name: graphic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.7"
+    version: "2.0.3"
   group_radio_button:
     dependency: "direct main"
     description:

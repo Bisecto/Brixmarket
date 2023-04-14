@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/instance.dart';
+import '../../../core/preloader.dart';
 import '../../../models/insight_model.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/appbar_menus.dart';
@@ -43,8 +44,13 @@ class _StatisticPageState extends State<StatisticPage> {
       body: FutureBuilder(
           future: cPropCtrl.getInsight(),
           builder: (context, AsyncSnapshot snap) {
+            if (snap.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child:
+                      SizedBox(height: 48, child: Preloader.loadingWidget()));
+            }
             Insight? insight = snap.data;
-            dnd(insight.toString() + '------------------ 0');
+
             return ListView(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -153,9 +159,10 @@ class _StatisticPageState extends State<StatisticPage> {
                             SizedBox(
                               height: 300,
                               width: double.infinity,
-                              child: insight!.viewsByDay == null
+                              child: insight?.data?.viewsByDay4Month == null
                                   ? const SizedBox.shrink()
-                                  : ViewStatGraph(views: insight.viewsByDay!),
+                                  : ViewStatGraph(
+                                      views: insight?.data?.viewsByDay4Month),
                             ),
                           ],
                         ),
@@ -196,9 +203,10 @@ class _StatisticPageState extends State<StatisticPage> {
                             SizedBox(
                               height: 300,
                               width: double.infinity,
-                              child: insight.viewsByDay == null
+                              child: insight?.data?.savesByDay4Month == null
                                   ? const SizedBox.shrink()
-                                  : ViewStatGraph(views: insight.viewsByDay!),
+                                  : ViewStatGraph(
+                                      views: insight?.data?.savesByDay4Month),
                             ),
                           ],
                         ),
@@ -210,52 +218,6 @@ class _StatisticPageState extends State<StatisticPage> {
               ],
             );
           }),
-    );
-  }
-
-  graphSummary(String durationText,
-      {required int? count, required int? change}) {
-    return SizedBox(
-      width: 70,
-      child: Column(
-        children: [
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 12,
-                    width: 12,
-                    decoration: BoxDecoration(
-                      color: (change ?? 0) > 0
-                          ? const Color.fromARGB(255, 42, 106, 44)
-                          : Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomText(
-                    text: durationText,
-                    color: Colors.blueGrey,
-                    weight: FontWeight.w500,
-                    size: 14,
-                  ),
-                  const SizedBox(height: 10),
-                  CustomText(
-                    text: '${count ?? '0'}',
-                    color: Colors.black,
-                    weight: FontWeight.bold,
-                    size: 14,
-                  ),
-                ],
-              ),
-            ),
-          ]),
-        ],
-      ),
     );
   }
 
@@ -285,8 +247,8 @@ class _StatisticPageState extends State<StatisticPage> {
               child: CustomText(
                 text: value,
                 color: Colors.white,
-                weight: FontWeight.w700,
-                size: 16,
+                weight: FontWeight.w400,
+                size: 18,
               ),
             ),
           ),

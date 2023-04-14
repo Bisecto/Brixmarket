@@ -16,6 +16,7 @@ class FormInput extends StatelessWidget {
   final String hint;
   final String? value;
   final TextInputType inputType;
+  final List<TextInputFormatter>? textInputFormatter;
   final int maxLines;
   final double width;
   final double height;
@@ -51,6 +52,7 @@ class FormInput extends StatelessWidget {
     this.error,
     this.validate,
     this.borderColor,
+    this.textInputFormatter,
   }) : super(key: key);
 
   @override
@@ -99,10 +101,7 @@ class FormInput extends StatelessWidget {
                       maxLines: maxLines,
                       enabled: isEnabled,
                       focusNode: focusNode,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                            RegExp("[0-9a-zA-Z]")),
-                      ],
+                      inputFormatters: textInputFormatter,
                       style: TextStyle(color: txColor ?? Colors.black87),
                       decoration: InputDecoration(
                         border: InputBorder.none,
