@@ -35,7 +35,8 @@ class CustomText extends StatelessWidget {
       softWrap: true,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        decoration: (underline) ? TextDecoration.underline : TextDecoration.none,
+        decoration:
+            (underline) ? TextDecoration.underline : TextDecoration.none,
         letterSpacing: spacing!,
         fontSize: size ?? 16,
         color: color ?? Colors.black,
@@ -46,11 +47,16 @@ class CustomText extends StatelessWidget {
 }
 
 class TextStyles {
-  static textHeadings({required String textValue, double textSize = 18, Color? textColor}) {
+  static textHeadings(
+      {required String textValue, double textSize = 18, Color? textColor}) {
     return Text(
       textValue,
       textDirection: TextDirection.ltr,
-      style: TextStyle(fontStyle: FontStyle.normal, color: textColor, fontSize: textSize, fontWeight: FontWeight.w600),
+      style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: textColor,
+          fontSize: textSize,
+          fontWeight: FontWeight.w600),
       textAlign: TextAlign.center,
     );
   }
@@ -64,7 +70,11 @@ class TextStyles {
     return Text(
       textValue,
       textDirection: TextDirection.ltr,
-      style: TextStyle(fontStyle: FontStyle.normal, color: textColor, fontSize: textSize, fontWeight: FontWeight.bold),
+      style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: textColor,
+          fontSize: textSize,
+          fontWeight: FontWeight.bold),
       textAlign: (centerText) ? TextAlign.center : TextAlign.start,
     );
   }
@@ -80,7 +90,12 @@ class TextStyles {
       textValue,
       textDirection: TextDirection.ltr,
       textAlign: (centerText) ? TextAlign.center : TextAlign.start,
-      style: TextStyle(fontStyle: FontStyle.normal, color: textColor, fontSize: textSize, fontWeight: FontWeight.w400, height: lineSpacing),
+      style: TextStyle(
+          fontStyle: FontStyle.normal,
+          color: textColor,
+          fontSize: textSize,
+          fontWeight: FontWeight.w400,
+          height: lineSpacing),
     );
   }
 
@@ -104,7 +119,11 @@ class TextStyles {
       text: TextSpan(children: [
         TextSpan(
           text: text1,
-          style: TextStyle(fontStyle: FontStyle.normal, color: color, fontSize: size, fontWeight: weight),
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              color: color,
+              fontSize: size,
+              fontWeight: weight),
         ),
         TextSpan(
           recognizer: TapGestureRecognizer()
@@ -112,11 +131,20 @@ class TextStyles {
               onPress1!();
             },
           text: text2,
-          style: TextStyle(decoration: decoration, fontStyle: FontStyle.normal, color: color2, fontSize: size, fontWeight: weight),
+          style: TextStyle(
+              decoration: decoration,
+              fontStyle: FontStyle.normal,
+              color: color2,
+              fontSize: size,
+              fontWeight: weight),
         ),
         TextSpan(
           text: text3,
-          style: TextStyle(fontStyle: FontStyle.normal, color: color, fontSize: size, fontWeight: weight),
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              color: color,
+              fontSize: size,
+              fontWeight: weight),
         ),
         TextSpan(
             recognizer: TapGestureRecognizer()

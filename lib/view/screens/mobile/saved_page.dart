@@ -21,7 +21,6 @@ class _SavedPagesState extends State<SavedPages> {
   List<String> propertyID = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

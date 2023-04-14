@@ -18,7 +18,7 @@ class ViewStatGraph extends StatelessWidget {
           accessor: (ViewData viewData) => viewData.views as num,
         ),
       },
-      elements: [IntervalElement(color: ColorAttr(value: Colors.red))],
+      elements: [IntervalElement(color: ColorAttr(value: Colors.blueGrey))],
       axes: [
         Defaults.horizontalAxis,
         Defaults.verticalAxis,
