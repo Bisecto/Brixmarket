@@ -114,7 +114,6 @@ class FormInput extends StatelessWidget {
                             overflow: TextOverflow.visible),
                       ),
                       onChanged: (text) {
-                        onChanged!(text);
                         if (validate != null) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             error!.value = validate!(text);

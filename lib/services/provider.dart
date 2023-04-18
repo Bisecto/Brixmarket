@@ -37,19 +37,24 @@ class Provider extends GetConnect {
     }
   }
 
-  Future<dynamic> postData(String url, Map<String, dynamic> data,
-      {String? baseUrl}) async {
+  Future<dynamic> postData(
+    String url,
+    Map<String, dynamic> data, {
+    String? baseUrl,
+    Map<String, String>? header,
+  }) async {
     //await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
     url = (baseUrl == null) ? appBaseUrl + url : baseUrl + url;
     // dnd(data);
-    // dnd(url);
+    dnd(url);
+    var head = (header == null) ? requestHeader : header;
     try {
       var response = await http
-          .post(Uri.parse(url), body: data, headers: requestHeader)
+          .post(Uri.parse(url), body: data, headers: head)
           .timeout(timeOutDuration,
               onTimeout: () => http.Response('Request time out', 408));
 
-      // dnd(response.body);
+      dnd(response.body);
 
       return processResponse(response);
     } catch (e, t) {

@@ -14,6 +14,7 @@ import '../models/property_model.dart';
 import '../models/user_model.dart';
 import '../res/strings.dart';
 import '../services/provider.dart';
+import '../utils/shared_preferences.dart';
 import '../utils/utils.dart';
 import '../view/screens/create_property/create_property_widges.dart';
 import '../view/screens/mobile/my_ads_page.dart';
@@ -65,6 +66,7 @@ class CreatePropertyCtrl extends GetxController {
 
   @override
   void onInit() {
+    authToken();
     controller = PageController(initialPage: 0);
     cPPageController = PageController(initialPage: 0);
     super.onInit();
@@ -412,14 +414,30 @@ class CreatePropertyCtrl extends GetxController {
     }
   }
 
-  Insight? insight;
+  String token = '';
+
+  authToken() async {
+    token = await SharedPref.getString('token');
+  }
+
+  Datum? insight;
   Future getInsight() async {
-    // if (insight == null) {
-    await Provider()
-        .postData("property/get-insight", {},
-            baseUrl: 'https://api.brixmarket.site/')
-        .then((value) => insight = Insight.fromJson(value));
-    // }
+    authToken();
+
+    var response = await Provider().postData("property/get-insight", {},
+        baseUrl: 'https://api.brixmarket.site/',
+        header: {'Authorization': 'Bearer $token'});
+
+    if (response != null) {
+      dnd('value');
+      dnd(response);
+      dnd('value');
+      insight = Datum.fromJson(response);
+      dnd('insight');
+      dnd(insight?.totalProperties?.toString());
+      dnd('insight');
+      return insight;
+    }
     return insight;
   }
 

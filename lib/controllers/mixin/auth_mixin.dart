@@ -7,6 +7,7 @@ import '../../models/upgrade_plans.dart';
 import '../../models/user_model.dart';
 import '../../res/strings.dart';
 import '../../services/provider.dart';
+import '../../utils/shared_preferences.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
 import '../../view/screens/mobile/sub_payment.dart';
@@ -80,7 +81,8 @@ mixin Auth {
   Future verifyOTP() async {
     Preloader.show();
 
-    var data = User.map(otp: EditCtrl.otp.text, userId: HomeController.tmpUserId);
+    var data =
+        User.map(otp: EditCtrl.otp.text, userId: HomeController.tmpUserId);
     var response = await Provider().postData("register/verify-OTP", data);
     EditCtrl.otp.text = '';
     if (response != null) {
@@ -99,18 +101,21 @@ mixin Auth {
         MSG.errorSnackBar(EditCtrl.emailErr.value);
       } else {
         Preloader.show();
-        var data = User.map(email: EditCtrl.email.text, password: EditCtrl.password.text);
+        var data = User.map(
+            email: EditCtrl.email.text, password: EditCtrl.password.text);
         var response = await Provider().postData("login", data);
 
         if (response != null) {
-          EditCtrl.disposeControllers();
+          loginNew();
+          //EditCtrl.disposeControllers();
           var userObj = User.fromJson(response);
 
           if (userObj.isVerified == false) {
             await homeCtrl.tmpLogin(userObj);
 
             Get.offAndToNamed(RouteStr.verityOtp);
-          } else if (userObj.surname == '' || userObj.surname.runtimeType == Null) {
+          } else if (userObj.surname == '' ||
+              userObj.surname.runtimeType == Null) {
             await homeCtrl.tmpLogin(userObj);
 
             Preloader.hide();
@@ -130,13 +135,45 @@ mixin Auth {
             Preloader.hide();
             MSG.snackBar('Login successful');
             if (Utils.isMobileApp) {
-            FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+              FirebaseMessaging.instance
+                  .subscribeToTopic(userObj.id.toString());
             }
             Utils.gotoHomePage();
           }
         }
 
         Preloader.hide();
+      }
+    } catch (e) {
+      Preloader.hide();
+      MSG.errorSnackBar(e.toString());
+    }
+  }
+
+  Future loginNew() async {
+    try {
+      EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
+      if (EditCtrl.emailErr.isNotEmpty) {
+        MSG.errorSnackBar(EditCtrl.emailErr.value);
+      } else {
+        var data = User.map(
+            email: EditCtrl.email.text, password: EditCtrl.password.text);
+        var response = await Provider().postData(
+          "login",
+          data,
+          baseUrl: 'https://api.brixmarket.site/',
+        );
+
+        if (response != null) {
+          MSG.snackBar('_token');
+          EditCtrl.disposeControllers();
+          var userObj = User.fromJson(response);
+
+          String _token = userObj.token!;
+          await SharedPref.putString('token', _token);
+          dnd(_token);
+          MSG.snackBar(_token);
+        }
       }
     } catch (e) {
       Preloader.hide();
@@ -172,7 +209,8 @@ mixin Auth {
         firstName: EditCtrl.firstName.text,
         phone: EditCtrl.phone.text,
       );
-      var response = await Provider().postFiles("register/user-basic", EditCtrl.image8Lists, data: data);
+      var response = await Provider()
+          .postFiles("register/user-basic", EditCtrl.image8Lists, data: data);
       if (response != null) {
         EditCtrl.disposeControllers();
         var userObj = User.fromJson(response);
@@ -182,8 +220,8 @@ mixin Auth {
           Get.offAndToNamed(RouteStr.regAgency);
         } else {
           if (Utils.isMobileApp) {
-          FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
-         }
+            FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+          }
           Utils.gotoHomePage();
         }
       }
@@ -253,7 +291,9 @@ mixin Auth {
 
     if (data.isNotEmpty) {
       Preloader.show();
-      var response = await Provider().postFiles("register/register-agency", EditCtrl.image8Lists, data: data);
+      var response = await Provider().postFiles(
+          "register/register-agency", EditCtrl.image8Lists,
+          data: data);
       if (response != null) {
         EditCtrl.disposeControllers();
         MSG.snackBar('Registration completed!!');
@@ -262,13 +302,14 @@ mixin Auth {
         Preloader.hide();
         Utils.gotoHomePage();
         if (Utils.isMobileApp) {
-        FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+          FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
         }
       }
     }
   }
 
-  Future premiumUpgrade({bool updateId = false, bool updateLocation = false}) async {
+  Future premiumUpgrade(
+      {bool updateId = false, bool updateLocation = false}) async {
     Map<String, dynamic> data = {};
     if (updateLocation) {
       if (EditCtrl.state.value.text.isEmpty) {
@@ -307,14 +348,19 @@ mixin Auth {
         );
       } else {
         Preloader.show();
-        data = User.map(idType: EditCtrl.idType.value.text, idNumber: EditCtrl.idNumber.text);
+        data = User.map(
+            idType: EditCtrl.idType.value.text,
+            idNumber: EditCtrl.idNumber.text);
       }
     }
     dynamic response;
     if (updateId && EditCtrl.image8Lists.isNotEmpty) {
-      response = await Provider().postFiles("register/user-premium-upgrade", EditCtrl.image8Lists, data: data);
+      response = await Provider().postFiles(
+          "register/user-premium-upgrade", EditCtrl.image8Lists,
+          data: data);
     } else {
-      response = await Provider().postData("register/user-premium-upgrade", data);
+      response =
+          await Provider().postData("register/user-premium-upgrade", data);
     }
     if (response != null) {
       EditCtrl.disposeControllers();
@@ -343,6 +389,7 @@ mixin Auth {
     // return paymentSuccess('reference');
     UpgradePlan plan = homeCtrl.selectedUpgradePlan!;
     var map = <String, String>{'plan': plan.id!, 'userId': user.id!};
+
     ///Had to commet this out becase its not been used currently.And it gives error to the android
     // await Payments.paystackPayment(
     //   Get.context!,
@@ -358,7 +405,8 @@ mixin Auth {
     Preloader.show();
 
     var data = User.map();
-    var response = await Provider().postData("user/verify-payment/$reference", data);
+    var response =
+        await Provider().postData("user/verify-payment/$reference", data);
     if (response != null) {
       // var userObj = User.fromJson(response);
       // await homeCtrl.loginUser(userObj);
@@ -440,7 +488,8 @@ mixin Auth {
         firstName: EditCtrl.firstName.text,
         phone: EditCtrl.phone.text,
       );
-      var response = await Provider().postFiles("user/update", EditCtrl.image8Lists, data: data);
+      var response = await Provider()
+          .postFiles("user/update", EditCtrl.image8Lists, data: data);
       if (response != null) {
         //EditCtrl.disposeControllers();
         var userObj = User.fromJson(response);
@@ -512,9 +561,12 @@ mixin Auth {
       );
       dynamic response;
       if (EditCtrl.image8Lists.isEmpty) {
-        response = await Provider().postData("user/update-agency-document", data);
+        response =
+            await Provider().postData("user/update-agency-document", data);
       } else {
-        response = await Provider().postFiles("user/update-agency-document", EditCtrl.image8Lists, data: data);
+        response = await Provider().postFiles(
+            "user/update-agency-document", EditCtrl.image8Lists,
+            data: data);
       }
       if (response != null) {
         EditCtrl.disposeControllers();

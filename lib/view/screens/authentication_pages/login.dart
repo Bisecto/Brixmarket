@@ -34,19 +34,26 @@ class LoginPage extends StatelessWidget {
               Builder(builder: (context) {
                 return Container(
                   height: Get.height,
-                  width: constraints.maxWidth >= 600 ? Get.width * 0.6 : Get.width,
+                  width:
+                      constraints.maxWidth >= 600 ? Get.width * 0.6 : Get.width,
                   color: Colors.white,
                   child: Center(
                     child: SingleChildScrollView(
                       child: Container(
-                        margin: EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05, bottom: Utils.isMobileApp ? Get.width * 0.2 : 0),
+                        margin: EdgeInsets.only(
+                            left: Get.width * 0.05,
+                            right: Get.width * 0.05,
+                            bottom: Utils.isMobileApp ? Get.width * 0.2 : 0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const [
-                                CustomText(text: Str.signIn, size: 32, weight: FontWeight.w800),
+                                CustomText(
+                                    text: Str.signIn,
+                                    size: 32,
+                                    weight: FontWeight.w800),
                                 SizedBox(height: 20),
                               ],
                             ),
@@ -83,7 +90,8 @@ class LoginPage extends StatelessWidget {
                                 SizedBox(
                                     width: 430,
                                     child: TextStyles.richTexts(
-                                      onPress1: () => Get.toNamed(RouteStr.recoverPassword),
+                                      onPress1: () =>
+                                          Get.toNamed(RouteStr.recoverPassword),
                                       size: 16,
                                       text1: Str.forgotPasswordQ,
                                       text2: ' ' + Str.reset,
@@ -93,7 +101,8 @@ class LoginPage extends StatelessWidget {
                                     width: 430,
                                     child: Center(
                                       child: TextStyles.richTexts(
-                                          onPress1: () => Get.offNamed(RouteStr.registerHome),
+                                          onPress1: () => Get.offNamed(
+                                              RouteStr.registerHome),
                                           onPress2: () {},
                                           size: 16,
                                           text1: Str.donTHaveAccountQ,

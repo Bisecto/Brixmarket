@@ -14,12 +14,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../controllers/instance.dart';
 import '../../../main.dart';
-import '../../../models/review_model.dart';
 import '../../../res/lists.dart';
-import '../../../utils/utils.dart';
 import 'dart:io' show Platform;
 
-import 'chat_details_page.dart';
 import 'chat_page.dart';
 import 'home_page.dart';
 
@@ -32,7 +29,6 @@ class MobileLandingPage extends StatefulWidget {
 
 class _MobileLandingPageState extends State<MobileLandingPage> {
   void initDynamicLinks(BuildContext context) async {
-
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
@@ -43,8 +39,10 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
+            builder: (context) => Single_Property(
+                  property_id: property_id,
+                  property_tiitle: 'Brixmarket',
+                )));
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -71,7 +69,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
       packageName = packageInfo.packageName;
       version = packageInfo.version;
       buildNumber = packageInfo.buildNumber;
-
     });
   }
 
@@ -202,8 +199,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
           setState(() {
             LatestVersion = data['version'];
             LatestBuildNumber = data['buildNumber'];
-
-
           });
           if (LatestVersion == version) {
             isAppUpdated = true;
@@ -237,8 +232,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
           setState(() {
             LatestVersion = data['version'];
             LatestBuildNumber = data['buildNumber'];
-
-
           });
           if (LatestVersion == version) {
             isAppUpdated = true;
@@ -276,8 +269,10 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
+            builder: (context) => Single_Property(
+                  property_id: property_id,
+                  property_tiitle: 'Brixmarket',
+                )));
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -292,7 +287,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //Utils.getCurrentLocation();
     if (Platform.isAndroid) {
@@ -380,7 +374,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
             notification.title,
             notification.body,
             const NotificationDetails(
-              iOS: const IOSNotificationDetails(
+              iOS: IOSNotificationDetails(
                 presentAlert: false,
                 presentSound: true,
                 //presentBadge: true
@@ -471,7 +465,7 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Colors.white,
               type: BottomNavigationBarType.fixed,
-              items:  const <BottomNavigationBarItem>[
+              items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home_outlined, size: 24), label: 'Home'),
                 BottomNavigationBarItem(
@@ -501,9 +495,12 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
                 if (index == 0) {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const MobileLandingPage()), // this mymainpage is your page to refresh
-                        (Route<dynamic> route) => false,
-                  );                }
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const MobileLandingPage()), // this mymainpage is your page to refresh
+                    (Route<dynamic> route) => false,
+                  );
+                }
                 Get.find<MobileHomeController>().bottomNavIndex.value = index;
               },
             ),

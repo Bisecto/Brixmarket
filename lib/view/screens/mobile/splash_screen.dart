@@ -8,10 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
-import '../../../config/theme/color.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/custom_text.dart';
 import 'landing_page.dart';
 import 'onboard_page.dart';
 
@@ -139,18 +137,18 @@ class _SplashScreenState extends State<SplashScreen> {
                                 'Deny',
                                 style: TextStyle(color: Colors.red),
                               ),
-                              onPressed: ()  {
-                                 //Navigator.of(context).pop();
-                               // Future.delayed(const Duration(seconds: 3), () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const OnBoardingPage(),
-                                    ),
-                                  );
-                                  //Get.offAndToNamed(RouteStr.mobileLanding);
-                               // });
+                              onPressed: () {
+                                //Navigator.of(context).pop();
+                                // Future.delayed(const Duration(seconds: 3), () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const OnBoardingPage(),
+                                  ),
+                                );
+                                //Get.offAndToNamed(RouteStr.mobileLanding);
+                                // });
                               },
                             ),
                             TextButton(
@@ -163,15 +161,15 @@ class _SplashScreenState extends State<SplashScreen> {
                                 await Utils.getCurrentLocation();
 
                                 //Future.delayed(const Duration(seconds: 3), () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const OnBoardingPage(),
-                                    ),
-                                  );
-                                  //Get.offAndToNamed(RouteStr.mobileLanding);
-                               // });
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const OnBoardingPage(),
+                                  ),
+                                );
+                                //Get.offAndToNamed(RouteStr.mobileLanding);
+                                // });
                                 // switch (heading) {
                                 //   case 'Message':
                                 //     homeCtrl.loginRequest(

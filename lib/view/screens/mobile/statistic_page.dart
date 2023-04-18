@@ -1,10 +1,11 @@
+import 'package:brixmarket/core/dialogs.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/preloader.dart';
 import '../../../models/insight_model.dart';
-import '../../../utils/utils.dart';
+
 import '../../widgets/appbar_menus.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/stat_graph.dart';
@@ -49,7 +50,11 @@ class _StatisticPageState extends State<StatisticPage> {
                   child:
                       SizedBox(height: 48, child: Preloader.loadingWidget()));
             }
-            Insight? insight = snap.data;
+
+            Datum? insight = snap.data;
+            propertyListed = snap.data?.totalProperties.toString() ?? '10';
+            totalViews = snap.data?.totalViews.toString() ?? '0';
+            totalImpressions = snap.data?.totalImpressions.toString() ?? '0';
 
             return ListView(
               shrinkWrap: true,
@@ -68,62 +73,14 @@ class _StatisticPageState extends State<StatisticPage> {
                 const SizedBox(height: 15.5),
                 const Divider(),
                 const SizedBox(height: 20.5),
-                insight == null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isStat = true;
-                              });
-                            },
-                            child: const SizedBox(
-                              height: 190,
-                              child: Material(
-                                  elevation: 3,
-                                  type: MaterialType.card,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: 'No data is captured yet',
-                                      color: Colors.blueGrey,
-                                      weight: FontWeight.bold,
-                                      size: 16,
-                                    ),
-                                  )),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const SizedBox(
-                            height: 400,
-                            child: Material(
-                                elevation: 3,
-                                type: MaterialType.card,
-                                child: Center(
-                                  child: CustomText(
-                                    text: 'No records',
-                                    color: Colors.blueGrey,
-                                    weight: FontWeight.bold,
-                                    size: 16,
-                                  ),
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // InkWell(onTap: () => cPropCtrl.sideNavIndex.value = 4, child: Image.asset('assets/images/proplan.png')),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          statSummary('Properties\n Listed', propertyListed),
-                          statSummary('Total Views\n', totalViews),
-                          statSummary('Total \nImpressions', totalImpressions),
-                        ],
-                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    statSummary('Properties\n Listed', propertyListed),
+                    statSummary('Total Views\n', totalViews),
+                    statSummary('Total \nImpressions', totalImpressions),
+                  ],
+                ),
                 const SizedBox(height: 20.5),
                 const Divider(),
                 const SizedBox(height: 20.5),
@@ -159,10 +116,17 @@ class _StatisticPageState extends State<StatisticPage> {
                             SizedBox(
                               height: 300,
                               width: double.infinity,
-                              child: insight?.data?.viewsByDay4Month == null
-                                  ? const SizedBox.shrink()
+                              child: insight?.viewsByDay4Month == null
+                                  ? const Center(
+                                      child: CustomText(
+                                        text: 'Nothing to see here yet.',
+                                        color: Colors.blueGrey,
+                                        weight: FontWeight.w400,
+                                        size: 16,
+                                      ),
+                                    )
                                   : ViewStatGraph(
-                                      views: insight?.data?.viewsByDay4Month),
+                                      views: insight?.viewsByDay4Month),
                             ),
                           ],
                         ),
@@ -203,10 +167,17 @@ class _StatisticPageState extends State<StatisticPage> {
                             SizedBox(
                               height: 300,
                               width: double.infinity,
-                              child: insight?.data?.savesByDay4Month == null
-                                  ? const SizedBox.shrink()
+                              child: insight?.savesByDay4Month == null
+                                  ? const Center(
+                                      child: CustomText(
+                                        text: 'Nothing to see here yet.',
+                                        color: Colors.blueGrey,
+                                        weight: FontWeight.w400,
+                                        size: 16,
+                                      ),
+                                    )
                                   : ViewStatGraph(
-                                      views: insight?.data?.savesByDay4Month),
+                                      views: insight?.savesByDay4Month),
                             ),
                           ],
                         ),

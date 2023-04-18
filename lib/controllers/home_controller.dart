@@ -61,7 +61,10 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     if (search.isEmpty) {
       results = [];
     } else {
-      results = properties.where((element) => element.toString().toLowerCase().contains(search.toLowerCase())).toList();
+      results = properties
+          .where((element) =>
+              element.toString().toLowerCase().contains(search.toLowerCase()))
+          .toList();
     }
 
     mainData.value = results;
@@ -94,8 +97,8 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
         var response = (await Provider().postData("login/user", User.map()));
         if (response != null) {
           loginUser(User.fromJson(response));
-          if(Utils.isMobileApp){
-          FirebaseMessaging.instance.subscribeToTopic(_userId);
+          if (Utils.isMobileApp) {
+            FirebaseMessaging.instance.subscribeToTopic(_userId);
           }
         }
       }
@@ -116,11 +119,12 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       tmpUserId = await SharedPref.getString('tmpUserId');
 
       if (tmpUserId.isNotEmpty && tmpUser.value.id == null) {
-        var response = (await Provider().postData("login/user", User.map(userId: tmpUserId)));
+        var response = (await Provider()
+            .postData("login/user", User.map(userId: tmpUserId)));
         if (response != null) {
           tmpLogin(User.fromJson(response));
-          if(Utils.isMobileApp){
-          FirebaseMessaging.instance.subscribeToTopic(_userId);
+          if (Utils.isMobileApp) {
+            FirebaseMessaging.instance.subscribeToTopic(_userId);
           }
         }
       }
@@ -150,7 +154,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       Get.toNamed(RouteStr.webHome);
     }
     homeCtrl.animateHomeHeroImage();
-   // propCtrl.fetchFeaturedProperties();
+    // propCtrl.fetchFeaturedProperties();
     //propCtrl.getHomeproperty();
     await propCtrl.getSavedProperties();
     await propCtrl.getAmenitiesWeb();
@@ -216,7 +220,8 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     if (upgradePlans.isEmpty) {
       var response = await Provider().getData("user/fetch-plans");
       if (response != null) {
-        upgradePlans = (response as List).map((e) => UpgradePlan.fromJson(e)).toList();
+        upgradePlans =
+            (response as List).map((e) => UpgradePlan.fromJson(e)).toList();
       }
     }
     return upgradePlans;
@@ -226,7 +231,6 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     await Share.share("https://brixmarket.com/", subject: 'Brixmarket');
     // MSG.snackBar("Successful", title: "Share");
   }
-
 
   Future sendFeedback() async {
     EditCtrl.nameErr.value = Val.name(EditCtrl.name.text);
@@ -269,9 +273,11 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   Future subscribeToNewsLetter() async {
-    EditCtrl.newsLetterEmailErr.value = Val.email(EditCtrl.newsLetterEmail.text);
+    EditCtrl.newsLetterEmailErr.value =
+        Val.email(EditCtrl.newsLetterEmail.text);
     if (EditCtrl.newsLetterEmailErr.value.isNotEmpty) {
-      MSG.errorSnackBar('Invalid input or email has already been saved',
+      MSG.errorSnackBar(
+        'Invalid input or email has already been saved',
       );
     } else {
       Preloader.show();
@@ -279,7 +285,8 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       var data = User.map(
         email: EditCtrl.newsLetterEmail.text,
       );
-      var response = await Provider().postData("user/subscribe-to-news-letter", data);
+      var response =
+          await Provider().postData("user/subscribe-to-news-letter", data);
       if (response != null) {
         EditCtrl.newsLetterEmail.text = '';
         Preloader.hide();
@@ -338,9 +345,11 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
 
   List<AppNotification> notifications = [];
   Future getNotifications() async {
-    var response = await Provider().postData("user/get-notifications", User.map());
+    var response =
+        await Provider().postData("user/get-notifications", User.map());
     if (response != null) {
-      notifications = (response as List).map((e) => AppNotification.fromJson(e)).toList();
+      notifications =
+          (response as List).map((e) => AppNotification.fromJson(e)).toList();
       Provider().postData("user/mark-notifications-as-read", User.map());
     }
 
@@ -350,10 +359,10 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
 
   var newNotifications = 0.obs;
   Future getNewNotifications() async {
-    var response = await Provider().postData("user/get-new-notifications", User.map());
+    var response =
+        await Provider().postData("user/get-new-notifications", User.map());
     if (response != null) {
       return response.isEmpty ? null : newNotifications.value = response.length;
-
     }
     return null;
   }

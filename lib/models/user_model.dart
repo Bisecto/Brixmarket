@@ -38,6 +38,7 @@ class User {
   Agency? agency;
   Setting? settings;
   List<String>? savedProperties;
+  String? token;
 
   set savedProperty(List<String> value) {
     savedProperties = value;
@@ -69,6 +70,7 @@ class User {
     this.isPremium,
     this.isBlocked,
     this.otp,
+    this.token,
     this.id,
     this.createdAt,
     this.updatedAt,
@@ -104,13 +106,23 @@ class User {
     isPremium = json['is_premium'].toString() == '1';
     isBlocked = json['is_blocked'].toString() == '1';
     otp = json['otp'];
+    token = json['token'];
     id = json['id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    premiumDetails = json['premium_details'] != null ? PremiumDetail.fromJson(json['premium_details']) : PremiumDetail();
-    agency = json['agency'] != null ? Agency.fromJson(json['agency']) : Agency();
-    settings = json['settings'] != null ? Setting.fromJson(json['settings']) : Setting();
-    savedProperties = json['saved_properties'] != null ? (json['saved_properties'] as List).map((e) => e['property'] as String).toList() : [];
+    premiumDetails = json['premium_details'] != null
+        ? PremiumDetail.fromJson(json['premium_details'])
+        : PremiumDetail();
+    agency =
+        json['agency'] != null ? Agency.fromJson(json['agency']) : Agency();
+    settings = json['settings'] != null
+        ? Setting.fromJson(json['settings'])
+        : Setting();
+    savedProperties = json['saved_properties'] != null
+        ? (json['saved_properties'] as List)
+            .map((e) => e['property'] as String)
+            .toList()
+        : [];
   }
 
   static Map<String, dynamic> map({
@@ -156,10 +168,14 @@ class User {
     subNewsletter,
     subject,
     message,
+    token,
   }) {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (otp != null) data['otp'] = otp;
-    if (userId != null || HomeController.userId.isNotEmpty) data['userId'] = userId ?? HomeController.userId;
+    if (token != null) data['token'] = token;
+    if (userId != null || HomeController.userId.isNotEmpty) {
+      data['userId'] = userId ?? HomeController.userId;
+    }
 
     if (isPremium != null) data['is_premium'] = isPremium;
     if (isUser != null) data['is_user'] = isUser;
@@ -207,7 +223,8 @@ class User {
     return data;
   }
 
-  static Map<String, dynamic> authMap({emailAddress, password, isPremium, isAgent, isUser}) {
+  static Map<String, dynamic> authMap(
+      {emailAddress, password, isPremium, isAgent, isUser}) {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['email_address'] = emailAddress;
     data['password'] = password;
