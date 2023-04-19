@@ -668,9 +668,9 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                           return properties.isEmpty
                               ? SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.6,
+                                      MediaQuery.of(context).size.height * 0.8,
+                                  width: MediaQuery.of(context).size.width,
                                   child: Column(
-                                    mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -685,7 +685,8 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                                       ),
                                       const CustomText(
                                           color: Pallet.secondaryColor,
-                                          text: 'Nothing for this location',
+                                          text:
+                                              'Nothing for this property name',
                                           weight: FontWeight.normal,
                                           size: 16),
                                     ],
@@ -738,6 +739,9 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                                               property: property);
                                         }
                                       }),
+                                  const SizedBox(
+                                    height: 70,
+                                  ),
                                 ]);
                         }
                       })),

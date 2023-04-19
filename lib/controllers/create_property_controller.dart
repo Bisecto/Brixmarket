@@ -429,13 +429,8 @@ class CreatePropertyCtrl extends GetxController {
         header: {'Authorization': 'Bearer $token'});
 
     if (response != null) {
-      dnd('value');
-      dnd(response);
-      dnd('value');
       insight = Datum.fromJson(response);
-      dnd('insight');
-      dnd(insight?.totalProperties?.toString());
-      dnd('insight');
+
       return insight;
     }
     return insight;
@@ -563,7 +558,7 @@ class CreatePropertyCtrl extends GetxController {
     var map = {'userId': user.id, 'property_state': 'Suspended'};
     var response = await Provider()
         .postData("property/get-user-properties?page=$page", map);
-    print(response);
+
     if (response != null) {
       mySuspendedProperties.value = [];
 

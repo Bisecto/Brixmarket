@@ -55,19 +55,19 @@ class _Single_PropertyState extends State<Single_Property> {
               singleProperty.Property property = snapdata.data!.data.property;
               singleProperty.User user = snapdata.data!.data.property.user;
               return SinglePropertyDetailPage(
-                feature: property.features,
-                images: property.media,
-                price: property.price,
-                review: property.reviews,
-                property: property,
-                location: property.location,
-                landMark: '',
-                amenities: property.amenities,
-                title: property.title,
-                property_id: property.id,
-                contact: user.phoneNumber,
-                userImage: user.image,
-              );
+                  feature: property.features,
+                  images: property.media,
+                  price: property.price,
+                  review: property.reviews,
+                  property: property,
+                  location: property.location,
+                  landMark: '',
+                  amenities: property.amenities,
+                  title: property.title,
+                  property_id: property.id,
+                  contact: user.phoneNumber,
+                  userImage: user.image,
+                  user: user.id);
             }
           }),
     );

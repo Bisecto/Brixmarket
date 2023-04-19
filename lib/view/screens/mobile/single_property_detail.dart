@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
 import '../../../controllers/instance.dart';
+import '../../../controllers/property_controller.dart';
 import '../../../core/app.dart';
 import '../../../redirect/dynamic_link.dart';
 import '../../../res/strings.dart';
@@ -30,6 +31,7 @@ class SinglePropertyDetailPage extends StatefulWidget {
   String property_id;
   Property property;
   String contact;
+  String user;
   String landMark;
   List<Amenity> amenities;
   List<Feature> feature;
@@ -47,6 +49,7 @@ class SinglePropertyDetailPage extends StatefulWidget {
       required this.location,
       required this.price,
       required this.feature,
+      required this.user,
       required this.landMark,
       required this.review,
       required this.userImage})
@@ -67,6 +70,8 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
 
   @override
   void initState() {
+    PropCtrl.markPropertyAsViewed(widget.property_id, widget.user);
+
     EditCtrl.message.clear();
     super.initState();
     if (widget.review.isNotEmpty) {

@@ -106,8 +106,10 @@ mixin Auth {
         var response = await Provider().postData("login", data);
 
         if (response != null) {
-          loginNew();
-          //EditCtrl.disposeControllers();
+          await SharedPref.putString('user_email', EditCtrl.email.text);
+          await SharedPref.putString('user_password', EditCtrl.password.text);
+          loginNew(
+              email: EditCtrl.email.text, password: EditCtrl.password.text);
           var userObj = User.fromJson(response);
 
           if (userObj.isVerified == false) {
@@ -150,30 +152,24 @@ mixin Auth {
     }
   }
 
-  Future loginNew() async {
+  Future loginNew({required String email, required String password}) async {
     try {
-      EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
-      if (EditCtrl.emailErr.isNotEmpty) {
-        MSG.errorSnackBar(EditCtrl.emailErr.value);
-      } else {
-        var data = User.map(
-            email: EditCtrl.email.text, password: EditCtrl.password.text);
-        var response = await Provider().postData(
-          "login",
-          data,
-          baseUrl: 'https://api.brixmarket.site/',
-        );
+      var data = User.map(email: email, password: password);
+      var response = await Provider().postData(
+        "login",
+        data,
+        baseUrl: 'https://api.brixmarket.site/',
+      );
 
-        if (response != null) {
-          MSG.snackBar('_token');
-          EditCtrl.disposeControllers();
-          var userObj = User.fromJson(response);
+      if (response != null) {
+        // MSG.snackBar('_token');
+        EditCtrl.disposeControllers();
+        var userObj = User.fromJson(response);
 
-          String _token = userObj.token!;
-          await SharedPref.putString('token', _token);
-          dnd(_token);
-          MSG.snackBar(_token);
-        }
+        String _token = userObj.token!;
+        await SharedPref.putString('token', _token);
+        //dnd(_token);
+        //  MSG.snackBar(_token);
       }
     } catch (e) {
       Preloader.hide();

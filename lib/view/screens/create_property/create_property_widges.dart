@@ -586,7 +586,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
                     label: 'Title',
                     hint: 'Enter title of the List',
                     textInputFormatter: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z@]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z ]")),
                     ],
                   ),
                 ),
@@ -614,7 +614,7 @@ class _CreatePropertyWidgetState extends State<CreatePropertyWidget> {
             label: 'Property Description',
             hint: 'Enter Description',
             textInputFormatter: [
-              FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z@]")),
+              FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z ]")),
             ],
           ),
           const CustomText(

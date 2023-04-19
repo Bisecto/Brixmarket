@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/home_controller.dart';
+import '../../../controllers/instance.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
 import 'landing_page.dart';

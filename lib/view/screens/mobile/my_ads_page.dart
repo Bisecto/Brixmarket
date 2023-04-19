@@ -668,7 +668,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                                       LimitedBox(
                                         maxWidth: Get.width * 0.6,
                                         child: Text(
-                                            '${property.location?.address ?? property.description}, ${property.location?.city}, ${property.location?.state}',
+                                            '${property.location?.address ?? property.description}, ${property.location?.city ?? ''}, ${property.location?.state ?? ''}',
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.normal,

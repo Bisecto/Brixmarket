@@ -6,7 +6,7 @@ class SharedPref {
   }
 
   static Future<String> getString(String key) async {
-    return await getValue(key: key, dataType: 'string');
+    return await getValue(key: key, dataType: 'string') ?? '';
   }
 
   static Future<bool> hasString(String key) async {
@@ -62,7 +62,8 @@ class SharedPref {
   }
 
 //Methods to retrieve data from sharedPrefs
-  static Future<dynamic> getValue({required String key, required String dataType}) async {
+  static Future<dynamic> getValue(
+      {required String key, required String dataType}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     switch (dataType) {
       case 'string':

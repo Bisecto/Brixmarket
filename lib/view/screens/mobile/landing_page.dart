@@ -2,6 +2,7 @@ import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/controllers/mobile_app_controllers/homepage_controller.dart';
 import 'package:brixmarket/res/strings.dart';
+import 'package:brixmarket/utils/utils.dart';
 import 'package:brixmarket/view/screens/mobile/single_property_page.dart';
 import 'package:brixmarket/view/screens/mobile/updateApp.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +18,7 @@ import '../../../main.dart';
 import '../../../res/lists.dart';
 import 'dart:io' show Platform;
 
+import '../../../utils/shared_preferences.dart';
 import 'chat_page.dart';
 import 'home_page.dart';
 
@@ -285,9 +287,18 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
     }
   }
 
+  String userMail = '';
+  String userPassword = '';
+
+  userDetails() async {
+    userMail = await SharedPref.getString('user_email');
+    userPassword = await SharedPref.getString('user_password');
+  }
+
   @override
   void initState() {
     super.initState();
+    userDetails();
     //Utils.getCurrentLocation();
     if (Platform.isAndroid) {
       initDynamicLinks(context);
@@ -455,6 +466,11 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (userMail.isNotEmpty &&
+        userPassword.isNotEmpty &&
+        HomeController.isLogin.value) {
+      homeCtrl.loginNew(email: userMail, password: userPassword);
+    }
     if (isAppUpdated) {
       return Obx(() => Scaffold(
             backgroundColor: Pallet.homeBackground,

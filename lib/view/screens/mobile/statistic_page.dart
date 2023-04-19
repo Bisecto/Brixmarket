@@ -52,7 +52,7 @@ class _StatisticPageState extends State<StatisticPage> {
             }
 
             Datum? insight = snap.data;
-            propertyListed = snap.data?.totalProperties.toString() ?? '10';
+            propertyListed = snap.data?.totalProperties.toString() ?? '0';
             totalViews = snap.data?.totalViews.toString() ?? '0';
             totalImpressions = snap.data?.totalImpressions.toString() ?? '0';
 
