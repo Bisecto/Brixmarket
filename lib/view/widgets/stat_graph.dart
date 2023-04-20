@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ViewStatGraph extends StatelessWidget {
-  const ViewStatGraph({Key? key, required this.views}) : super(key: key);
+  const ViewStatGraph({
+    Key? key,
+    required this.views,
+    required this.title,
+  }) : super(key: key);
   final dynamic views;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: SfCartesianChart(
           primaryXAxis: CategoryAxis(),
-          title: ChartTitle(text: 'Monthly views analysis'),
+          title: ChartTitle(text: title),
           legend: Legend(isVisible: false),
-          borderWidth: 2,
+          borderWidth: 0,
           series: <LineSeries<ViewsByDay4Month, String>>[
             LineSeries<ViewsByDay4Month, String>(
                 dataSource: views,

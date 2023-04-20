@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:brixmarket/res/lists.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -9,6 +12,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../config/theme/color.dart';
 import '../../../controllers/edit_controller.dart';
+import '../../../controllers/home_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../controllers/property_controller.dart';
 import '../../../core/app.dart';
@@ -22,6 +26,7 @@ import '../../widgets/form_inputs.dart';
 import '../../widgets/save_property_icon.dart';
 import 'explore_page.dart';
 import 'package:brixmarket/models/single_property_model.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class SinglePropertyDetailPage extends StatefulWidget {
   List<Media> images;
@@ -68,10 +73,12 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
   double total_rating = 0;
   double average_rating = 0;
 
+  String deviceId = 'unknown';
+
+  var deviceData = <String, dynamic>{};
+
   @override
   void initState() {
-    PropCtrl.markPropertyAsViewed(widget.property_id, widget.user);
-
     EditCtrl.message.clear();
     super.initState();
     if (widget.review.isNotEmpty) {
@@ -85,6 +92,21 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
         average_rating = total_rating / widget.review.length;
       });
     }
+    Utils.initPlatformState().then((value) => {
+          deviceData = value,
+          if (Platform.isAndroid)
+            {deviceId = deviceData['androidId'] ?? 'unknown'}
+          else if (Platform.isIOS)
+            {deviceId = deviceData['identifierForVendor'] ?? 'unknown'}
+        });
+
+    Future.delayed(const Duration(seconds: 1), () {
+      if (HomeController.isLogin.value) {
+        PropCtrl.markPropertyAsViewed(widget.property_id, widget.user);
+      } else if (deviceId != 'unknown') {
+        PropCtrl.markPropertyAsViewed(widget.property_id, deviceId);
+      }
+    });
   }
 
   _onPageChanged(int index) {
@@ -967,7 +989,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                           text: 'Request Tour',
                           width: 140,
                           height: 48,
-                          size: 16,
+                          size: 14,
                           radius: 4,
                           top: 12,
                           txtColor: Colors.white,

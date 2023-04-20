@@ -192,15 +192,14 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   static markPropertyAsViewed(String propertyId, userId) async {
+    //MSG.snackBar('calling');
     var map = {'propertyId': propertyId, 'userId': userId};
     var response = await Provider().postData(
       "property/view-property",
       map,
       baseUrl: 'https://api.brixmarket.site/',
     );
-    if (response != null && response.isNotEmpty) {
-      MSG.snackBar(response['message']);
-    }
+    if (response != null && response.isNotEmpty) {}
   }
 
   saveHomeProperty(home.Latest property) async {

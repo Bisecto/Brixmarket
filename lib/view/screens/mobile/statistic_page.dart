@@ -1,4 +1,4 @@
-import 'package:brixmarket/core/dialogs.dart';
+import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/theme/color.dart';
@@ -6,6 +6,7 @@ import '../../../controllers/instance.dart';
 import '../../../core/preloader.dart';
 import '../../../models/insight_model.dart';
 
+import '../../temp.dart';
 import '../../widgets/appbar_menus.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/stat_graph.dart';
@@ -50,11 +51,14 @@ class _StatisticPageState extends State<StatisticPage> {
                   child:
                       SizedBox(height: 48, child: Preloader.loadingWidget()));
             }
-
             Datum? insight = snap.data;
-            propertyListed = snap.data?.totalProperties.toString() ?? '0';
-            totalViews = snap.data?.totalViews.toString() ?? '0';
-            totalImpressions = snap.data?.totalImpressions.toString() ?? '0';
+            if (!HomeController.isLogin.value) {
+              insight = null;
+            }
+
+            propertyListed = insight?.totalProperties.toString() ?? '0';
+            totalViews = insight?.totalViews.toString() ?? '0';
+            totalImpressions = insight?.totalImpressions.toString() ?? '0';
 
             return ListView(
               shrinkWrap: true,
@@ -86,7 +90,7 @@ class _StatisticPageState extends State<StatisticPage> {
                 const SizedBox(height: 20.5),
                 const Center(
                   child: CustomText(
-                    text: 'Property views (this month)',
+                    text: 'Property Views (this month)',
                     color: Colors.black,
                     weight: FontWeight.w700,
                     size: 16,
@@ -126,7 +130,9 @@ class _StatisticPageState extends State<StatisticPage> {
                                       ),
                                     )
                                   : ViewStatGraph(
-                                      views: insight?.viewsByDay4Month),
+                                      views: insight?.viewsByDay4Month,
+                                      title: 'Monthly Views Analysis',
+                                    ),
                             ),
                           ],
                         ),
@@ -177,7 +183,9 @@ class _StatisticPageState extends State<StatisticPage> {
                                       ),
                                     )
                                   : ViewStatGraph(
-                                      views: insight?.savesByDay4Month),
+                                      views: insight?.savesByDay4Month,
+                                      title: 'Monthly Saved Analysis',
+                                    ),
                             ),
                           ],
                         ),
