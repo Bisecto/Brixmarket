@@ -65,13 +65,19 @@ class _StatisticPageState extends State<StatisticPage> {
               padding: const EdgeInsets.symmetric(horizontal: 14),
               children: [
                 const SizedBox(height: 30),
-                Center(
-                  child: CustomText(
-                    color: Pallet.secondaryColor,
-                    size: 18,
-                    text: 'your insights'.toUpperCase(),
-                    maxLines: 2,
-                    weight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => MyChart()));
+                  },
+                  child: Center(
+                    child: CustomText(
+                      color: Pallet.secondaryColor,
+                      size: 18,
+                      text: 'your insights'.toUpperCase(),
+                      maxLines: 2,
+                      weight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15.5),
