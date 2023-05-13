@@ -67,8 +67,10 @@ class _StatisticPageState extends State<StatisticPage> {
                 const SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => MyChart()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => MyChart(
+                    //           views: insight?.viewsByDay4Month,
+                    //         )));
                   },
                   child: Center(
                     child: CustomText(
@@ -109,44 +111,30 @@ class _StatisticPageState extends State<StatisticPage> {
                   height: 400,
                   width: double.infinity,
                   child: Material(
-                      elevation: 2,
+                      elevation: 1,
                       type: MaterialType.card,
-                      child: Container(
-                        height: 270,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 30),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color.fromARGB(255, 230, 228, 228),
-                                width: 0.4)),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                              child: insight?.viewsByDay4Month == null
-                                  ? const Center(
-                                      child: CustomText(
-                                        text: 'Nothing to see here yet.',
-                                        color: Colors.blueGrey,
-                                        weight: FontWeight.w400,
-                                        size: 16,
-                                      ),
-                                    )
-                                  : ViewStatGraph(
-                                      views: insight?.viewsByDay4Month,
-                                      title: 'Monthly Views Analysis',
-                                    ),
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          insight?.viewsByDay4Month == null
+                              ? const Center(
+                                  child: CustomText(
+                                    text: 'Nothing to see here yet.',
+                                    color: Colors.blueGrey,
+                                    weight: FontWeight.w400,
+                                    size: 16,
+                                  ),
+                                )
+                              : ViewStatGraph(
+                                  views: insight?.viewsByDay4Month,
+                                  title: 'Monthly Views Analysis',
+                                ),
+                        ],
                       )),
                 ),
-                const SizedBox(height: 20.5),
+                const SizedBox(height: 30.5),
                 const Divider(),
-                const SizedBox(height: 20.5),
+                const SizedBox(height: 30.5),
                 const Center(
                   child: CustomText(
                     text: 'Saves (this month)',
@@ -162,40 +150,27 @@ class _StatisticPageState extends State<StatisticPage> {
                   height: 400,
                   width: double.infinity,
                   child: Material(
-                      elevation: 2,
-                      type: MaterialType.card,
-                      child: Container(
-                        height: 270,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 30),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color.fromARGB(255, 230, 228, 228),
-                                width: 0.4)),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                              child: insight?.savesByDay4Month == null
-                                  ? const Center(
-                                      child: CustomText(
-                                        text: 'Nothing to see here yet.',
-                                        color: Colors.blueGrey,
-                                        weight: FontWeight.w400,
-                                        size: 16,
-                                      ),
-                                    )
-                                  : ViewStatGraph(
-                                      views: insight?.savesByDay4Month,
-                                      title: 'Monthly Saved Analysis',
-                                    ),
-                            ),
-                          ],
-                        ),
-                      )),
+                    elevation: 1,
+                    type: MaterialType.card,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        insight?.savesByDay4Month == null
+                            ? const Center(
+                                child: CustomText(
+                                  text: 'Nothing to see here yet.',
+                                  color: Colors.blueGrey,
+                                  weight: FontWeight.w400,
+                                  size: 16,
+                                ),
+                              )
+                            : ViewStatGraph(
+                                views: insight?.savesByDay4Month,
+                                title: 'Monthly Saved Analysis',
+                              ),
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

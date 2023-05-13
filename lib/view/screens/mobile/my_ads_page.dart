@@ -145,6 +145,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                             Expanded(
                                 child:
                                     myPropertiesWidget(cPropCtrl.myProperties)),
+                            const SizedBox(
+                              height: 60,
+                            )
                           ]);
                         }
                       }
@@ -186,6 +189,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                             Expanded(
                                 child: Obx(() => myPropertiesWidget(
                                     cPropCtrl.myPublishedProperties))),
+                            const SizedBox(
+                              height: 60,
+                            )
                           ]);
                         }
                       }
@@ -229,6 +235,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                             Expanded(
                                 child: Obx(() => myPropertiesWidget(
                                     cPropCtrl.myDraftProperties))),
+                            const SizedBox(
+                              height: 60,
+                            )
                           ]);
                         }
                       }
@@ -272,6 +281,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                             Expanded(
                                 child: Obx(() => myPropertiesWidget(
                                     cPropCtrl.mySoldProperties))),
+                            const SizedBox(
+                              height: 60,
+                            )
                           ]);
                         }
                       }
@@ -315,6 +327,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                             Expanded(
                                 child: Obx(() => myPropertiesWidget(
                                     cPropCtrl.mySuspendedProperties))),
+                            const SizedBox(
+                              height: 60,
+                            )
                           ]);
                         }
                       }

@@ -686,7 +686,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                                       const CustomText(
                                           color: Pallet.secondaryColor,
                                           text:
-                                              'Nothing for this property name',
+                                              'Nothing to see here, try another keyword',
                                           weight: FontWeight.normal,
                                           size: 16),
                                     ],
@@ -1045,7 +1045,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                                                     color:
                                                         Pallet.secondaryColor,
                                                     text:
-                                                        'Nothing for this location',
+                                                        'No properties showing in this location',
                                                     weight: FontWeight.normal,
                                                     size: 16),
                                               ],
