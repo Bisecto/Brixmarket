@@ -25,7 +25,8 @@ class Provider extends GetConnect {
     try {
       var response = await http
           .post(Uri.parse(url),
-              body: params, headers: thirdPartyRequest ? null : requestHeader)
+              body: params,
+              headers: thirdPartyRequest ?? await formDataHeader())
           .timeout(timeOutDuration,
               onTimeout: () => http.Response('Request time out', 408));
       return thirdPartyRequest ? response : processResponse(response);
@@ -44,10 +45,10 @@ class Provider extends GetConnect {
     Map<String, String>? header,
   }) async {
     //await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
-    url = (baseUrl == null) ? appBaseUrl + url : baseUrl + url;
+    url = appBaseUrl + url;
     // dnd(data);
     dnd(url);
-    var head = (header == null) ? requestHeader : header;
+    var head = header ?? await formDataHeader();
     try {
       var response = await http
           .post(Uri.parse(url), body: data, headers: head)
@@ -77,7 +78,7 @@ class Provider extends GetConnect {
         data.forEach((key, value) {
           request.fields[key] = value;
         });
-        request.headers.addAll(requestHeader);
+        request.headers.addAll(await formDataHeader());
         request.files.add(
             await http.MultipartFile.fromPath('profile_pic', imagePath!.path));
       }
@@ -107,7 +108,7 @@ class Provider extends GetConnect {
           request.fields[key] = value;
         });
       }
-      request.headers.addAll(requestHeader);
+      request.headers.addAll(await formDataHeader());
       for (var imagePath in imagePaths) {
         request.files.add(http.MultipartFile.fromBytes('images[]', imagePath,
             filename: 'profileImage.jpg'));
@@ -138,7 +139,7 @@ class Provider extends GetConnect {
           request.fields[key] = value;
         });
       }
-      request.headers.addAll(requestHeader);
+      request.headers.addAll(await formDataHeader());
 
       for (var imagePath in imagePaths) {
         request.files.add(http.MultipartFile.fromBytes('images', imagePath,

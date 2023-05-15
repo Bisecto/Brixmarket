@@ -11,10 +11,8 @@ import '../core/dialogs.dart';
 import '../core/preloader.dart';
 import '../models/insight_model.dart';
 import '../models/property_model.dart';
-import '../models/user_model.dart';
 import '../res/strings.dart';
 import '../services/provider.dart';
-import '../utils/shared_preferences.dart';
 import '../utils/utils.dart';
 import '../view/screens/create_property/create_property_widges.dart';
 import '../view/screens/mobile/my_ads_page.dart';
@@ -66,7 +64,6 @@ class CreatePropertyCtrl extends GetxController {
 
   @override
   void onInit() {
-    authToken();
     controller = PageController(initialPage: 0);
     cPPageController = PageController(initialPage: 0);
     super.onInit();
@@ -414,19 +411,18 @@ class CreatePropertyCtrl extends GetxController {
     }
   }
 
-  String token = '';
+  // String token = '';
 
-  authToken() async {
-    token = await SharedPref.getString('token');
-  }
+  // authToken() async {
+  //   token = await SharedPref.getString('token');
+  // }
 
   Datum? insight;
-  Future getInsight() async {
-    authToken();
-
-    var response = await Provider().postData("property/get-insight", {},
-        baseUrl: 'https://api.brixmarket.site/',
-        header: {'Authorization': 'Bearer $token'});
+  Future<Datum?> getInsight() async {
+    var response = await Provider().postData(
+      "property/get-insight",
+      {},
+    );
 
     if (response != null) {
       insight = Datum.fromJson(response);

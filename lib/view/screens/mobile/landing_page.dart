@@ -466,11 +466,6 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (userMail.isNotEmpty &&
-        userPassword.isNotEmpty &&
-        HomeController.isLogin.value) {
-      homeCtrl.loginNew(email: userMail, password: userPassword);
-    }
     if (isAppUpdated) {
       return Obx(() => Scaffold(
             backgroundColor: Pallet.homeBackground,

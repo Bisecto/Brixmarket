@@ -30,6 +30,7 @@ import 'package:brixmarket/models/single_property_model.dart' as single;
 class HomeController extends GetxController with Auth, Chat, ResetPassword {
   late PageController controller;
   static String _userId = '';
+  static String _token = '';
   static var isLogin = false.obs;
   var savingProperty = [].obs;
   var user = User().obs;
@@ -107,8 +108,10 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       if (userObj.id != null) {
         user.value = userObj;
         _userId = userObj.id!;
+        _token = userObj.token!;
         isLogin.value = true;
         await SharedPref.putString('userId', _userId);
+        await SharedPref.putString('token', _token);
         setUserType();
       }
     }
@@ -133,7 +136,9 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       if (userObj.id != null) {
         tmpUser.value = userObj;
         tmpUserId = userObj.id!;
+        _token = userObj.token!;
         await SharedPref.putString('tmpUserId', tmpUserId);
+        await SharedPref.putString('token', _token);
       }
     }
   }
