@@ -9,12 +9,11 @@ import '../../res/lists.dart';
 import '../../utils/utils.dart';
 import '../screens/mobile/explore_filter_page.dart';
 import 'custom_text.dart';
-import 'drop_down.dart';
 import 'form_inputs.dart';
 
 class WebHeroSearch extends StatefulWidget {
 
-  WebHeroSearch({Key? key}) : super(key: key);
+  const WebHeroSearch({Key? key}) : super(key: key);
 
   @override
   State<WebHeroSearch> createState() => _WebHeroSearchState();
@@ -28,7 +27,7 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
 
   // @override
   showOverlayFilterBox(BuildContext context) {
-    final overlay = Overlay.of(context)!;
+    final overlay = Overlay.of(context);
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
     // final offSet = renderBox.localToGlobal(Offset.zero);
@@ -116,7 +115,7 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
                     height: 48,
                     color:
                     Pallet.secondaryColor,
-                    child:  Center(
+                    child:  const Center(
                       child: CustomText(
                         color: Colors.white,
                         size: 16,
@@ -126,7 +125,7 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               const Text('Adjust the slider to select the range of price.', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
@@ -156,8 +155,8 @@ class _WebHeroSearchState extends State<WebHeroSearch> {
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                     Text('Min price ${Utils.amount(_lowerValue)}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
-                     Text('Max price ${Utils.amount(_upperValue)}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                     Text('Min price ${Utils.amount(_lowerValue)}', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                     Text('Max price ${Utils.amount(_upperValue)}', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
 
                   ],
                 ),

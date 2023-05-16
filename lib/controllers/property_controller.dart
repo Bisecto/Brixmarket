@@ -297,8 +297,12 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   Future<List<home_property.Latest>> getHomeproperty() async {
     if (homeProperty.isEmpty) {
-      var response = await Provider().getData("property/get-home-properties");
-      //print(response + '..............................................');
+
+      var response = await Provider().postData("property/get-home-properties", {});
+
+    //  print(response + '..............................................');
+    dnd('property/get-home-propertiesw030$response');
+
       if (response != null) {
         for (var e in (response['latest'] as List)) {
           homeProperty.add(
@@ -323,7 +327,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   Future<List<home_property.Latest>> getLatestproperty() async {
     if (latestProperty.isEmpty) {
-      var response = await Provider().getData("property/get-home-properties");
+      var response = await Provider().postData("property/get-home-properties", {});
       //print(response + '..............................................');
       if (response != null) {
         for (var e in (response['latest'] as List)) {
@@ -375,7 +379,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   Future<List<home_property.Latest>> getFeaturedproperty2() async {
     if (featuredProperty2.isEmpty) {
-      var response = await Provider().getData("property/get-home-properties");
+      var response = await Provider().postData("property/get-home-properties", {});
       //print(response + '..............................................');
       if (response != null) {
         for (var e in (response['latest'] as List)) {

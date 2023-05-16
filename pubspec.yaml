@@ -14,53 +14,53 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  get: ^4.6.1
+  get: ^4.6.5
   sizer: ^2.0.15
-  group_radio_button: ^1.2.0
+  group_radio_button: ^1.3.0
   pin_code_fields: ^7.4.0
-  flutter_rating_bar: ^4.0.0
-  readmore: ^2.1.0
-  material_floating_search_bar: ^0.3.7
+  flutter_rating_bar: ^4.0.1
+  readmore: ^2.2.0
+  material_floating_search_bar_2:
   #flutter_paystack_client: ^0.1.0
-  extended_image: ^6.0.2+1
-  shared_preferences: ^2.0.6
-  device_info_plus: ^3.2.3
-  intl: ^0.17.0
-  image_picker: ^0.8.5
-  file_picker: ^4.5.1
+  extended_image:
+  shared_preferences: ^2.1.1
+  device_info_plus: ^3.2.4
+  intl: 
+  image_picker: ^0.8.7+5
+  file_picker:
   flutter_cors: ^1.3.2
-  graphic: ^2.0.3
-  path_provider: ^2.0.9
-  carousel_slider: ^4.0.0
-  universal_io: ^2.0.4
+  graphic: ^2.2.0
+  path_provider: ^2.0.15
+  carousel_slider: ^4.2.1
+  universal_io:
   flutter_phone_direct_caller: ^2.1.1
-  geolocator: ^9.0.1
-  geocoding: ^2.0.4
-  share_plus: ^4.0.4
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  share_plus:
   modal_bottom_sheet: ^2.0.1
-  firebase_database: ^10.0.6
-  firebase_core: ^2.3.0
-  firebase_messaging: ^14.1.2
+  firebase_database: ^10.2.0
+  firebase_core: ^2.12.0
+  firebase_messaging: ^14.6.0
   cross_connectivity: ^3.0.5
-  url_launcher: ^6.1.3
-  flutter_widget_from_html_core: ^0.8.5+3
-  flutter_local_notifications: ^9.4.1
+  url_launcher: ^6.1.11
+  flutter_widget_from_html_core: ^0.10.0
+  flutter_local_notifications: 
   url_strategy: ^0.2.0
   change_app_package_name:
-  firebase_remote_config: ^3.0.6
-  firebase_dynamic_links: ^5.0.6
-  cloud_firestore: ^4.1.0
-  firebase_analytics: ^10.0.6
-  firebase_auth: ^4.1.4
-  firebase_storage: ^11.0.6
-  youtube_player_flutter: ^8.0.0
-  package_info_plus: ^1.0.2
-  another_xlider: ^1.1.2
-  restart_app: ^1.1.0+1
+  firebase_remote_config: ^4.2.0
+  firebase_dynamic_links: ^5.3.0
+  cloud_firestore: ^4.7.0
+  firebase_analytics: ^10.4.0
+  firebase_auth: ^4.6.0
+  firebase_storage: ^11.2.0
+  youtube_player_flutter: ^8.1.2
+  package_info_plus:
+  another_xlider: ^3.0.1
+  restart_app: ^1.1.2
   uni_links: ^0.5.1
   number_paginator: ^0.2.3
-  syncfusion_flutter_charts: ^21.1.39
   fl_chart: ^0.62.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

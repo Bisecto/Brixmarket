@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/home_controller.dart';
 import '../../../controllers/instance.dart';
+import '../../../core/dialogs.dart';
 import '../../../res/strings.dart';
 import '../../../utils/utils.dart';
 import 'landing_page.dart';
@@ -25,10 +26,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  String userMail = '';
+  String userPassword = '';
+
+  userDetails() async {
+    userMail = await SharedPref.getString('user_email');
+    userPassword = await SharedPref.getString('user_password');
+  }
   @override
   void initState() {
     super.initState();
+    userDetails();
     checkpermission();
+
+    // if (userMail.isNotEmpty &&
+    //     userPassword.isNotEmpty &&
+    //     HomeController.isLogin.value) {
+    //   homeCtrl.login().then((value) => {
+    //     MSG.snackBar('i am logged in')
+    //   });
+    // }
 
     // Connectivity().checkConnection().then((connected) async {
     //   SharedPref.getBool('acceptLocationUsage').then((accepted) async {

@@ -24,11 +24,11 @@ const imageBaseUrl = 'https://dfy7hoxi61jci.cloudfront.net/';
 // const cacImgPath = imageBaseUrl;
 // const idImgPath = imageBaseUrl;
 
-const baseImgPath = imageBaseUrl + 'public/res/img';
-const propertyImgPath = imageBaseUrl + 'public/res/img/properties/';
-const userImgPath = imageBaseUrl + 'public/res/img/users/';
-const cacImgPath = imageBaseUrl + 'public/res/img/agency-cert/';
-const idImgPath = imageBaseUrl + 'public/res/img/user-ids/';
+const baseImgPath = imageBaseUrl;
+const propertyImgPath = imageBaseUrl + 'properties/';
+const userImgPath = imageBaseUrl + 'users/';
+const cacImgPath = imageBaseUrl + 'agency-cert/';
+const idImgPath = imageBaseUrl + 'user-ids/';
 
 const defaultImage = 'assets/images/default_icon.jpeg';
 //const requestHeader = {'Authorization': 'Bearer $authToken'};

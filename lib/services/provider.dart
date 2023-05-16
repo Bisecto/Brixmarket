@@ -20,7 +20,7 @@ class Provider extends GetConnect {
   Future<dynamic> getData(String url,
       {Map<String, dynamic>? params, thirdPartyRequest = false}) async {
     // await Connectivity().checkConnection().then((connected) async => connected ? true : Get.toNamed(noInternet));
-    url = thirdPartyRequest ? url : appBaseUrl + url;
+    url =  appBaseUrl + url;
     // dnd(url);
     try {
       var response = await http

@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../config/theme/color.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/preloader.dart';
-import '../../../models/insight_model.dart';
 
 import '../../../utils/shared_preferences.dart';
-import '../../temp.dart';
 import '../../widgets/appbar_menus.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/stat_graph.dart';
@@ -36,11 +34,16 @@ class _StatisticPageState extends State<StatisticPage> {
     if (userMail.isNotEmpty &&
         userPassword.isNotEmpty &&
         HomeController.isLogin.value) {
-      await homeCtrl.login();
+      await homeCtrl.loginNew(email: userMail, password: userPassword);
       await cPropCtrl.getInsight().then((value) => {
+
+            setState((){
+              insight = value;
+            }),
+
             if (insight != null)
               {
-                insight = value,
+                
                 propertyListed = insight?.totalProperties.toString() ?? '0',
                 totalViews = insight?.totalViews.toString() ?? '0',
                 totalImpressions = insight?.totalImpressions.toString() ?? '0',

@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../controllers/instance.dart';
+import '../../../core/dialogs.dart';
 import '../../../main.dart';
 import '../../../res/lists.dart';
 import 'dart:io' show Platform;
@@ -380,17 +381,17 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
         //     MaterialPageRoute(
         //         builder: (context) => TestingNews(categorySlug: message.data['categorySlug'], news_id: message.data['news_id'])
         //     ));
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            const NotificationDetails(
-              iOS: IOSNotificationDetails(
-                presentAlert: false,
-                presentSound: true,
-                //presentBadge: true
-              ),
-            ));
+        // flutterLocalNotificationsPlugin.show(
+        //     notification.hashCode,
+        //     notification.title,
+        //     notification.body,
+        //     const NotificationDetails(
+        //       iOS: IOSNotificationDetails(
+        //         presentAlert: false,
+        //         presentSound: true,
+        //         //presentBadge: true
+        //       ),
+        //     ));
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -466,6 +467,8 @@ class _MobileLandingPageState extends State<MobileLandingPage> {
 
   @override
   Widget build(BuildContext context) {
+
+     
     if (isAppUpdated) {
       return Obx(() => Scaffold(
             backgroundColor: Pallet.homeBackground,

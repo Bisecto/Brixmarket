@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:brixmarket/models/home_property_model.dart' as home;
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';

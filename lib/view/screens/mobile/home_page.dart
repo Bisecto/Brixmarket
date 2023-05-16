@@ -34,7 +34,12 @@ class MobileHomePage extends StatefulWidget {
 
 class _MobileHomePageState extends State<MobileHomePage> {
   @override
-  void initState() {}
+  void initState() {
+
+    super.initState();
+  
+
+  }
 
   bool isLoading = false;
 
