@@ -94,22 +94,30 @@ mixin Auth {
     }
   }
 
-  Future login() async {
+  Future login({String? email, String? password}) async {
+    
     try {
       EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
       if (EditCtrl.emailErr.isNotEmpty) {
+        if(email != null){
+        MSG.snackBar('email');
+             
+        }else{
         MSG.errorSnackBar(EditCtrl.emailErr.value);
+
+        }
       } else {
         Preloader.show();
         var data = User.map(
-            email: EditCtrl.email.text, password: EditCtrl.password.text);
+            email: email ??  EditCtrl.email.text, password: password ?? EditCtrl.password.text);
         var response = await Provider().postData("login", data);
+
 
         if (response != null) {
           await SharedPref.putString('user_email', EditCtrl.email.text);
           await SharedPref.putString('user_password', EditCtrl.password.text);
-          loginNew(
-              email: EditCtrl.email.text, password: EditCtrl.password.text);
+          // loginNew(
+          //     email: EditCtrl.email.text, password: EditCtrl.password.text);
           var userObj = User.fromJson(response);
 
           if (userObj.isVerified == false) {
@@ -135,7 +143,7 @@ mixin Auth {
             await homeCtrl.loginUser(userObj);
             await propCtrl.getSavedProperties();
             Preloader.hide();
-            MSG.snackBar('Login successful');
+            // MSG.snackBar('Login successful');
             if (Utils.isMobileApp) {
               FirebaseMessaging.instance
                   .subscribeToTopic(userObj.id.toString());

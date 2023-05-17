@@ -47,7 +47,7 @@ class Provider extends GetConnect {
     //await Connectivity().checkConnection().then((connected) async => connected ? null : Get.toNamed(noInternet));
     url = appBaseUrl + url;
     // dnd(data);
-    dnd(url);
+    // dnd(url);
     var head = header ?? await formDataHeader();
     try {
       var response = await http
@@ -55,7 +55,7 @@ class Provider extends GetConnect {
           .timeout(timeOutDuration,
               onTimeout: () => http.Response('Request time out', 408));
 
-      dnd(response.body);
+      // dnd(response.body);
 
       return processResponse(response);
     } catch (e, t) {

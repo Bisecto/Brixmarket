@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/edit_controller.dart';
 import '../../../controllers/home_controller.dart';
 import '../../../controllers/instance.dart';
 import '../../../core/dialogs.dart';
@@ -33,20 +34,25 @@ class _SplashScreenState extends State<SplashScreen> {
   userDetails() async {
     userMail = await SharedPref.getString('user_email');
     userPassword = await SharedPref.getString('user_password');
+    EditCtrl.email.text = userMail;
+
+      if (userMail.isNotEmpty &&
+        userPassword.isNotEmpty ) {
+      homeCtrl.login(email: userMail,password: userPassword ).then((value) => {
+            EditCtrl.email.text = '',
+
+      });
+    }
   }
   @override
   void initState() {
-    super.initState();
-    userDetails();
-    checkpermission();
 
-    // if (userMail.isNotEmpty &&
-    //     userPassword.isNotEmpty &&
-    //     HomeController.isLogin.value) {
-    //   homeCtrl.login().then((value) => {
-    //     MSG.snackBar('i am logged in')
-    //   });
-    // }
+     userDetails();
+    checkpermission();
+    super.initState();
+   
+
+  
 
     // Connectivity().checkConnection().then((connected) async {
     //   SharedPref.getBool('acceptLocationUsage').then((accepted) async {

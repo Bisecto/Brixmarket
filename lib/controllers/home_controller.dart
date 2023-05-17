@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
 
+import '../core/app.dart';
 import '../core/dialogs.dart';
 import '../core/preloader.dart';
 import '../models/notification.dart';
@@ -127,6 +128,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
             .postData("login/user", User.map(userId: tmpUserId)));
         if (response != null) {
           tmpLogin(User.fromJson(response));
+
           if (Utils.isMobileApp) {
             FirebaseMessaging.instance.subscribeToTopic(_userId);
           }
@@ -234,7 +236,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   shareApp({Property? property}) async {
-    await Share.share("https://brixmarket.com/", subject: 'Brixmarket');
+    await Share.share(appBaseUrl, subject: 'Brixmarket');
     // MSG.snackBar("Successful", title: "Share");
   }
 

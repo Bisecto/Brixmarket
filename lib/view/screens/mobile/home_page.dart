@@ -906,275 +906,281 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
           )),
       body: Stack(
         children: [
-          SizedBox(
-            height: Get.height,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              physics: const ScrollPhysics(),
-              child: Obx(() => propCtrl.searchLoading.value
-                  ? SizedBox(
-                      height: Get.height,
-                      width: Get.width,
-                      child: const Center(
-                        child: SizedBox(child: CircularProgressIndicator()),
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          Row(
-                            children: [
-                              const Icon(Icons.location_on,
-                                  color: Pallet.secondaryColor),
-                              const SizedBox(width: 12),
-                              GestureDetector(
-                                onTap: () {
-                                  var location =
-                                      user.city != null && user.city != ''
-                                          ? user.city.toString()
-                                          : homeCtrl.currentLocation
-                                                      .split(',')
-                                                      .length >
-                                                  1
-                                              ? homeCtrl.currentLocation
-                                                  .split(',')[1]
-                                              : '';
-                                  if (location == '' || location == 'null') {
-                                    MSG.errorSnackBar(
-                                        'Your location has not yet been set');
-                                  } else {
-                                    EditCtrl.homeSearch.text =
-                                        location.contains('Federal') ||
-                                                location.contains('FCT')
-                                            ? 'Abuja'
-                                            : location;
-                                    //propCtrl.homeSearchProperties();
-                                  }
-                                },
-                                child: const CustomText(
-                                    color: Pallet.secondaryColor,
-                                    text: 'Use my current location',
-                                    weight: FontWeight.normal,
-                                    size: 16),
-                              ),
-                            ],
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 14.0, bottom: 14),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SearchByNameOfProperty()));
-                                },
-                                child: Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.house,
-                                      color: Colors.red,
-                                    ),
-                                    CustomText(
-                                        color: Pallet.secondaryColor,
-                                        text: '   Search using property name',
-                                        weight: FontWeight.normal,
-                                        size: 16),
-                                  ],
+          Positioned(
+            bottom: 50,
+            left: 0, right: 0,
+            child: SizedBox(
+              height: Get.height,
+              child: SingleChildScrollView(
+                controller: scrollController,
+                physics: const ScrollPhysics(),
+                child: Obx(() => propCtrl.searchLoading.value
+                    ? SizedBox(
+                        height: Get.height,
+                        width: Get.width,
+                        child: const Center(
+                          child: SizedBox(child: CircularProgressIndicator()),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on,
+                                    color: Pallet.secondaryColor),
+                                const SizedBox(width: 12),
+                                GestureDetector(
+                                  onTap: () {
+                                    var location =
+                                        user.city != null && user.city != ''
+                                            ? user.city.toString()
+                                            : homeCtrl.currentLocation
+                                                        .split(',')
+                                                        .length >
+                                                    1
+                                                ? homeCtrl.currentLocation
+                                                    .split(',')[1]
+                                                : '';
+                                    if (location == '' || location == 'null') {
+                                      MSG.errorSnackBar(
+                                          'Your location has not yet been set');
+                                    } else {
+                                      EditCtrl.homeSearch.text =
+                                          location.contains('Federal') ||
+                                                  location.contains('FCT')
+                                              ? 'Abuja'
+                                              : location;
+                                      //propCtrl.homeSearchProperties();
+                                    }
+                                  },
+                                  child: const CustomText(
+                                      color: Pallet.secondaryColor,
+                                      text: 'Use my current location',
+                                      weight: FontWeight.normal,
+                                      size: 16),
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 14.0, bottom: 14),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchByNameOfProperty()));
+                                  },
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.house,
+                                        color: Colors.red,
+                                      ),
+                                      CustomText(
+                                          color: Pallet.secondaryColor,
+                                          text: '   Search using property name',
+                                          weight: FontWeight.normal,
+                                          size: 16),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          if (isLoading)
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.6,
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Preloader.loadingWidget()),
-                            ),
-
-                          if (!isLoading)
-                            StreamBuilder<filter.FilterModel>(
-                                stream: _filterStreamController.stream,
-                                builder: (context, snapdata) {
-                                  if (snapdata.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.6,
-                                      child: Align(
-                                          alignment: Alignment.center,
-                                          child: Preloader.loadingWidget()),
-                                    );
-                                  } else if (isLoading) {
-                                    return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.6,
-                                      child: Align(
-                                          alignment: Alignment.center,
-                                          child: Preloader.loadingWidget()),
-                                    );
-                                  } else {
-                                    List<filter.Property> properties =
-                                        snapdata.data!.data.properties;
-
-                                    page = snapdata.data!.data.pages;
-                                    return properties.isEmpty
-                                        ? SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
+                            const SizedBox(height: 20),
+                            if (isLoading)
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.6,
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Preloader.loadingWidget()),
+                              ),
+          
+                            if (!isLoading)
+                              StreamBuilder<filter.FilterModel>(
+                                  stream: _filterStreamController.stream,
+                                  builder: (context, snapdata) {
+                                    if (snapdata.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
                                                 0.6,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                    height: 120,
-                                                    width: 120,
-                                                    child: Image.asset(
-                                                        'assets/images/list.png')),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                const CustomText(
-                                                    color:
-                                                        Pallet.secondaryColor,
-                                                    text:
-                                                        'No properties showing in this location',
-                                                    weight: FontWeight.normal,
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: Preloader.loadingWidget()),
+                                      );
+                                    } else if (isLoading) {
+                                      return SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.6,
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: Preloader.loadingWidget()),
+                                      );
+                                    } else {
+                                      List<filter.Property> properties =
+                                          snapdata.data!.data.properties;
+          
+                                      page = snapdata.data!.data.pages;
+                                      return properties.isEmpty
+                                          ? SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.6,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                      height: 120,
+                                                      width: 120,
+                                                      child: Image.asset(
+                                                          'assets/images/list.png')),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  const CustomText(
+                                                      color:
+                                                          Pallet.secondaryColor,
+                                                      text:
+                                                          'No properties showing in this location',
+                                                      weight: FontWeight.normal,
+                                                      size: 16),
+                                                ],
+                                              ),
+                                            )
+                                          : Column(children: [
+                                              const Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 0),
+                                                child: CustomText(
+                                                    color: Colors.blueGrey,
+                                                    text: 'Searched Results',
+                                                    weight: FontWeight.bold,
                                                     size: 16),
-                                              ],
-                                            ),
-                                          )
-                                        : Column(children: [
-                                            const Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 0, 0),
-                                              child: CustomText(
-                                                  color: Colors.blueGrey,
-                                                  text: 'Searched Results',
-                                                  weight: FontWeight.bold,
-                                                  size: 16),
-                                            ),
-                                            const SizedBox(height: 16),
-                                            const Divider(
-                                                color: Colors.black12),
-                                            ListView.builder(
-                                                //controller: scrollController,
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                itemCount: properties.length,
-                                                padding: const EdgeInsets.only(
-                                                    left: 12.0,
-                                                    right: 12.0,
-                                                    bottom: 20),
-                                                scrollDirection: Axis.vertical,
-                                                shrinkWrap: true,
-                                                itemBuilder: (context, index) {
-                                                  filter.Property property =
-                                                      properties[index];
-                                                  if (snapdata.data!.data
-                                                      .properties.isEmpty) {
-                                                    return Column(
-                                                      children: [
-                                                        Column(children: [
-                                                          SizedBox(
-                                                            height: Get.height *
-                                                                0.2,
-                                                          ),
-                                                          const CustomText(
-                                                              color: Colors
-                                                                  .blueGrey,
-                                                              text:
-                                                                  'No Results Found',
-                                                              weight: FontWeight
-                                                                  .w400,
-                                                              size: 18),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                        ])
-                                                      ],
-                                                    );
-                                                  } else {
-                                                    return buildFilterList(
-                                                        showMore: true,
-                                                        property: property);
-                                                  }
-                                                }),
-                                          ]);
-                                  }
-                                }),
-
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     const CustomText(
-                          //         color: Colors.blueGrey,
-                          //         text: 'Search Results',
-                          //         weight: FontWeight.normal,
-                          //         size: 16),
-                          //     propCtrl.searchProperties.isEmpty
-                          //         ? const CustomText(
-                          //             color: Pallet.secondaryColor,
-                          //             text: 'No Results Found',
-                          //             weight: FontWeight.w400,
-                          //             size: 16)
-                          //         : CustomText(
-                          //             color: Pallet.secondaryColor,
-                          //             text:
-                          //                 '${propCtrl.searchProperties.length} results Found',
-                          //             weight: FontWeight.w400,
-                          //             size: 16),
-                          //   ],
-                          // ),
-                          // const SizedBox(height: 8),
-                          // propCtrl.searchProperties.isNotEmpty
-                          //     ? SizedBox(
-                          //         child: ListView.builder(
-                          //             physics: const NeverScrollableScrollPhysics(),
-                          //             itemCount: propCtrl.searchProperties.length,
-                          //             scrollDirection: Axis.vertical,
-                          //             shrinkWrap: true,
-                          //             itemBuilder: (context, index) {
-                          //               return buildPremiumList(
-                          //                   showMore: true,
-                          //                   property:
-                          //                       propCtrl.searchProperties[index]);
-                          //             }),
-                          //       )
-                          //     : Column(
-                          //         mainAxisAlignment: MainAxisAlignment.start,
-                          //         children: [
-                          //           SizedBox(
-                          //             height: Get.height * 0.3,
-                          //           ),
-                          //           const CustomText(
-                          //               color: Colors.blueGrey,
-                          //               text: 'No Results Found',
-                          //               weight: FontWeight.w400,
-                          //               size: 18),
-                          //           const SizedBox(height: 10),
-                          //           const CustomText(
-                          //               color: Colors.blueGrey,
-                          //               text:
-                          //                   'Enable your location for better proximity',
-                          //               weight: FontWeight.w400,
-                          //               size: 16),
-                          //         ],
-                          //       ),
-                        ],
-                      ),
-                    )),
+                                              ),
+                                              const SizedBox(height: 16),
+                                              const Divider(
+                                                  color: Colors.black12),
+                                              ListView.builder(
+                                                  //controller: scrollController,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: properties.length,
+                                                  padding: const EdgeInsets.only(
+                                                      left: 12.0,
+                                                      right: 12.0,
+                                                      bottom: 20),
+                                                  scrollDirection: Axis.vertical,
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (context, index) {
+                                                    filter.Property property =
+                                                        properties[index];
+                                                    if (snapdata.data!.data
+                                                        .properties.isEmpty) {
+                                                      return Column(
+                                                        children: [
+                                                          Column(children: [
+                                                            SizedBox(
+                                                              height: Get.height *
+                                                                  0.2,
+                                                            ),
+                                                            const CustomText(
+                                                                color: Colors
+                                                                    .blueGrey,
+                                                                text:
+                                                                    'No Results Found',
+                                                                weight: FontWeight
+                                                                    .w400,
+                                                                size: 18),
+                                                            const SizedBox(
+                                                                height: 10),
+                                                          ])
+                                                        ],
+                                                      );
+                                                    } else {
+                                                      return buildFilterList(
+                                                          showMore: true,
+                                                          property: property);
+                                                    }
+                                                  }),
+                                            ]);
+                                    }
+                                  }),
+          
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     const CustomText(
+                            //         color: Colors.blueGrey,
+                            //         text: 'Search Results',
+                            //         weight: FontWeight.normal,
+                            //         size: 16),
+                            //     propCtrl.searchProperties.isEmpty
+                            //         ? const CustomText(
+                            //             color: Pallet.secondaryColor,
+                            //             text: 'No Results Found',
+                            //             weight: FontWeight.w400,
+                            //             size: 16)
+                            //         : CustomText(
+                            //             color: Pallet.secondaryColor,
+                            //             text:
+                            //                 '${propCtrl.searchProperties.length} results Found',
+                            //             weight: FontWeight.w400,
+                            //             size: 16),
+                            //   ],
+                            // ),
+                            // const SizedBox(height: 8),
+                            // propCtrl.searchProperties.isNotEmpty
+                            //     ? SizedBox(
+                            //         child: ListView.builder(
+                            //             physics: const NeverScrollableScrollPhysics(),
+                            //             itemCount: propCtrl.searchProperties.length,
+                            //             scrollDirection: Axis.vertical,
+                            //             shrinkWrap: true,
+                            //             itemBuilder: (context, index) {
+                            //               return buildPremiumList(
+                            //                   showMore: true,
+                            //                   property:
+                            //                       propCtrl.searchProperties[index]);
+                            //             }),
+                            //       )
+                            //     : Column(
+                            //         mainAxisAlignment: MainAxisAlignment.start,
+                            //         children: [
+                            //           SizedBox(
+                            //             height: Get.height * 0.3,
+                            //           ),
+                            //           const CustomText(
+                            //               color: Colors.blueGrey,
+                            //               text: 'No Results Found',
+                            //               weight: FontWeight.w400,
+                            //               size: 18),
+                            //           const SizedBox(height: 10),
+                            //           const CustomText(
+                            //               color: Colors.blueGrey,
+                            //               text:
+                            //                   'Enable your location for better proximity',
+                            //               weight: FontWeight.w400,
+                            //               size: 16),
+                            //         ],
+                            //       ),
+                                                  const SizedBox(height: 50,)
+          
+                          ],
+                        ),
+                      )),
+              ),
             ),
           ),
           if (page > 1)

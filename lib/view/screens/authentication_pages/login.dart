@@ -13,10 +13,12 @@ import '../../widgets/form_button.dart';
 import '../../widgets/form_inputs.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    EditCtrl.email.text = '';
+    EditCtrl.password.text = '';
     return LayoutBuilder(builder: (_, constraints) {
       return Scaffold(
           backgroundColor: Pallet.primaryBackground,
