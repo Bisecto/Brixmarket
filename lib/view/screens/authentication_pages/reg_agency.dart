@@ -125,6 +125,7 @@ class RegAgencyPage extends StatelessWidget {
                                             value: EditCtrl.isRegisterAgency.value,
                                             onChanged: (state) {
                                               EditCtrl.isRegisterAgency.value = state == true;
+                                              print(EditCtrl.isRegisterAgency.value);
                                             },
                                           ),
                                         ),

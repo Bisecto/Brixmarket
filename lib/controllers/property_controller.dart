@@ -1,14 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:brixmarket/core/app.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
 import 'package:brixmarket/core/dialogs.dart';
+import 'package:brixmarket/models/filter_property_model.dart' as filter;
+import 'package:brixmarket/models/home_property_model.dart' as home;
+import 'package:brixmarket/models/single_property_model.dart' as single;
+import 'package:brixmarket/models/single_property_model.dart' as singleProp;
 import 'package:brixmarket/models/user_model.dart';
 import 'package:brixmarket/redirect/push_notification.dart';
 import 'package:brixmarket/utils/utils.dart';
 import 'package:get/get.dart';
-import 'package:brixmarket/models/home_property_model.dart' as home;
-import 'package:brixmarket/models/filter_property_model.dart' as filter;
-import 'package:brixmarket/models/single_property_model.dart' as single;
+
 import '../core/preloader.dart';
 import '../models/home_property_model.dart' as home_property;
 import '../models/property_model.dart';
@@ -19,7 +25,6 @@ import '../utils/validations.dart';
 import 'instance.dart';
 import 'mixin/create_property_mixin.dart';
 import 'mixin/fetch_property_mixin.dart';
-import 'package:brixmarket/models/single_property_model.dart' as singleProp;
 
 class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   var isList = false.obs;
@@ -157,6 +162,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       }
 
       propCtrl.user.refresh();
+      print('LOLXXZS');
       MSG.snackBar(response['message']);
     }
 
@@ -203,18 +209,30 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   saveHomeProperty(home.Latest property) async {
+    // var data={
+    //   'property' ='',
+    //   'userId'=''
+    // };
     homeCtrl.savingProperty.add(property.id);
     if (HomeController.userId == '') {
       Get.toNamed(RouteStr.login);
     } else {
-      var response = await Provider()
-          .postData("user/save-property", Property.map(id: property.id));
-      if (response != null && response.isNotEmpty) {
-        mySavedProperties.value = [];
-        mySavedProperties.value = (response['properties'] as List)
-            .map((e) => Property.fromJson(e))
-            .toList();
-      }
+      final res =
+      await http.post(Uri.parse('$appBaseUrl user/save-property'),headers: await formDataHeader(),body:{'property': property.id, 'userId': HomeController.userId} );
+      //print(res.body);
+      final json = await jsonDecode(res.body);
+      MSG.snackBar(json['message']);
+      final response =
+      await http.get(Uri.parse('$appBaseUrl property/get-saved-properties/${HomeController.userId}'),headers: await formDataHeader());
+      //print(res.body);
+      final jsonResponse = await jsonDecode(res.body);
+      print(jsonResponse['data']);
+      if (jsonResponse['data'] != null && jsonResponse['data'].isNotEmpty) {
+            mySavedProperties.value = [];
+            mySavedProperties.value = (jsonResponse['data']['properties'])
+                .map((e) => Property.fromJson(e))
+                .toList();
+          }
       if (propCtrl.user.value.savedProperties != null) {
         if (propCtrl.user.value.savedProperties!.contains(property.id)) {
           propCtrl.user.value.savedProperties!.remove(property.id);
@@ -222,9 +240,38 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           propCtrl.user.value.savedProperties!.add(property.id);
         }
       }
-
       propCtrl.user.refresh();
-      MSG.snackBar(response['message']);
+      MSG.snackBar(json['message']);
+      // var response = await Provider().postData("user/save-property",
+      //     {'property': property.id, 'userId': HomeController.userId}
+      //     // Property.map(id: property.id)
+      //     ).whenComplete(() async {
+      //   var respons = await Provider().getData(
+      //       "property/get-saved-properties/${HomeController.userId}"
+      //
+      //       // Property.map(id: property.id)
+      //       );
+      //   if (respons != null && respons.isNotEmpty) {
+      //     mySavedProperties.value = [];
+      //     mySavedProperties.value = (respons['properties'] as List)
+      //         .map((e) => Property.fromJson(e))
+      //         .toList();
+      //   }
+      // });
+      // print(response);
+      // print(response);
+      // print(response);
+      //
+      // if (propCtrl.user.value.savedProperties != null) {
+      //   if (propCtrl.user.value.savedProperties!.contains(property.id)) {
+      //     propCtrl.user.value.savedProperties!.remove(property.id);
+      //   } else {
+      //     propCtrl.user.value.savedProperties!.add(property.id);
+      //   }
+      // }
+      //
+      // propCtrl.user.refresh();
+      // MSG.snackBar('Done');
     }
 
     homeCtrl.savingProperty.remove(property.id);
@@ -235,11 +282,18 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     if (HomeController.userId == '') {
       Get.toNamed(RouteStr.login);
     } else {
-      var response = await Provider()
-          .postData("user/save-property", Property.map(id: property.id));
-      if (response != null && response.isNotEmpty) {
+      final res =
+      await http.post(Uri.parse('$appBaseUrl user/save-property'),headers: await formDataHeader(),body:{'property': property.id, 'userId': HomeController.userId} );
+      //print(res.body);
+      final json = await jsonDecode(res.body);
+      MSG.snackBar(json['message']);
+      final response =
+      await http.get(Uri.parse('$appBaseUrl property/get-saved-properties/${HomeController.userId}'),headers: await formDataHeader());
+      //print(res.body);
+      final jsonResponse = await jsonDecode(res.body);
+      if (jsonResponse['data'] != null && jsonResponse['data'].isNotEmpty) {
         mySavedProperties.value = [];
-        mySavedProperties.value = (response['properties'] as List)
+        mySavedProperties.value = (jsonResponse['data']['properties'] as List)
             .map((e) => Property.fromJson(e))
             .toList();
       }
@@ -250,9 +304,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           propCtrl.user.value.savedProperties!.add(property.id);
         }
       }
-
       propCtrl.user.refresh();
-      MSG.snackBar(response['message']);
+      MSG.snackBar(json['message']);
     }
 
     homeCtrl.savingProperty.remove(property.id);
@@ -297,11 +350,11 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   Future<List<home_property.Latest>> getHomeproperty() async {
     if (homeProperty.isEmpty) {
+      var response =
+          await Provider().postData("property/get-home-properties", {});
 
-      var response = await Provider().postData("property/get-home-properties", {});
-
-    //  print(response + '..............................................');
-    dnd('property/get-home-propertiesw030$response');
+      //  print(response + '..............................................');
+      dnd('property/get-home-propertiesw030$response');
 
       if (response != null) {
         for (var e in (response['latest'] as List)) {
@@ -327,7 +380,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   Future<List<home_property.Latest>> getLatestproperty() async {
     if (latestProperty.isEmpty) {
-      var response = await Provider().postData("property/get-home-properties", {});
+      var response =
+          await Provider().postData("property/get-home-properties", {});
       //print(response + '..............................................');
       if (response != null) {
         for (var e in (response['latest'] as List)) {
@@ -379,7 +433,8 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
   Future<List<home_property.Latest>> getFeaturedproperty2() async {
     if (featuredProperty2.isEmpty) {
-      var response = await Provider().postData("property/get-home-properties", {});
+      var response =
+          await Provider().postData("property/get-home-properties", {});
       //print(response + '..............................................');
       if (response != null) {
         for (var e in (response['latest'] as List)) {
@@ -402,6 +457,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   }
 
   List<Property> allproperty = <Property>[];
+
   Future<List<Property>> fetchAllProperties() async {
     if (allproperty.isEmpty) {
       // var response = await Provider().getData("property/featured-properties");
@@ -740,6 +796,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
   late Timer messageTimer;
 
   int iM = 0;
+
   animateHomeHeroImage({bool stopTimer = false}) {
     if (!Utils.isMobileApp) {
       if (stopTimer) {

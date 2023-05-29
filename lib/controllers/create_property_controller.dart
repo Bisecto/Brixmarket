@@ -196,7 +196,9 @@ class CreatePropertyCtrl extends GetxController {
       );
 
       var response = await Provider().postData("property/store", data);
+      print(123456);
       print(response);
+      print(123456);
       if (response != null) {
         print(response);
         propCtrl.property = Property.fromJson(response);

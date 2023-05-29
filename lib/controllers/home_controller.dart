@@ -43,7 +43,8 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   var isPremium = false;
   var currentLocation = ''.obs;
 
-  List<String> properties = [
+  List<String> properties =
+  [
     'Bundalow',
     'Plots of Land',
     'Flat',
@@ -93,6 +94,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   Future loginUser(User? userObj) async {
+    print(userObj);
     if (userObj == null) {
       _userId = await SharedPref.getString('userId');
 
@@ -118,12 +120,24 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     }
     inst.reInitInstance();
   }
-
-  Future tmpLogin(User? userObj) async {
+  Future mainTmpLogin(User? userObj) async {
+    print('ONENATION3');
+    if (kDebugMode) {
+      print(3333333333);
+      print(userObj);
+      print(3333333333);
+    }
     if (userObj == null) {
+      print('ONENATION4');
       tmpUserId = await SharedPref.getString('tmpUserId');
-
+      if (kDebugMode) {
+        print(222222222222);
+        print(tmpUserId);
+        print(tmpUser);
+        print(222222222222);
+      }
       if (tmpUserId.isNotEmpty && tmpUser.value.id == null) {
+        print('ONENATION7');
         var response = (await Provider()
             .postData("login/user", User.map(userId: tmpUserId)));
         if (response != null) {
@@ -135,10 +149,48 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
         }
       }
     } else {
+      print('ONENATION5');
+      if (userObj.id != null) {
+        print('ONENATION6');
+        tmpUser.value = userObj;
+        tmpUserId = userObj.id!;
+        _token = userObj.token??'';
+        await SharedPref.putString('tmpUserId', tmpUserId);
+        await SharedPref.putString('token', _token);
+      }
+    }
+  }
+  Future tmpLogin(User? userObj) async {
+    if (kDebugMode) {
+      print(3333333333);
+      print(userObj);
+      print(3333333333);
+    }
+    if (userObj == null) {
+      tmpUserId = await SharedPref.getString('tmpUserId');
+      if (kDebugMode) {
+        print(222222222222);
+        print(tmpUserId);
+        print(tmpUser);
+        print(222222222222);
+      }
+      if (tmpUserId.isNotEmpty && tmpUser.value.id == null) {
+        var response = (await Provider()
+            .postData("login/user", User.map(userId: tmpUserId)));
+        if (response != null) {
+          tmpLogin(User.fromJson(response));
+
+          if (Utils.isMobileApp&&_userId.isNotEmpty) {
+            FirebaseMessaging.instance.subscribeToTopic(_userId);
+          }
+        }
+      }
+    } else {
+
       if (userObj.id != null) {
         tmpUser.value = userObj;
         tmpUserId = userObj.id!;
-        _token = userObj.token!;
+        _token = userObj.token??'';
         await SharedPref.putString('tmpUserId', tmpUserId);
         await SharedPref.putString('token', _token);
       }
@@ -355,6 +407,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   Future getNotifications() async {
     var response =
         await Provider().postData("user/get-notifications", User.map());
+    //print(response);
     if (response != null) {
       notifications =
           (response as List).map((e) => AppNotification.fromJson(e)).toList();
@@ -369,6 +422,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   Future getNewNotifications() async {
     var response =
         await Provider().postData("user/get-new-notifications", User.map());
+
     if (response != null) {
       return response.isEmpty ? null : newNotifications.value = response.length;
     }

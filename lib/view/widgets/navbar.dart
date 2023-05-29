@@ -33,7 +33,9 @@ Widget navBar() {
                 child: Obx(
                   () => CustomText(
                     size: 16,
-                    color: homeCtrl.navbarIndex.value == 1 ? Pallet.secondaryColor : const Color(0xFF282e42),
+                    color: homeCtrl.navbarIndex.value == 1
+                        ? Pallet.secondaryColor
+                        : const Color(0xFF282e42),
                     weight: FontWeight.w600,
                     text: 'Buy',
                   ),
@@ -47,7 +49,9 @@ Widget navBar() {
                 child: Obx(
                   () => CustomText(
                     size: 16,
-                    color: homeCtrl.navbarIndex.value == 2 ? Pallet.secondaryColor : const Color(0xFF282e42),
+                    color: homeCtrl.navbarIndex.value == 2
+                        ? Pallet.secondaryColor
+                        : const Color(0xFF282e42),
                     weight: FontWeight.w600,
                     text: 'Rent',
                   ),
@@ -61,7 +65,9 @@ Widget navBar() {
                 child: Obx(
                   () => CustomText(
                     size: 16,
-                    color: homeCtrl.navbarIndex.value == 3 ? Pallet.secondaryColor : const Color(0xFF282e42),
+                    color: homeCtrl.navbarIndex.value == 3
+                        ? Pallet.secondaryColor
+                        : const Color(0xFF282e42),
                     weight: FontWeight.w600,
                     text: 'New Homes',
                   ),
@@ -75,7 +81,9 @@ Widget navBar() {
                 child: Obx(
                   () => CustomText(
                     size: 16,
-                    color: homeCtrl.navbarIndex.value == 4 ? Pallet.secondaryColor : const Color(0xFF282e42),
+                    color: homeCtrl.navbarIndex.value == 4
+                        ? Pallet.secondaryColor
+                        : const Color(0xFF282e42),
                     weight: FontWeight.w600,
                     text: 'Commercial',
                   ),
@@ -88,7 +96,9 @@ Widget navBar() {
               },
               child: Obx(() => CustomText(
                     size: 16,
-                    color: homeCtrl.navbarIndex.value == 5 ? Pallet.secondaryColor : const Color(0xFF282e42),
+                    color: homeCtrl.navbarIndex.value == 5
+                        ? Pallet.secondaryColor
+                        : const Color(0xFF282e42),
                     weight: FontWeight.w500,
                     text: 'Premium Realtors',
                   )),
@@ -100,12 +110,16 @@ Widget navBar() {
           children: [
             InkWell(
               splashColor: Colors.transparent,
-              onTap: () => HomeController.userId.isBlank! ? Get.toNamed(RouteStr.login) : null,
+              onTap: () => HomeController.userId.isBlank!
+                  ? Get.toNamed(RouteStr.login)
+                  : null,
               child: CustomText(
                 size: 16,
                 color: Colors.blueGrey,
                 weight: FontWeight.w500,
-                text: HomeController.userId.isBlank! ? 'Sign in' : homeCtrl.user.value.firstName,
+                text: HomeController.userId.isBlank!
+                    ? 'Sign in'
+                    : homeCtrl.user.value.firstName,
               ),
             ),
             const SizedBox(
@@ -120,8 +134,11 @@ Widget navBar() {
                       Get.toNamed(RouteStr.webDashboard);
                     },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Pallet.secondaryColor),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Pallet.secondaryColor),
                 child: const CustomText(
                   size: 16,
                   color: Colors.white,
@@ -155,7 +172,8 @@ Widget topMessage({homeCtrl}) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                constraints: BoxConstraints(minWidth: 20, maxWidth: Get.width * 0.7),
+                constraints:
+                    BoxConstraints(minWidth: 20, maxWidth: Get.width * 0.7),
                 child: TextStyles.richTexts(
                     onPress1: () {},
                     onPress2: () {},
@@ -165,7 +183,8 @@ Widget topMessage({homeCtrl}) {
                     color: Colors.white,
                     color2: Colors.white60,
                     centerText: true,
-                    text1: 'Updates!! You can now pre order houses on a single click without hassele   ',
+                    text1:
+                        'Updates!! You can now pre order houses on a single click without hassele   ',
                     text2: ' learn more',
                     text3: '',
                     text4: ''),

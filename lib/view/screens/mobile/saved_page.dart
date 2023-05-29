@@ -98,7 +98,7 @@ class _SavedPagesState extends State<SavedPages> {
                           child: SizedBox(
                             child: ListView.builder(
                                 itemCount:
-                                    propCtrl.mySavedProperties.value.length,
+                                    propCtrl.mySavedProperties.length,
                                 padding: const EdgeInsets.only(
                                     left: 12.0, right: 12.0, bottom: 20),
                                 scrollDirection: Axis.vertical,
@@ -107,7 +107,7 @@ class _SavedPagesState extends State<SavedPages> {
                                   return buildPremiumList(
                                       showMore: true,
                                       property: propCtrl
-                                          .mySavedProperties.value[index],
+                                          .mySavedProperties[index],
                                       borderColor: Colors.grey);
                                 }),
                           ),

@@ -3,15 +3,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:brixmarket/models/filter_property_model.dart';
 import 'package:brixmarket/controllers/edit_controller.dart';
-
-import '../core/app.dart';
 class PropertyApi {
 
   final StreamController<FilterModel> getfilterProperty = StreamController();
   Future<void> getProperty(int page,{String searchValue='',String location=''}) async {
-    if(location.isNotEmpty){
+    if(location.length>0){
     EditCtrl.filterState.value.text=location;}
-    var url = Uri.parse('${appBaseUrl}property/filter-properties?page=$page');
+    var Url = Uri.parse('https://api.brixmarket.site/property/filter-properties?page=$page');
     var body={
       'search_term': searchValue==''?EditCtrl.webSearchKeyWord.value.text:searchValue,
       'min_price': EditCtrl.priceMin.value.text,
@@ -34,7 +32,7 @@ class PropertyApi {
       'Cookie': 'PHPSESSID=efe427461bf8353458f882c0d7143ce3'
     };
     final res =
-    await http.post(url,headers: await formDataHeader(),body: body);
+    await http.post(Url,headers: headers,body: body);
     final dataBody = await jsonDecode(res.body);
     FilterModel filterModel = FilterModel.fromJson(dataBody);
     getfilterProperty.add(filterModel);

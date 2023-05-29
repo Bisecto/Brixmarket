@@ -5,6 +5,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -22,8 +23,6 @@ import 'controllers/property_controller.dart';
 import 'controllers/terms_controller.dart';
 import 'res/strings.dart';
 import 'utils/utils.dart';
-import 'package:flutter/foundation.dart';
-
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'id', 'name',
@@ -36,26 +35,25 @@ Future<void> _FirebaseMessagingBacground(RemoteMessage message) async {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //   statusBarColor: Colors.deepOrange,
   // ));deepOrange
-
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-    if(kIsWeb){
-      await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
-            authDomain: "brimarket-3e1d9.firebaseapp.com",
-            projectId: "brimarket-3e1d9",
-            storageBucket: "brimarket-3e1d9.appspot.com",
-            messagingSenderId: "591770978937",
-            appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
-            measurementId: "G-5MFHT3RCLW"),
-      );
-    }else{
-      await Firebase.initializeApp();
-
-    }
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyBMohxojVx0jaut5qxWyuzul5_kwExNXuw",
+          authDomain: "brimarket-3e1d9.firebaseapp.com",
+          projectId: "brimarket-3e1d9",
+          storageBucket: "brimarket-3e1d9.appspot.com",
+          messagingSenderId: "591770978937",
+          appId: "1:591770978937:web:dfd865441b80e09c86e2a8",
+          measurementId: "G-5MFHT3RCLW"),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
 
   setPathUrlStrategy();
 
@@ -117,25 +115,27 @@ class _MyAppState extends State<MyApp> {
     FirebaseDynamicLinks.instance.onLink;
 
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri? deepLink = data?.link;
 
     if (deepLink != null) {
-      String property_id = deepLink.queryParameters['id']?? 'pro';
+      String property_id = deepLink.queryParameters['id'] ?? 'pro';
 
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
+            builder: (context) => Single_Property(
+                  property_id: property_id,
+                  property_tiitle: 'Brixmarket',
+                )));
       } else {
         return;
       }
     }
   }
-  void initDynamicLinks(BuildContext context) async {
 
+  void initDynamicLinks(BuildContext context) async {
     final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
       final Uri deeplink = data.link;
       //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
@@ -144,8 +144,10 @@ class _MyAppState extends State<MyApp> {
 
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                Single_Property(property_id: property_id,property_tiitle: 'Brixmarket',)));
+            builder: (context) => Single_Property(
+                  property_id: property_id,
+                  property_tiitle: 'Brixmarket',
+                )));
       } else {
         return;
       }
@@ -156,17 +158,20 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    if(Utils.isMobileApp){
+    if (Utils.isMobileApp) {
       FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
-      if(Platform.isAndroid){
-        initDynamicLinks(context);}else{
+      if (Platform.isAndroid) {
+        initDynamicLinks(context);
+      } else {
         Dynamic();
       }
     }
   }
+
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
-  FirebaseAnalyticsObserver(analytics: analytics);
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: ((context, constraints, orientation) {

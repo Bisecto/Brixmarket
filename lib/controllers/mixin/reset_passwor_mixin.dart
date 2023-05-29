@@ -11,17 +11,23 @@ import '../../view/screens/reset_password_pages/create_new_password.dart';
 import '../edit_controller.dart';
 
 mixin ResetPassword {
-  Future sendPasswordTOP() async {
+  Future sendPasswordOTP() async {
+    print(1);
     EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
     if (EditCtrl.emailErr.value.isNotEmpty) {
+      print(2);
+
       MSG.errorSnackBar(
         EditCtrl.emailErr.value,
       );
     } else {
       Preloader.show();
+      print(3);
 
       var response = await Provider().getData("login/send-OTP/${EditCtrl.email.text}");
       if (response != null) {
+        print(4);
+
         Preloader.hide();
         Get.off(() => PasswordOtpPage());
       }

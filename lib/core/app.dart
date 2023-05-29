@@ -7,10 +7,13 @@ const bool live = true;
 Future<Map<String, String>> formDataHeader([String? token]) async {
   final accessToken = token ?? await SharedPref.getString('token');
   return {
-    if (accessToken != null) 'Authorization': 'Bearer $accessToken',
+    if (accessToken.isNotEmpty) 'Authorization': 'Bearer $accessToken',
   };
 }
-
+const headers = {
+  'Authorization': 'Bearer kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos',
+  'Cookie': 'PHPSESSID=1hkes2gigv5uifp7to76ihto1s'
+};
 // const String authToken =
 //     'kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos';
 const appBaseUrl = 'https://api.brixmarket.site/';

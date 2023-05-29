@@ -89,6 +89,14 @@ class LoginPage extends StatelessWidget {
                                   onPressed: homeCtrl.login,
                                 ),
                                 const SizedBox(height: 16),
+                                // const SizedBox(height: 15),
+                                // FormButton(
+                                //   width: 430,
+                                //   text: Str.signIn,
+                                //   bgColor: Colors.blueAccent,
+                                //   onPressed: homeCtrl.login1,
+                                // ),
+                                // const SizedBox(height: 16),
                                 SizedBox(
                                     width: 430,
                                     child: TextStyles.richTexts(

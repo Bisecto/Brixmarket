@@ -120,7 +120,7 @@ profileImgAndBasicInfo(int num) {
                     const Text('Status: ',style: TextStyle(
                       color: Colors.white
                     ),),
-                    Obx(() => homeCtrl.user.value.isVerified == true
+                    Obx(() => homeCtrl.user.value.verifiedAgent == true
                         ? Row(
                             children: const [
                               Icon(

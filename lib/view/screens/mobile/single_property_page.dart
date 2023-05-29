@@ -35,6 +35,7 @@ class _Single_PropertyState extends State<Single_Property> {
 
   @override
   void initState() {
+    print('fyewtudgshkjlYUWEFJKDSN');
     getSingleProperty(widget.property_id);
   }
 
@@ -54,6 +55,7 @@ class _Single_PropertyState extends State<Single_Property> {
               //homeCtrl.single_property = properties;
               singleProperty.Property property = snapdata.data!.data.property;
               singleProperty.User user = snapdata.data!.data.property.user;
+              print('FETYUWYGSDHUKJNCVWEDJSHWUEIDSJH');
               return SinglePropertyDetailPage(
                   feature: property.features,
                   images: property.media,
@@ -64,7 +66,7 @@ class _Single_PropertyState extends State<Single_Property> {
                   landMark: '',
                   amenities: property.amenities,
                   title: property.title,
-                  property_id: property.id,
+                  propertyId: property.id,
                   contact: user.phoneNumber,
                   userImage: user.image,
                   user: user.id);

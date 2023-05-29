@@ -231,11 +231,11 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
           controller: EditCtrl.otp,
           keyboardType: TextInputType.number,
           onCompleted: (v) {
-            formKey.currentState!.validate();
+            formKey.currentState?.validate();
           },
           onChanged: (value) {
             if (value.length == 6) {
-              homeCtrl.verifyOTP();
+              homeCtrl.verifyOTP2();
             }
           },
           beforeTextPaste: (text) {

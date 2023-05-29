@@ -347,7 +347,8 @@ class Utils {
     try {
       if (Platform.isAndroid) {
         Position? position = await Geolocator.getLastKnownPosition(
-            forceAndroidLocationManager: false);
+            forceAndroidLocationManager: true);
+
         return position;
       } else {
         Position position = await Geolocator.getCurrentPosition(
@@ -363,6 +364,11 @@ class Utils {
 
   static Future<String?> getState() async {
     var position = await getCurrentLocation();
+    print('position');
+    print('position');
+    print('position');
+    print(position);
+    print('position');
     if (position == null) {
       dnd(position);
       return '...';

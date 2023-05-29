@@ -4634,7 +4634,8 @@ final allCountries = {
     }
   ]
 };
-final ngnLga = {
+final ngnLga =
+{
   "Borno": [
     "Abadam",
     "Askira\Uba",

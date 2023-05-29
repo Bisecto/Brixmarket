@@ -136,7 +136,7 @@ class _PasswordOtpPageState extends State<PasswordOtpPage> {
                             onPress1: (){
                               if (_start==0) {
                                 //resendOTP();
-                                homeCtrl.sendPasswordTOP();
+                                homeCtrl.sendPasswordOTP();
                                 setState(() {
                                   _start = 59;
                                   startTimer();

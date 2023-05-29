@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import '../res/strings.dart';
 import '../view/screens/about.dart';
 import '../view/screens/accept_location_usage.dart';
+import '../view/screens/auth/login_page.dart';
 import '../view/screens/authentication_pages/login.dart';
 import '../view/screens/authentication_pages/reg_agency.dart';
 import '../view/screens/authentication_pages/reg_basic_info.dart';
@@ -44,7 +45,7 @@ import 'package:brixmarket/view/screens/filter_web_page.dart';
 List<GetPage<dynamic>> authPages = [
   GetPage(
       name: RouteStr.login,
-      page: () => LoginPage(),
+      page: () => Login(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 500)),
   GetPage(

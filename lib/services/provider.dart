@@ -56,7 +56,8 @@ class Provider extends GetConnect {
               onTimeout: () => http.Response('Request time out', 408));
 
       // dnd(response.body);
-
+      print(url);
+      print(response);
       return processResponse(response);
     } catch (e, t) {
       // dnd('$e Trace: $t');
@@ -95,7 +96,7 @@ class Provider extends GetConnect {
   }
 
   Future postFiles(url, List<Uint8List> imagePaths,
-      {Map<String, dynamic>? data}) async {
+      {Map<String, dynamic>? data,String? token}) async {
     await Connectivity().checkConnection().then((connected) async =>
         connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;
@@ -150,6 +151,8 @@ class Provider extends GetConnect {
       var response = await http.Response.fromStream(httpResponse).timeout(
           timeOutDuration2,
           onTimeout: () => http.Response('Request time out', 408));
+      print(response);
+      print(response);print(response);print(response);print(response);print(response);
       return processResponse(response);
     } catch (e, t) {
       // dnd('$e Trace: $t');
@@ -159,13 +162,14 @@ class Provider extends GetConnect {
   }
 
   processResponse(http.Response response) {
-    // dnd(response.body);
+     dnd(response.body);
     try {
       if (response.statusCode == 200) {
         // print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
         // print(response.body);
         ApiResponse apiResponse =
             ApiResponse.fromJson(jsonDecode(response.body));
+        print(apiResponse.data);
         if (!apiResponse.status) {
           try {
             if (apiResponse.causes.isNotEmpty) {
@@ -200,8 +204,10 @@ class Provider extends GetConnect {
       // dnd('$e Trace: $t');
       // MSG.errorSnackBar('Connection error, try again');
       // dnd(e);
+      print('Ok its null');
       return null;
     }
+     print('Ok its not null');
     return null;
   }
 }

@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     userMail = await SharedPref.getString('user_email');
     userPassword = await SharedPref.getString('user_password');
     EditCtrl.email.text = userMail;
+    print(userMail + userPassword);
 
       if (userMail.isNotEmpty &&
         userPassword.isNotEmpty ) {
@@ -90,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //await SharedPref.putBool('acceptLocationUsage', true);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
-          await openApp();
+          await openApp(context);
         } else {
           Get.to(() => NoInternet(
               callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
@@ -102,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //await SharedPref.putBool('acceptLocationUsage', false);
       Connectivity().checkConnection().then((connected) async {
         if (connected) {
-          await openApp();
+          await openApp(context);
         } else {
           Get.to(() => NoInternet(
               callBack: () => Get.offNamed(RouteStr.mobileSplashscreen),
@@ -112,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  openApp() async {
+  openApp(context) async {
     bool firstOpen = (await SharedPref.getBool('firstOpen')) ?? false;
 
     if (firstOpen) {

@@ -33,7 +33,7 @@ class SinglePropertyDetailPage extends StatefulWidget {
   String title;
   Location location;
   String userImage;
-  String property_id;
+  String propertyId;
   Property property;
   String contact;
   String user;
@@ -49,7 +49,7 @@ class SinglePropertyDetailPage extends StatefulWidget {
       required this.property,
       required this.contact,
       required this.title,
-      required this.property_id,
+      required this.propertyId,
       required this.amenities,
       required this.location,
       required this.price,
@@ -102,9 +102,9 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
 
     Future.delayed(const Duration(seconds: 1), () {
       if (HomeController.isLogin.value) {
-        PropCtrl.markPropertyAsViewed(widget.property_id, widget.user);
+        PropCtrl.markPropertyAsViewed(widget.propertyId, widget.user);
       } else if (deviceId != 'unknown') {
-        PropCtrl.markPropertyAsViewed(widget.property_id, deviceId);
+        PropCtrl.markPropertyAsViewed(widget.propertyId, deviceId);
       }
     });
   }
@@ -469,7 +469,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                                           user: widget.property.user),
                                       weight: FontWeight.bold,
                                       size: 16)),
-                              widget.property.user.verifiedAgent == false
+                              widget.property.user.verifiedAgent == 0
                                   ? const SizedBox.shrink()
                                   : const Positioned(
                                       right: 2,
@@ -480,15 +480,15 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                           ),
                           const SizedBox(height: 5),
                           CustomText(
-                              color: widget.property.user.verifiedAgent == false
+                              color: widget.property.user.verifiedAgent == 0
                                   ? Colors.deepOrangeAccent
                                   : Colors.green,
-                              text: (widget.property.user.verifiedAgent == false
+                              text: (widget.property.user.verifiedAgent == 0
                                       ? 'Not Verified '
                                       : 'Verified ') +
-                                  (widget.property.user.isUser == true
+                                  (widget.property.user.isUser == 1
                                       ? 'Property Agent'
-                                      : widget.property.user.isAgent == true
+                                      : widget.property.user.isAgent == 1
                                           ? 'Realtor/Agent'
                                           : 'Real Estate Agency'),
                               weight: FontWeight.w400,
@@ -721,7 +721,8 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                                         _handleTap(index);
                                       });
                                     }),
-                                    child: Container(
+                                    child:
+                                    Container(
                                         height: 50,
                                         width: double.infinity,
                                         margin: const EdgeInsets.symmetric(
@@ -940,7 +941,8 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                     ),
                   ),
                   user.id == widget.property.user.id
-                      ? FormButton(
+                      ?
+                  FormButton(
                           onPressed: () async {
                             showDialog(
                               context: context,

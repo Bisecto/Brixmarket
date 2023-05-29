@@ -1,12 +1,21 @@
+import 'dart:convert';
+
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/controllers/edit_controller.dart';
+import 'package:brixmarket/core/app.dart';
 import 'package:brixmarket/utils/utils.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:brixmarket/view/screens/reset_password_pages/password_otp_page.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/instance.dart';
+import '../../../core/dialogs.dart';
+import '../../../core/preloader.dart';
 import '../../../res/strings.dart';
+import '../../../services/provider.dart';
 import '../../../utils/validations.dart';
 import '../../widgets/auth_side.dart';
 import '../../widgets/form_button.dart';
@@ -68,7 +77,43 @@ class ForgotPassword extends StatelessWidget {
                                 FormButton(
                                   width: 430,
                                   text: Str.reset,
-                                  onPressed: homeCtrl.sendPasswordTOP,
+                                  onPressed: () async {
+
+                                      print(1);
+                                      EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
+                                      if (EditCtrl.emailErr.value.isNotEmpty) {
+                                        print(2);
+
+                                        MSG.errorSnackBar(
+                                          'Invalid email provided',
+                                        );
+                                      } else {
+                                        Preloader.show();
+                                        print(3);
+                                        var url= Uri.parse('$appBaseUrl login/send-OTP/${EditCtrl.email.text}');
+                                        final res =
+                                        await http.get(url,headers: await formDataHeader());
+                                        print(res.body);
+                                        final json = await jsonDecode(res.body);
+                                        print(json);
+                                        if(json['status']){
+                                          Preloader.hide();
+                                          Get.off(() => PasswordOtpPage());
+                                        } else{
+                                          Preloader.hide();
+                                          MSG.errorSnackBar('Something went wrong please try again');
+                                        }
+                                        // var response = await Provider().getData("login/send-OTP/${EditCtrl.email.text}");
+                                        // print(response);
+                                        // if (response != null) {
+                                        //   print(4);
+                                        //
+                                        //   Preloader.hide();
+                                        //   Get.off(() => PasswordOtpPage());
+                                        // }
+                                      }
+
+                                  },
                                 ),
                                 const SizedBox(height: 16),
                                 SizedBox(

@@ -8,10 +8,12 @@ class Agency {
   String? state;
   String? legalStatus;
   bool? isVerified;
-  String? id;
+  //String? id;
   AgencyDocument? document;
 
-  Agency({this.user, this.name, this.address, this.city, this.state, this.legalStatus, this.isVerified, this.id, this.document});
+  Agency({this.user, this.name, this.address, this.city, this.state, this.legalStatus, this.isVerified,
+    //this.id,
+    this.document});
 
   Agency.fromJson(Map<String, dynamic> json) {
     user = json['user'];
@@ -21,7 +23,7 @@ class Agency {
     state = json['state'];
     legalStatus = json['legal_status'];
     isVerified = json['is_verified'].toString() == '1';
-    id = json['id'];
+    //id = json['id'];
     document = json['document'] != null ? AgencyDocument.fromJson(json['document']) : null;
   }
 
@@ -34,7 +36,7 @@ class Agency {
     data['state'] = state;
     data['legal_status'] = legalStatus;
     data['is_verified'] = isVerified;
-    data['id'] = id;
+   // data['id'] = id;
     if (document != null) {
       data['document'] = document!.toJson();
     }

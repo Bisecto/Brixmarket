@@ -35,7 +35,7 @@ class MobileHomePage extends StatefulWidget {
 class _MobileHomePageState extends State<MobileHomePage> {
   @override
   void initState() {
-
+    Utils.getState();
     super.initState();
   
 
