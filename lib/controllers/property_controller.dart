@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:brixmarket/core/app.dart';
 import 'package:http/http.dart' as http;
+import 'package:brixmarket/models/saved_property_model.dart' as savedProperty;
 
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
@@ -168,6 +169,34 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
 
     homeCtrl.savingProperty.remove(property.id);
   }
+  savePropertySP(savedProperty.Property property) async {
+    homeCtrl.savingProperty.add(property.id);
+    if (HomeController.userId == '') {
+      Get.toNamed(RouteStr.login);
+    } else {
+      var response = await Provider()
+          .postData("user/save-property", Property.map(id: property.id));
+      if (response != null && response.isNotEmpty) {
+        mySavedProperties.value = [];
+        mySavedProperties.value = (response['properties'] as List)
+            .map((e) => Property.fromJson(e))
+            .toList();
+      }
+      if (propCtrl.user.value.savedProperties != null) {
+        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
+          propCtrl.user.value.savedProperties!.remove(property.id);
+        } else {
+          propCtrl.user.value.savedProperties!.add(property.id!);
+        }
+      }
+
+      propCtrl.user.refresh();
+      print('LOLXXZS');
+      MSG.snackBar(response['message']);
+    }
+
+    homeCtrl.savingProperty.remove(property.id);
+  }
 
   saveProperty1(singleProp.Property property) async {
     homeCtrl.savingProperty.add(property.id);
@@ -289,7 +318,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       MSG.snackBar(json['message']);
       final response =
       await http.get(Uri.parse('$appBaseUrl property/get-saved-properties/${HomeController.userId}'),headers: await formDataHeader());
-      //print(res.body);
+      print('property/get-saved-properties/');
       final jsonResponse = await jsonDecode(res.body);
       if (jsonResponse['data'] != null && jsonResponse['data'].isNotEmpty) {
         mySavedProperties.value = [];

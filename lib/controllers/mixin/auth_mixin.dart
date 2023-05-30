@@ -209,7 +209,7 @@ mixin Auth {
             }
 
             await homeCtrl.loginUser(userObj);
-            await propCtrl.getSavedProperties();
+            await propCtrl.getSavedProperties(homeCtrl.user.value.id);
             Preloader.hide();
             // MSG.snackBar('Login successful');
             if (Utils.isMobileApp) {
@@ -291,7 +291,7 @@ mixin Auth {
             }
 
             await homeCtrl.loginUser(userObj);
-            await propCtrl.getSavedProperties();
+            await propCtrl.getSavedProperties(homeCtrl.user.value.id);
             Preloader.hide();
             // MSG.snackBar('Login successful');
             if (Utils.isMobileApp) {

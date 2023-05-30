@@ -216,7 +216,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     homeCtrl.animateHomeHeroImage();
     // propCtrl.fetchFeaturedProperties();
     //propCtrl.getHomeproperty();
-    await propCtrl.getSavedProperties();
+    await propCtrl.getSavedProperties(homeCtrl.user.value.id);
     await propCtrl.getAmenitiesWeb();
     await fetchFAQs();
   }

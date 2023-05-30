@@ -1,15 +1,20 @@
 import 'dart:async';
+import 'package:brixmarket/core/app.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:brixmarket/models/filter_property_model.dart';
 import 'package:brixmarket/controllers/edit_controller.dart';
+
+import '../models/saved_property_model.dart';
 class PropertyApi {
 
   final StreamController<FilterModel> getfilterProperty = StreamController();
+  final StreamController<SavedProperty> getsavedProperty = StreamController();
+
   Future<void> getProperty(int page,{String searchValue='',String location=''}) async {
     if(location.length>0){
     EditCtrl.filterState.value.text=location;}
-    var Url = Uri.parse('https://api.brixmarket.site/property/filter-properties?page=$page');
+    var Url = Uri.parse('$appBaseUrl property/filter-properties?page=$page');
     var body={
       'search_term': searchValue==''?EditCtrl.webSearchKeyWord.value.text:searchValue,
       'min_price': EditCtrl.priceMin.value.text,
@@ -36,6 +41,15 @@ class PropertyApi {
     final dataBody = await jsonDecode(res.body);
     FilterModel filterModel = FilterModel.fromJson(dataBody);
     getfilterProperty.add(filterModel);
+  }
+  Future<void> getSavedProperties(int page, String? userId) async {
+    var Url = Uri.parse('$appBaseUrl property/get-saved-properties/$userId ?page=$page');
+    final res =
+    await http.post(Url,headers: await formDataHeader());
+    final dataBody = await jsonDecode(res.body);
+    SavedProperty savedProperty = SavedProperty.fromJson(dataBody);
+getsavedProperty.add(savedProperty);
+
   }
 
 }

@@ -30,7 +30,7 @@ class SavedPropertiesWidget extends StatelessWidget {
           children: [
             FutureBuilder(
                 initialData: propCtrl.mySavedProperties,
-                future: propCtrl.getSavedProperties(),
+                future: propCtrl.getSavedProperties(homeCtrl.user.value.id),
                 builder: (context, AsyncSnapshot snap) {
                   List<Property> myProperties = snap.data ?? [];
                   return Padding(

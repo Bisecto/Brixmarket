@@ -7,6 +7,8 @@ import '../../models/user_model.dart';
 import '../../utils/utils.dart';
 import '../../../models/singleProperty_model.dart'as single;
 import 'package:brixmarket/models/single_property_model.dart'as singleProperty;
+import 'package:brixmarket/models/saved_property_model.dart' as savedProperty;
+
 class SaveProperty extends StatelessWidget {
   final singleProperty.Property property;
   final User user;
@@ -72,6 +74,23 @@ class SavePropertyIcon extends StatelessWidget {
     );
   }
 }
+class SavePropertyIconSavedProperty extends StatelessWidget {
+  final savedProperty.Property property;
+  final User user;
+  final double? size;
+  final Color? color;
+  final List state;
+  const SavePropertyIconSavedProperty({Key? key, required this.property, required this.user, this.size, this.color, required this.state}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => homeCtrl.savePropertySP(property),
+      child: Utils.savedPropertyIcon(property.id, size: size ?? 24, user: user, color: color, state: state),
+    );
+  }
+}
+
 class SavePropert extends StatelessWidget {
   final singleProperty.Property property;
   final User user;

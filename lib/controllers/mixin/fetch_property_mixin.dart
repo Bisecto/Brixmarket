@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:brixmarket/core/app.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../../core/preloader.dart';
 import '../../models/property_model.dart';
@@ -97,14 +101,26 @@ mixin FetchProperty {
     return allAmenities;
   }
 
-  Future getSavedProperties() async {
-    if (propCtrl.mySavedProperties.isEmpty) {
-      var response = await Provider().postData("user/saved-properties", Property.map(id: propCtrl.property.id));
+  Future getSavedProperties(String? userId) async {
+   // if (propCtrl.mySavedProperties.isEmpty) {
+      var response = await Provider().postData("property/get-saved-properties/$userId", Property.map(id: propCtrl.property.id));
       if (response != null && response.isNotEmpty) {
         propCtrl.mySavedProperties.value = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
       }
-    }
+    //}
 
     return propCtrl.mySavedProperties.isEmpty ? null : propCtrl.mySavedProperties;
   }
-}
+  // Future getMySavedProperty(String? userId) async {
+  //   var Url = Uri.parse('$appBaseUrl property/get-saved-properties/$userId');
+  //   final res =
+  //   await http.post(Url,headers: await formDataHeader());
+  //   final dataBody = await jsonDecode(res.body);
+  //   Property property=Property.fromJson(dataBody['data']['properties']);
+  //   propCtrl.mySavedProperties.add(property);
+  //   return propCtrl.mySavedProperties.isEmpty ? null : propCtrl.mySavedProperties;
+  //
+  //
+  // }
+
+  }
