@@ -57,7 +57,22 @@ class SaveFilterPropertyIcon extends StatelessWidget {
     );
   }
 }
-
+// class SavePropertyIcon extends StatelessWidget {
+//   final String propertyId;
+//   final User user;
+//   final double? size;
+//   final Color? color;
+//   final List state;
+//   const SavePropertyIcon({Key? key,required this.propertyId, required this.user, this.size, this.color, required this.state}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () => homeCtrl.saveFilterProperty(property),
+//       child: Utils.savedPropertyIcon(propertyId, size: size ?? 24, user: user, color: color, state: state),
+//     );
+//   }
+// }
 class SavePropertyIcon extends StatelessWidget {
   final Property property;
   final User user;
@@ -86,7 +101,7 @@ class SavePropertyIconSavedProperty extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => homeCtrl.savePropertySP(property),
-      child: Utils.savedPropertyIcon(property.id, size: size ?? 24, user: user, color: color, state: state),
+      child: Utils.savedPropertyIcon(property.property, size: size ?? 24, user: user, color: color, state: state),
     );
   }
 }

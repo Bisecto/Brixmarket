@@ -188,9 +188,10 @@ class _Short_stayState extends State<Short_stay> {
                                               ? buildListShort_stayContainer(
                                               properties:
                                               properties)
-                                              : PropertyShortStayGrid(
-                                              properties:
-                                              properties),
+                                                  :Container(),
+                                              // : PropertyShortStayGrid(
+                                              // properties:
+                                              // properties),
                                         );
                                         }
                                       }),

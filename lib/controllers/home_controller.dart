@@ -79,7 +79,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     isLogin.value = false;
     await SharedPref.remove('userId');
     await SharedPref.remove('token');
-    propCtrl.mySavedProperties.clear();
+    propCtrl.myPropertiesID.clear();
     if (Utils.isMobileApp) {
       Get.find<MobileHomeController>().bottomNavIndex.value = 0;
       Get.offAndToNamed(RouteStr.mobileLanding);

@@ -285,7 +285,7 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                 child: Icon(Icons.favorite),
                               ),
                               Obx(
-                                () => homeCtrl.mySavedProperties.value.isEmpty
+                                () => homeCtrl.myPropertiesID.value.isEmpty
                                     ? const SizedBox.shrink()
                                     : Positioned(
                                         top: 1,
@@ -294,7 +294,7 @@ appBarWeb(GlobalKey<ScaffoldState> scaffoldKey) {
                                             backgroundColor: Utils.isMobileApp ? Colors.black : Colors.red,
                                             radius: 8,
                                             child: Text(
-                                              homeCtrl.mySavedProperties.value.length.toString(),
+                                              homeCtrl.myPropertiesID.value.length.toString(),
                                               style: const TextStyle(color: Colors.white, height: 1, fontSize: 12, fontWeight: FontWeight.w600),
                                             )),
                                       ),

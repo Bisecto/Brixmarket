@@ -671,8 +671,9 @@ class _Filter_webState extends State<Filter_web> {
                                                 !isTabletDown()
                                                 ? buildListContainer(
                                                     properties: properties)
-                                                : PropertiesWebGrade(
-                                                    properties: properties),
+                                                    :Container(),
+                                                // : PropertiesWebGrade(
+                                                //     properties: properties),
                                                 if (snapdata.data!.data.pages >
                                                 1)
                                               Align(

@@ -139,63 +139,71 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     Get.toNamed(RouteStr.webProperty, arguments: {'property': property});
   }
 
-  var mySavedProperties = <Property>[].obs;
+  //var mySavedProperties = <Property>[].obs;
+  var myPropertiesID=[].obs;
 
   saveProperty(Property property) async {
     homeCtrl.savingProperty.add(property.id);
+
     if (HomeController.userId == '') {
       Get.toNamed(RouteStr.login);
     } else {
       var response = await Provider()
           .postData("user/save-property", Property.map(id: property.id));
+      print(response);
       if (response != null && response.isNotEmpty) {
-        mySavedProperties.value = [];
-        mySavedProperties.value = (response['properties'] as List)
-            .map((e) => Property.fromJson(e))
-            .toList();
-      }
-      if (propCtrl.user.value.savedProperties != null) {
-        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
-          propCtrl.user.value.savedProperties!.remove(property.id);
-        } else {
-          propCtrl.user.value.savedProperties!.add(property.id!);
+        // var Url = Uri.parse('$appBaseUrl user/list-saved-properties');
+        // final res =
+        // await http.post(Url,headers: await formDataHeader(),body: {
+        //   'userId':HomeController.userId
+        // });
+        // final dataBody = await jsonDecode(res.body);
+        // if(dataBody['status']){
+        //   print(dataBody['data']);
+        //   //myPropertiesID=dataBody['data'];
+        //
+        // }
+        if (response['message']=='Property added to your saved properties'){
+          propCtrl.myPropertiesID.add(property.id);
+        }else //if (response['message']=='Property removed from your saved properties')
+        {
+          propCtrl.myPropertiesID.remove(property.id);
         }
+        propCtrl.user.refresh();
+        print('LOLXXZS');
+        MSG.snackBar(response['message']);
       }
 
-      propCtrl.user.refresh();
-      print('LOLXXZS');
-      MSG.snackBar(response['message']);
+
+
     }
 
     homeCtrl.savingProperty.remove(property.id);
   }
   savePropertySP(savedProperty.Property property) async {
-    homeCtrl.savingProperty.add(property.id);
+    homeCtrl.savingProperty.add(property.property);
     if (HomeController.userId == '') {
       Get.toNamed(RouteStr.login);
     } else {
       var response = await Provider()
-          .postData("user/save-property", Property.map(id: property.id));
+          .postData("user/save-property", Property.map(id: property.property));
+      print(response);
       if (response != null && response.isNotEmpty) {
-        mySavedProperties.value = [];
-        mySavedProperties.value = (response['properties'] as List)
-            .map((e) => Property.fromJson(e))
-            .toList();
-      }
-      if (propCtrl.user.value.savedProperties != null) {
-        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
-          propCtrl.user.value.savedProperties!.remove(property.id);
-        } else {
-          propCtrl.user.value.savedProperties!.add(property.id!);
+        if (response['message']=='Property added to your saved properties'){
+          propCtrl.myPropertiesID.add(property.property);
+          print(propCtrl.myPropertiesID);
+        }else
+        {
+          propCtrl.myPropertiesID.remove(property.property);
+          print(propCtrl.myPropertiesID);
         }
+        propCtrl.user.refresh();
+        print('LOLXXZS');
+        MSG.snackBar(response['message']);
       }
-
-      propCtrl.user.refresh();
-      print('LOLXXZS');
-      MSG.snackBar(response['message']);
     }
 
-    homeCtrl.savingProperty.remove(property.id);
+    homeCtrl.savingProperty.remove(property.property);
   }
 
   saveProperty1(singleProp.Property property) async {
@@ -206,21 +214,27 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       var response = await Provider()
           .postData("user/save-property", Property.map(id: property.id));
       if (response != null && response.isNotEmpty) {
-        mySavedProperties.value = [];
-        mySavedProperties.value = (response['properties'] as List)
-            .map((e) => Property.fromJson(e))
-            .toList();
-      }
-      if (propCtrl.user.value.savedProperties != null) {
-        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
-          propCtrl.user.value.savedProperties!.remove(property.id);
-        } else {
-          propCtrl.user.value.savedProperties!.add(property.id);
+        // var Url = Uri.parse('$appBaseUrl user/list-saved-properties');
+        // final res =
+        // await http.post(Url,headers: await formDataHeader(),body: {
+        //   'userId':HomeController.userId
+        // });
+        // final dataBody = await jsonDecode(res.body);
+        // if(dataBody['status']){
+        //   myPropertiesID=dataBody['data'];
+        //
+        // }
+        if (response['message']=='Property added to your saved properties'){
+          propCtrl.myPropertiesID.add(property.id);
+        }else
+          //if (response['message']=='Property removed from your saved properties')
+          {
+          propCtrl.myPropertiesID.remove(property.id);
         }
+        propCtrl.user.refresh();
+        print('LOLXXZS');
+        MSG.snackBar(response['message']);
       }
-
-      propCtrl.user.refresh();
-      MSG.snackBar(response['message']);
     }
 
     homeCtrl.savingProperty.remove(property.id);
@@ -245,31 +259,32 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     homeCtrl.savingProperty.add(property.id);
     if (HomeController.userId == '') {
       Get.toNamed(RouteStr.login);
-    } else {
+    }
+    else {
       final res =
       await http.post(Uri.parse('$appBaseUrl user/save-property'),headers: await formDataHeader(),body:{'property': property.id, 'userId': HomeController.userId} );
       //print(res.body);
       final json = await jsonDecode(res.body);
-      MSG.snackBar(json['message']);
-      final response =
-      await http.get(Uri.parse('$appBaseUrl property/get-saved-properties/${HomeController.userId}'),headers: await formDataHeader());
-      //print(res.body);
-      final jsonResponse = await jsonDecode(res.body);
-      print(jsonResponse['data']);
-      if (jsonResponse['data'] != null && jsonResponse['data'].isNotEmpty) {
-            mySavedProperties.value = [];
-            mySavedProperties.value = (jsonResponse['data']['properties'])
-                .map((e) => Property.fromJson(e))
-                .toList();
-          }
-      if (propCtrl.user.value.savedProperties != null) {
-        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
-          propCtrl.user.value.savedProperties!.remove(property.id);
-        } else {
-          propCtrl.user.value.savedProperties!.add(property.id);
-        }
-      }
+      //MSG.snackBar(json['message']);
+      // var Url = Uri.parse('$appBaseUrl user/list-saved-properties');
+      // final res2 =
+      // await http.post(Url,headers: await formDataHeader(),body: {
+      //   'userId':HomeController.userId
+      // });
+      // final dataBody = await jsonDecode(res2.body);
+      // print(dataBody);
+      // if(dataBody['status']){
+      //   myPropertiesID=dataBody['data'];
+      //
+      // }
       propCtrl.user.refresh();
+      print('LOLXXZS');
+     if (json['message']=='Property added to your saved properties'){
+       propCtrl.myPropertiesID.add(property.id);
+    }else //if (json['message']=='Property removed from your saved properties')
+    {
+       propCtrl.myPropertiesID.remove(property.id);
+     }
       MSG.snackBar(json['message']);
       // var response = await Provider().postData("user/save-property",
       //     {'property': property.id, 'userId': HomeController.userId}
@@ -315,25 +330,25 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       await http.post(Uri.parse('$appBaseUrl user/save-property'),headers: await formDataHeader(),body:{'property': property.id, 'userId': HomeController.userId} );
       //print(res.body);
       final json = await jsonDecode(res.body);
-      MSG.snackBar(json['message']);
-      final response =
-      await http.get(Uri.parse('$appBaseUrl property/get-saved-properties/${HomeController.userId}'),headers: await formDataHeader());
-      print('property/get-saved-properties/');
-      final jsonResponse = await jsonDecode(res.body);
-      if (jsonResponse['data'] != null && jsonResponse['data'].isNotEmpty) {
-        mySavedProperties.value = [];
-        mySavedProperties.value = (jsonResponse['data']['properties'] as List)
-            .map((e) => Property.fromJson(e))
-            .toList();
-      }
-      if (propCtrl.user.value.savedProperties != null) {
-        if (propCtrl.user.value.savedProperties!.contains(property.id)) {
-          propCtrl.user.value.savedProperties!.remove(property.id);
-        } else {
-          propCtrl.user.value.savedProperties!.add(property.id);
-        }
-      }
+      // var Url = Uri.parse('$appBaseUrl user/list-saved-properties');
+      // final res2 =
+      // await http.post(Url,body: {
+      //   'userId':HomeController.userId
+      // });
+      // final dataBody = await jsonDecode(res.body);
+      // if(dataBody['status']){
+      //   myPropertiesID=dataBody['data'];
+      //
+      // }
       propCtrl.user.refresh();
+      print('LOLXXZS');
+      if (json['message']=='Property added to your saved properties'){
+        propCtrl.myPropertiesID.add(property.id);
+      }else
+        //if (json['message']=='Property removed from your saved properties')
+        {
+        propCtrl.myPropertiesID.remove(property.id);
+      }
       MSG.snackBar(json['message']);
     }
 

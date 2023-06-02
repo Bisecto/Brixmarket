@@ -117,6 +117,8 @@ mixin Auth {
       Preloader.hide();
       EditCtrl.disposeControllers();
       Get.offAndToNamed(RouteStr.regBasic);
+    }else{
+      Preloader.hide();
     }
   }
   Future verifyOTP2() async {
@@ -150,6 +152,7 @@ mixin Auth {
       EditCtrl.disposeControllers();
       Get.offAndToNamed(RouteStr.regBasic);
     }else{
+      Preloader.hide();
       MSG.errorSnackBar('Your entered an invalid Verification code');
 
     }
@@ -478,6 +481,7 @@ mixin Auth {
           email:await SharedPref.getString('user_email')
         );
       }
+
     } else {
       print('Not Registered');
       data = User.map(
@@ -514,6 +518,8 @@ mixin Auth {
         if (Utils.isMobileApp) {
           FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
         }
+      } else{
+        Preloader.hide();
       }
     }
   }

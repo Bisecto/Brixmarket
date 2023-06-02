@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
                         FormButton(
                           width: 430,
                           text: Str.signIn,
-                          bgColor: Colors.blueAccent,
+                          //bgColor: Colors.blueAccent,
                           onPressed: homeCtrl.mainlLogin,
                         ),
                         const SizedBox(height: 16),

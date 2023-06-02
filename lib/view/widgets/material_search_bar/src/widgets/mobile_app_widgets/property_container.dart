@@ -343,7 +343,7 @@ buildSavedList(
         //Get.toNamed(RouteStr.mobileProperty);
         Navigator.of(context!).push(MaterialPageRoute(
             builder: (context) => Single_Property(
-              property_id: property.id,
+              property_id: property.property,
               property_tiitle: property.data.title,
             )));
       },

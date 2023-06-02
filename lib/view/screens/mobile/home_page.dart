@@ -806,7 +806,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
 
   getSearchedResult(int page, String searchValue) async {
     PropertyApi propertyApi = PropertyApi();
-    await propertyApi.getProperty(page, location: searchValue).then((value) => {
+    await propertyApi.getProperty(page, location: searchValue.toLowerCase()).then((value) => {
           isLoading = false,
         });
     setState(() {
@@ -909,6 +909,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
           Positioned(
             bottom: 50,
             left: 0, right: 0,
+            top: 2,
             child: SizedBox(
               height: Get.height,
               child: SingleChildScrollView(

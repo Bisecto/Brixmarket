@@ -13,6 +13,7 @@ import '../../utils/utils.dart';
 import '../edit_controller.dart';
 import '../instance.dart';
 import 'package:brixmarket/view/screens/filter_web_page.dart';
+
 mixin FetchProperty {
   var activeNavItem = NavItems.home.obs;
 
@@ -20,6 +21,7 @@ mixin FetchProperty {
   late Future<List> allAmenitiesFuture = getAmenitiesWeb();
   var refreshCount = 0.obs;
   var searchResultCount = 0.obs;
+
   Future<List<Property>> getPropertiesWeb({bool filter = false}) async {
     Preloader.show();
     if (filter || activeNavItem.value != NavItems.home) {
@@ -28,15 +30,19 @@ mixin FetchProperty {
     var response = await Provider().getData("property/get-all");
     if (response != null && response.isNotEmpty) {
       Preloader.hide();
-      return (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+      return (response['properties'] as List)
+          .map((e) => Property.fromJson(e))
+          .toList();
     }
     Preloader.hide();
     return [];
   }
 
-  void setAllPropertiesWeb({String val='',bool filter = false, NavItems navItem = NavItems.home, bool sideNav = false}) async {
+  void setAllPropertiesWeb(
+      {String val = '', bool filter = false, NavItems navItem = NavItems
+          .home, bool sideNav = false}) async {
     //if (sideNav) Get.back();
-    Get.to(()=> Filter_web());
+    Get.to(() => Filter_web());
     Get.toNamed(RouteStr.webfilter);
     activeNavItem.value = navItem;
     //allPropertiesWeb.value = getPropertiesWeb(filter: filter);
@@ -45,6 +51,7 @@ mixin FetchProperty {
   }
 
   var map = <String, String>{};
+
   Future<List<Property>> applyFilterParametersWeb() async {
     map = {
       'min_price': EditCtrl.priceMin.value.text,
@@ -85,42 +92,56 @@ mixin FetchProperty {
 
     if (response != null && response.isNotEmpty) {
       Preloader.hide();
-      return (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+      return (response['properties'] as List)
+          .map((e) => Property.fromJson(e))
+          .toList();
     }
     Preloader.hide();
     return [];
   }
 
   List allAmenities = [];
+
   Future<List> getAmenitiesWeb() async {
     allAmenities = [];
     if (allAmenities.isEmpty) {
       String category = 'all';
-      await Provider().postData("property/get-amenities/$category", Property.map()).then((value) => allAmenities = value as List);
+      await Provider().postData(
+          "property/get-amenities/$category", Property.map()).then((value) =>
+      allAmenities = value as List);
     }
     return allAmenities;
   }
 
   Future getSavedProperties(String? userId) async {
-   // if (propCtrl.mySavedProperties.isEmpty) {
-      var response = await Provider().postData("property/get-saved-properties/$userId", Property.map(id: propCtrl.property.id));
-      if (response != null && response.isNotEmpty) {
-        propCtrl.mySavedProperties.value = (response['properties'] as List).map((e) => Property.fromJson(e)).toList();
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+    print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');
+
+    print(userId);
+    if(!userId.isNull){
+      var Url = Uri.parse('$appBaseUrl user/list-saved-properties');
+      final res =
+      await http.post(Url, body: {
+        'userId': userId
+      });
+      final dataBody = await jsonDecode(res.body);
+      if (dataBody['status']) {
+        print(dataBody['data']);
+        propCtrl.myPropertiesID.value = dataBody['data'];
+        print(propCtrl.myPropertiesID);
+
+        return propCtrl.myPropertiesID.isEmpty ? null : propCtrl.myPropertiesID;
       }
-    //}
-
-    return propCtrl.mySavedProperties.isEmpty ? null : propCtrl.mySavedProperties;
-  }
-  // Future getMySavedProperty(String? userId) async {
-  //   var Url = Uri.parse('$appBaseUrl property/get-saved-properties/$userId');
-  //   final res =
-  //   await http.post(Url,headers: await formDataHeader());
-  //   final dataBody = await jsonDecode(res.body);
-  //   Property property=Property.fromJson(dataBody['data']['properties']);
-  //   propCtrl.mySavedProperties.add(property);
-  //   return propCtrl.mySavedProperties.isEmpty ? null : propCtrl.mySavedProperties;
-  //
-  //
-  // }
+    }else{
+      return null;
+    }
 
   }
+}

@@ -43,6 +43,11 @@ mixin ResetPassword {
     if (response != null) {
       Preloader.hide();
       Get.off(() => const CreateNewPassword());
+    }else{
+      Preloader.hide();
+      MSG.errorSnackBar('Your entered an invalid Verification code');
+
+
     }
   }
 

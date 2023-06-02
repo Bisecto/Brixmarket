@@ -46,7 +46,7 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   void dispose() {
     super.dispose();
-    //_filterStreamController.di
+    //_filterStreamController.close();
   }
 
   int page = 1;

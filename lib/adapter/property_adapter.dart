@@ -47,6 +47,7 @@ class PropertyApi {
     final res =
     await http.post(Url,headers: await formDataHeader());
     final dataBody = await jsonDecode(res.body);
+    print(dataBody);
     SavedProperty savedProperty = SavedProperty.fromJson(dataBody);
 getsavedProperty.add(savedProperty);
 

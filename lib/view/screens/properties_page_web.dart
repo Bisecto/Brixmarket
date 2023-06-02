@@ -176,9 +176,10 @@ class PropertiesPage extends StatelessWidget {
                                                       ? buildListContainer(
                                                           properties:
                                                               properties)
-                                                      : PropertiesGrade(
-                                                          properties:
-                                                              properties),
+                                                      :Container(),
+                                                      // : PropertiesGrade(
+                                                      //     properties:
+                                                      //         properties),
                                                 );
                                           }
                                         }),

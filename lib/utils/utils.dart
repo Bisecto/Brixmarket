@@ -220,7 +220,7 @@ class Utils {
 
   static Widget savedPropertyIcon(propertyId,
       {double size = 18.0, user, Color? color, required List state}) {
-    if (state.contains(propertyId)) {
+    if (propCtrl.savingProperty.contains(propertyId)) {
       return Container(
           margin: const EdgeInsets.only(right: 8),
           padding: const EdgeInsets.all(6),
@@ -230,8 +230,8 @@ class Utils {
               borderRadius: BorderRadius.circular(6)),
           child: Image.asset(ImgStr.loadingLove1, height: size, width: size));
     }
-    if (homeCtrl.user.value.savedProperties != null) {
-      if (homeCtrl.user.value.savedProperties!.contains(propertyId)) {
+    //if (homeCtrl.user.value.savedProperties != null) {
+      if (propCtrl.myPropertiesID.contains(propertyId)) {
         return Container(
             margin: const EdgeInsets.only(right: 8),
             padding: const EdgeInsets.all(6),
@@ -241,7 +241,7 @@ class Utils {
                 borderRadius: BorderRadius.circular(6)),
             child: Icon(Icons.favorite, color: Colors.red, size: size));
       }
-    }
+    //}
     return Container(
         margin: const EdgeInsets.only(right: 8),
         padding: const EdgeInsets.all(6),

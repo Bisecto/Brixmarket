@@ -29,10 +29,10 @@ class SavedPropertiesWidget extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(dashPadding, 0, dashPadding, 0),
           children: [
             FutureBuilder(
-                initialData: propCtrl.mySavedProperties,
+                initialData: propCtrl.myPropertiesID,
                 future: propCtrl.getSavedProperties(homeCtrl.user.value.id),
                 builder: (context, AsyncSnapshot snap) {
-                  List<Property> myProperties = snap.data ?? [];
+                  List<String> myProperties = snap.data ?? [];
                   return Padding(
                     padding: const EdgeInsets.only(top: 48),
                     child: Column(
@@ -64,7 +64,8 @@ class SavedPropertiesWidget extends StatelessWidget {
                                       )
                                     ],
                                   )
-                                : Obx(() => PropertiesGrade(properties: propCtrl.mySavedProperties.value)),
+                                : Obx(() =>Container() //PropertiesGrade(properties: propCtrl.myPropertiesID.value)
+                        ),
                         const SizedBox(height: 100)
                       ],
                     ),

@@ -1,20 +1,18 @@
 import 'dart:async';
 
 import 'package:brixmarket/core/preloader.dart';
+import 'package:brixmarket/models/saved_property_model.dart' as savedProperty;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 import '../../../adapter/property_adapter.dart';
 import '../../../config/theme/color.dart';
 import '../../../controllers/instance.dart';
 import '../../../controllers/mobile_app_controllers/homepage_controller.dart';
-import '../../../models/property_model.dart';
 import '../../widgets/appbar_menus.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/material_search_bar/src/widgets/mobile_app_widgets/property_container.dart';
-import 'package:brixmarket/models/saved_property_model.dart' as savedProperty;
 
 class SavedPages extends StatefulWidget {
   const SavedPages({Key? key}) : super(key: key);
@@ -31,22 +29,24 @@ class _SavedPagesState extends State<SavedPages> {
   ScrollController scrollController = ScrollController();
   bool showbtn = false;
   StreamController<savedProperty.SavedProperty> _savedPropertyStreamController =
-  StreamController.broadcast();
+      StreamController.broadcast();
+
   getSavedProperty(int page) async {
     PropertyApi propertyApi = PropertyApi();
-    await propertyApi.getSavedProperties(page,homeCtrl.user.value.id);
+    await propertyApi.getSavedProperties(page, homeCtrl.user.value.id);
     setState(() {
       _savedPropertyStreamController = propertyApi.getsavedProperty;
       isLoading = false;
     });
   }
+
   @override
   void initState() {
     getSavedProperty(page);
     scrollController.addListener(() {
       //scroll listener
       double showoffset =
-      10.0; //Back to top botton will show on scroll offset 10.0
+          10.0; //Back to top botton will show on scroll offset 10.0
 
       if (scrollController.offset > showoffset) {
         showbtn = true;
@@ -61,7 +61,6 @@ class _SavedPagesState extends State<SavedPages> {
       }
     });
     super.initState();
-
   }
 
   @override
@@ -98,8 +97,7 @@ class _SavedPagesState extends State<SavedPages> {
             ),
           ],
         ),
-        body:
-        Stack(
+        body: Stack(
           children: [
             SizedBox(
               height: Get.height,
@@ -133,7 +131,7 @@ class _SavedPagesState extends State<SavedPages> {
                             const SizedBox(height: 16),
                             const Divider(color: Colors.black12),
                             ListView.builder(
-                              //controller: scrollController,
+                                //controller: scrollController,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: properties.length,
                                 padding: const EdgeInsets.only(
@@ -142,38 +140,45 @@ class _SavedPagesState extends State<SavedPages> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   savedProperty.Property property =
-                                  properties[index];
+                                      properties[index];
                                   //  page = snapdata.data!.data.pages;
-                                  if (snapdata
-                                      .data!.data.properties.isEmpty) {
+                                  if (snapdata.data!.data.properties.isEmpty) {
                                     return Column(
                                       children: [
-                                        Column(children: [
+                                        Column(
+                                            children: [
                                           SizedBox(
                                             height: Get.height * 0.2,
                                           ),
-                                  TextStyles.richTexts(
-                                                        centerText: true,
-                                                        color: Colors.blueGrey,
-                                                        decoration: TextDecoration.underline,
-                                                        onPress1: () => Get.find<MobileHomeController>()
-                                                            .bottomNavIndex
-                                                            .value = 1,
-                                                        onPress2: () {},
-                                                        size: 16,
-                                                        text1:
-                                                            'You don\'t have any saved property listed.\n',
-                                                        text2: 'Browse list',
-                                                      )
+                                          TextStyles.richTexts(
+                                            centerText: true,
+                                            color: Colors.blueGrey,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            onPress1: () =>
+                                                Get.find<MobileHomeController>()
+                                                    .bottomNavIndex
+                                                    .value = 1,
+                                            onPress2: () {},
+                                            size: 16,
+                                            text1:
+                                                'You don\'t have any saved property listed.\n',
+                                            text2: 'Browse list',
+                                          )
                                         ])
                                       ],
                                     );
                                   } else {
-                                    return
-                                      buildSavedList(
-                                                                  showMore: true,
-                                                                  property: property,
-                                                                  borderColor: Colors.grey);
+                                    if(propCtrl.myPropertiesID.contains(property.property)){
+                                      print(property.property);
+                                      print(propCtrl.myPropertiesID);
+                                      return buildSavedList(
+                                          showMore: true,
+                                          property: property,
+                                          borderColor: Colors.grey);
+                                    }else{
+                                      return Container();
+                                     }
                                   }
                                 }),
                           ]);
@@ -204,7 +209,7 @@ class _SavedPagesState extends State<SavedPages> {
                             buttonSelectedForegroundColor: Colors.white,
                             buttonUnselectedForegroundColor: Colors.pink,
                             buttonUnselectedBackgroundColor:
-                            Colors.grey.withOpacity(0.1),
+                                Colors.grey.withOpacity(0.1),
                             buttonSelectedBackgroundColor: Colors.pink,
                           ),
                         )),
