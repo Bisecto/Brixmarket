@@ -18,7 +18,7 @@ mixin FetchProperty {
   var activeNavItem = NavItems.home.obs;
 
   late Rx<Future<List<Property>>> allPropertiesWeb = getPropertiesWeb().obs;
-  late Future<List> allAmenitiesFuture = getAmenitiesWeb();
+  //late Future<List> allAmenitiesFuture = getAmenitiesWeb();
   var refreshCount = 0.obs;
   var searchResultCount = 0.obs;
 
@@ -102,16 +102,16 @@ mixin FetchProperty {
 
   List allAmenities = [];
 
-  Future<List> getAmenitiesWeb() async {
-    allAmenities = [];
-    if (allAmenities.isEmpty) {
-      String category = 'all';
-      await Provider().postData(
-          "property/get-amenities/$category", Property.map()).then((value) =>
-      allAmenities = value as List);
-    }
-    return allAmenities;
-  }
+  // Future<List> getAmenitiesWeb() async {
+  //   allAmenities = [];
+  //   if (allAmenities.isEmpty) {
+  //     String category = 'all';
+  //     await Provider().postData(
+  //         "property/get-amenities/$category", Property.map()).then((value) =>
+  //     allAmenities = value as List);
+  //   }
+  //   return allAmenities;
+  // }
 
   Future getSavedProperties(String? userId) async {
     print('345EFTYDVRTR8YTR9UIOGJDFSKVHBGIGEORJFDYER8OIJKT5HO54OI');

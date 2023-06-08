@@ -1,14 +1,14 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../../core/app.dart';
 import '../../core/dialogs.dart';
 import '../../core/preloader.dart';
-import '../../libs/payments.dart';
-import '../../models/api_response_model.dart';
 import '../../models/upgrade_plans.dart';
 import '../../models/user_model.dart';
 import '../../res/strings.dart';
@@ -16,14 +16,11 @@ import '../../services/provider.dart';
 import '../../utils/shared_preferences.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
-import '../../view/screens/authentication_pages/verify_reg_otp_page.dart';
 import '../../view/screens/mobile/splash_screen.dart';
 import '../../view/screens/mobile/sub_payment.dart';
 import '../edit_controller.dart';
 import '../home_controller.dart';
 import '../instance.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart' as http;
 
 mixin Auth {
   var loading = false;
@@ -89,6 +86,7 @@ mixin Auth {
       Preloader.hide();
     }
   }
+
   Future resendOTP2() async {
     Preloader.show();
 
@@ -117,10 +115,11 @@ mixin Auth {
       Preloader.hide();
       EditCtrl.disposeControllers();
       Get.offAndToNamed(RouteStr.regBasic);
-    }else{
+    } else {
       Preloader.hide();
     }
   }
+
   Future verifyOTP2() async {
     Preloader.show();
     print(EditCtrl.otp.text);
@@ -133,11 +132,13 @@ mixin Auth {
       'Authorization': 'Bearer ',
       'Cookie': 'PHPSESSID=iddn76vfj1indejroutud0m4ec'
     };
-    var data =
-    User.map(otp: EditCtrl.otp.text, userId: HomeController.tmpUserId,email: EditCtrl.email.text,password: EditCtrl.password.text);
+    var data = User.map(
+        otp: EditCtrl.otp.text,
+        userId: HomeController.tmpUserId,
+        email: EditCtrl.email.text,
+        password: EditCtrl.password.text);
     //var response = await Provider().postData("register/verify-OTP", data);
-    final res =
-    await http.post(Url,headers: header,body: {
+    final res = await http.post(Url, headers: header, body: {
       'email_address': EditCtrl.email.text,
       'password': EditCtrl.password.text,
       'otp': EditCtrl.otp.text
@@ -151,32 +152,29 @@ mixin Auth {
       Preloader.hide();
       EditCtrl.disposeControllers();
       Get.offAndToNamed(RouteStr.regBasic);
-    }else{
+    } else {
       Preloader.hide();
       MSG.errorSnackBar('Your entered an invalid Verification code');
-
     }
   }
-    Future mainlLogin({String? email, String? password} ) async {
 
+  Future mainlLogin({String? email, String? password}) async {
     try {
       EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
       if (EditCtrl.emailErr.isNotEmpty) {
-        if(email != null){
+        if (email != null) {
           MSG.snackBar('email');
-
-        }else{
+        } else {
           MSG.errorSnackBar(EditCtrl.emailErr.value);
-
         }
       } else {
         Preloader.show();
         var Url = Uri.parse('$appBaseUrl login');
 
         var data = User.map(
-            email: email ??  EditCtrl.email.text, password: password ?? EditCtrl.password.text);
-        final res =
-        await http.post(Url,headers: headers,body: data);
+            email: email ?? EditCtrl.email.text,
+            password: password ?? EditCtrl.password.text);
+        final res = await http.post(Url, headers: headers, body: data);
         final dataBody = await jsonDecode(res.body);
         //var response = await Provider().postData("login", data);
         print(dataBody);
@@ -194,7 +192,6 @@ mixin Auth {
             await homeCtrl.mainTmpLogin(userObj);
             print('ONENATION2');
             Get.offAndToNamed(RouteStr.verityOtp);
-
           } else if (userObj.surname == '' ||
               userObj.surname.runtimeType == Null) {
             await homeCtrl.tmpLogin(userObj);
@@ -221,13 +218,12 @@ mixin Auth {
             }
             Utils.gotoHomePage();
           }
-        } else{
+        } else {
           Preloader.hide();
           MSG.errorSnackBar('Invalid login combination');
-
         }
 
-       // Preloader.hide();
+        // Preloader.hide();
       }
     } catch (e) {
       Preloader.hide();
@@ -237,22 +233,21 @@ mixin Auth {
       //MSG.errorSnackBar(e.toString());
     }
   }
-  Future login({String? email, String? password} ) async {
 
+  Future login({String? email, String? password}) async {
     try {
       EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
       if (EditCtrl.emailErr.isNotEmpty) {
-        if(email != null){
-        MSG.snackBar('email');
-
-        }else{
-        MSG.errorSnackBar(EditCtrl.emailErr.value);
-
+        if (email != null) {
+          MSG.snackBar('email');
+        } else {
+          MSG.errorSnackBar(EditCtrl.emailErr.value);
         }
       } else {
         Preloader.show();
         var data = User.map(
-            email: email ??  EditCtrl.email.text, password: password ?? EditCtrl.password.text);
+            email: email ?? EditCtrl.email.text,
+            password: password ?? EditCtrl.password.text);
         var response = await Provider().postData("login", data);
         if (kDebugMode) {
           print(123456789);
@@ -260,10 +255,21 @@ mixin Auth {
           print(098765432);
         }
 
-
         if (response != null) {
-          await SharedPref.putString('user_email', EditCtrl.email.text);
-          await SharedPref.putString('user_password', EditCtrl.password.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          print(EditCtrl.email.text);
+          if (EditCtrl.email.text.isNotEmpty) {
+            await SharedPref.putString('user_email', EditCtrl.email.text);
+            await SharedPref.putString('user_password', EditCtrl.password.text);
+          }
           // loginNew(
           //     email: EditCtrl.email.text, password: EditCtrl.password.text);
           var userObj = User.fromJson(response);
@@ -276,7 +282,6 @@ mixin Auth {
             await homeCtrl.tmpLogin(userObj);
 
             Get.offAndToNamed(RouteStr.verityOtp);
-
           } else if (userObj.surname == '' ||
               userObj.surname.runtimeType == Null) {
             await homeCtrl.tmpLogin(userObj);
@@ -371,18 +376,20 @@ mixin Auth {
         'Authorization': 'Bearer ',
         'Cookie': 'PHPSESSID=iddn76vfj1indejroutud0m4ec'
       };
-      var request = http.MultipartRequest('POST', Uri.parse('https://api.brixmarket.site/register/user-basic'));
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('https://api.brixmarket.site/register/user-basic'));
       request.fields.addAll({
         'surname': EditCtrl.surname.text,
         'first_name': EditCtrl.firstName.text,
         'phone_number': EditCtrl.phone.text,
-        'email_address':  await SharedPref.getString('user_email'),
+        'email_address': await SharedPref.getString('user_email'),
       });
       print(await SharedPref.getString('user_email'));
       print(EditCtrl.email.text);
-      if(EditCtrl.image8Lists.isNotEmpty) {
+      if (EditCtrl.image8Lists.isNotEmpty) {
         request.files.add(http.MultipartFile.fromBytes(
-            'image', EditCtrl.image8Lists[0], filename: 'profileImage.jpg'));
+            'image', EditCtrl.image8Lists[0],
+            filename: 'profileImage.jpg'));
       }
       request.headers.addAll(headers);
 
@@ -390,7 +397,7 @@ mixin Auth {
       var response = await http.Response.fromStream(httpResponse).timeout(
           timeOutDuration2,
           onTimeout: () => http.Response('Request time out', 408));
-      var result=Provider().processResponse(response);
+      var result = Provider().processResponse(response);
       print(123456123456);
       //print(await httpResponse.stream.bytesToString());
 
@@ -398,32 +405,27 @@ mixin Auth {
 
       ///if (response.statusCode == 200) {
 
-        if (result!=null) {
-          EditCtrl.disposeControllers();
-          var userObj = User.fromJson(result);
-          print(userObj.id);
-          await homeCtrl.loginUser(userObj);
-          Preloader.hide();
-          if (!(userObj.isUser ?? false)) {
-            Get.offAndToNamed(RouteStr.regAgency);
-          } else {
-            if (Utils.isMobileApp) {
-              FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
-            }
-            Navigator.pushReplacement(
-              context!,
-              MaterialPageRoute(builder: (context) => const SplashScreen()),
-            );
-            //Utils.gotoHomePage();
-          }
-        }
-        //print(response);
+      if (result != null) {
+        EditCtrl.disposeControllers();
+        var userObj = User.fromJson(result);
+        print(userObj.id);
+        await homeCtrl.loginUser(userObj);
         Preloader.hide();
-
-
-
-
-
+        if (!(userObj.isUser ?? false)) {
+          Get.offAndToNamed(RouteStr.regAgency);
+        } else {
+          if (Utils.isMobileApp) {
+            FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
+          }
+          Navigator.pushReplacement(
+            context!,
+            MaterialPageRoute(builder: (context) => const SplashScreen()),
+          );
+          //Utils.gotoHomePage();
+        }
+      }
+      //print(response);
+      Preloader.hide();
     }
   }
 
@@ -471,27 +473,24 @@ mixin Auth {
       } else {
         print('Registered');
         data = User.map(
+            agencyName: EditCtrl.agencyName.text,
+            state: EditCtrl.state.value.text,
+            city: EditCtrl.city.value.text,
+            address: EditCtrl.address.text,
+            legalName: EditCtrl.legalName.text,
+            rcNumber: EditCtrl.rcNumber.text,
+            legalStatus: 'Registered',
+            email: await SharedPref.getString('user_email'));
+      }
+    } else {
+      print('Not Registered');
+      data = User.map(
           agencyName: EditCtrl.agencyName.text,
           state: EditCtrl.state.value.text,
           city: EditCtrl.city.value.text,
           address: EditCtrl.address.text,
-          legalName: EditCtrl.legalName.text,
-          rcNumber: EditCtrl.rcNumber.text,
-          legalStatus: 'Registered',
-          email:await SharedPref.getString('user_email')
-        );
-      }
-
-    } else {
-      print('Not Registered');
-      data = User.map(
-        agencyName: EditCtrl.agencyName.text,
-        state: EditCtrl.state.value.text,
-        city: EditCtrl.city.value.text,
-        address: EditCtrl.address.text,
-        legalStatus: 'Not Registered',
-          email:await SharedPref.getString('user_email')
-      );
+          legalStatus: 'Not Registered',
+          email: await SharedPref.getString('user_email'));
     }
 
     if (data.isNotEmpty) {
@@ -518,7 +517,7 @@ mixin Auth {
         if (Utils.isMobileApp) {
           FirebaseMessaging.instance.subscribeToTopic(userObj.id.toString());
         }
-      } else{
+      } else {
         Preloader.hide();
       }
     }

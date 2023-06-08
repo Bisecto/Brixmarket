@@ -1,15 +1,18 @@
 import 'dart:async';
+import 'dart:math';
+
 import 'package:brixmarket/controllers/edit_controller.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:restart_app/restart_app.dart';
+
 import '../core/dialogs.dart';
 import '../core/preloader.dart';
 import '../models/insight_model.dart';
+import '../models/media_model.dart';
 import '../models/property_model.dart';
 import '../res/strings.dart';
 import '../services/provider.dart';
@@ -17,6 +20,7 @@ import '../utils/utils.dart';
 import '../view/screens/create_property/create_property_widges.dart';
 import '../view/screens/mobile/my_ads_page.dart';
 import 'instance.dart';
+import 'package:http/http.dart' as http;
 
 class CreatePropertyCtrl extends GetxController {
   late PageController controller;
@@ -103,7 +107,7 @@ class CreatePropertyCtrl extends GetxController {
   bool saveToDraft = false;
 
   gotoNext({required int pageIndex}) async {
-    print(pageIndex);
+    ///(pageIndex);
     createPropScrollCtrl.jumpTo(0);
     if (saveToDraft == true) {
       MSG.snackBar('Property saved to my draft');
@@ -183,7 +187,7 @@ class CreatePropertyCtrl extends GetxController {
       );
     } else {
       Preloader.show();
-      print(EditCtrl.reference.text);
+      ///(EditCtrl.reference.text);
       Map<String, dynamic> data = Property.map(
         title: EditCtrl.title.text,
         reference: EditCtrl.reference.text,
@@ -194,20 +198,21 @@ class CreatePropertyCtrl extends GetxController {
         type: EditCtrl.type.value.text,
         status: EditCtrl.status.value.text,
       );
-
+      ///(data);
+       await Provider().postData("property/store", data);
       var response = await Provider().postData("property/store", data);
-      print(123456);
-      print(response);
-      print(123456);
+      ///(123456);
+      ///(response);
+      ///(123456);
       if (response != null) {
-        print(response);
+        ///(response);
         propCtrl.property = Property.fromJson(response);
         Preloader.hide();
         gotoNext(pageIndex: 1);
         getAmenities();
         getFeatures();
       } else {
-        print(response);
+        ///(response);
         Preloader.hide();
         MSG.errorSnackBar('There was a problem uploading product details',
             title: 'Message');
@@ -246,8 +251,8 @@ class CreatePropertyCtrl extends GetxController {
         gotoNext(pageIndex: 2);
       } else {
         //gotoNext(pageIndex: 2);
-        print('1234567890');
-        print(response);
+        ///('1234567890');
+        ///(response);
         Preloader.hide();
         MSG.errorSnackBar(
             'Image was not Uploaded. Please check your connections.',
@@ -420,6 +425,7 @@ class CreatePropertyCtrl extends GetxController {
   // }
 
   Datum? insight;
+
   Future<Datum?> getInsight() async {
     var response = await Provider().postData(
       "property/get-insight",
@@ -445,6 +451,7 @@ class CreatePropertyCtrl extends GetxController {
   int myDraftPropertiesPage = 0;
   int mySuspendedPropertiesPage = 0;
   int myPublishedPropertiesPage = 0;
+
   //StreamController<UserProperty> My_property_streamController=StreamController();
 
   // Future getUserProperty(int page,{required String property_state}) async {
@@ -464,10 +471,10 @@ class CreatePropertyCtrl extends GetxController {
   //     myProperties.add(Property.fromJson(e));
   //   }
   //   // //UserProperty userProperty=UserProperty.fromJson(dataBody);
-  //   // print('1');
-  //   // print(dataBody['data']);
+  //   // ///('1');
+  //   // ///(dataBody['data']);
   //   // //allProperties.add(dataBody['data']);
-  //   // print('1');
+  //   // ///('1');
   //   // // FilterModel filterModel = FilterModel.fromJson(dataBody);
   //   // //myProperties.add(userProperty.data.property);
   //   // //My_property_streamController.add(userProperty);
@@ -475,10 +482,11 @@ class CreatePropertyCtrl extends GetxController {
   // }
 
   Future getAllMyProperties(int page) async {
-    var map = {'userId': user.id, 'property_state': 'All'};
+    var map = {'userId': user.id.toString(), 'property_state': 'All'};
+
     var response = await Provider()
         .postData("property/get-user-properties?page=$page", map);
-    // print(response);
+    // ///(response);
     if (response != null) {
       myProperties.value = [];
 
@@ -486,6 +494,7 @@ class CreatePropertyCtrl extends GetxController {
         allPropertiesPage = response['pages'];
         for (var e in response['properties']) {
           myProperties.add(Property.fromJson(e));
+
         }
       }
       // }
@@ -497,7 +506,7 @@ class CreatePropertyCtrl extends GetxController {
     var map = {'userId': user.id, 'property_state': 'Published'};
     var response = await Provider()
         .postData("property/get-user-properties?page=$page", map);
-    print(response);
+    ///(response);
     if (response != null) {
       myPublishedProperties.value = [];
 
@@ -517,7 +526,7 @@ class CreatePropertyCtrl extends GetxController {
     var map = {'userId': user.id, 'property_state': 'Draft'};
     var response = await Provider()
         .postData("property/get-user-properties?page=$page", map);
-    print(response);
+    ///(response);
     if (response != null) {
       myDraftProperties.value = [];
 
@@ -537,7 +546,7 @@ class CreatePropertyCtrl extends GetxController {
     var map = {'userId': user.id, 'property_state': 'Sold'};
     var response = await Provider()
         .postData("property/get-user-properties?page=$page", map);
-    print(response);
+    ///(response);
     if (response != null) {
       mySoldProperties.value = [];
 
@@ -576,7 +585,7 @@ class CreatePropertyCtrl extends GetxController {
     var map = {'userId': user.id, 'property_state': property_state};
     var response = await Provider()
         .postData("property/get-user-properties?page=$page", map);
-    print(response);
+    ///(response);
     if (response != null) {
       myProperties.value = [];
       mySoldProperties.value = [];
@@ -655,6 +664,14 @@ class CreatePropertyCtrl extends GetxController {
     EditCtrl.title.text = property.title ?? '';
     EditCtrl.reference.text = property.reference!;
     EditCtrl.description.text = property.description ?? '';
+    ///(property.title);
+    ///(property.reference);
+    ///(property.description);
+    ///(property.price);
+    ///(property.priceDuration);
+    ///(property.category);
+    ///(property.type);
+    ///(property.status);
 
     EditCtrl.price.text = property.price.toString();
     EditCtrl.priceDuration.value.text = property.priceDuration!;

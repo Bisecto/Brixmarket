@@ -20,20 +20,22 @@ class Provider extends GetConnect {
   Future<dynamic> getData(String url,
       {Map<String, dynamic>? params, thirdPartyRequest = false}) async {
     // await Connectivity().checkConnection().then((connected) async => connected ? true : Get.toNamed(noInternet));
-    url =  appBaseUrl + url;
+    url = appBaseUrl + url;
     // dnd(url);
+    print(url);
     try {
       var response = await http
           .post(Uri.parse(url),
               body: params,
-              headers: thirdPartyRequest ?? await formDataHeader())
+              headers: thirdPartyRequest ?{}: await formDataHeader())
           .timeout(timeOutDuration,
               onTimeout: () => http.Response('Request time out', 408));
+      print(response);
       return thirdPartyRequest ? response : processResponse(response);
     } catch (e, t) {
-      // dnd('$e Trace: $t');
+      dnd('$e Trace: $t');
       Preloader.hide();
-      //dnd('Request Error: ' + e.toString());
+      dnd('Request Error: ' + e.toString());
       return null;
     }
   }
@@ -48,6 +50,7 @@ class Provider extends GetConnect {
     url = appBaseUrl + url;
     // dnd(data);
     // dnd(url);
+    print(data);
     var head = header ?? await formDataHeader();
     try {
       var response = await http
@@ -96,7 +99,7 @@ class Provider extends GetConnect {
   }
 
   Future postFiles(url, List<Uint8List> imagePaths,
-      {Map<String, dynamic>? data,String? token}) async {
+      {Map<String, dynamic>? data, String? token}) async {
     await Connectivity().checkConnection().then((connected) async =>
         connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;
@@ -152,7 +155,11 @@ class Provider extends GetConnect {
           timeOutDuration2,
           onTimeout: () => http.Response('Request time out', 408));
       print(response);
-      print(response);print(response);print(response);print(response);print(response);
+      print(response);
+      print(response);
+      print(response);
+      print(response);
+      print(response);
       return processResponse(response);
     } catch (e, t) {
       // dnd('$e Trace: $t');
@@ -162,7 +169,7 @@ class Provider extends GetConnect {
   }
 
   processResponse(http.Response response) {
-     dnd(response.body);
+    dnd(response.body);
     try {
       if (response.statusCode == 200) {
         // print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
@@ -175,18 +182,28 @@ class Provider extends GetConnect {
             if (apiResponse.causes.isNotEmpty) {
               Preloader.hide();
               // for (var causes in apiResponse.causes.entries) {
-              MSG.errorSnackBar(apiResponse.message.toString());
-
+              if (apiResponse.message != 'Property not found') {
+                if (apiResponse.message != 'View not saved') {
+                  MSG.errorSnackBar(apiResponse.message.toString());
+                }
+              }
               // }
             } else {
               Preloader.hide();
-              MSG.errorSnackBar(apiResponse.message.toString());
+              if (apiResponse.message != 'Property not found') {
+                if (apiResponse.message != 'View not saved') {
+                  MSG.errorSnackBar(apiResponse.message.toString());
+                }
+              }
             }
           } catch (e, t) {
             // dnd('$e Trace: $t');
             Preloader.hide();
-            MSG.errorSnackBar(apiResponse.message.toString());
-
+            if (apiResponse.message != 'Property not found') {
+              if (apiResponse.message != 'View not saved') {
+                MSG.errorSnackBar(apiResponse.message.toString());
+              }
+            }
             // dnd(e);
           }
         } else {
@@ -207,7 +224,7 @@ class Provider extends GetConnect {
       print('Ok its null');
       return null;
     }
-     print('Ok its not null');
+    print('Ok its not null');
     return null;
   }
 }

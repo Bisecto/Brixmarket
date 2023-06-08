@@ -2,7 +2,6 @@ import 'package:brixmarket/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
@@ -26,7 +25,6 @@ import 'mixin/auth_mixin.dart';
 import 'mixin/chat_mixin.dart';
 import 'mixin/reset_passwor_mixin.dart';
 import 'mobile_app_controllers/homepage_controller.dart';
-import 'package:brixmarket/models/single_property_model.dart' as single;
 
 class HomeController extends GetxController with Auth, Chat, ResetPassword {
   late PageController controller;
@@ -37,14 +35,14 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   var user = User().obs;
   var tmpUser = User().obs;
   static String tmpUserId = '';
+
   static String get userId => _userId;
   var isUser = false;
   var isAgent = false;
   var isPremium = false;
   var currentLocation = ''.obs;
 
-  List<String> properties =
-  [
+  List<String> properties = [
     'Bundalow',
     'Plots of Land',
     'Flat',
@@ -79,6 +77,9 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     isLogin.value = false;
     await SharedPref.remove('userId');
     await SharedPref.remove('token');
+    await SharedPref.remove('user_email');
+    await SharedPref.remove('user_password');
+
     propCtrl.myPropertiesID.clear();
     if (Utils.isMobileApp) {
       Get.find<MobileHomeController>().bottomNavIndex.value = 0;
@@ -94,7 +95,6 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   Future loginUser(User? userObj) async {
-    print(userObj);
     if (userObj == null) {
       _userId = await SharedPref.getString('userId');
 
@@ -120,24 +120,25 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     }
     inst.reInitInstance();
   }
+
   Future mainTmpLogin(User? userObj) async {
-    print('ONENATION3');
+    ///('ONENATION3');
     if (kDebugMode) {
-      print(3333333333);
-      print(userObj);
-      print(3333333333);
+      ///(3333333333);
+      ///(userObj);
+      ///(3333333333);
     }
     if (userObj == null) {
-      print('ONENATION4');
+      ///('ONENATION4');
       tmpUserId = await SharedPref.getString('tmpUserId');
       if (kDebugMode) {
-        print(222222222222);
-        print(tmpUserId);
-        print(tmpUser);
-        print(222222222222);
+        ///(222222222222);
+        ///(tmpUserId);
+        ///(tmpUser);
+        ///(222222222222);
       }
       if (tmpUserId.isNotEmpty && tmpUser.value.id == null) {
-        print('ONENATION7');
+        ///('ONENATION7');
         var response = (await Provider()
             .postData("login/user", User.map(userId: tmpUserId)));
         if (response != null) {
@@ -149,30 +150,31 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
         }
       }
     } else {
-      print('ONENATION5');
+      ///('ONENATION5');
       if (userObj.id != null) {
-        print('ONENATION6');
+        ///('ONENATION6');
         tmpUser.value = userObj;
         tmpUserId = userObj.id!;
-        _token = userObj.token??'';
+        _token = userObj.token ?? '';
         await SharedPref.putString('tmpUserId', tmpUserId);
         await SharedPref.putString('token', _token);
       }
     }
   }
+
   Future tmpLogin(User? userObj) async {
     if (kDebugMode) {
-      print(3333333333);
-      print(userObj);
-      print(3333333333);
+      ///(3333333333);
+      ///(userObj);
+      ///(3333333333);
     }
     if (userObj == null) {
       tmpUserId = await SharedPref.getString('tmpUserId');
       if (kDebugMode) {
-        print(222222222222);
-        print(tmpUserId);
-        print(tmpUser);
-        print(222222222222);
+        ///(222222222222);
+        ///(tmpUserId);
+        ///(tmpUser);
+        ///(222222222222);
       }
       if (tmpUserId.isNotEmpty && tmpUser.value.id == null) {
         var response = (await Provider()
@@ -180,17 +182,16 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
         if (response != null) {
           tmpLogin(User.fromJson(response));
 
-          if (Utils.isMobileApp&&_userId.isNotEmpty) {
+          if (Utils.isMobileApp && _userId.isNotEmpty) {
             FirebaseMessaging.instance.subscribeToTopic(_userId);
           }
         }
       }
     } else {
-
       if (userObj.id != null) {
         tmpUser.value = userObj;
         tmpUserId = userObj.id!;
-        _token = userObj.token??'';
+        _token = userObj.token ?? '';
         await SharedPref.putString('tmpUserId', tmpUserId);
         await SharedPref.putString('token', _token);
       }
@@ -217,11 +218,12 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
     // propCtrl.fetchFeaturedProperties();
     //propCtrl.getHomeproperty();
     await propCtrl.getSavedProperties(homeCtrl.user.value.id);
-    await propCtrl.getAmenitiesWeb();
+   // await propCtrl.getAmenitiesWeb();
     await fetchFAQs();
   }
 
   List faqs = [];
+
   Future<List> fetchFAQs() async {
     faqs = [];
     if (faqs.isEmpty) {
@@ -234,6 +236,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   bool isGoBack = false;
+
   @override
   void onInit() {
     var makeSecondCall = true;
@@ -265,17 +268,20 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   var showTopMsg = true.obs;
+
   void closeTopMsg() {
     showTopMsg.value = false;
   }
 
   var highLighted = 'Buy'.obs;
+
   searchProperty(String s) {
     highLighted.value = s;
   }
 
   List<UpgradePlan> upgradePlans = [];
   UpgradePlan? selectedUpgradePlan;
+
   getUpgradePlans() async {
     if (upgradePlans.isEmpty) {
       var response = await Provider().getData("user/fetch-plans");
@@ -288,7 +294,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   shareApp({Property? property}) async {
-    await Share.share(appBaseUrl, subject: 'Brixmarket');
+    await Share.share(appUrl, subject: 'Brixmarket');
     // MSG.snackBar("Successful", title: "Share");
   }
 
@@ -327,7 +333,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
       if (response != null) {
         Preloader.hide();
         Get.back();
-        MSG.snackBar('Thank you for subscribing to our newsletter');
+        MSG.snackBar('Thanks for your feedback');
       }
     }
   }
@@ -404,10 +410,11 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   List<AppNotification> notifications = [];
+
   Future getNotifications() async {
     var response =
         await Provider().postData("user/get-notifications", User.map());
-    //print(response);
+    /////(response);
     if (response != null) {
       notifications =
           (response as List).map((e) => AppNotification.fromJson(e)).toList();
@@ -419,6 +426,7 @@ class HomeController extends GetxController with Auth, Chat, ResetPassword {
   }
 
   var newNotifications = 0.obs;
+
   Future getNewNotifications() async {
     var response =
         await Provider().postData("user/get-new-notifications", User.map());

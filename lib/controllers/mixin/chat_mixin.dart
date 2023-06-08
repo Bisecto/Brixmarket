@@ -208,13 +208,14 @@ mixin Chat {
           .toList();
       chatUserStreamCtrl.sink.add(added);
     } else {
-      Provider().getData('chat/users/${user.id}').then((value) {
+      await Provider().getData('chat/users/${user.id}',).then((value) {
         var added =
             (value as List).map((event) => ChatUser.fromJson(event)).toList();
         chatUserStreamCtrl.sink.add(added);
       });
       userTimer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
         Provider().getData('chat/users/${user.id}').then((value) {
+          // print(value);
           var added =
               (value as List).map((event) => ChatUser.fromJson(event)).toList();
           chatUserStreamCtrl.sink.add(added);

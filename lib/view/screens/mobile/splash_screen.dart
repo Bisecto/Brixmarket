@@ -34,15 +34,19 @@ class _SplashScreenState extends State<SplashScreen> {
   userDetails() async {
     userMail = await SharedPref.getString('user_email');
     userPassword = await SharedPref.getString('user_password');
+
     EditCtrl.email.text = userMail;
+    EditCtrl.password.text = userPassword;
+    print(userMail + userPassword);
+    print(userMail + userPassword);
+    print(userMail + userPassword);
+    print(userMail + userPassword);
+    print(userMail + userPassword);
     print(userMail + userPassword);
 
       if (userMail.isNotEmpty &&
         userPassword.isNotEmpty ) {
-      homeCtrl.login(email: userMail,password: userPassword ).then((value) => {
-            EditCtrl.email.text = '',
-
-      });
+      homeCtrl.login(email: userMail,password: userPassword );
     }
   }
   @override

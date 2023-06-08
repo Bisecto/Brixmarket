@@ -311,7 +311,7 @@ sendFeedback() {
         controller: ModalScrollController.of(context),
         child: Container(
           constraints: const BoxConstraints(maxWidth: 480),
-          height: 640,
+          height: Get.height-50,
           color: Colors.white,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           child: Column(
