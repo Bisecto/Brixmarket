@@ -60,15 +60,29 @@ class Utils {
     var date = DateTime.parse(datetime);
     return DateFormat('y-m-d').format(date);
   }
+  static String formateSimpleDate({String? dateTime}) {
+    var inputDate = DateTime.parse(dateTime!);
 
+    var outputFormat = DateFormat('MMM d, hh:mm a');
+    var outputDate = outputFormat.format(inputDate);
+    print(outputDate);
+    return outputDate;
+  }
   static String formatDateTime(time) {
+    print(time);
     var timeNow = DateTime.now();
     dynamic timeToFormat;
 
     if (time.runtimeType == String) {
+      print('STring');
       timeToFormat = DateTime.parse(time);
+      print(timeToFormat);
     } else if (time.runtimeType == int) {
+      print(' Not STring');
+
       timeToFormat = DateTime.fromMillisecondsSinceEpoch(time);
+      print(timeToFormat);
+
     }
 
     var yearN = DateFormat('y').format(timeNow);
@@ -78,16 +92,23 @@ class Utils {
     var dayT = DateFormat('d').format(timeToFormat);
 
     if (yearN != yearT) {
+      print('1');
+      print(DateFormat('d MMM, h:ma').format(timeToFormat));
       return DateFormat('d MMM y, h:ma').format(timeToFormat);
+
     } else if (dayN != dayT) {
+      print('2');
+      print(DateFormat('d MMM, h:ma').format(timeToFormat));
       return DateFormat('d MMM, h:ma').format(timeToFormat);
     } else {
+      print('3');
+      print(DateFormat('d MMM, h:ma').format(timeToFormat));
       return DateFormat('h:ma').format(timeToFormat);
     }
   }
 
   static bool isPhoneNumber(String s) {
-    if (s.length > 16 || s.length < 9) return false;
+    if (s.length > 16 || s.length < 10) return false;
     return hasMatch(s, r'^(?:[+0][1-9])?[0-9]{10,12}$');
   }
 

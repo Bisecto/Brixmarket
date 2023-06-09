@@ -20,6 +20,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   void initState() {
     homeCtrl.fetchChatMessages();
+    EditCtrl.chatMessage.clear();
     super.initState();
   }
   String quote='"';

@@ -1164,7 +1164,7 @@ flagInappropriate(propertyId) {
   );
 }
 
-requestATour(propertyId) {
+requestATour(propertyId,propertyUserId) {
   showMaterialModalBottomSheet(
     context: Get.context!,
     builder: (context) => SingleChildScrollView(
@@ -1226,7 +1226,7 @@ requestATour(propertyId) {
               hint: 'Enter message',
             ),
             FormButton(
-              onPressed: () => propCtrl.submitRequestATour(propertyId),
+              onPressed: () => propCtrl.submitRequestATour(propertyId,propertyUserId),
               text: 'Submit',
               width: double.infinity,
               height: 48,

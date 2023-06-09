@@ -975,7 +975,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                                             onPressed: () => propCtrl
                                                                 .submitPropertyReview(
                                                                     property
-                                                                        .id),
+                                                                        .id,property.user),
                                                             text:
                                                                 'Submit Review',
                                                             width: 160,
@@ -1408,7 +1408,7 @@ class _PropertyDetailsListsPageState extends State<PropertyPageWeb> {
                                                                     FormButton(
                                                                       onPressed:
                                                                           () =>
-                                                                              propCtrl.submitRequestATour(property.id),
+                                                                              propCtrl.submitRequestATour(property.id,property.user),
                                                                       text:
                                                                           'Send Request',
                                                                       txtColor:

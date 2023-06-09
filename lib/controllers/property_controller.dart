@@ -649,7 +649,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     EditCtrl.image8Lists.refresh();
   }
 
-  Future submitPropertyReview(propertyId) async {
+  Future submitPropertyReview(propertyId,propertyUserId) async {
     EditCtrl.messageErr.value = Val.name(EditCtrl.messageReview.text);
     if (EditCtrl.rating.text.isEmpty) {
       MSG.errorSnackBar('Select a star to rate the user');
@@ -671,7 +671,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         Preloader.hide();
         //if (property.user!.settings!.inAppAlert.isTrue) {
         await sendPushNotification(
-            property.user!.id.toString(),
+            propertyUserId.id,
             "You just got a review on a property you uploaded",
             EditCtrl.messageReview.text,
             'Review_Notification');
@@ -687,7 +687,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
   }
 
-  Future submitPropertyReviewMobile(propertyId, single.Property prop) async {
+  Future submitPropertyReviewMobile(propertyId, single.Property prop,propertyUserId) async {
     EditCtrl.messageErr.value = Val.name(EditCtrl.messageReview.text);
     if (EditCtrl.rating.text.isEmpty) {
       MSG.errorSnackBar('Select a star to rate the user');
@@ -699,7 +699,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       Preloader.show();
 
       var data = Property.map(
-        id: propertyId,
+        id: propertyId.id,
         rating: EditCtrl.rating.text,
         message: EditCtrl.messageReview.text,
       );
@@ -709,7 +709,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         Preloader.hide();
         //if (property.user!.settings!.inAppAlert.isTrue) {
         await sendPushNotification(
-            prop.user.id.toString(),
+            propertyUserId,
             "You just got a review on a property you uploaded",
             EditCtrl.messageReview.text,
             'Review_Notification');
@@ -771,7 +771,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     }
   }
 
-  Future submitRequestATour(propertyId) async {
+  Future submitRequestATour(propertyId,propertyUserId) async {
     EditCtrl.nameErr.value = Val.name(EditCtrl.name.text);
     EditCtrl.phoneErr.value = Val.phone(EditCtrl.phone.text);
     EditCtrl.emailErr.value = Val.email(EditCtrl.email.text);
@@ -809,7 +809,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         //if (property.user!.settings!.inAppAlert.isTrue&&property.user!.settings!.requestTourAlert.isTrue) {
 
         await sendPushNotification(
-            property.user!.id.toString(),
+            propertyUserId.id,
             EditCtrl.name.text + " Requested a tour on a property you uploaded",
             EditCtrl.messageTour.text,
             'Request_Tour_Notification');

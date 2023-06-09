@@ -35,7 +35,7 @@ class ChatUser {
         lastMessage: json['message'].toString().replaceAll('&#039;', '\'').replaceAll('&bull;', '.').replaceAll('&yen;', '¥').replaceAll('&pound;', '£').replaceAll('&euro;', '€').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&').replaceAll('&ldquo;', '"').replaceAll('&rdquo;', '"').replaceAll('&lsquo;', '\'').replaceAll('&rsquo;', '\''),
         sender: json['sender'],
         fromMe: json['sender'] == HomeController.userId,
-        lastMessageTime: Utils.formatDateTime(json['updated_at']),
+        lastMessageTime: (json['updated_at']),
         seen: json['seen'].toString() == '1' || json['seen'].toString() == 'true',
         delivered: json['delivered'].toString() == '1' || json['delivered'].toString() == 'true',
       );

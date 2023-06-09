@@ -133,14 +133,14 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  void initDynamicLinks(BuildContext context) async {
+  void initDynamicLinks() async {
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
       final Uri deeplink = data.link;
       //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
       //print('Category SLug $categorySlug');
-      String property_id = deeplink.queryParameters['id'] ?? 'pro';
+      String property_id =  deeplink.queryParameters['id'] ?? 'pro';
 
       if (property_id != 'pro') {
         Navigator.of(context).push(MaterialPageRoute(
@@ -161,7 +161,7 @@ class _MyAppState extends State<MyApp> {
     if (Utils.isMobileApp) {
       FirebaseMessaging.instance.subscribeToTopic("AdminNotification");
       if (Platform.isAndroid) {
-        initDynamicLinks(context);
+        initDynamicLinks();
       } else {
         Dynamic();
       }

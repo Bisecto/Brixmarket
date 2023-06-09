@@ -126,7 +126,9 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
       initialPage: 0,
     );
     var details = widget.property.features.map((feature) {
-      return Container(
+      if(feature.feature.isNotEmpty){
+
+        return Container(
         width: Get.width * 0.9,
         margin: const EdgeInsets.only(bottom: 8),
         child: Row(
@@ -141,16 +143,21 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                     size: 16)),
           ],
         ),
-      );
+      );}else{
+         Container(height:0);
+      }
     }).toList();
     var amenities = widget.property.amenities.map((value) {
-      return Container(
+      if(value.amenity.isNotEmpty){
+
+        return Container(
         width: Get.width * 0.9,
         margin: const EdgeInsets.only(bottom: 8),
         child: Row(
           children: [
             const Icon(Icons.light_outlined, color: Colors.black54, size: 18),
             const SizedBox(width: 16),
+            if(value.amenity.isNotEmpty)
             CustomText(
                 color: Colors.black54,
                 text: value.amenity,
@@ -158,7 +165,9 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                 size: 16),
           ],
         ),
-      );
+      );}else{
+        return SizedBox(height: 0,);
+      }
     }).toList();
     detailsDescription.add(details);
     detailsDescription.add(amenities);
@@ -987,7 +996,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                   user.id == widget.property.user.id
                       ? const SizedBox.shrink()
                       : FormButton(
-                          onPressed: () => requestATour(widget.property.id),
+                          onPressed: () => requestATour(widget.property.id,widget.property.user),
                           text: 'Request Tour',
                           width: 140,
                           height: 48,
@@ -1077,7 +1086,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
               ),
               FormButton(
                 onPressed: () => propCtrl.submitPropertyReviewMobile(
-                    propertyId, widget.property),
+                    propertyId, widget.property,widget.property.user),
                 text: 'Submit',
                 width: double.infinity,
                 height: 48,
@@ -1228,7 +1237,7 @@ flagInappropriate(propertyId) {
   );
 }
 
-requestATour(propertyId) {
+requestATour(propertyId,propertyUserId) {
   showMaterialModalBottomSheet(
     context: Get.context!,
     builder: (context) => SingleChildScrollView(
@@ -1290,7 +1299,7 @@ requestATour(propertyId) {
               hint: 'Enter message',
             ),
             FormButton(
-              onPressed: () => propCtrl.submitRequestATour(propertyId),
+              onPressed: () => propCtrl.submitRequestATour(propertyId,propertyUserId),
               text: 'Submit',
               width: double.infinity,
               height: 48,

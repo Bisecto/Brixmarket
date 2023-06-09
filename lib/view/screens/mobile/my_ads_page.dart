@@ -456,8 +456,9 @@ class _MyAdsPageState extends State<MyAdsPage>
                       child: NumberPaginator(
                         numberPages: totalAllPropertypage,
                         onPageChange: (int index) {
+                          //print(index+1);
                           setState(() {
-                            allPropertySinglePage = index;
+                            allPropertySinglePage = index+1;
 
                             cPropCtrl.getAllMyProperties(allPropertySinglePage);
                           });
@@ -487,7 +488,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                         numberPages: totalPublishedPropertypage,
                         onPageChange: (int index) {
                           setState(() {
-                            publishedPropertySinglePage = index;
+                            publishedPropertySinglePage = index+1;
 
                             cPropCtrl.getAllPublishedProperties(
                                 publishedPropertySinglePage);
@@ -518,7 +519,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                         numberPages: totalDraftPropertypage,
                         onPageChange: (int index) {
                           setState(() {
-                            draftPropertySinglePage = index;
+                            draftPropertySinglePage = index+1;
 
                             cPropCtrl
                                 .getAllDraftProperties(draftPropertySinglePage);
@@ -549,7 +550,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                         numberPages: totalSoldPropertypage,
                         onPageChange: (int index) {
                           setState(() {
-                            soldPropertySinglePage = index;
+                            soldPropertySinglePage = index+1;
 
                             cPropCtrl
                                 .getAllSoldProperties(soldPropertySinglePage);
@@ -580,7 +581,7 @@ class _MyAdsPageState extends State<MyAdsPage>
                         numberPages: totalSuspendedPropertypage,
                         onPageChange: (int index) {
                           setState(() {
-                            suspendedPropertySinglePage = index;
+                            suspendedPropertySinglePage = index+1;
 
                             cPropCtrl.getAllSuspendedProperties(
                                 suspendedPropertySinglePage);

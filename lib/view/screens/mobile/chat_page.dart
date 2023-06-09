@@ -100,6 +100,7 @@ class _ChatPageState extends State<ChatPage> {
                 stream: homeCtrl.chatUserStream,
                 builder: (context, snapshot) {
                   List<ChatUser> users = snapshot.data ?? [];
+                  //print(users[2].lastMessage);
                   return snapshot.connectionState == ConnectionState.waiting
                       ? SizedBox(height: Get.height, child: Center(child: Preloader.loadingWidget()))
                       : users.isEmpty
@@ -113,12 +114,15 @@ class _ChatPageState extends State<ChatPage> {
                           : ListView.builder(
                               itemCount: users.length,
                               shrinkWrap: true,
+                              reverse: true,
                               padding: const EdgeInsets.only(top: 16),
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 if(users[index].chatKey.contains(user.id.toString())){
                                 return GestureDetector(
-                                  onTap: () => homeCtrl.chatFromUserList(users[index]),
+                                  onTap: () {
+                                    print(users[index].lastMessageTime);
+                                      homeCtrl.chatFromUserList(users[index]);},
                                   child: ConversationList(
                                     name: users[index].name,
                                     messageText: users[index].lastMessage,

@@ -704,7 +704,7 @@ mixin Auth {
         phone: EditCtrl.phone.text,
       );
       var response = await Provider()
-          .postFiles("user/update", EditCtrl.image8Lists, data: data);
+          .postFiles("user/update/${data['userId']}", EditCtrl.image8Lists, data: data);
       if (response != null) {
         //EditCtrl.disposeControllers();
         var userObj = User.fromJson(response);

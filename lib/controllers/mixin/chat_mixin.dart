@@ -89,6 +89,7 @@ mixin Chat {
 
   sendMessage() async {
     var message = EditCtrl.chatMessage.text.trim();
+    EditCtrl.chatMessage.clear();
     if (message.isNotEmpty) {
       var thisUserMap = ChatUser.toJson(
           chatKey: chatKey,

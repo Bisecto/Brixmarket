@@ -100,6 +100,8 @@ class Provider extends GetConnect {
 
   Future postFiles(url, List<Uint8List> imagePaths,
       {Map<String, dynamic>? data, String? token}) async {
+    print(url);
+    print(data);
     await Connectivity().checkConnection().then((connected) async =>
         connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;

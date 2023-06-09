@@ -899,7 +899,7 @@ class _Single_Property_detail_webState
                                                   FormButton(
                                                     onPressed: () => propCtrl
                                                         .submitPropertyReview(
-                                                            widget.property.id),
+                                                            widget.property.id,widget.property.user),
                                                     text: 'Submit Review',
                                                     width: 160,
                                                     height: 42,
@@ -1261,7 +1261,7 @@ class _Single_Property_detail_webState
                                                         onPressed: () => propCtrl
                                                             .submitRequestATour(
                                                                 widget.property
-                                                                    .id),
+                                                                    .id,widget.property.user),
                                                         text: 'Send Request',
                                                         txtColor: Colors.white,
                                                         // width: do,
