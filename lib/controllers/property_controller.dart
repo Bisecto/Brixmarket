@@ -699,7 +699,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
       Preloader.show();
 
       var data = Property.map(
-        id: propertyId.id,
+        id: propertyId,
         rating: EditCtrl.rating.text,
         message: EditCtrl.messageReview.text,
       );
@@ -709,7 +709,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
         Preloader.hide();
         //if (property.user!.settings!.inAppAlert.isTrue) {
         await sendPushNotification(
-            propertyUserId,
+            propertyUserId.id,
             "You just got a review on a property you uploaded",
             EditCtrl.messageReview.text,
             'Review_Notification');

@@ -14,6 +14,7 @@ import 'package:brixmarket/view/screens/mobile/statistic_page.dart';
 import 'package:brixmarket/view/screens/mobile/subscription_page.dart';
 import 'package:get/get.dart';
 
+import '../controllers/edit_controller.dart';
 import '../res/strings.dart';
 import '../view/screens/about.dart';
 import '../view/screens/accept_location_usage.dart';
@@ -30,6 +31,7 @@ import '../view/screens/homepage.dart';
 import '../view/screens/mobile/landing_page.dart';
 import '../view/screens/mobile/onboard_page.dart';
 import '../view/screens/mobile/property_details_page.dart';
+import '../view/screens/mobile/single_property_page.dart';
 import '../view/screens/mobile/splash_screen.dart';
 import '../view/screens/no_internet.dart';
 import '../view/screens/properties_page_web.dart';
@@ -164,6 +166,11 @@ List<GetPage<dynamic>> mobileHomePages = [
   GetPage(
       name: RouteStr.mobileHome,
       page: () => HomePage(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 500)),
+  GetPage(
+      name: RouteStr.propertySinglePage,
+      page: () => Single_Property(property_id: EditCtrl.propertyId.text, property_tiitle: 'Brixmarket',),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 500)),
   GetPage(

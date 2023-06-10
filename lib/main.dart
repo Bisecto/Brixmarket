@@ -16,11 +16,13 @@ import 'config/route.dart';
 import 'config/theme/color.dart';
 import 'controllers/create_property_controller.dart';
 import 'controllers/dashboard_controller.dart';
+import 'controllers/edit_controller.dart';
 import 'controllers/mobile_app_controllers/accout_page_controller.dart';
 import 'controllers/mobile_app_controllers/homepage_controller.dart';
 import 'controllers/mobile_app_controllers/property_details_controller.dart';
 import 'controllers/property_controller.dart';
 import 'controllers/terms_controller.dart';
+import 'core/dialogs.dart';
 import 'res/strings.dart';
 import 'utils/utils.dart';
 
@@ -122,11 +124,14 @@ class _MyAppState extends State<MyApp> {
       String property_id = deepLink.queryParameters['id'] ?? 'pro';
 
       if (property_id != 'pro') {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Single_Property(
-                  property_id: property_id,
-                  property_tiitle: 'Brixmarket',
-                )));
+        EditCtrl.propertyId.text=property_id;
+        Get.toNamed(RouteStr.propertySinglePage);
+
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => Single_Property(
+        //           property_id: property_id,
+        //           property_tiitle: 'Brixmarket',
+        //         )));
       } else {
         return;
       }
@@ -136,18 +141,37 @@ class _MyAppState extends State<MyApp> {
   void initDynamicLinks() async {
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
+    print("1111111111RYTUGHKJN,MBVGCFDXCGVHGKHKYTRERSDFXCGVHJHGYFTDFGXCGHFJYDTRGFXCFHDTFG");
+    print(data);
+
     if (data != null) {
+      print("22222222RYTUGHKJN,MBVGCFDXCGVHGKHKYTRERSDFXCGVHJHGYFTDFGXCGHFJYDTRGFXCFHDTFG");
+
       final Uri deeplink = data.link;
+      print("3333333333RYTUGHKJN,MBVGCFDXCGVHGKHKYTRERSDFXCGVHJHGYFTDFGXCGHFJYDTRGFXCFHDTFG");
+      print(deeplink);
+
       //String categorySlug = deeplink.queryParameters['categorySlug'] ?? 'Empty';
       //print('Category SLug $categorySlug');
       String property_id =  deeplink.queryParameters['id'] ?? 'pro';
+      print("444444444444RYTUGHKJN,MBVGCFDXCGVHGKHKYTRERSDFXCGVHJHGYFTDFGXCGHFJYDTRGFXCFHDTFG");
+      print(property_id);
+
 
       if (property_id != 'pro') {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Single_Property(
-                  property_id: property_id,
-                  property_tiitle: 'Brixmarket',
-                )));
+        EditCtrl.propertyId.text=property_id;
+        print("55555555555RYTUGHKJN,MBVGCFDXCGVHGKHKYTRERSDFXCGVHJHGYFTDFGXCGHFJYDTRGFXCFHDTFG");
+        print("PUSH NAVIGATOR");
+// MSG.snackBar(property_id);
+      //Navigator.of(context).push(route)
+        //Get.(RouteStr.regBasic);
+        Get.toNamed(RouteStr.propertySinglePage);
+
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => Single_Property(
+        //           property_id: property_id,
+        //           property_tiitle: 'Brixmarket',
+        //         )));
       } else {
         return;
       }

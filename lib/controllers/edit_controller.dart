@@ -25,6 +25,7 @@ class EditCtrl extends GetxController {
   static var email = TextEditingController();
   static var emailErr = ''.obs;
   static var phone = TextEditingController();
+
   static var phoneErr = ''.obs;
   static var whatsAppNumber = TextEditingController();
   static var whatsAppPhoneErr = ''.obs;
@@ -100,6 +101,8 @@ class EditCtrl extends GetxController {
   static var subject = TextEditingController();
   static var subjectErr = ''.obs;
   static var message = TextEditingController();
+  static var propertyId = TextEditingController();
+
   static var messageTour = TextEditingController();
   static var messageReview = TextEditingController();
   static var messageFeedback = TextEditingController();
@@ -153,6 +156,7 @@ class EditCtrl extends GetxController {
       userAddress.text = '';
       userAddressErr.value = '';
       email.text = '';
+      propertyId.text='';
       emailErr.value = '';
       phone.text = '';
       phoneErr.value = '';

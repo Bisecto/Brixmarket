@@ -22,7 +22,7 @@ class FirebaseDynamicLinkService {
         uriPrefix: 'https://brixmarket.page.link',
 
         ///website domain below
-        link: Uri.parse('https://brixmarket.com/property?id=${property.id}'),
+        link: Uri.parse('https://brixmarket.site/property?id=${property.id}'),
         androidParameters: AndroidParameters(
           fallbackUrl: Uri.parse(Str.downloadAndroidLink),
           packageName: 'com.brixx.brixmarket',

@@ -144,7 +144,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
           ],
         ),
       );}else{
-         Container(height:0);
+         return Container(height:0);
       }
     }).toList();
     var amenities = widget.property.amenities.map((value) {
@@ -928,7 +928,7 @@ class _SinglePropertyDetailPageState extends State<SinglePropertyDetailPage> {
                                 color: Pallet.secondaryColor,
                                 text: Utils.amount(widget.property.price),
                                 weight: FontWeight.bold,
-                                size: 18),
+                                size: 16),
                             const SizedBox(width: 5),
                             widget.property.priceDuration.substring(0, 3) ==
                                     'Per'

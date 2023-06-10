@@ -46,6 +46,8 @@ mixin RouteStr {
   static const String chat = '/chat';
   static const String mobileMyProperties = '/my-properties';
   static const String mobileStatistic = '/statistic';
+  static const String propertySinglePage = '/propertySinglePage';
+
   static const String mobileSubscription = '/subscription';
   static const String mobileProfileHome = '/profile-home';
   static const String mobileSecurityHome = '/security-home';
