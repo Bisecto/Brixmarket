@@ -12,6 +12,7 @@ class PropertyApi {
   final StreamController<SavedProperty> getsavedProperty = StreamController();
 
   Future<void> getProperty(int page,{String searchValue='',String location=''}) async {
+    print(page);
     if(location.length>0){
     EditCtrl.filterState.value.text=location;}
     var Url = Uri.parse('$appBaseUrl property/filter-properties?page=$page');

@@ -767,7 +767,7 @@ class _SearchByNameOfPropertyState extends State<SearchByNameOfProperty> {
                         onPageChange: (int index) {
                           setState(() {
                             isLoading = true;
-                            getSearchedResult(index, searchValue);
+                            getSearchedResult(index+1, searchValue);
                           });
                         },
                         config: NumberPaginatorUIConfig(
@@ -1201,7 +1201,7 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
                         onPageChange: (int index) {
                           setState(() {
                             isLoading = true;
-                            getSearchedResult(index, searchValue);
+                            getSearchedResult(index+1, searchValue);
                           });
                         },
                         config: NumberPaginatorUIConfig(

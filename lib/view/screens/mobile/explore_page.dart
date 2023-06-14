@@ -1361,7 +1361,8 @@ class _ExplorePageState extends State<ExplorePage> {
                           onPageChange: (int index) {
                             setState(() {
                               isLoading = true;
-                              getfilterProperty(index);
+                              //print(index);
+                              getfilterProperty(index+1);
                             });
                           },
                           config: NumberPaginatorUIConfig(

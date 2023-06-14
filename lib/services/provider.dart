@@ -22,7 +22,7 @@ class Provider extends GetConnect {
     // await Connectivity().checkConnection().then((connected) async => connected ? true : Get.toNamed(noInternet));
     url = appBaseUrl + url;
     // dnd(url);
-    print(url);
+    ///nt(url);
     try {
       var response = await http
           .post(Uri.parse(url),
@@ -30,7 +30,7 @@ class Provider extends GetConnect {
               headers: thirdPartyRequest ?{}: await formDataHeader())
           .timeout(timeOutDuration,
               onTimeout: () => http.Response('Request time out', 408));
-      print(response);
+      ///nt(response);
       return thirdPartyRequest ? response : processResponse(response);
     } catch (e, t) {
       dnd('$e Trace: $t');
@@ -50,7 +50,7 @@ class Provider extends GetConnect {
     url = appBaseUrl + url;
     // dnd(data);
     // dnd(url);
-    print(data);
+    ///nt(data);
     var head = header ?? await formDataHeader();
     try {
       var response = await http
@@ -59,8 +59,8 @@ class Provider extends GetConnect {
               onTimeout: () => http.Response('Request time out', 408));
 
       // dnd(response.body);
-      print(url);
-      print(response);
+      ///nt(url);
+      ///nt(response);
       return processResponse(response);
     } catch (e, t) {
       // dnd('$e Trace: $t');
@@ -100,8 +100,8 @@ class Provider extends GetConnect {
 
   Future postFiles(url, List<Uint8List> imagePaths,
       {Map<String, dynamic>? data, String? token}) async {
-    print(url);
-    print(data);
+    ///nt(url);
+    ///nt(data);
     await Connectivity().checkConnection().then((connected) async =>
         connected ? null : Get.toNamed(RouteStr.mobileNoInternet));
     url = appBaseUrl + url;
@@ -156,12 +156,12 @@ class Provider extends GetConnect {
       var response = await http.Response.fromStream(httpResponse).timeout(
           timeOutDuration2,
           onTimeout: () => http.Response('Request time out', 408));
-      print(response);
-      print(response);
-      print(response);
-      print(response);
-      print(response);
-      print(response);
+      ///nt(response);
+      ///nt(response);
+      ///nt(response);
+      ///nt(response);
+      ///nt(response);
+      ///nt(response);
       return processResponse(response);
     } catch (e, t) {
       // dnd('$e Trace: $t');
@@ -174,11 +174,11 @@ class Provider extends GetConnect {
     dnd(response.body);
     try {
       if (response.statusCode == 200) {
-        // print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        // print(response.body);
+        // ///nt('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        // ///nt(response.body);
         ApiResponse apiResponse =
             ApiResponse.fromJson(jsonDecode(response.body));
-        print(apiResponse.data);
+        ///nt(apiResponse.data);
         if (!apiResponse.status) {
           try {
             if (apiResponse.causes.isNotEmpty) {
@@ -223,10 +223,10 @@ class Provider extends GetConnect {
       // dnd('$e Trace: $t');
       // MSG.errorSnackBar('Connection error, try again');
       // dnd(e);
-      print('Ok its null');
+      ///nt('Ok its null');
       return null;
     }
-    print('Ok its not null');
+    ///nt('Ok its not null');
     return null;
   }
 }

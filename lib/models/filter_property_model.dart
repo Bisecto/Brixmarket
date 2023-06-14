@@ -56,7 +56,7 @@ class Data {
 
 class Property {
   Property({
-    required this.user,
+    //required this.user,
     required this.title,
     required this.description,
     required this.price,
@@ -78,7 +78,7 @@ class Property {
     required this.contact,
   });
 
-  User user;
+ // User user;
   String title;
   String description;
   int price;
@@ -100,7 +100,7 @@ class Property {
   Contact contact;
 
   factory Property.fromJson(Map<String, dynamic> json) => Property(
-        user: User.fromJson(json["user"]),
+        //user: User.fromJson(json["user"]),
         title: json['title']
             .toString()
             .replaceAll('&#039;', '\'')
@@ -151,7 +151,7 @@ class Property {
       );
 
   Map<String, dynamic> toJson() => {
-        "user": user.toJson(),
+        //"user": user.toJson(),
         "title": title,
         "description": description,
         "price": price,
@@ -336,114 +336,114 @@ class Media {
       };
 }
 
-class User {
-  User({
-    required this.surname,
-    required this.firstName,
-    required this.phoneNumber,
-    required this.emailAddress,
-    required this.refId,
-    required this.image,
-    required this.location,
-    required this.longitude,
-    required this.latitude,
-    required this.city,
-    required this.state,
-    required this.country,
-    required this.address,
-    required this.password,
-    required this.isAdmin,
-    required this.isActive,
-    required this.isAgency,
-    required this.isAgent,
-    required this.isUser,
-    required this.isVerified,
-    required this.verifiedAgent,
-    required this.isPremium,
-    required this.isBlocked,
-    required this.otp,
-    required this.id,
-  });
-
-  String surname;
-  String firstName;
-  String phoneNumber;
-  String emailAddress;
-  String refId;
-  String image;
-  String location;
-  String longitude;
-  String latitude;
-  String city;
-  String state;
-  String country;
-  String address;
-  String password;
-  int isAdmin;
-  int isActive;
-  int isAgency;
-  int isAgent;
-  int isUser;
-  int isVerified;
-  int verifiedAgent;
-  int isPremium;
-  int isBlocked;
-  String otp;
-  String id;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        surname: json["surname"] ?? "null",
-        firstName: json["first_name"] ?? "null",
-        phoneNumber: json["phone_number"] ?? "null",
-        emailAddress: json["email_address"] ?? "null",
-        refId: json["ref_id"] ?? "null",
-        image: json["image"] ?? "null",
-        location: json["location"] ?? "null",
-        longitude: json["longitude"] ?? "null",
-        latitude: json["latitude"] ?? "null",
-        city: json["city"] ?? "null",
-        state: json["state"] ?? "null",
-        country: json["country"] ?? "null",
-        address: json["address"] ?? "null",
-        password: json["password"] ?? "null",
-        isAdmin: json["is_admin"],
-        isActive: json["is_active"],
-        isAgency: json["is_agency"],
-        isAgent: json["is_agent"],
-        isUser: json["is_user"],
-        isVerified: json["is_verified"],
-        verifiedAgent: json["verified_agent"],
-        isPremium: json["is_premium"],
-        isBlocked: json["is_blocked"],
-        otp: json["otp"] ?? "null",
-        id: json["id"] ?? "null",
-      );
-
-  Map<String, dynamic> toJson() => {
-        "surname": surname,
-        "first_name": firstName,
-        "phone_number": phoneNumber,
-        "email_address": emailAddress,
-        "ref_id": refId,
-        "image": image,
-        "location": location,
-        "longitude": longitude,
-        "latitude": latitude,
-        "city": city,
-        "state": state,
-        "country": country,
-        "address": address,
-        "password": password,
-        "is_admin": isAdmin,
-        "is_active": isActive,
-        "is_agency": isAgency,
-        "is_agent": isAgent,
-        "is_user": isUser,
-        "is_verified": isVerified,
-        "verified_agent": verifiedAgent,
-        "is_premium": isPremium,
-        "is_blocked": isBlocked,
-        "otp": otp,
-        "id": id,
-      };
-}
+// class User {
+//   User({
+//     required this.surname,
+//     required this.firstName,
+//     required this.phoneNumber,
+//     required this.emailAddress,
+//     required this.refId,
+//     required this.image,
+//     required this.location,
+//     required this.longitude,
+//     required this.latitude,
+//     required this.city,
+//     required this.state,
+//     required this.country,
+//     required this.address,
+//     required this.password,
+//     //required this.isAdmin,
+//     required this.isActive,
+//     required this.isAgency,
+//     required this.isAgent,
+//     required this.isUser,
+//     required this.isVerified,
+//     required this.verifiedAgent,
+//     required this.isPremium,
+//     required this.isBlocked,
+//     required this.otp,
+//     required this.id,
+//   });
+//
+//   String surname;
+//   String firstName;
+//   String phoneNumber;
+//   String emailAddress;
+//   String refId;
+//   String image;
+//   String location;
+//   String longitude;
+//   String latitude;
+//   String city;
+//   String state;
+//   String country;
+//   String address;
+//   String password;
+//  // int isAdmin;
+//   int isActive;
+//   int isAgency;
+//   int isAgent;
+//   int isUser;
+//   int isVerified;
+//   int verifiedAgent;
+//   int isPremium;
+//   int isBlocked;
+//   String otp;
+//   String id;
+//
+//   factory User.fromJson(Map<String, dynamic> json) => User(
+//         surname: json["surname"] ?? "null",
+//         firstName: json["first_name"] ?? "null",
+//         phoneNumber: json["phone_number"] ?? "null",
+//         emailAddress: json["email_address"] ?? "null",
+//         refId: json["ref_id"] ?? "null",
+//         image: json["image"] ?? "null",
+//         location: json["location"] ?? "null",
+//         longitude: json["longitude"] ?? "null",
+//         latitude: json["latitude"] ?? "null",
+//         city: json["city"] ?? "null",
+//         state: json["state"] ?? "null",
+//         country: json["country"] ?? "null",
+//         address: json["address"] ?? "null",
+//         password: json["password"] ?? "null",
+//         //isAdmin: json["is_admin"],
+//         isActive: json["is_active"],
+//         isAgency: json["is_agency"],
+//         isAgent: json["is_agent"],
+//         isUser: json["is_user"],
+//         isVerified: json["is_verified"],
+//         verifiedAgent: json["verified_agent"],
+//         isPremium: json["is_premium"],
+//         isBlocked: json["is_blocked"],
+//         otp: json["otp"] ?? "null",
+//         id: json["id"] ?? "null",
+//       );
+//
+//   Map<String, dynamic> toJson() => {
+//         "surname": surname,
+//         "first_name": firstName,
+//         "phone_number": phoneNumber,
+//         "email_address": emailAddress,
+//         "ref_id": refId,
+//         "image": image,
+//         "location": location,
+//         "longitude": longitude,
+//         "latitude": latitude,
+//         "city": city,
+//         "state": state,
+//         "country": country,
+//         "address": address,
+//         "password": password,
+//         //"is_admin": isAdmin,
+//         "is_active": isActive,
+//         "is_agency": isAgency,
+//         "is_agent": isAgent,
+//         "is_user": isUser,
+//         "is_verified": isVerified,
+//         "verified_agent": verifiedAgent,
+//         "is_premium": isPremium,
+//         "is_blocked": isBlocked,
+//         "otp": otp,
+//         "id": id,
+//       };
+// }

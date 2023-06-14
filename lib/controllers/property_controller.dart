@@ -428,7 +428,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           await Provider().postData("property/get-home-properties", {});
       //print(response + '..............................................');
       if (response != null) {
-        for (var e in (response['latest'] as List)) {
+        for (var e in (response['premium'] as List)) {
           latestProperty.add(
               //featuredProperties.length < 100,
               home_property.Latest.fromJson(e));
@@ -481,7 +481,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
           await Provider().postData("property/get-home-properties", {});
       //print(response + '..............................................');
       if (response != null) {
-        for (var e in (response['latest'] as List)) {
+        for (var e in (response['premium'] as List)) {
           featuredProperty2.add(
               //featuredProperties.length < 100,
               home_property.Latest.fromJson(e));
