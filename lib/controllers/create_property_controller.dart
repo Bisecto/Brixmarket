@@ -6,7 +6,6 @@ import 'package:brixmarket/core/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:restart_app/restart_app.dart';
 
 import '../core/dialogs.dart';
@@ -44,7 +43,6 @@ class CreatePropertyCtrl extends GetxController {
 
   static const historyLength = 5;
 
-  FloatingSearchBarController? searchController;
   final oCcy = NumberFormat("#,##0.00", "en_US");
   var accountIndex = 0.obs;
 

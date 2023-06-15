@@ -16,7 +16,7 @@ const headers = {
 };
 // const String authToken =
 //     'kOoT3jVQAK73GAsRrftjnnXzXS6o7lfLi9iMENmJOx1nYbDPgaiqk7vs5lEpfXg4LMF+wFZWWommwTf1CrqTU1ZZz/my4WZxuReq/uDdBIs=dodroosos';
-const appBaseUrl = 'https://api.brixmarket.site/';
+const appBaseUrl = 'https://api.brixmarket.com/';
 const appUrl = 'https://brixmarket.site';
 const imageBaseUrl = 'https://dfy7hoxi61jci.cloudfront.net/';
 // const appBaseUrl = 'https://iceztech.com/clients/brix/';

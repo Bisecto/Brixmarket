@@ -69,25 +69,25 @@ class DeviceInfo {
     };
   }
 
-  static Map<String, dynamic> readWebBrowserInfo(WebBrowserInfo data) {
-    return <String, dynamic>{
-      'browserName': describeEnum(data.browserName),
-      'appCodeName': data.appCodeName,
-      'appName': data.appName,
-      'appVersion': data.appVersion,
-      'deviceMemory': data.deviceMemory,
-      'language': data.language,
-      'languages': data.languages,
-      'platform': data.platform,
-      'product': data.product,
-      'productSub': data.productSub,
-      'userAgent': data.userAgent,
-      'vendor': data.vendor,
-      'vendorSub': data.vendorSub,
-      'hardwareConcurrency': data.hardwareConcurrency,
-      'maxTouchPoints': data.maxTouchPoints,
-    };
-  }
+  // static Map<String, dynamic> readWebBrowserInfo(WebBrowserInfo data) {
+  //   return <String, dynamic>{
+  //     'browserName': describeEnum(data.browserName),
+  //     'appCodeName': data.appCodeName,
+  //     'appName': data.appName,
+  //     'appVersion': data.appVersion,
+  //     'deviceMemory': data.deviceMemory,
+  //     'language': data.language,
+  //     'languages': data.languages,
+  //     'platform': data.platform,
+  //     'product': data.product,
+  //     'productSub': data.productSub,
+  //     'userAgent': data.userAgent,
+  //     'vendor': data.vendor,
+  //     'vendorSub': data.vendorSub,
+  //     'hardwareConcurrency': data.hardwareConcurrency,
+  //     'maxTouchPoints': data.maxTouchPoints,
+  //   };
+  // }
 
   static Map<String, dynamic> readMacOsDeviceInfo(MacOsDeviceInfo data) {
     return <String, dynamic>{
@@ -104,11 +104,11 @@ class DeviceInfo {
     };
   }
 
-  static Map<String, dynamic> readWindowsDeviceInfo(WindowsDeviceInfo data) {
-    return <String, dynamic>{
-      'numberOfCores': data.numberOfCores,
-      'computerName': data.computerName,
-      'systemMemoryInMegabytes': data.systemMemoryInMegabytes,
-    };
-  }
+  // static Map<String, dynamic> readWindowsDeviceInfo(WindowsDeviceInfo data) {
+  //   return <String, dynamic>{
+  //     'numberOfCores': data.numberOfCores,
+  //     'computerName': data.computerName,
+  //     'systemMemoryInMegabytes': data.systemMemoryInMegabytes,
+  //   };
+  // }
 }

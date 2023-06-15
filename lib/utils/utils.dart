@@ -120,10 +120,10 @@ class Utils {
     var deviceData = <String, dynamic>{};
 
     try {
-      if (kIsWeb) {
-        deviceData = DeviceInfo.readWebBrowserInfo(
-            await DeviceInfo.deviceInfoPlugin.webBrowserInfo);
-      } else {
+      // if (kIsWeb) {
+      //   deviceData = DeviceInfo.readWebBrowserInfo(
+      //       await DeviceInfo.deviceInfoPlugin.webBrowserInfo);
+      // } else {
         if (Platform.isAndroid) {
           deviceData = DeviceInfo.readAndroidBuildData(
               await DeviceInfo.deviceInfoPlugin.androidInfo);
@@ -136,11 +136,12 @@ class Utils {
         } else if (Platform.isMacOS) {
           deviceData = DeviceInfo.readMacOsDeviceInfo(
               await DeviceInfo.deviceInfoPlugin.macOsInfo);
-        } else if (Platform.isWindows) {
-          deviceData = DeviceInfo.readWindowsDeviceInfo(
-              await DeviceInfo.deviceInfoPlugin.windowsInfo);
         }
-      }
+        // else if (Platform.isWindows) {
+        //   deviceData = DeviceInfo.readWindowsDeviceInfo(
+        //       await DeviceInfo.deviceInfoPlugin.windowsInfo);
+        // }
+    //  }
     } on PlatformException {
       deviceData = <String, dynamic>{
         'Error:': 'Failed to get platform version.'

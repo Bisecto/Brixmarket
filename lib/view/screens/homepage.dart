@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../controllers/instance.dart';
@@ -178,21 +177,21 @@ class HomePage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: isMobile() ? 12 : 24,
-                                      horizontal: isMobile()
-                                          ? 16
-                                          : isTablet()
-                                              ? 48
-                                              : 0),
-                                  width: 740,
-                                  constraints: const BoxConstraints(maxHeight: 420),
-                                  child: buildFloatingSearchBar(),
-                                ),
-                              ),
+                              // Align(
+                              //   alignment: Alignment.topCenter,
+                              //   child: Container(
+                              //     margin: EdgeInsets.symmetric(
+                              //         vertical: isMobile() ? 12 : 24,
+                              //         horizontal: isMobile()
+                              //             ? 16
+                              //             : isTablet()
+                              //                 ? 48
+                              //                 : 0),
+                              //     width: 740,
+                              //     constraints: const BoxConstraints(maxHeight: 420),
+                              //     child: buildFloatingSearchBar(),
+                              //   ),
+                              // ),
                             ],
                           )
                         ],
@@ -721,43 +720,43 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildFloatingSearchBar() {
-    return FloatingSearchBar(
-      hint: 'Country, City, Town or Area',
-      scrollPadding: const EdgeInsets.only(top: 0),
-      transitionDuration: const Duration(milliseconds: 0),
-      transitionCurve: Curves.slowMiddle,
-      borderRadius: BorderRadius.circular(4),
-      automaticallyImplyBackButton: false,
-      automaticallyImplyDrawerHamburger: false,
-      physics: const BouncingScrollPhysics(),
-      axisAlignment: 0.0,
-      openAxisAlignment: 0.0,
-      // width: Get.width * 0.55,
-      height: isTabletDown() ? 52 : 64,
-      backdropColor: Colors.transparent,
-      debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: (query) => homeCtrl.filterProduct(query),
-      transition: CircularFloatingSearchBarTransition(),
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-          child: Material(
-            color: Colors.white,
-            elevation: 8.0,
-            shadowColor: Colors.black,
-            type: MaterialType.card,
-            child: Obx(() => ListView.builder(
-                shrinkWrap: true,
-                itemCount: homeCtrl.mainData.length,
-                itemBuilder: (_, int i) => Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black12, width: 0.2))),
-                    child: Text(homeCtrl.mainData[i], style: const TextStyle(fontSize: 16))))),
-          ),
-        );
-      },
-    );
-  }
+  // Widget buildFloatingSearchBar() {
+  //   return FloatingSearchBar(
+  //     hint: 'Country, City, Town or Area',
+  //     scrollPadding: const EdgeInsets.only(top: 0),
+  //     transitionDuration: const Duration(milliseconds: 0),
+  //     transitionCurve: Curves.slowMiddle,
+  //     borderRadius: BorderRadius.circular(4),
+  //     automaticallyImplyBackButton: false,
+  //     automaticallyImplyDrawerHamburger: false,
+  //     physics: const BouncingScrollPhysics(),
+  //     axisAlignment: 0.0,
+  //     openAxisAlignment: 0.0,
+  //     // width: Get.width * 0.55,
+  //     height: isTabletDown() ? 52 : 64,
+  //     backdropColor: Colors.transparent,
+  //     debounceDelay: const Duration(milliseconds: 500),
+  //     onQueryChanged: (query) => homeCtrl.filterProduct(query),
+  //     transition: CircularFloatingSearchBarTransition(),
+  //     builder: (context, transition) {
+  //       return ClipRRect(
+  //         borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+  //         child: Material(
+  //           color: Colors.white,
+  //           elevation: 8.0,
+  //           shadowColor: Colors.black,
+  //           type: MaterialType.card,
+  //           child: Obx(() => ListView.builder(
+  //               shrinkWrap: true,
+  //               itemCount: homeCtrl.mainData.length,
+  //               itemBuilder: (_, int i) => Container(
+  //                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+  //                   decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black12, width: 0.2))),
+  //                   child: Text(homeCtrl.mainData[i], style: const TextStyle(fontSize: 16))))),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
 }

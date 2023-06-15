@@ -5,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
-import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:brixmarket/models/home_property_model.dart' as home;
 import '../../controllers/edit_controller.dart';
 import '../../controllers/instance.dart';
@@ -1162,50 +1161,50 @@ class _HomePageWebState extends State<HomePageWeb> {
     );
   }
 
-  Widget buildFloatingSearchBar() {
-    return FloatingSearchBar(
-      hint: 'Country, City, Town or Area',
-      scrollPadding: const EdgeInsets.only(top: 0),
-      transitionDuration: const Duration(milliseconds: 0),
-      transitionCurve: Curves.slowMiddle,
-      borderRadius: BorderRadius.circular(4),
-      automaticallyImplyBackButton: false,
-      automaticallyImplyDrawerHamburger: false,
-      physics: const BouncingScrollPhysics(),
-      axisAlignment: 0.0,
-      openAxisAlignment: 0.0,
-      // width: Get.width * 0.55,
-      height: isTabletDown() ? 52 : 64,
-      backdropColor: Colors.transparent,
-      debounceDelay: const Duration(milliseconds: 500),
-      onQueryChanged: (query) => homeCtrl.filterProduct(query),
-      transition: CircularFloatingSearchBarTransition(),
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-          child: Material(
-            color: Colors.white,
-            elevation: 8.0,
-            shadowColor: Colors.black,
-            type: MaterialType.card,
-            child: Obx(() => ListView.builder(
-                shrinkWrap: true,
-                itemCount: homeCtrl.mainData.length,
-                itemBuilder: (_, int i) => Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                            bottom:
-                                BorderSide(color: Colors.black12, width: 0.2))),
-                    child: Text(homeCtrl.mainData[i],
-                        style: const TextStyle(fontSize: 16))))),
-          ),
-        );
-      },
-    );
-  }
+  // Widget buildFloatingSearchBar() {
+  //   return FloatingSearchBar(
+  //     hint: 'Country, City, Town or Area',
+  //     scrollPadding: const EdgeInsets.only(top: 0),
+  //     transitionDuration: const Duration(milliseconds: 0),
+  //     transitionCurve: Curves.slowMiddle,
+  //     borderRadius: BorderRadius.circular(4),
+  //     automaticallyImplyBackButton: false,
+  //     automaticallyImplyDrawerHamburger: false,
+  //     physics: const BouncingScrollPhysics(),
+  //     axisAlignment: 0.0,
+  //     openAxisAlignment: 0.0,
+  //     // width: Get.width * 0.55,
+  //     height: isTabletDown() ? 52 : 64,
+  //     backdropColor: Colors.transparent,
+  //     debounceDelay: const Duration(milliseconds: 500),
+  //     onQueryChanged: (query) => homeCtrl.filterProduct(query),
+  //     transition: CircularFloatingSearchBarTransition(),
+  //     builder: (context, transition) {
+  //       return ClipRRect(
+  //         borderRadius: const BorderRadius.only(
+  //             bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+  //         child: Material(
+  //           color: Colors.white,
+  //           elevation: 8.0,
+  //           shadowColor: Colors.black,
+  //           type: MaterialType.card,
+  //           child: Obx(() => ListView.builder(
+  //               shrinkWrap: true,
+  //               itemCount: homeCtrl.mainData.length,
+  //               itemBuilder: (_, int i) => Container(
+  //                   padding: const EdgeInsets.symmetric(
+  //                       vertical: 12, horizontal: 16),
+  //                   decoration: const BoxDecoration(
+  //                       border: Border(
+  //                           bottom:
+  //                               BorderSide(color: Colors.black12, width: 0.2))),
+  //                   child: Text(homeCtrl.mainData[i],
+  //                       style: const TextStyle(fontSize: 16))))),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }
 
 class FaceOutlinePainter extends CustomPainter {

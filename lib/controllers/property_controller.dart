@@ -246,7 +246,7 @@ class PropCtrl extends HomeController with CreateProperty, FetchProperty {
     var response = await Provider().postData(
       "property/view-property",
       map,
-      baseUrl: 'https://api.brixmarket.site/',
+      baseUrl: appBaseUrl,
     );
     if (response != null && response.isNotEmpty) {}
   }
