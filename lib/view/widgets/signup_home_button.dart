@@ -23,7 +23,7 @@ class SignUpHomeButtons extends StatelessWidget {
         onPressed: onPressed,
         child: Text(text, style: TextStyle(color: const Color.fromARGB(255, 29, 28, 28), fontSize: fontSize, fontWeight: FontWeight.w500)),
         style: ElevatedButton.styleFrom(
-          primary: Pallet.btnSignColor,
+          backgroundColor: Pallet.btnSignColor,
           fixedSize: Size(double.infinity, height),
           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4), side: const BorderSide(color: Colors.black26)),

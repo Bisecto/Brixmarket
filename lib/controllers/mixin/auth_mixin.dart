@@ -170,6 +170,7 @@ mixin Auth {
       } else {
         Preloader.show();
         var Url = Uri.parse('$appBaseUrl login');
+        print(Url);
 
         var data = User.map(
             email: email ?? EditCtrl.email.text,

@@ -1,7 +1,7 @@
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart'as carouselSlider;
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,7 +22,7 @@ import '../widgets/save_property_icon.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  final CarouselController _controller = CarouselController();
+  final carouselSlider.CarouselController _controller = carouselSlider.CarouselController();
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -248,7 +248,7 @@ class HomePage extends StatelessWidget {
                           ? const SizedBox.shrink()
                           : Stack(
                               children: [
-                                CarouselSlider(
+                                carouselSlider.CarouselSlider(
                                   items: [
                                     ...properties.map((e) {
                                       int iFeature = 0;
@@ -436,7 +436,7 @@ class HomePage extends StatelessWidget {
                                     }).toList(),
                                   ],
                                   carouselController: _controller,
-                                  options: CarouselOptions(
+                                  options: carouselSlider.CarouselOptions(
                                       autoPlayInterval: const Duration(seconds: 15),
                                       autoPlayAnimationDuration: const Duration(milliseconds: 1500),
                                       pauseAutoPlayOnTouch: true,

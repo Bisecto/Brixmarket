@@ -21,7 +21,7 @@ class SavedPropertiesWidget extends StatelessWidget {
       margin: const EdgeInsets.only(top: 0),
       child: Scrollbar(
         controller: cPropCtrl.scrollController4,
-        isAlwaysShown: true,
+        thumbVisibility: true,
         interactive: true,
         child: ListView(
           shrinkWrap: true,

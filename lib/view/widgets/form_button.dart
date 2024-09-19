@@ -46,7 +46,7 @@ class FormButton extends StatelessWidget {
         ),
         style: ElevatedButton.styleFrom(
           //backgroundColor: bgColor,
-          primary: bgColor,
+          backgroundColor: bgColor,
             fixedSize: const Size(double.infinity, 48),
           textStyle:  TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: textColor),
           shape: RoundedRectangleBorder(
@@ -91,8 +91,7 @@ class FormBorderButton extends StatelessWidget {
           ),
         ),
         style: ElevatedButton.styleFrom(
-          elevation: 0,
-          primary: bgColor,
+          elevation: 0, backgroundColor: bgColor,
           fixedSize: const Size(double.infinity, 35),
           textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: txtColor),
           shape: RoundedRectangleBorder(
@@ -140,7 +139,7 @@ class FormIconButton extends StatelessWidget {
                 size: hasIcon ? 12 : 0,
               ),
               style: ElevatedButton.styleFrom(
-                primary: bgColor ?? Pallet.secondaryColor,
+                backgroundColor: bgColor ?? Pallet.secondaryColor,
                 fixedSize: const Size(double.infinity, 48),
                 textStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w100),
                 shape: RoundedRectangleBorder(

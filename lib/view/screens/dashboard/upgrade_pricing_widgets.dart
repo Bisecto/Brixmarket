@@ -20,7 +20,7 @@ class UpgradePricingWidget extends StatelessWidget {
       height: Get.height,
       child: Scrollbar(
         controller: cPropCtrl.scrollController5,
-        isAlwaysShown: true,
+        thumbVisibility: true,
         interactive: true,
         child: ListView(
           shrinkWrap: true,

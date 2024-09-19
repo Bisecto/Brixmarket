@@ -1,7 +1,7 @@
 import 'package:brixmarket/config/theme/color.dart';
 import 'package:brixmarket/core/app.dart';
 import 'package:brixmarket/view/widgets/custom_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart'as carouselSlider;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:brixmarket/controllers/home_controller.dart';
@@ -812,7 +812,7 @@ class _HomePageWebState extends State<HomePageWeb> {
                 onTap();
               },
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 //foregroundColor: Colors.white,
               ),
               child: Text(btnText,
